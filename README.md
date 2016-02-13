@@ -1,4 +1,5 @@
-#ChocolateChip - A Compact Framework for Mobile Web Apps
+=======
+# ChocolateChip-UI - A Compact Framework for Mobile Web Apps
 
 
 ##ChocolateChip-UI
@@ -150,3 +151,4 @@ git config core.autocrlf input
 core.eol tells Git to always checkout this repository with LF. 
 core.autocrlf tells Git to convert CRLF to LF on commit.
 
+A front end framework for building mobile web apps.
