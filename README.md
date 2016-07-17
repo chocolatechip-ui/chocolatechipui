@@ -10,7 +10,7 @@
 
 ChocolateChip-UI is a framework for making mobile Web apps. It has three components: semantic HTML5 markup, CSS and JavaScript. To successfully make an app with ChocolateChip-UI you'll need at least moderate experience working with JavaScript. This is so you can use templates, make Ajax requests and handle callbacks for user interaction. If this is beyond your current skills, consider getting someone with Web development experience to help you. ChocolateChip-UI is built on jQuery, so you will need a compatible version of it to work with ChocolateChip-UI.
 
-Please visit [ChocolateChip-UI's Website](http://chocolatechip-ui.com) for documentation and tutorials. This project includes examples for iOS, Android and Windows Phone 8 to help you get going.
+Please visit [ChocolateChip-UI's Website](http://chocolatechip-ui.github.io) for documentation and tutorials. This project includes examples for iOS, Android and Windows Phone 8 to help you get going.
 
 ##NPM
 The fastest way to get going with ChocolateChip-UI is to install the NPM module ```chui```. This will allow you to quickly create the type of ChocolateChip-UI project you want. Please visit [NPM](https://www.npmjs.com/package/chui) for directions on how to use it
