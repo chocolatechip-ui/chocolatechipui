@@ -1,0 +1,178 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="msapplication-tap-highlight" content="no">
+  <title>ChocolateChip-UI Filter</title>
+  <link rel="stylesheet" href="../dist/css/chui-ios.min.css">
+  <script src="../dist/chui.min.js"></script>
+  <script type="application/json" src="../dist/chui.min.js.map"></script>
+  <style>
+    .sortButtons button {
+      margin-bottom: 10px;
+    }
+    .sortButtons button svg {
+      transition: all .25s ease-out;
+      margin-left: 5px;
+      transform: rotate(-180deg);
+    }
+    .sortButtons button.descending svg {
+      transform: rotate(0deg);
+    }
+    .sortButtons button:first-child {
+      margin-left: 0;
+    }
+    input {
+      padding: 4px;
+      font-size: 14px;
+    }
+    body.themeIsAndroid .SortOrderArrow {
+      fill: #555 !important;
+    }
+    body.themeIsAndroid .sortButtons button svg {
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+  <screen id='main' class="current">
+    <nav>
+      <h1>Filter and Sort</h1>
+    </nav>
+    <section>
+      <h2>Sortable List:</h2>
+      <p><input id='filterByName' type="text" placeholder='first or last name'></p>
+      <p class='sortButtons'>
+        <button id='sortByName'>Last Name
+          <svg width="10px" height="6px" viewBox="0 0 10 6" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <path class="SortOrderArrow" fill="#007aff" d="M10,3.94703249e-15 L5,6 L0,0 L10,3.94703249e-15 Z" id="Triangle"></path>
+          </svg>
+        </button>
+        <button id='sortByAge'>Age
+          <svg width="10px" height="6px" viewBox="0 0 10 6" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <path class="SortOrderArrow" fill="#007aff" d="M10,3.94703249e-15 L5,6 L0,0 L10,3.94703249e-15 Z" id="Triangle"></path>
+          </svg>
+        </button>
+      </p>
+      <ul id="listView" class='list cloak'>
+        <li>
+          <h3>{= data.firstName } {= data.lastName }, Age: {= data.age }</h3>
+        </li>
+      </ul>
+    </section>
+  </screen>
+
+  <script>
+
+  $(function() {
+
+
+    /**
+     * Plain data object:
+     */
+    var people = [
+      {firstName: "Joe", lastName: "Bodoni", age: 28},
+      {firstName: "Sue", lastName: "Higgins", age: 22},
+      {firstName: "John", lastName: "Doe", age: 32},
+      {firstName: "Betty", lastName: "Bonnet", age: 26},
+      {firstName: "Steve", lastName: "Martin", age: 25},
+      {firstName: "Joe", lastName: "Carson", age: 27},
+      {firstName: "Sam", lastName: "Taylor", age: 31},
+      {firstName: "Mary", lastName: "Martin", age: 21},
+      {firstName: "Paul", lastName: "Quintin", age: 34},
+      {firstName: "Debbie", lastName: "Abernathy", age: 29},
+      {firstName: "William", lastName: "Gonzalez", age: 41}
+    ];
+    var PeopleModel = $.Model(people, 'people-model');
+
+    var PeopleView = $.View({
+      element: '#listView', 
+      model: PeopleModel
+    });
+    PeopleView.render();
+
+    var filterInput = $('#filterByName');
+
+    /**
+     * Filter the model.
+     * Make case insensitive:
+     */
+    function filterNames() {
+      var val = filterInput.val();
+      if (val) val = val.toLowerCase();
+      /**
+       * Check that no backslashes were entered:
+       */
+      if (/\\/.test(val)) return;
+      /**
+       * Find a match:
+       */
+      var persons = PeopleModel.filter(function(person) {
+        var name = person.firstName.toLowerCase() + ' ' + person.lastName.toLowerCase()
+        return name.match(val);
+      });
+      PeopleView.render(persons);
+    }
+
+    /**
+     * Setup for sorting - ascendeing and descending:
+     */
+
+    /**
+     * Initial state for sort:
+     */
+    var sortOrder = true;
+
+    /**
+     * Sort by Last Name:
+     */
+    $('#sortByName').on('tap', function() {
+      var hyphen = '-';
+      sortOrder = $(this).hasClass('descending');hyphen = sortOrder ? '' : '-';
+      
+      PeopleModel.orderBy(hyphen + 'lastName', hyphen + 'firstName');
+      if (filterInput.val() !== '') {
+        filterNames();
+      } else {
+        PeopleView.render();
+      }
+      $(this).toggleClass('descending');
+    });
+
+    /**
+     * Sort by Age:
+     */
+    $('#sortByAge').on('tap', function() {
+      var hyphen = '-';
+      sortOrder = $(this).hasClass('descending');
+      hyphen = sortOrder ? '' : '-';
+      PeopleModel.orderBy(hyphen + 'age');
+      if (filterInput.val() !== '') {
+        filterNames();
+      } else {
+        PeopleView.render();
+      }
+      $(this).toggleClass('descending');
+    });
+
+    /**
+     * Sort Model and render view:
+     */
+    PeopleModel.orderBy('lastName', 'firstName');
+    PeopleView.render();
+
+    /**
+     * Filter data as user types:
+     */
+    filterInput.on('input', function() {
+      filterNames();
+    });
+
+  })
+  </script>
+</body>
+</html>

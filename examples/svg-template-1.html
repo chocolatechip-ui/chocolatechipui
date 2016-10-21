@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="msapplication-tap-highlight" content="no">
+  <title>ChocolateChip-UI SVG</title>
+  <link rel="stylesheet" href="../dist/css/chui-ios.min.css">
+  <script src="../dist/chui.min.js"></script>
+  <script type="application/json" src="../dist/chui.min.js.map"></script>
+  <script>
+    $(function() {
+
+      /**
+       * Data for SVG rectangles:
+       */
+      var data = [
+        {color: "#ff0000", stroke: "#00ff00", height: "20"},
+        {color: "#00ffff", stroke: "#ff0000", height: "20"},
+        {color: "#ff00ff", stroke: "#00ffff", height: "20"},
+        {color: "#f0990f", stroke: "#0ff00f", height: "20"},
+      ];
+
+      /**
+       * Define model to bind rectanges to:
+       */
+      var rectModel = $.Model(data);
+
+      /**
+       * Define view for SVG rectangles:
+       */
+      var RectView = $.View({
+        element: '#rectangles',
+        template: '<li>\n\
+          <svg width="{= data.height * 2.5 }px" height="{= data.height }px" viewBox="0 0 {= data.height * 2.5 } {= data.height }" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-miterlimit:1.41421;">\n\
+            <rect id="Rectangle-1" x="0" y="0" width="{= data.height * 2.5 }" height="{= data.height }" style="fill:{= data.color };stroke-width:4px;stroke:{= data.stroke };"/>{= data.height }\n\
+          </svg>\n\
+        </li>',
+          model: rectModel
+      });
+      RectView.render(data)
+
+      /**
+       * Get new height and width for rectangles:
+       */
+      $('#updateSVG').on('input', function() {
+        var val = this.value;
+        rectModel.forEach(function(rect, idx) {
+          rectModel.setPropAt('height',val, idx);
+        });
+      })
+    });
+  </script>
+</head>
+<body>
+  <screen id='main' class='current'>
+    <nav>
+      <h1>SVG Templates</h1>
+    </nav>
+    <section>
+      <h2 class='normal-case'>Update the dimensions of these SVG rectangles with the slider</h2>
+      <ul class="list" id='rectangles'></ul>
+      <p>
+        <label for="range">Use slider to change size:</label><input id='updateSVG' type="range" min='20' max='70' value='20'>
+      </p>
+      <summary>These rectangles are SVG images bound to a model for automatic refresh.</summary>
+    </section>
+  </screen>
+</body>
+</html>

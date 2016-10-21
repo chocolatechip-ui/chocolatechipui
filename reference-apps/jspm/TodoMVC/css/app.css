@@ -1,0 +1,93 @@
+nav {
+  background-color: #0268BF;
+}
+nav > h1 {
+  color: #fafafa;
+  text-align: left;
+}
+nav button {
+  color: #fafafa;
+}
+nav input {
+  border-radius: 0;
+}
+#totals-view {
+  padding-left: 10px;
+  margin-right: 20px;
+}
+li.active #checkmark {
+  display: none !important;
+}
+#todo-items h3 {
+  text-decoration: line-through;
+}
+#todo-items li {
+  background-color: #FAFCFD;
+}
+#todo-items li.active {
+  background-color: #fff;
+}
+#todo-items li.active h3 {
+  text-decoration: none;
+}
+button {
+  transition: all .25s ease-out;
+}
+button.set-state {
+  padding: 0;
+  height: 30px;
+  width: 30px;
+  border: solid 1px #007AFF;
+  border-radius: 30px;
+  margin-right: 10px;
+}
+li.active .set-state {
+  border: solid 1px #ccc;
+}
+button.set-state:hover {
+  border: solid 1px #007aff;
+  background-color: #007aff;
+}
+li.active button.set-state:hover #checkmark,
+button.set-state:hover #checkmark {
+  stroke: #ffffff;
+  display: block !important;
+}
+button.delete-item {
+  padding: 0;
+  height: 30px;
+  width: 30px;
+  border: solid 1px #FF0000;
+  border-radius: 30px;
+  margin-right: 10px;
+}
+button.delete-item:hover {
+  background-color: #ff0000;
+}
+button.delete-item:hover #Delete {
+  stroke: #ffffff;
+}
+button.delete-item > svg {
+  margin-top: 2px;
+}
+footer button {
+  padding: 2px 10px;
+  border: solid 1px transparent;
+  border-radius: 8px;
+}
+footer button:hover {
+  background-color: #007AFF;
+  color: #fff;
+  border: solid 1px #007AFF;
+}
+footer button.selected {
+  border: solid 1px #007AFF;
+}
+@media only screen and (max-width: 374px) {
+  #totals-view {
+    margin-right: 10px;
+  }
+  footer button {
+    padding: 2px 5px !important;
+  }
+}

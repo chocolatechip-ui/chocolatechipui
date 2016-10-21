@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="msapplication-tap-highlight" content="no">
+  <title>ChocolateChip-UI Center</title>
+  <link rel="stylesheet" href="../dist/css/chui-ios.min.css">
+  <script src="../dist/chui.min.js"></script>
+  <script type="application/json" src="../dist/chui.min.js.map"></script>
+  <script>
+    $(function() {
+      /**
+       * Add busy widget to page:
+       */
+      $('section').Busy({color:'#007AFF', size: 100});
+      
+      /**
+       * Center busy widget:
+       */
+      $('section').find('.chui-busy').center();
+    });
+  </script>
+</head>
+<body>
+  <screen id='main'>
+    <nav>
+      <h1>List</h1>
+    </nav>
+    <section>
+      <ul class='list'>
+        <li>
+          <h3>People</h3>
+        </li>
+        <li>
+          <h3>Places</h3>
+        </li>
+        <li>
+          <h3>Things</h3>
+        </li>
+      </ul>
+    </section>
+  </screen>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="msapplication-tap-highlight" content="no">
+  <title>ChocolateChip-UI Editable List - Arabic</title>
+  <link rel="stylesheet" href="../dist/css/chui-ios.min.css">
+  <script src="../dist/chui.js"></script>
+  <script type="application/json" src="../dist/chui.min.js.map"></script>
+</head>
+<body>
+  <screen id='main' class='current'>
+    <nav>
+      <h1>قائمة للتحرير</h1>
+    </nav>
+    <section>
+      <h2>أعضاء</h2>
+      <ul class='list' id="editList">
+        <script type='text/x-template'>
+          <li data-id="{= person.guid }">
+            <h3>{= person.name.first } {= person.name.last }</h3>
+          </li>
+        </script>
+      </ul>
+    </section>
+</screen>
+
+<script>
+
+  $(function() {
+    var people = [
+      
+  {
+    "guid": "02cd3a66-2a4f-48b9-ac6b-e32c1868a8e8",
+    "name": {
+      "first": "أسلم",
+      "last": "عبد الرشيد"
+    }
+  },
+  {
+    "guid": "4cf0c7b3-2df1-42c8-99af-377955cd1690",
+    "name": {
+      "first": "سعيد",
+      "last": "حكمة"
+    }
+  },
+  {
+    "guid": "0f17f9e0-fb41-4b8f-b3f7-9b0426c50066",
+    "name": {
+      "first": "عمر",
+      "last": "تِيجَانِي"
+    }
+  },
+  {
+    "guid": "e90dd256-4ee9-4681-a5fa-dd428d455c16",
+    "name": {
+      "first": "نجمة",
+      "last": "عبد الله"
+    }
+  },
+  {
+    "guid": "ed17ad1c-1dfd-4d70-bbd2-56a96cc7fe02",
+    "name": {
+      "first": "حيدر",
+      "last": "حسّان"
+    }
+  },
+  {
+    "guid": "d2867a0e-1ea1-408e-9450-0876804675db",
+    "name": {
+      "first": "ضياء الدين",
+      "last": "حنيف"
+    }
+  },
+  {
+    "guid": "cea10dc6-b63c-46b0-8e51-3081638275c2",
+    "name": {
+      "first": "أحمد",
+      "last": "الْقَلْيُوبِيّ"
+    }
+  },
+  {
+    "guid": "4bac88a3-3afe-4df1-b0ce-8b6bde3dba6b",
+    "name": {
+      "first": "دلال",
+      "last": "الدوسري"
+    }
+  },
+  {
+    "guid": "6d6f5e3a-988c-48a6-ad62-d6741346102f",
+    "name": {
+      "first": "بدر",
+      "last": "الأخْرَس"
+    }
+  },
+  {
+    "guid": "4fcc9d85-5e9f-4f9c-8f45-5997e159707e",
+    "name": {
+      "first": "فرحان",
+      "last": "حفناوي"
+    }
+  },
+  {
+    "guid": "905ce47a-cf92-42d7-94b8-95a497903154",
+    "name": {
+      "first": "إسهامي",
+      "last": "تجاني"
+    }
+  },
+  {
+    "guid": "56615e29-7289-4a70-81a3-1075c2acb191",
+    "name": {
+      "first": "جميلة",
+      "last": "البلوشي"
+    }
+  },
+  {
+    "guid": "e0497613-15e0-446f-a596-b390935fe905",
+    "name": {
+      "first": "مصطفى",
+      "last": "بودربالة"
+    }
+  },
+  {
+    "guid": "dff782d7-4ae5-437b-98c6-6b8d7516800b",
+    "name": {
+      "first": "ناصر",
+      "last": "حَجُّو"
+    }
+  },
+  {
+    "guid": "f3440ed5-e999-457d-bbeb-dfdbe44c8326",
+    "name": {
+      "first": "كريم",
+      "last": "هداية"
+    }
+  }
+    ];
+
+    /**
+     * Define  model:
+     */
+    var PeopleModel = $.Model(people, 'people-model');
+
+    var editListView = $.View({
+      element: '#editList',
+      model: PeopleModel,
+      variable: 'person'
+    });
+    editListView.render();
+
+    var myEditList = $.EditList({
+      deletable: true,
+      movable: true,
+      model: PeopleModel,
+      modelProp: 'guid',
+      editLabel: 'تحرير',
+      doneLabel: 'منجز',
+      deleteLabel: 'حذف',
+      cancelLabel: 'إلغاء',
+      element: '#editList',
+      view: editListView
+    });
+
+
+    window.editListView = editListView;
+    window.PeopleModel = PeopleModel;
+    window.myEditList = myEditList;
+  });
+</script>  
+</body>

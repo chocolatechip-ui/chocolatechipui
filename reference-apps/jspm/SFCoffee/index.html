@@ -1,0 +1,48 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>SFCOFFEE</title>
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="msapplication-tap-highlight" content="no">
+	<link rel="stylesheet" href='./css/chui-ios.min.css'>
+	<link rel="stylesheet" href='./css/app.css'>
+  <script type='text/javascript' src='js/chui.min.js'></script>
+  <script type='application/json' src='js/chui.min.js.map'></script>
+  <script src='js/app.js'></script>
+  <script type='application/json' src='js/app.js.map'></script>
+</head>
+<body>
+	<screen id='main' class='current'>
+		<section>
+			<button id='exploreButton' class='explore'>Explore Places</button>
+		</section>
+	</screen>
+	<screen id="shops" class="next">
+		<nav>
+			<button class="back">Home</button>
+			<h1>Coffee Shops</h1>
+			<button id='aboutThisApp'>About</button>
+		</nav>
+		<section>
+			<ul id='shop-list' class="list"></ul>
+		</section>
+	</screen>
+	<screen id="coffeeShopDetail" class="next">
+		<nav>
+			<button class="back">Shops</button>
+			<h1>Coffee Shops</h1>
+		</nav>
+		<section>
+			<ul class="list" id="shopDetail"></ul>
+		</section>
+	</screen>
+	<script id='aboutThisAppTemplate' type='text/x-template'>
+		<div><button id='closeAboutSheet' class='action'>Close</button><br></div>
+		<img src='./images/coffee-brewing.jpg'>
+		<p>Everyone loves coffee, and geeks more so. This is a demonstration of using TruckJS to create a Web app for mobile devices abut coffeeshops in San Francisco. It's using the iOS theme with an extra stylesheet for customizing things.</p>
+	</script>
+</body>
+</html>

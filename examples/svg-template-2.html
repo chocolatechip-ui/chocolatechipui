@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="msapplication-tap-highlight" content="no">
+  <title>ChocolateChip-UI SVG</title>
+  <link rel="stylesheet" href="../dist/css/chui-ios.min.css">
+  <script src="../dist/chui.min.js"></script>
+  <script type="application/json" src="../dist/chui.min.js.map"></script>
+  <style>
+    circle {
+      fill: transparent;
+    }
+    input[type=range] {
+      width: 200px;
+    }
+  </style>
+  <script>
+    $(function() {
+
+      /**
+       * Define Point Calculator:
+       */
+      function valueToPoint (value, index, total) {
+        var x  = 0
+        var y = -value * 0.8
+        var angle = Math.PI * 2 / total * index
+        var cos = Math.cos(angle)
+        var sin = Math.sin(angle)
+        var tx = x * cos - y * sin + 100
+        var ty = x * sin + y * cos + 100
+        return {
+          x: tx,
+          y: ty
+        }
+      }
+
+      /**
+       * Create matrix of points:
+       */
+      function calculatePoints(val) {
+        var ret = [];
+        var pointsArray = [];
+        var points = '';
+        for (var i = 0; i < val; i++) {
+          ret.push({value: 94});
+          ret.push({value: 46});
+        }
+        ret.forEach(function(ctx, idx) {
+          pointsArray.push(valueToPoint(ctx.value, idx, val));
+        });
+        pointsArray.forEach(function(ctx) {
+          points += ctx.x + ',' + ctx.y + ' ';
+        });
+        points.trim();
+        return points
+      };
+
+      /**
+       * Define Polygon View:
+       */
+      var polygonModel = $.Model({
+        points: calculatePoints(6), 
+        color: 'red'
+      })
+      var PolygonView = $.View({
+        element: '#polygon',
+        model: polygonModel,
+        template: `<svg width="200" height="200">
+            <g>
+            <polygon fill="{= data.color }" points="{= data.points }"></polygon>
+            <circle stroke-width="2" stroke="{= data.color }" cx="100" cy="100" r="80"></circle>
+          </g>
+        </svg>`
+      });
+      PolygonView.render();
+
+      /**
+       * Define view to print number of points:
+       */
+      var NumberOfPointsView = $.View({
+        element: '#numberOfPoints',
+        variable: 'points'
+      });
+      NumberOfPointsView.render(3);
+
+      /**
+       * Define view for Hue value:
+       */
+      var HueValueView = $.View({
+        element: '#hueValue',
+        variable: 'hue',
+        data: 0
+      });
+      HueValueView.render();
+      var SaturationValueView = $.View({
+        element: '#saturationValue',
+        variable: 'saturation',
+        data: 100
+      });
+      SaturationValueView.render();
+
+      var LightnessValueView = $.View({
+        element: '#lightnessValue',
+        variable: 'lightness',
+        data: 50
+      });
+      LightnessValueView.render();
+
+      /**
+       * Define dispatch receiver for polygon:
+       */
+      $.on('update-polygon', function(obj) {
+        polygonModel.set('points', obj.points);
+        polygonModel.set('color', obj.color);
+
+      });
+
+      /**
+       * Update polygon with slider:
+       */
+      $('#updatePoints').on('input', function() {
+        var val = this.value;
+        var points = calculatePoints(val);
+        var hue = $('#updateHue').val();
+        var saturation = $('#updateSaturation').val();
+        var lightness = $('#updateBrightness').val();
+
+        /**
+         * Dispatch the new points for polygon:
+         */
+        $.send('update-polygon', {points: points, color: `hsl(${hue}, ${saturation}%, ${lightness}%)`})
+        NumberOfPointsView.render(val/2);
+      });
+
+      /**
+       * Update the SVG's hsl hue:
+       */
+      $('#updateHue').on('input', function() {
+        /**
+         * Get the hue:
+         */
+        var hue = this.value;
+        var saturation = $('#updateSaturation').val();
+        var lightness = $('#updateBrightness').val();
+        /**
+         * Get points and calculate:
+         */
+        var points = $('#updatePoints').val();
+        points = calculatePoints(points);
+
+        /**
+         * Dispatch new color values for polygon:
+         */
+        $.send('update-polygon', {points: points, color: `hsl(${hue}, ${saturation}%, ${lightness}%)`});
+        HueValueView.render(hue)
+      });
+      $('#updateSaturation').on('input', function() {
+        var saturation = this.value;
+        var hue = $('#updateHue').val();
+        var lightness = $('#updateBrightness').val();
+        var points = $('#updatePoints').val();
+        points = calculatePoints(points);
+        /**
+         * Dispatch new color values for polygon:
+         */
+        var hue = $('#updateHue').val();
+        $.send('update-polygon', {points: points, color: `hsl(${hue}, ${saturation}%, ${lightness}%)`});
+        SaturationValueView.render(saturation);
+      });
+      $('#updateBrightness').on('input', function() {
+        var lightness = this.value;
+        var hue = $('#updateHue').val();
+        var saturation = $('#updateSaturation').val();
+        var points = $('#updatePoints').val();
+        points = calculatePoints(points);
+        /**
+         * Dispatch new color values for polygon:
+         */
+        $.send('update-polygon', {points: points, color: `hsl(${hue}, ${saturation}%, ${lightness}%)`});
+        LightnessValueView.render(lightness);
+      });
+    });
+  </script>
+</head>
+<body>
+  <screen id='main' class='current'>
+    <nav>
+      <h1>SVG Template</h1>
+    </nav>
+    <section>
+      <h2 class='normal-case'>Update the number of points on the polygon with the slider</h2>
+      <p>This example uses a view bound to a model and dispatches to update the SVG image in real time.</p>
+      <ul class="list" id='squares'>
+        <li id='polygon'></li>
+      </ul>
+      <p>
+        <label for="pointsRange">Number of points: <span id='numberOfPoints'>{= points }</span></label>
+        <input id='updatePoints' type='range' name="pointsRange" min='6' max='200' value='6' step='2'>
+      </p>
+      <p>
+        <label for="hueRange">Hue: <span id='hueValue'>{= hue }</span></label>
+        <input id='updateHue' type='range' name="hueRange" min='0' max='360' value='0'>
+      </p>
+      <p>
+        <label for="saturationRange">Saturation: <span id='saturationValue'>{= saturation }%</span></label>
+        <input id='updateSaturation' type="range" type='range' name="saturationRange" min='0' max='100' value='100'>
+      </p>
+      <p>
+        <label for="lightnessRange">Lightness: <span id='lightnessValue'>{= lightness }%</span></label>
+        <input id='updateBrightness' type="range" type='range' name="saturationRange" min='0' max='100' value='50'>
+      </p>
+    </section>
+  </screen>
+</body>
+</html>

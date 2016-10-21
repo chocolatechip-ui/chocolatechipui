@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="msapplication-tap-highlight" content="no">
+  <title>ChocolateChip-UI Form</title>
+  <link rel="stylesheet" href="../dist/css/chui-ios.min.css">
+  <script src="../dist/chui.min.js"></script>
+  <script type="application/json" src="../dist/chui.min.js.map"></script>
+</head>
+<body>
+  <screen id='main' class="current">
+    <nav>
+      <h1>Form</h1>
+    </nav>
+    <section>
+      <h2>Custom Validator</h2>
+      <ul class="list">
+        <li>
+          <label for="text">Name: </label>
+          <input type="text" name='person_name' id='name'>
+        </li>
+        <li>
+          <label for="age">Age: </label>
+          <input type="number" name='person_age' id='age'>
+        </li>
+        <li>
+          <button class='raised' id='validateForm'>Validate</button>
+        </li>
+      </ul>
+
+      <h2>Results</h2>
+      <ul class="list">
+        <li id="results"></li>
+      </ul>
+    </section>
+  </screen>
+  <script>
+    $(function() {
+
+      $.registerCustomValidator('custom-nameWithSpaces', /^[A-Za-z\W]+$/);
+
+      var ResultsView = $.View({
+        element: '#results',
+        template: '{= data }'
+      });
+
+      $('#validateForm').on('click', function() {
+        var myForm = $.Form([
+          {
+            element: '#name',
+            type: 'custom-nameWithSpaces',
+            callback: function() {
+              alert('The first name needs to be text!')
+            }
+          },
+          {
+            element: '#age',
+            type: 'age',
+            min: 21,
+            callback: function() {
+              alert("Please provide a proper age.")
+            }
+          },
+          {
+            element: '#bongo',
+            type: 'text'
+          }
+        ]);
+        if(!myForm.errors()) {
+          formData = myForm.get();
+          ResultsView.render(JSON.stringify(formData));
+        } else {
+          myForm.getErrors().forEach(function(err) {
+            ResultsView.render('Error: ' + err.type);
+          })
+        }
+      });
+    });
+  </script>
+</body>
+</html>

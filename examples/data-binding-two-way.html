@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="msapplication-tap-highlight" content="no">
+  <title>ChocolateChip-UI Two Way Data Binding</title>
+  <link rel="stylesheet" href="../dist/css/chui-ios.min.css">
+  <script src="../dist/chui.min.js"></script>
+  <script type="application/json" src="../dist/chui.min.js.map"></script>
+  <script type="text/javascript">
+    $(function() {
+      /**
+       * Accomplishing Two-Way Data Binding:
+       * ===================================
+       * ChocolateChip-UI provides a simple solution for one-way data binding using mediators and dispatches.
+       * In the following example, we want to have a text input bound to its label. We also want the input to be bound to the value of the data model, and the data model to be bound to the value of the text input.
+       * To bind the first input to its label, we bind an event handler on the input. This handler uses a mediator to update the model with the input's changed value and then render the view.
+       * In the case of the second input, we create a mediator that only gets fired when the user taps the update button. That mediator updates the model, the value of the first input and then renders its label's view.
+       * So, the updating of the model and rendering of the label is handled in each case by a single mediator. This means we can change what element or what DOM event runs the mediator without worrying about the implementation of the mediator.
+       */
+
+      /**
+       * Define data model:
+       */
+      var myData = {
+        message: 'This is the message.'
+      };
+      var myDataModel = $.Model(myData);
+
+      /**
+       * Define view to render model in label:
+       */
+      var myDataView = $.View({
+        element: '#inputValue',
+        model: myDataModel
+      });
+      myDataView.render();
+
+      /**
+       * Define view to render json model:
+       */
+      var dataModelView = $.View({
+        element: '#dataModelValue'
+      });
+
+      /**
+       * Render the model:
+       */
+      renderDataModel();
+
+      /**
+       * Set initial value of input to model:
+       */
+      $('#myText1').val(myDataModel.get().message);
+
+      /**
+       * Run mediator when user types:
+       */
+      $('#myText1').on('input change', function() {
+        var data = this.value;
+        mediateTextInput.run(data);
+      })
+
+      /**
+       * Update the model when the input value changes.
+       */
+      var mediateTextInput = $.on('data-bind-input', function(data) {
+        myDataModel.set("message", data);
+        $('#myText1').val(data);
+        renderDataModel();
+      });
+
+      $('#updateText').on('tap', function() {
+        var data =  $('#myText2').val();
+        mediateTextInput.run(data);
+      });
+
+      function renderDataModel() {
+        var json = JSON.stringify(myDataModel.get());
+        dataModelView.render(json);
+      }
+      
+    });
+  </script>
+  
+</head>
+<body>
+<screen id="main" class="current">
+  <nav>
+      <h1>Data Binding</h1>
+  </nav>
+  <section>
+    <h2 class='wrap'>Label is bound to input's model</h2>
+    <ul class="list">
+      <li>
+        <label>Enter data:</label>
+        <input id='myText1' type='text'>
+      </li>
+      <li>
+        <h3 id='inputValue'>{= data.message }</h3>
+      </li>
+    </ul>
+    <h2 class='wrap'>Input is not bound.</h2>
+    <ul class="list">
+      <li>
+        <button id='updateText'>Update Data Model</button>
+      </li>
+      <li><label>Enter data:</label> 
+        <input id='myText2' type='text'>
+      </li>
+    </ul>
+    <h2>Current value of the data model</h2>
+    <ul class="list">
+      <li id='dataModelValue'>
+        <h3>{= data }</h3>
+      </li>
+    </ul>
+  </section>
+</body>
+</html>

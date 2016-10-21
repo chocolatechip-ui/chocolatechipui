@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="msapplication-tap-highlight" content="no">
+  <title>ChocolateChip-UI Mediator</title>
+  <link rel="stylesheet" href="../dist/css/chui-ios.min.css">
+  <script src="../dist/chui.min.js"></script>
+  <script type="application/json" src="../dist/chui.min.js.map"></script>
+</head>
+<body>
+  <screen id='main' class='current'>
+    <nav>
+      <h1>$.Mediator</h1>
+    </nav>
+    <section>
+      <h2 class='wrap'>Open console to see results</h2>
+      <h2 class='wrap normal-case'>You can use the following methods:</h2>
+      <ul class='list'>
+        <li>
+          <h3>FooMtor.run('Whatever')</h3>
+        </li>
+        <li>
+          <h3>BarMtor.run('Same here')</h3>
+        </li>
+        <li>
+          <h3>$.send('baz-topic', 'A new message is being sent.')</h3>
+        </li>
+        <li>
+          <h3>FooMtor.off()</h3>
+        </li>
+      </ul>
+    </section>
+  </screen>
+  <script>
+
+    /**
+     * Define some mediators:
+     */
+    var  FooMtor = $.on('baz-topic', function(data) {
+      console.log('1. Foo here.')
+      console.log(data);
+      console.log('')
+    });
+    var  BarMtor = $.on('baz-topic', function(data){
+      console.log('2. Bar here.');
+      console.log(data);
+      console.log('')
+    });
+    
+    /**
+     * Run the mediator:
+     */
+    FooMtor.run('This is Godzilla!');
+
+    /**
+     * Dispatch to both mediators:
+     */
+    $.send('baz-topic', 'This is for everyone.')
+
+  </script>
+</body>
+</html>

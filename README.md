@@ -1,154 +1,184 @@
-=======
-# ChocolateChip-UI - A Compact Framework for Mobile Web Apps
+# ChocolateChip-UI
 
+- Make mobile web apps
+- Get hard work done fast
+- Use platform-specific themes
 
-##ChocolateChip-UI
+ChocolateChip-UI is a framework for making mobile web apps that mimic the native look and feel of the mobile device. It provides you with standard mobile layouts and widgets to get going. Its API is identical to jQuery so you'll feel comfortable right away. Nothing new to learn there. ChocolateChip-UI is designed to take advantage of ES6. In fact, the source code is written in ES6 and transpiled with Babel down to ES5. We love ES6, and especially ES6 modules. This is our future. Why wait? We use JSPM to let you use ES6 modules now to build your apps.
 
+###Website
+You can learn how to use ChocolateChip-UI at the website: [chocolatechip-ui.github.io](https://chocolatechip-ui.github.io).
 
-[TypeScript definitions on DefinitelyTyped](http://definitelytyped.org)
+###Getting Started
 
-
-ChocolateChip-UI is a framework for making mobile Web apps. It has three components: semantic HTML5 markup, CSS and JavaScript. To successfully make an app with ChocolateChip-UI you'll need at least moderate experience working with JavaScript. This is so you can use templates, make Ajax requests and handle callbacks for user interaction. If this is beyond your current skills, consider getting someone with Web development experience to help you. ChocolateChip-UI is built on jQuery, so you will need a compatible version of it to work with ChocolateChip-UI.
-
-Please visit [ChocolateChip-UI's Website](http://chocolatechip-ui.github.io) for documentation and tutorials. This project includes examples for iOS, Android and Windows Phone 8 to help you get going.
-
-##NPM
-The fastest way to get going with ChocolateChip-UI is to install the NPM module ```chui```. This will allow you to quickly create the type of ChocolateChip-UI project you want. Please visit [NPM](https://www.npmjs.com/package/chui) for directions on how to use it
-
-##Building 
-
-You do not have to build ChocolateChipUI. This repository has all examples and test pre-built for you. To view the iOS examples, please use the Safari Browser. For Android, use Chrome. For Windows Phone, use IE 10 or MS Edge. 
-
-If you want or need to make modifications to the code for whatever reason, you'll need to build the files from the source code. For details how to do that, read on.
-
-ChocolateChip-UI uses Gulpjs to build. This is a Node package, so you'll first need to have [Node installed](http://http://nodejs.org). After installing Nodejs, or if you already have it installed, on Mac OS X use the terminal to cd to the directory. On Windows you can use the Windows command prompt to do this. Once you are in the folder, run the following command in your terminal. 
-
-###Gulpjs
-
-On Mac OS X, you'll need to run the command in your terminal with **sudo** to avoid installation errors:
-
-```shell
-sudo npm install -g gulp
-``` 
-
-
-For Windows, just run this:
-
-```shell
-npm install -g gulp
-```
-
-Enter your password when it requests. After you should see a number of Nodejs modules being installed in a folder called **node\_modules**. You do not need **node\_modules** in your final project. The node modules are there to enable the build process with Gruntjs.
-
-Now that you have the node modules install, you can just type `gulp` in the terminal and hit return/enter. This will kick off the build process, which will produce the following directories:
+To get started, install our NPM module - [https://www.npmjs.com/package/chui](chui):
 
 ```
-chui/
-data/
-demo/
-examples-android/
-examples-ios/
-examples-win/
-images/
-node_modules/
+npm i -g chui
 ```
 
-If you're starting a new project, you only need the files in the **chui** folder. If you want to create a custom build, then just run any of the tasks:
+##Examples
+
+If you're new to ChocolateChip-UI and want to see samples, just run the following command:
 
 ```
-gulp js android
+chui -e
+```
+
+This will output working examples of layouts and widgets to your destop in a folder named `Chui Examples`. By default all examples are using the iOS theme. To see how they work for android, just change the stylesheet reference to Adroid:
+
+```
+Change
+<link rel="stylesheet" href="../dist/css/chui-ios.min.css">
+
+to:
+<link rel="stylesheet" href="../dist/css/chui-android.min.css">
+```
+
+Reload the example and you'll see the Android theme in action. This includes the Android ripple effect when you tap interactive elements.
+
+##Demos
+
+Besides examples, you can also output four reference apps created with ChocolateChip-UI. These are great to see how their code is organized, and how their themes are widgets were customized for the needs to the app.
+
+The four apps are: Fragranž, TodoMVC, SFCoffee an Vino. Frangranž shows how to present a variety of colognes and perfumes for browsing and purchase. TodoMVC is our take on the famous Github project. The original is based on the design of a Todo app for desktop. Since ChocolateChip-UI is about the mobile experience, we completely redid it for mobile. SFCoffee is what the name says, and exploration of some of the famous coffeeshops frequented by the Starup scene in San Francisco. Vino is an app showcasing wines from Northern California. Since these are demos, no purchases are processed. That for you to do.
+
+To get these demos, run:
+
+```
+chui -r
+```
+
+This will output the reference apps to your desktop in a folder named `Chui Reference Apps`. These apps are in two folders: `basic` and `jspm`. The demos in `basic` are plain JavaScript. To launch them, just double click the `index.html` file in each demo.
+
+For the `jspm` demos you need to install their dependencies. To run a demo, do the following:
+
+```
+npm i
+
+# When done, run:
+jspm i
+
+# When done, run:
+gulp
+```
+This will build and open the demo in your browser. To see how the `jspm` version of these demos are organized, open the `dev` folder. There you will find all the code organized as ES6 modules.
+
+
+##Creating a New Project
+
+When you're creating projects with the `chui` command line tool, you can choose whether you want to write plain JavaScript, or whether you want to work with ES6. Examples and projects created with plain JavaScript can be double clicked to launch in the browser. No server needed, unless you need to fetch data from somewhere. Ajax requests will require a server instance running. You can do this with [https://www.npmjs.com/package/http-server](http-server). Install the NPM module and then just run `http-server` on your folder.
+
+##Plain JavaScript
+
+To create projects, you use flags with the `chui` command. The most important flag is `-n` for your project's name:
+
+```
+chui -n myProject
+```
+
+If you fail to provide a name, `chui` will not create a project, simple as that.  Next you can indicate what platform you want to target: Android or iOS. To do this you use the `-o` flag with `android` or `ios`:
+
+```
+# For Android:
+chui -n myProject -o android
+
+# For iOS:
+chui -n myProject -o ios
+```
+
+If no `-o` flag is provided, it will default to iOS:
+
+```
+# Create an iOS project (default):
+chui -n myProject
+```
+
+###Four Types of Projects
+
+You can create for types of projects to get your going quickly. You indicate the type of project you want with the `-t` flag. You can use the following values:
+
+- basic
+- navigation
+- slideout
+- tabbar
+
+Basic is exactly that. Nothing there but a basic view. This is the best choice when you already know what you want to build and don't want anything in your way.
+
+Navigation gives you a basic navigation list with routing. You can update the list values and routes as needed.
+
+Slideout gives you a basic slideout menu app. Instead of a navigation list, this uses the slideout as the primary means of navigating the app.
+
+
+Tabbar gives you a app that uses a tabbar for navigation. You can add a navigation list to the last tab to get more screens for your app.
+
+If no `-t` flag is provided, it will create a basic app automatically.
+
+```
+# For Android:
+chui -n myProject -o android -t basic
+chui -n myProject -o android -t navigation
+chui -n myProject -o android -t slideout
+chui -n myProject -o android -t tabbar
+# Default (basic):
+chui -n myProject -o android
 ```
 
 ```
-gulp js ios
+# For iOS:
+chui -n myProject -o ios -t basic
+chui -n myProject -o ios -t navigation
+chui -n myProject -o ios -t slideout
+chui -n myProject -o ios -t tabbar
+# Default (basic):
+chui -n myProject -o ios
 ```
 
-```
-gulp js win
-```
 
-These will build the ChUI JavaScript file, normal and minified, as well as the OS theme normal and minified.
+##ES6
 
-You can also build out just the examples for a particular platform:
+ES6 (ECMAScript 2016) is the future of JavaScript development. If you are not using it yet, at some point you will. It provides many powerful features. One of the most useful is modules. ES6 modules lets you break your project down into organized modules of behavior. This increases the maintainability of your app. When importing views, routes and controllers, you'll need to mount them. Read the documentation for more information about this.
 
-
-```
-gulp android_examples
-```
-
-```
-gulp ios_examples
-```
-
-```
-gulp win_examples
-```
-
-This will include the ChUI JavaScript, the theme and all the examples for that platform.
-
-If you intend to customize a theme for branding purposes, you should do so in the LESS files in the source. But instead of having to rebuild the theme each time, you can ask Gulp to watch the theme. That means every time you make a change and save a file, Gulp will rebuild the theme for you.
-
-To watch all there themes, run:
-
-```
-gulp watch
-```
-
-To watch specific platform theme, run one of these:
-
-```
-gulp watch_android
-```
-
-```
-gulp watch_ios
-```
-
-```
-gulp watch_win
-```
-
-You could also build a theme and watch it all at once:
-
-```
-gulp js android && gulp watch_android
-```
-
-```
-gulp js ios && gulp watch_ios
-```
-
-```
-gulp js win && gulp watch_win
-```
-##ChocolateChipJS
-
-If you want to use ChocolateChipJS instead of jQuery, you can just run the following command:
+To make your project work with ES6 we use Babel, Browsersync and JSPM. This means that you need a build step and a server instance. These are set up for you automatically when you create a project for ES6. To do so, use the `-j` flag. Just add it to 
 
 
 ```
-gulp --chocolatechipjs
+# For Android:
+chui -n myProject -o android -t basic -j
+chui -n myProject -o android -t navigation -j
+chui -n myProject -o android -t slideout -j
+chui -n myProject -o android -t tabbar -j
+# Default (basic):
+chui -n myProject -o android -j
 ```
 
-This will put the latest version of ChocolateChipJS in the chui folder and also output all examples to use ChocolateChipJS instead of jQuery. You can learn more about how to use ChocolateChipJS on [our website](http://chocolatechip-ui.com).
-
-###Note
-
-You do not need Nodejs to use ChocolateChip-UI. Nodejs is only used to build the framework and examples from the source files.
-
-##Contributing Code
-###Avoiding Carriage Returns in Commits
-
-ChocolateChip-UI uses Unix linefeeds (LF) for new lines. Github for Windows adds carriage returns to linefeeds (CRLF). If you try to check in such files, Git will flag every line with changed new lines, which means practically everything. To avoid this we've added a .gitattributes file to the repository. This will prevent Github from converting the new lines on Windows. 
-
-If you are editing the source code on Windows, depending on the text editor you are using, or if you do a copy/paste, you may inadvertently introduce Windows carriage returns. Also some Grunt actions, such as concatenation with banners, automatically create newlines with carriage returns on Windows. When these carriage returns are added to the source code, they will show up as a changes at commit time. You can avoid this. Navigate to the ChocolateChip-UI repository in the command prompt, then execute these two Git commands:
-
 ```
-git config core.eol lf
-git config core.autocrlf input
+# For iOS:
+chui -n myProject -o ios -t basic -j
+chui -n myProject -o ios -t navigation -j
+chui -n myProject -o ios -t slideout -j
+chui -n myProject -o ios -t tabbar -j
+# Default (basic):
+chui -n myProject -j
 ```
 
-core.eol tells Git to always checkout this repository with LF. 
-core.autocrlf tells Git to convert CRLF to LF on commit.
+After creating a project for ES6, you need to install its dependencies. Open the terminal, `cd` to your new project and run:
 
-A front end framework for building mobile web apps.
+
+```
+npm i
+
+# When done, run:
+jspm i
+
+# When done, run:
+gulp
+```
+This will build and open the project in your browser.
+
+###ES6 Project Structure
+
+When you make a project for ES6, you'll work in the `dev` folder inside your project's `js` folder. The project setup automatically watches files in the `dev` folder. When you make and save changes, it rebuilds your project and reloads it in the browser.
+
+
+For more details about working with ES6 projects, read the [chocolatechip-ui.github.io/v4/docs/tutorials/es6.html](documentation).

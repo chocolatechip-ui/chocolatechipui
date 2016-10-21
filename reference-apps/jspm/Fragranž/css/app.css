@@ -1,0 +1,110 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+button {
+  color: #d34057;
+}
+#fragranz_small {
+  display: -webkit-flex;
+  -webkit-justify: center;
+  -webkit-align-items: center;
+  -webkit-flex-direction: column;
+  display: flex;
+  justify: center;
+  align-items: center;
+  flex-direction: column;
+}
+#fragranz_small > img {
+  display: block;
+}
+#availableFragrances > li > img {
+  align-self: flex-start;
+}
+#fragranceDetail > li > img {
+  width: 100px;
+  align-self: flex-start;
+}
+#fragranceGenres > li > h3, #fragrancesGenreTitle , #backToGenre, #purchaseDetails span {
+  text-transform: capitalize;
+}
+.popup > .panel > p {
+  text-align: left;
+}
+screen > toolbar {
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+}
+#addToCart {
+  border: solid 1px #d34057;
+  border-radius: 6px;
+  height: 30px;
+  max-height: 30px !important;
+  width: 30px;
+  margin-top: 0;
+  padding: 0;
+  position: relative;
+  display: block;
+}
+#addToCart > svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 28px;
+  width: 28px;
+}
+#addToCart path,
+#shoppingCart path {
+  stroke: red !important;
+  stroke-fill: red !important;
+  fill: red !important;
+}
+#shoppingCart {
+  border: solid 1px #d34057;
+  border-radius: 6px;
+  height: 30px;
+  width: 30px;
+  box-sizing: border-box;
+  position: relative;
+  margin-left: 10px;
+  display: block;
+}
+button#shoppingCart > svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 28px;
+  width: 28px;
+}
+#orderButtons {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
+
+  display: flex;
+  display: -webkit-flex;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+#orderButtons > button {
+  margin: 10px auto !important;
+}
+
+#confirmationNum {
+  text-transform: uppercase;
+}
+nav {
+  background-color: #F6487C;
+}
+nav > h1 {
+  color: #fff;
+}
+button.back, #chui-back-arrow {
+  color: #fff;
+  stroke: #fff;
+}

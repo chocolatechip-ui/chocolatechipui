@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="msapplication-tap-highlight" content="no">
+  <title>ChocolateChip-UI Dispatcher</title>
+  <link rel="stylesheet" href="../dist/css/chui-ios.min.css">
+  <script src="../dist/chui.min.js"></script>
+  <script type="application/json" src="../dist/chui.min.js.map"></script>
+</head>
+<body>
+  <screen class='current' id='main'>
+    <nav>
+      <h1>Dispatcher</h1>
+    </nav>
+    <section>
+      <ul class='list'><li><h3>{= data }</h3></li></ul>
+    </section>
+  </screen>
+
+  <script>
+    $(function() {
+
+      var ReceiverView = $.View({
+        element: '.list'
+      });
+
+      /**
+       * Two methods to listen to:
+       */
+      var arrayHandler = function(data) {
+        if (data instanceof Array) {
+          if (data[0] instanceof Object) {
+            data.forEach(function(ctx) {
+              if (ctx['news-flash']) {
+                ReceiverView.render(ctx['news-flash'], true);
+              } else {
+                ReceiverView.render(ctx['update'], true);
+              }
+            });
+          } else {
+            ReceiverView.render(data.join(' '), true);
+          }
+        }
+      };
+      
+      var stringHandler = function(string) {
+        if (typeof string === 'string') {
+          ReceiverView.render(string, true);
+        }
+      };
+
+      var objArrayHandler = function(obj) {
+        if (obj instanceof Array) {
+          obj.forEach(function(ctx) {
+            if (ctx.name && ctx.job) {
+              ReceiverView.render('My name is ' + ctx.name + ', and I am a ' + ctx.job + '.', true);
+            } else {
+              return;
+            }        
+          });
+        }
+      };
+      var stringDispatcher = $.on('news/update', stringHandler);
+      $.on('news/update', arrayHandler);  
+      $.on('users/new', objArrayHandler);
+      
+      $.send('news/update', 'This is the latest news!');
+      $.send('news/update', ['Somebody','did','something','funny']);
+      $.send('news/update', [{'news-flash':'Not much has happened yet.'},{'update':'More of the same.'}]);
+      
+      stringDispatcher.off();
+      /**
+       * This doesn't get published to stringDispatcher:
+       */
+      $.send('news/update', 'We need piles of money now!');
+      /**
+       * This does get published:
+       */
+      $.send('users/new', [{'name':'Wobba', 'job':'developer'}, {'name':'Bozo the Clown', 'job':'clown'}, {'name':'Joe','job':'just a regular guy'}]);
+    });
+  </script>
+</body>
+</html>

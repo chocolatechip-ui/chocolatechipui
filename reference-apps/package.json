@@ -1,0 +1,23 @@
+{
+  "name": "chui-reference-apps",
+  "version": "1.0.0",
+  "description": "Reference apps built with ChocolateChip-UI",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chocolatechip-ui/reference-apps"
+  },
+  "scripts": {
+    "test": ""
+  },
+  "keywords": [
+    "javascript",
+    "mobile",
+    "mvc"
+  ],
+  "author": "Robert Biggs",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chocolatechip-ui/reference-apps/issues"
+  },
+  "homepage": "https://github.com/chocolatechip-ui/reference-apps#readme"
+}
