@@ -1,0 +1,74 @@
+/* Color navbar and toolbar */
+nav, screen > footer, 
+screen > toolbar,
+input[type="range"] -webkit-track,
+.isDesktop .segmented > button:hover,
+.segmented > button.selected,
+.isDesktop .stepper > button:hover,
+.isDesktop .stepper > button.selected,
+.isDesktop .stepper > button:hover > span,
+.isDesktop .stepper > button.selected > span  {
+  background-color: #9fc5e8;
+}
+/* Color title and buttons in nav and toolbars */
+nav h1, 
+nav button, 
+toolbar button, 
+footer button, 
+nav .back, 
+#chui-back-arrow,
+.pager > button.selected   {
+  color: #555 !important;
+  stroke: #555 !important;
+}
+/* Callout text */
+.attentionGrapper {
+  /*color: #9fc5e8;*/
+}
+/* Editable List, Select List &  Multi-select List */
+#move-indicator,
+.selection-indicator #checkmark,
+.multi-select-list > li #multi-select-icon  {
+  /*stroke: #9fc5e8 ;*/
+}
+/* Paging Control */
+#pagination-icons path#page-previous,
+#pagination-icons path#page-next {
+  stroke: #555;
+}
+/* Range Control */
+input[type="range"] {
+  background-image: -webkit-linear-gradient(top, #9fc5e8, #9fc5e8);
+}
+/* Segmented Buttons */
+.segmented > button {
+  border-color: #9fc5e8;
+  color: #9fc5e8;
+}
+.isDesktop .segmented > button:hover,
+.segmented > button.selected {
+  color: #555;
+}
+/* Slideout Button */
+button.slide-out-button {
+  background-image: -webkit-linear-gradient(left, #fafafa, #fafafa) !important;
+  background-image: linear-gradient(left, #fafafa, #fafafa) !important;
+}
+button.slide-out-button::before,
+button.slide-out-button::after {
+  background-color: #fafafa;
+}
+/* Stepper Control */
+.stepper > label,
+.stepper > button {
+  border: solid 1px #9fc5e8;
+}
+/* Switches */
+switch.checked {
+  border-color: #9fc5e8;
+  box-shadow: inset 0 0 0 15px #9fc5e8;
+}
+/* Tabbar */
+tabbar > button.more > .icon::before {
+  color: #9fc5e8 !important;
+}

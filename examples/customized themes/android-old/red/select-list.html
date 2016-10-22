@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="msapplication-tap-highlight" content="no">
+  <title>ChocolateChip-UI List</title>
+  <link rel="stylesheet" href="../../../../dist/css/chui-android.min.css">
+  <link rel="stylesheet" href="css/red.css">
+  <script src="../../../../dist/chui.min.js"></script>
+  <script type="application/json" src="../../../../dist/chui.min.js.map"></script>
+</head>
+<body>
+  <screen class='current' id='select-example'>
+    <nav>
+      <h1>To Do</h1>
+    </nav>
+    <section>
+      <h2>Choose what to do</h2>
+      <ul class="list" id="selectList">
+        <li data-select="{= data.value}">
+          <h3>{= data.label }</h3>
+        </li>
+      </ul>
+      <p>You are going to: <strong><span id="response" class='attentionGrapper'>{= value }</span></strong></p>
+    </section>
+  </screen>
+  <script>
+    $(function() {
+
+      /**
+       * TODO data:
+       */
+      var TODO = [
+        {value: "eat", label: "Go Eat Something"},
+        {value: "nap", label: "Take a nap"},
+        {value: "work", label: "Get some work done"},
+        {value: "play", label: "Play a game"}
+      ];
+
+      /**
+       * Define and render view:
+       */
+      var TODOView = $.View({
+        element: '#selectList'
+      });
+      TODOView.render(TODO);
+
+      /**
+       * Set up Select List:
+       */
+      var MySelectList = $.SelectList({
+        element: '#selectList',
+        selected: 2,
+        callback: function() {
+          renderSelection();
+        }
+      });
+
+      /**
+       * View for chosen segment value:
+       */
+      var SelectListView = $.View({
+        element: '.attentionGrapper',
+        variable: 'value'
+      })
+
+      /**
+       * Define callback for select list:
+       */ 
+      var renderSelection = function() {
+        var value = MySelectList.getSelection().value;
+        SelectListView.render(value);
+      }
+
+      /**
+       * Render default selection:
+       */
+      renderSelection();
+    });
+  </script>
+</body>
+</html>

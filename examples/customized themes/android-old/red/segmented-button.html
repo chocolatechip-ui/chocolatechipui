@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="msapplication-tap-highlight" content="no">
+  <title>ChocolateChip-UI Segmented Buttons</title>
+  <link rel="stylesheet" href="../../../../dist/css/chui-android.min.css">
+  <link rel="stylesheet" href="css/red.css">
+  <script src="../../../../dist/chui.js"></script>
+  <script type="application/json" src="../../../../dist/chui.min.js.map"></script>
+  <style>
+    .chosen-image {
+      height: 100px;
+      width: auto;
+    }
+  </style>
+  <script>
+    $(function() {
+
+      /**
+       * Define callback for Segmented Control:
+       */
+      var segmentedResponse = function() {
+        var selection = segCtrl.getSelection().index;
+        var choice;
+        var img;
+        switch(selection) {
+          case 0:
+            choice = 'one';
+            img = '../../images/music/Imagine Dragons.jpg';
+            break;
+          case 1:
+            choice = 'two';
+            img = '../../images/music/Hurry and Harm.jpg';
+            break;
+          case 2:
+            choice = 'three';
+            img = '../../images/music/Willy Moon.jpg';
+            break;
+        }
+        segmentValueView.render({value: choice, text: segCtrl.getSelection().element.text(), imagePath: img});
+      };
+
+      /**
+       * View for chosen segment value:
+       */
+      var segmentValueView = $.View({
+        element: '#choice'
+      });
+
+      /**
+       * Setup segmented control:
+       */
+      var segCtrl = $.Segmented({
+        element: '#segmentedPanel',
+        labels : ['Radioactive','Hurt','Yeah, Yeah'],
+        selected: 2,
+        callback: segmentedResponse
+      });
+      segmentValueView.render({value: 'three', text: 'Yeah, Yeah', imagePath: '../../images/music/Willy Moon.jpg'});
+    });
+  </script>
+</head>
+<body>
+  <screen id="main" class="current">
+    <nav>
+      <h1>Segmented</h1>
+    </nav>
+    <section>
+      <div id='segmentedPanel' class='horizontal centered'>
+      </div>
+      <ul class='list' id='output'>
+        <li>
+          <div id='choice'>
+            <h3>You selected segment: <span>{= data.value }</span>.</h3>
+            <h4>Content: <span id="content">{= data.text }</span></h4>
+            <img class='chosen-image' id='image' data-src="{= data.imagePath }" alt="{= data.text }">
+          </div>
+        </li>
+      </ul>
+    </section>
+  </screen>
+</body>
+</html>

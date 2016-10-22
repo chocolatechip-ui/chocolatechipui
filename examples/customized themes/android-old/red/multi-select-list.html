@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="msapplication-tap-highlight" content="no">
+  <title>ChocolateChip-UI Multi-Select</title>
+  <link rel="stylesheet" href="../../../../dist/css/chui-android.min.css">
+  <link rel="stylesheet" href="css/red.css">
+  <script src="../../../../dist/chui.min.js"></script>
+  <script type="application/json" src="../../../../dist/chui.min.js.map"></script>
+  <style>
+`    body.themeIsAndroid button.action {
+      color: #333;
+      border-radius: 0;
+    }
+  </style>
+</head>
+<body>
+  <screen class='current' id='multi-select-example'>
+    <nav>
+      <h1>To Do</h1>
+    </nav>
+    <section>
+      <h2>Choose what to do</h2>
+      <ul class="list" id="multiSelectList">
+        <li data-select="{= data.value}">
+          <h3>{= data.label }</h3>
+        </li>
+      </ul>
+      <p>You are going to: <strong><span id="response" class='attentionGrapper'></span></strong></p>
+      <p>
+        <button id='done' class="action centered">Validate</button>
+        <p>Validation Results: <span id="valiationResults"></span></p>
+      </p>
+    </section>
+  </screen>
+  <script>
+
+    $(function() {
+      /**
+       * ToDo data:
+       */
+      var ToDo = [
+        {value: "eat", label: "Go Eat Something"},
+        {value: "nap", label: "Take a nap"},
+        {value: "work", label: "Get some work done"},
+        {value: "play", label: "Play a game"}
+      ];
+
+      /**
+       * Define and render view:
+       */
+      var ToDoView = $.View({
+        element: '#multiSelectList'
+      });
+      ToDoView.render(ToDo);
+
+      /**
+       * Set up Select List:
+       */
+      var myMulitSelectList = $.MultiSelectList({
+        element: '#multiSelectList',
+        selected: [1,2],
+        name: 'personal_choice[]',
+        callback: function() {
+          renderSelection();
+        }
+      });
+
+
+      /**
+       * Define callback for multi-select list:
+       */
+      var renderSelection = function() {
+        var temp = [];
+        myMulitSelectList.getSelection().forEach(function(item) {
+          temp.push(item.value);
+        });
+        temp.sort()
+        temp = temp.join(', ');
+        if (temp.length) {
+          $('#response').text(temp);
+        } else {
+          $('#response').empty()
+        }
+      };
+      
+      /**
+       * Render any default selections:
+       */
+      renderSelection();
+
+      /**
+       * Validate and return JSON object from list, view results in browser console:
+       */
+      $('#done').on('tap', function() {
+        var choice = $.Form([
+          {
+            element: '#multiSelectList',
+            type: 'multiselectlist'
+          }
+        ]);
+        /**
+         * If validation passed, output results:
+         */
+        if(!choice.errors()) {
+          var formData = choice.get();
+          $('#valiationResults').text(JSON.stringify(formData));
+        }
+      });
+
+    });
+  </script>
+</body>
+</html>

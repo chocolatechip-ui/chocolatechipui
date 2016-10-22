@@ -1,0 +1,96 @@
+/* Color navbar and toolbar */
+nav, screen > footer, screen > toolbar {
+  background-color: #9fc5e8;
+}
+/* Color title and buttons in nav and toolbars */
+nav h1, nav button, toolbar button, footer button, nav .back, #chui-back-arrow  {
+  color: #555 !important;
+  stroke: #555 !important;
+}
+/* Color segmented control marker */
+span.androidSelectionBorder,
+tabbar > span.androidSelectionBorder {
+  border-bottom: solid 3px #9fc5e8 !important;
+}
+/* Callout text */
+.attentionGrapper {
+  /*color: #9fc5e8;*/
+}
+/* Editable Lists */
+#move-indicator,
+.list li > .deletion-indicator #checkmark,
+.multi-select-list > li #multi-select-icon,
+.select-list > li.selected #outer-circle {
+  /*stroke: #9fc5e8 !important;*/
+}
+.list li > .deletion-indicator {
+  /*border: solid 1px #9fc5e8;*/
+}
+.list.editable > li.selected > .deletion-indicator,
+.list.deletable > li.selected > .deletion-indicator {
+  box-shadow: 0 0 2px 1px #9fc5e8;
+}
+.multi-select-list > li > span.multi-selection-indicator {
+  border: solid 1px #9fc5e8;
+}
+.multi-select-list > li.selected > span.multi-selection-indicator {
+  box-shadow: 0 0 2px 1px #9fc5e8;
+}
+#pagination-icons path#page-previous,
+#pagination-icons path#page-next {
+  stroke: #555 !important;
+}
+.pager > button.selected   {
+  color: #555 !important;
+  stroke: #555 !important;
+}
+input[type="range"] {
+  background-image: -webkit-linear-gradient(top, #9fc5e8, #9fc5e8), -webkit-linear-gradient(top, #cccccc, #cccccc);
+}
+input[type="range"]::-webkit-slider-thumb {
+  background-color: #9fc5e8;
+}
+input[type="range"]:active::-webkit-slider-thumb,
+.isDesktop input[type="range"]::-webkit-slider-thumb:hover {
+  box-shadow: 0 0 0 1px #9fc5e8, 0 0 0 8px rgba(0, 0, 0, 0.08);
+}
+.isDesktop input[type="range"]::-webkit-slider-thumb:hover::before {
+  background-color: #9fc5e8;
+}
+.isNativeAndroidBrowser input[type="range"] {
+  background-image: -webkit-linear-gradient(top, #9fc5e8, #9fc5e8);
+}
+.segmented > span.androidSelectionBorder {
+  border-bottom: solid 3px #9fc5e8;
+}
+.select-list > li.selected #inner-circle {
+  fill: #9fc5e8 !important;
+}
+button.slide-out-button {
+  background-image: -webkit-linear-gradient(left, #555, #555) !important;
+  background-image: linear-gradient(left, #555, #555) !important;
+}
+button.slide-out-button::before,
+button.slide-out-button::after {
+  background-color: #555;
+}
+switch {
+  background-image: -webkit-linear-gradient(left, #9fc5e8, #9fc5e8), -webkit-linear-gradient(left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+  background-image: linear-gradient(to left, #9fc5e8, #9fc5e8), linear-gradient(to left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+}
+switch.checked > em {
+  background-color: #9fc5e8;
+}
+switch.traditional.checked > em {
+  background-color: #9fc5e8;
+  border: solid 1px #9fc5e8;
+}
+.isDesktop tabbar>button:hover, tabbar>button.selected {
+  color: #9fc5e8 !important;
+}
+tabbar ~ screen > nav {
+  background-color: #f0f0f0 !important;
+}
+tabbar ~ screen > nav > h1 {
+  color: #000 !important;
+}
