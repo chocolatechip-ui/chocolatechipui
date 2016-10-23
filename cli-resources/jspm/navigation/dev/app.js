@@ -9,17 +9,17 @@ $(() => {
    */
   VIPView.setElement("#arrayTemplate1");
   VIPView.setData(luminaries);
-  chosenPersonView.setElement("#chosenPersonList")
-
-  /**
-   * Setup Router:
-   */
-  const router = $.Router();
+  chosenPersonView.setElement("#chosenPersonList");
 
   /**
    * Render views:
    */
   VIPView.render();
+
+  /**
+   * Setup Router:
+   */
+  const router = $.Router();
 
 
   /**
