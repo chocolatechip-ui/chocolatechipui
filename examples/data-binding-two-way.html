@@ -47,6 +47,14 @@
       });
 
       /**
+       * Render view with model:
+       */
+      function renderDataModel() {
+        var json = JSON.stringify(myDataModel.get());
+        dataModelView.render(json);
+      }
+
+      /**
        * Render the model:
        */
       renderDataModel();
@@ -65,6 +73,14 @@
       })
 
       /**
+       * Run mediator when user taps:
+       */
+      $('#updateText').on('tap', function() {
+        var data =  $('#myText2').val();
+        mediateTextInput.run(data);
+      });
+
+      /**
        * Update the model when the input value changes.
        */
       var mediateTextInput = $.on('data-bind-input', function(data) {
@@ -72,16 +88,6 @@
         $('#myText1').val(data);
         renderDataModel();
       });
-
-      $('#updateText').on('tap', function() {
-        var data =  $('#myText2').val();
-        mediateTextInput.run(data);
-      });
-
-      function renderDataModel() {
-        var json = JSON.stringify(myDataModel.get());
-        dataModelView.render(json);
-      }
       
     });
   </script>
