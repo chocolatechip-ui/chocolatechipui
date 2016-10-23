@@ -207,7 +207,6 @@
       var vipView = $.View({
         element: '#basicRepeater', 
         model: luminariesModel,
-        name: 'vipView',
         startIndexFrom: 12,
         safeHTML: true,
         events: [{
@@ -226,7 +225,6 @@
       var luminariesView = $.View({
         element: '#repeaterWithImages', 
         data: luminaries,
-        name: 'luminariesView',
         variable: 'person',
         template: "<li class='comp'>\
           <aside>\
@@ -268,7 +266,6 @@
       var namesView = $.View({
         element: '#dataBinding',
         data: names,
-        name: 'namesView'
       });
       namesView.render();
 
@@ -281,8 +278,7 @@
        * Init beezle view:
        */
       var beezleView = $.View({
-        element: '#beezle', 
-        name: 'beezleView'
+        element: '#beezle',
        });
       beezleView.render(beezleNames);
       window.beezleView = beezleView;
@@ -355,7 +351,6 @@
         element: '#templ8',
         data: peeps,
         variable: 'somebody',
-        name: 'peepsView'
       });
       peepsView.render()
 
