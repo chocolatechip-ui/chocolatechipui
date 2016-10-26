@@ -153,9 +153,11 @@
            */
           set: (prop, data) => {
             if (!prop) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noPropertyOrDataError)
               return;
             } else if (!data) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noPropertyToSet + prop)
               return;
             }
@@ -174,9 +176,11 @@
            */
           merge: obj => {
             if (!obj) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noObjectToMerge);
               return;
             } else if ($.type(obj) !== 'object') {
+              if ($.supressErrorMessages) return;
               console.error(erros.incorrectDataForMerging)
             } else {
               $.extend(mod.data, obj);
@@ -191,6 +195,7 @@
            */
           mixin: obj => {
             if (!obj) {
+              if ($.supressErrorMessages) return;
               console.error(erros.noObjForMixin);
               return;
             }
@@ -207,6 +212,7 @@
 
           remove: prop => {
             if (!prop) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noPropertyToDelete);
               return;
             }
@@ -219,9 +225,11 @@
           on: (event, callback) => {
             if (__stopped) return;
             if (!callback) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noCallbackForModelOn);
               return;
             } else if (!event) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noEventForModelOn);
               return;
             }
@@ -235,6 +243,7 @@
           trigger: (event, data) => {
             if (__stopped) return;
             if (!event) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noEventForModelTrigger);
               return;
             }
@@ -255,9 +264,11 @@
 
           removeEventCallback: (event, position) => {
             if (position === undefined) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noPosForEventDeletion);
               return;
             } else if(event === undefined) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noEventForEventDeletion)
             }
             __events[event].splice(position, 1);
@@ -273,6 +284,7 @@
               mod.data = data;
               if (renderView) updateBoundViews(mod);
             } else {
+              if ($.supressErrorMessages) return;
               console.error(errors.noDataToReplaceInModel)
             }
           },
@@ -321,9 +333,11 @@
            */
           getPropAt: (prop, pos) => {
             if (pos === undefined) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noPosForPropAt);
               return;
             } else if (!prop) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noPropForPropAt);
               return;
             }
@@ -335,12 +349,15 @@
            */
           setPropAt: (prop, value, pos) => {
             if (pos === undefined) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noPosForSetPropAt);
               return;
             } else if (!value) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noValueForSetPropAt);
               return;
             } else if (!prop) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noPropForSetPropAt);
               return;
             }
@@ -353,6 +370,7 @@
            */
           get: () => {
             if (!mod.data) {
+              if ($.supressErrorMessages) return;
               console.error(errors.modelHasNoDataToReturn);
             } else {
               return mod.data
@@ -361,6 +379,7 @@
 
           push: data => {
             if (!data) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noDataToPushToModel);
               return;
             }
@@ -375,6 +394,7 @@
 
           unshift: (data) => {
             if (!data) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noDataForShiftToModel);
               return;
             } else {
@@ -393,9 +413,11 @@
 
           slice: (start, end) => {
             if (end === undefined) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noEndForModelSlice);
               return;
             } else if (start === undefined) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noStartModelForSlice);
               return;
             }
@@ -404,9 +426,11 @@
 
           splice: (start, end, data) => {
             if (end === undefined) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noEndForModelSplice);
               return;
             } else if (start === undefined) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noStartForModelSplice);
               return;
             }
@@ -421,9 +445,11 @@
 
           insert: (pos, data) => {
             if (data === undefined) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noDataToInsertInModel);
               return;
             } else if (pos === undefined) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noPosToInserInModel);
               return;
             }
@@ -433,6 +459,7 @@
 
           pluck: property => {
             if (!property) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noPropForPlucking);
               return;
             } else {
@@ -449,6 +476,7 @@
 
           find: callback => {
             if (!callback) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noCallbackForModelFind);
               return;
             } else {
@@ -459,6 +487,7 @@
 
           indexOf: callback => {
             if (!callback) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noCallbackForIndexOf);
               return;
             } else {
@@ -469,6 +498,7 @@
 
           findIndex: callback => {
             if (!callback) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noCallbackFoFindIndex);
               return;
             } else {
@@ -479,6 +509,7 @@
 
           forEach: (callback) => {
             if (!callback) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noCallbackForForEach);
               return;
             }
@@ -528,6 +559,7 @@
 
           orderBy(...props) {
             if (!props || !props.length) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noPropsForSortBy);
               return;
             }
@@ -582,6 +614,7 @@
 
           concat: data => {
             if (!data) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noDataToConcat);
               return;
             }
@@ -592,6 +625,7 @@
 
           mixin: data => {
             if (!data) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noPosForEventDeletion);
               return;
             }
@@ -610,9 +644,11 @@
           on: (event, callback) => {
             if (__stopped) return;
             if (!callback) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noCallbackForModelOn);
               return;
             } else if (!event) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noEventForModelOn);
               return;
             }
@@ -626,6 +662,7 @@
           trigger: (event, data) => {
             if (__stopped) return;
             if (!event) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noEventForModelTrigger);
               return;
             }

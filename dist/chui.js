@@ -859,7 +859,11 @@ var DOMStack = function() {
     removeTopic: function removeTopic(topic) {
       return delete topics[topic];
     },
-    production: false
+    production: false,
+    /**
+     * Suppress ChocolateChip-UI's error messages:
+     */
+    supressErrorMessages: false
   });
   /**
    * ChocolateChip-UI DOM methods.
@@ -1827,10 +1831,12 @@ var DOMStack = function() {
     $.fn.extend({
       on: function on(event, selector, callback, capturePhase) {
         if (!event) {
+          if ($.supressErrorMessages) return;
           console.error(errors.noEventOrCallback);
           return;
         }
         if (!selector) {
+          if ($.supressErrorMessages) return;
           console.error(errors.noCallbackForEventBinding);
           return;
         }
@@ -1889,6 +1895,7 @@ var DOMStack = function() {
       },
       trigger: function trigger(event) {
         if (!event) {
+          if ($.supressErrorMessages) return;
           console.error(errors.noEventToTrigger);
           return;
         }
@@ -3201,8 +3208,9 @@ $.extend({
       noEventsToAdd: "ChocolateChip-UI View Error: No event was provided to attach fo the view. Please provide an event to procede.",
       noDataToSetForView: "ChocolateChip-UI View Error: No data was provided to set for the view. Please provide some data.",
       noModelToBindToView: "ChocolateChip-UI View Error: No model was provided to bind the view to. Please provide a valid model to complete this operation.",
-      viewHasNoModel: "ChocolateChip-UI View Error: Could not get this view's model because it is not bound to one. You can use `bindModel()` to mind a model to this view.",
-      viewHasNoData: "ChocolateChip-UI View Error: This view has no data. Did you render it with data, or did you bind it to a model? Try using `getModel()` to see if this view is using a model."
+      viewHasNoModel: "ChocolateChip-UI View Error: Could not get this view's model because it is not bound to one. You can use `bindModel()` to bind a model to this view.",
+      viewHasNoData: "ChocolateChip-UI View Error: This view has no data. Did you render it with data, or did you bind it to a model? Try using `getModel()` to see if this view is using a model.",
+      viewHasNoTemplate: "ChocolateChip-UI View Error: This view has no template. Either you created it without a template, or there was some problem parsing the template. Please check how this view is set up."
     },
     es: {
       noDataForViewRender: "Hubo Error de Vista ChocolateChip-UI: : No se proporcionó datos para que la vista los utilice. Si desea renderizar la vista, proporcione datos o redefinir la vista con un valor para sus datos o un modelo de datos. De lo contrario, la vista no se renderizará.",
@@ -3215,7 +3223,8 @@ $.extend({
       noDataToSetForView: "Hubo Error de Vista ChocolateChip-UI: No se proporcionó datos para la vista. Por favor proporcione algunos datos.",
       noModelToBindToView: "Hubo Error de Vista ChocolateChip-UI: No se proporcionó un modelo para establecer un enlace entre él y la vista. Por favor proporcione un modelo válido para completar esta operación.",
       viewHasNoModel: "Hubo Error de Vista ChocolateChip-UI: No pudimos acceder al modelo de esta vista porque no está asociada con uno. Puede realizar esto usando `bindModel()`.",
-      viewHasNoData: "Hubo Error de Vista ChocolateChip-UI: Esta vista no tiene datos. A caso no se renderizó con datos o no se asoció con ningún modelo. Trate de executar `getModel()` para averiguar si esta vista está usando un modelo."
+      viewHasNoData: "Hubo Error de Vista ChocolateChip-UI: Esta vista no tiene datos. A caso no se renderizó con datos o no se asoció con ningún modelo. Trate de executar `getModel()` para averiguar si esta vista está usando un modelo.",
+      viewHasNoTemplate: "Hubo Error de Vista ChocolateChip-UI: Esta vista no tiene plantilla. Ó se creó la vista sin plantilla, ó hubo algún error al procesar la plantilla. Debe chequear cómo se definó la vista."
     }
   };
   var errors = undefined;
@@ -3357,6 +3366,7 @@ $.extend({
         id: __id,
         render: function render(data, append) {
           if (!__element) {
+            if ($.supressErrorMessages) return;
             console.error(errors.noElementForView);
             return;
           }
@@ -3372,6 +3382,7 @@ $.extend({
           data = escapeNumber(data);
           __data = escapeNumber(__data);
           if (!data && !__data && !__model) {
+            if ($.supressErrorMessages) return;
             console.error(errors.noDataForViewRender);
             return;
           }
@@ -3417,6 +3428,7 @@ $.extend({
                 item = $.escapeHTML(item);
               }
               if (!parsedTemplate && !__noTemplate) {
+                if ($.supressErrorMessages) return;
                 console.error(errors.viewElementHasNoTemplate);
                 return;
               }
@@ -3433,6 +3445,7 @@ $.extend({
              */
           } else if ($.type(data) === 'object' || $.type(data) === 'string' || $.type(data) === 'number') {
             if (!parsedTemplate) {
+              if ($.supressErrorMessages) return;
               console.error(errors.viewElementHasNoTemplate);
               return;
             }
@@ -3449,6 +3462,7 @@ $.extend({
         },
         empty: function empty() {
           if (!__element) {
+            if ($.supressErrorMessages) return;
             console.error(errors.noElementForView);
             return;
           }
@@ -3456,6 +3470,7 @@ $.extend({
         },
         resetIndex: function resetIndex() {
           if (!__element) {
+            if ($.supressErrorMessages) return;
             console.error(errors.noElementForView);
             return;
           }
@@ -3465,6 +3480,7 @@ $.extend({
         },
         startIndexFrom: function startIndexFrom(number) {
           if (!__element) {
+            if ($.supressErrorMessages) return;
             console.error(errors.noElementForView);
             return;
           }
@@ -3475,10 +3491,17 @@ $.extend({
           }
         },
         getElement: function getElement() {
-          return __element;
+          if (!__element) {
+            if ($.supressErrorMessages) return;
+            console.error(errors.noElementForView);
+            return;
+          } else {
+            return __element;
+          }
         },
         setElement: function setElement(element) {
           if (!__element) {
+            if ($.supressErrorMessages) return;
             console.error(errors.noElementForView);
             return;
           }
@@ -3487,10 +3510,17 @@ $.extend({
           handleEvents();
         },
         getTemplate: function getTemplate() {
-          return __template;
+          if (!__template) {
+            if ($.supressErrorMessages) return;
+            console.error(errors.viewHasNoTemplate);
+            return;
+          } else {
+            return __template;
+          }
         },
         setTemplate: function setTemplate(template) {
           if (!template) {
+            if ($.supressErrorMessages) return;
             console.error(errors.noTemplateToSetToView);
             return;
           } else {
@@ -3500,6 +3530,7 @@ $.extend({
         },
         bindModel: function bindModel(model) {
           if (!model) {
+            if ($.supressErrorMessages) return;
             console.error(errors.noModelToBindToView);
             return;
           }
@@ -3519,6 +3550,7 @@ $.extend({
           if (__model) {
             return __model;
           } else {
+            if ($.supressErrorMessages) return;
             console.error(errors.viewHasNoModel);
           }
         },
@@ -3527,6 +3559,7 @@ $.extend({
         },
         isEmpty: function isEmpty() {
           if (!__element) {
+            if ($.supressErrorMessages) return;
             console.error(errors.noElementForView);
             return;
           }
@@ -3538,6 +3571,7 @@ $.extend({
         },
         addEvent: function addEvent(events, replace) {
           if (!events) {
+            if ($.supressErrorMessages) return;
             console.error(errors.noEventsToAdd);
             return;
           }
@@ -3572,12 +3606,14 @@ $.extend({
           if (__data) {
             return __data;
           } else {
+            if ($.supressErrorMessages) return;
             console.error(errors.viewHasNoData);
             return;
           }
         },
         setData: function setData(data) {
           if (!data) {
+            if ($.supressErrorMessages) return;
             console.error(errors.noDataToSetForView);
             return;
           }
@@ -4573,9 +4609,11 @@ if (!Array.prototype.unique) {
            */
           set: function set(prop, data) {
             if (!prop) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noPropertyOrDataError);
               return;
             } else if (!data) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noPropertyToSet + prop);
               return;
             }
@@ -4594,9 +4632,11 @@ if (!Array.prototype.unique) {
            */
           merge: function merge(obj) {
             if (!obj) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noObjectToMerge);
               return;
             } else if ($.type(obj) !== 'object') {
+              if ($.supressErrorMessages) return;
               console.error(erros.incorrectDataForMerging);
             } else {
               $.extend(mod.data, obj);
@@ -4610,6 +4650,7 @@ if (!Array.prototype.unique) {
            */
           mixin: function mixin(obj) {
             if (!obj) {
+              if ($.supressErrorMessages) return;
               console.error(erros.noObjForMixin);
               return;
             }
@@ -4625,6 +4666,7 @@ if (!Array.prototype.unique) {
           },
           remove: function remove(prop) {
             if (!prop) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noPropertyToDelete);
               return;
             }
@@ -4637,9 +4679,11 @@ if (!Array.prototype.unique) {
           on: function on(event, callback) {
             if (__stopped) return;
             if (!callback) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noCallbackForModelOn);
               return;
             } else if (!event) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noEventForModelOn);
               return;
             }
@@ -4652,6 +4696,7 @@ if (!Array.prototype.unique) {
           trigger: function trigger(event, data) {
             if (__stopped) return;
             if (!event) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noEventForModelTrigger);
               return;
             }
@@ -4670,9 +4715,11 @@ if (!Array.prototype.unique) {
           },
           removeEventCallback: function removeEventCallback(event, position) {
             if (position === undefined) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noPosForEventDeletion);
               return;
             } else if (event === undefined) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noEventForEventDeletion);
             }
             __events[event].splice(position, 1);
@@ -4684,6 +4731,7 @@ if (!Array.prototype.unique) {
             mod.data = data;
             if (renderView) updateBoundViews(mod);
           } else {
+            if ($.supressErrorMessages) return;
             console.error(errors.noDataToReplaceInModel);
           }
         }), _defineProperty(_ref, 'boundViews', mod.boundViews), _ref;
@@ -4724,9 +4772,11 @@ if (!Array.prototype.unique) {
            */
           getPropAt: function getPropAt(prop, pos) {
             if (pos === undefined) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noPosForPropAt);
               return;
             } else if (!prop) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noPropForPropAt);
               return;
             }
@@ -4737,12 +4787,15 @@ if (!Array.prototype.unique) {
            */
           setPropAt: function setPropAt(prop, value, pos) {
             if (pos === undefined) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noPosForSetPropAt);
               return;
             } else if (!value) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noValueForSetPropAt);
               return;
             } else if (!prop) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noPropForSetPropAt);
               return;
             }
@@ -4754,6 +4807,7 @@ if (!Array.prototype.unique) {
            */
           get: function get() {
             if (!mod.data) {
+              if ($.supressErrorMessages) return;
               console.error(errors.modelHasNoDataToReturn);
             } else {
               return mod.data;
@@ -4761,6 +4815,7 @@ if (!Array.prototype.unique) {
           },
           push: function push(data) {
             if (!data) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noDataToPushToModel);
               return;
             }
@@ -4773,6 +4828,7 @@ if (!Array.prototype.unique) {
           },
           unshift: function unshift(data) {
             if (!data) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noDataForShiftToModel);
               return;
             } else {
@@ -4789,9 +4845,11 @@ if (!Array.prototype.unique) {
           },
           slice: function slice(start, end) {
             if (end === undefined) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noEndForModelSlice);
               return;
             } else if (start === undefined) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noStartModelForSlice);
               return;
             }
@@ -4799,9 +4857,11 @@ if (!Array.prototype.unique) {
           },
           splice: function splice(start, end, data) {
             if (end === undefined) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noEndForModelSplice);
               return;
             } else if (start === undefined) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noStartForModelSplice);
               return;
             }
@@ -4815,9 +4875,11 @@ if (!Array.prototype.unique) {
           },
           insert: function insert(pos, data) {
             if (data === undefined) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noDataToInsertInModel);
               return;
             } else if (pos === undefined) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noPosToInserInModel);
               return;
             }
@@ -4826,6 +4888,7 @@ if (!Array.prototype.unique) {
           },
           pluck: function pluck(property) {
             if (!property) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noPropForPlucking);
               return;
             } else {
@@ -4841,6 +4904,7 @@ if (!Array.prototype.unique) {
           },
           find: function find(callback) {
             if (!callback) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noCallbackForModelFind);
               return;
             } else {
@@ -4849,6 +4913,7 @@ if (!Array.prototype.unique) {
           },
           indexOf: function indexOf(callback) {
             if (!callback) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noCallbackForIndexOf);
               return;
             } else {
@@ -4857,6 +4922,7 @@ if (!Array.prototype.unique) {
           },
           findIndex: function findIndex(callback) {
             if (!callback) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noCallbackFoFindIndex);
               return;
             } else {
@@ -4865,6 +4931,7 @@ if (!Array.prototype.unique) {
           },
           forEach: function forEach(callback) {
             if (!callback) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noCallbackForForEach);
               return;
             }
@@ -4918,6 +4985,7 @@ if (!Array.prototype.unique) {
               props[_key11] = arguments[_key11];
             }
             if (!props || !props.length) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noPropsForSortBy);
               return;
             }
@@ -4970,6 +5038,7 @@ if (!Array.prototype.unique) {
           },
           concat: function concat(data) {
             if (!data) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noDataToConcat);
               return;
             }
@@ -4979,6 +5048,7 @@ if (!Array.prototype.unique) {
           },
           mixin: function mixin(data) {
             if (!data) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noPosForEventDeletion);
               return;
             }
@@ -4996,9 +5066,11 @@ if (!Array.prototype.unique) {
           on: function on(event, callback) {
             if (__stopped) return;
             if (!callback) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noCallbackForModelOn);
               return;
             } else if (!event) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noEventForModelOn);
               return;
             }
@@ -5011,6 +5083,7 @@ if (!Array.prototype.unique) {
           trigger: function trigger(event, data) {
             if (__stopped) return;
             if (!event) {
+              if ($.supressErrorMessages) return;
               console.error(errors.noEventForModelTrigger);
               return;
             }

@@ -394,6 +394,11 @@
      */
     removeTopic: topic => delete topics[topic],
 
-    production: false
+    production: false,
+
+    /**
+     * Suppress ChocolateChip-UI's error messages:
+     */
+    supressErrorMessages: false
     
   })

@@ -203,6 +203,7 @@
 
         render(data, append) {
           if (!__element) {
+            if ($.supressErrorMessages) return;
             console.error(errors.noElementForView)
             return ;
           }
@@ -217,6 +218,7 @@
           data = escapeNumber(data);
           __data = escapeNumber(__data);
           if (!data && !__data && !__model) {
+            if ($.supressErrorMessages) return;
             console.error(errors.noDataForViewRender);
             return;
           }
@@ -266,6 +268,7 @@
                 item = $.escapeHTML(item);
               }
               if (!parsedTemplate && !__noTemplate) {
+                if ($.supressErrorMessages) return;
                 console.error(errors.viewElementHasNoTemplate)
                 return;
               }
@@ -283,6 +286,7 @@
              */
           } else if ($.type(data) === 'object' || $.type(data) === 'string' || $.type(data) === 'number') {
             if (!parsedTemplate) {
+              if ($.supressErrorMessages) return;
               console.error(errors.viewElementHasNoTemplate)
               return;
             }
@@ -300,6 +304,7 @@
 
         empty() {
           if (!__element) {
+            if ($.supressErrorMessages) return;
             console.error(errors.noElementForView)
             return;
           }
@@ -308,6 +313,7 @@
 
         resetIndex() {
           if (!__element) {
+            if ($.supressErrorMessages) return;
             console.error(errors.noElementForView)
             return;
           }
@@ -318,6 +324,7 @@
 
         startIndexFrom(number) {
           if (!__element) {
+            if ($.supressErrorMessages) return;
             console.error(errors.noElementForView)
             return;
           }
@@ -330,6 +337,7 @@
 
         getElement() {
           if (!__element) {
+            if ($.supressErrorMessages) return;
             console.error(errors.noElementForView)
             return;
           } else {
@@ -339,6 +347,7 @@
 
         setElement(element) {
           if (!__element) {
+            if ($.supressErrorMessages) return;
             console.error(errors.noElementForView)
             return;
           }
@@ -349,6 +358,7 @@
 
         getTemplate() {
           if (!__template) {
+            if ($.supressErrorMessages) return;
             console.error(errors.viewHasNoTemplate)
             return;
           } else {
@@ -358,6 +368,7 @@
 
         setTemplate(template) {
           if (!template) {
+            if ($.supressErrorMessages) return;
             console.error(errors.noTemplateToSetToView)
             return;
           } else {
@@ -368,6 +379,7 @@
 
         bindModel(model) {
           if (!model) {
+            if ($.supressErrorMessages) return;
             console.error(errors.noModelToBindToView);
             return;
           }
@@ -389,6 +401,7 @@
           if (__model) {
             return __model
           } else {
+            if ($.supressErrorMessages) return;
             console.error(errors.viewHasNoModel)
           }
         },
@@ -399,6 +412,7 @@
 
         isEmpty() {
           if (!__element) {
+            if ($.supressErrorMessages) return;
             console.error(errors.noElementForView)
             return;
           }
@@ -411,6 +425,7 @@
 
         addEvent(events, replace) {
           if (!events) {
+            if ($.supressErrorMessages) return;
             console.error(errors.noEventsToAdd);
             return;
           }
@@ -449,6 +464,7 @@
           if (__data) {
             return __data
           } else {
+            if ($.supressErrorMessages) return;
             console.error(errors.viewHasNoData);
             return;
           }
@@ -456,6 +472,7 @@
 
         setData(data) {
           if (!data) {
+            if ($.supressErrorMessages) return;
             console.error(errors.noDataToSetForView);
             return;
           }

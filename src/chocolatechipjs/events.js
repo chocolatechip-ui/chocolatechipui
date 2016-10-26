@@ -194,10 +194,12 @@
     $.fn.extend({
       on: function(event, selector, callback, capturePhase) {
         if (!event) {
+          if ($.supressErrorMessages) return;
           console.error(errors.noEventOrCallback);
           return;
         }
         if (!selector) {
+          if ($.supressErrorMessages) return;
           console.error(errors.noCallbackForEventBinding);
           return;
         }
@@ -260,6 +262,7 @@
 
       trigger: function(event) {
         if (!event) {
+          if ($.supressErrorMessages) return;
           console.error(errors.noEventToTrigger);
           return;
         }
