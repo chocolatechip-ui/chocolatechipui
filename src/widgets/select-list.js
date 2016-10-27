@@ -25,7 +25,18 @@ $.extend({
       const value = ctx.getAttribute("data-select") !== null ? ctx.getAttribute("data-select") : "";
       ctx.setAttribute('role', 'radio');
       $(ctx).removeClass('selected').find('input').removeAttr('checked');
-      $(ctx).append('<span class="selection-indicator"><svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="selection-indicator"><path d="M2,13 L9.9294326,16.8406135 L17.1937075,1.90173332" id="checkmark" stroke="#007AFF" stroke-width="2"></path><circle id="outer-circle" stroke="#007AFF" stroke-width="2" cx="10" cy="10" r="9"></circle><circle id="inner-circle" fill="#007AFF" cx="10" cy="10" r="5"></circle></g></g></svg></span>');
+      $(ctx).append(`<aside>
+          <span class="selection-indicator">
+            <svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+              <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <g id="selection-indicator">
+                  <path d="M2,13 L9.9294326,16.8406135 L17.1937075,1.90173332" id="checkmark" stroke="#007AFF" stroke-width="2"></path>
+                  <circle id="outer-circle" stroke="#007AFF" stroke-width="2" cx="10" cy="10" r="9"></circle><circle id="inner-circle" fill="#007AFF" cx="10" cy="10" r="5"></circle>
+                </g>
+              </g>
+            </svg>
+          </span>
+        </aside>`);
       if (settings.selected === idx) {
         ctx.setAttribute('aria-checked', 'true');
         ctx.classList.add('selected');

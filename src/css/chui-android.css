@@ -1226,7 +1226,7 @@ html[dir=rtl] label + input {
 .select-list > li {
   cursor: pointer;
 }
-.select-list > li > span.selection-indicator {
+.select-list > li > aside > span.selection-indicator {
   /*display: none;*/
   height: 20px;
   width: 20px;
@@ -1237,7 +1237,7 @@ html[dir=rtl] label + input {
 .select-list > li #checkmark {
   display: none;
 }
-.select-list > li.selected > span.selection-indicator,
+.select-list > li.selected > aside > span.selection-indicator,
 .select-list > li.selected #inner-circle {
   display: inline-block;
 }
