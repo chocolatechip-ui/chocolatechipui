@@ -48,6 +48,22 @@
       <h1>$.Model</h1>
     </nav>
     <section>
+      <h2>Add a new person to model</h2>
+      <ul class="list" id="form">
+        <li>
+          <input type="text" id='firstName' placeholder="First Name:">
+        </li>
+        <li>
+          <input type="text" id='lastName' placeholder="Last Name:">
+        </li>
+        <li>
+          <input type="number" id='age' placeholder="Age:">
+        </li>
+      </ul>
+      <p>
+        <button id='submitForm'>Submit</button> <label for="peopleAlert">Dispatch to mediator: <input name='peopleAlert' id='peopleAlert' type="checkbox"></label>
+        
+      </p>
       <h2>Output from Model</h2>
       <p id='buttonContainer'>
         <label>
@@ -68,26 +84,6 @@
         </li>
       </ul>
       <p>The model has <span id='numberOfPeople'>{= data.count }</span> people.</p>
-      <br>
-      <h2>Add a new person to model</h2>
-      <ul class="list" id="form">
-        <li>
-          <input type="text" id='firstName'>
-          <h2> First Name</h2>
-        </li>
-        <li>
-          <input type="text" id='lastName'>
-          <h2> Last Name</h2>
-        </li>
-        <li>
-          <input type="number" id='age'>
-          <h2> Age</h2>
-        </li>
-      </ul>
-      <p>
-        <label for="peopleAlert"><input name='peopleAlert' id='peopleAlert' type="checkbox"> Dispatch to 'peopleMtor' mediator</label><br>
-        <button id='submitForm'>Submit</button>
-      </p>
     </section>
   </screen>
   <script>
@@ -123,7 +119,7 @@
      * Push something to view model with this flag: 'peopleAlert':
      */
     var peopleMtor = $.on('peopleAlert', function(data) {
-      alert(data.firstName + ' ' + data.lastName);
+      alert('Message from mediator: ' + data.firstName + ' ' + data.lastName);
     });
 
     /**
