@@ -19,6 +19,7 @@ $(() => {
    * Setup Slide Out:
    */
   const AppSlideOut = $.SlideOut();
+  
   /**
    * Notice names have `:` to indicate id for routing.
    * Id will be used to render view.

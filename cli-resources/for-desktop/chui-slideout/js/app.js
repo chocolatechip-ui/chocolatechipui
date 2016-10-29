@@ -216,11 +216,6 @@ $(function() {
     </li>`
   };
 
-  // templates[0] = $("#music-template").html();
-  // templates[1] = $("#documents-template").html();
-  // templates[2] = $("#recipes-template").html();
-  // templates[3] = $("#favorites-template").html();
-
   /**
    * Define initial state of View:
    */
@@ -234,6 +229,7 @@ $(function() {
    * Setup Slide Out:
    */
   var AppSlideOut = $.SlideOut();
+  
   /** 
    * Notice names have `:` to indicate id for routing.
    * Id will be used to render view.
