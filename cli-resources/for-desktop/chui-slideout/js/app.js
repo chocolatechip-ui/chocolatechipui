@@ -179,21 +179,55 @@ $(function() {
     "Hiking",
     "Puzzles"
   ];
-  var templates = [];
+  var templates = {
+    music: `<li>
+      <div>
+        <h3>{= data.title }</h3>
+        <h4>{= data.album }</h4>
+        <p>{= data.description }</p>
+      </div>
+    </li>`,
+    documents: `<li class="center-vertical">
+      <h3>{= data.title }</h3>
+      <h4>{= data.subtitle }</h4>
+      <aside>
+        <span class="counter">{= data.amount }</span>
+      </aside>
+    </li>`,
+    recipes: `<li>
+      <div>
+        <h3>{= data.name }</h3>
+        <h4>Ingredients</h4>
+        <ul>
+          {{ data.ingredients.forEach(function(ingredient) { }}
+            <li>{= ingredient }</li>
+          {{ }); }}
+        </ul>
+        <h4>Directions</h4>
+        <ol>
+          {{ data.directions.forEach(function(direction) { }}
+            <li>{= direction }</li>
+          {{ }); }}
+        </ol>
+      </div>
+    </li>`,
+    favorites: `<li>
+       <h3>{= data }</h3>
+    </li>`
+  };
 
-  templates[0] = $("#music-template").html();
-  templates[1] = $("#documents-template").html();
-  templates[2] = $("#recipes-template").html();
-  templates[3] = $("#favorites-template").html();
+  // templates[0] = $("#music-template").html();
+  // templates[1] = $("#documents-template").html();
+  // templates[2] = $("#recipes-template").html();
+  // templates[3] = $("#favorites-template").html();
 
   /**
    * Define initial state of View:
    */
   var listView = $.View({
     element: "#myList",
-    template: templates[0]
+    template: templates.music
   });
-  listView.setTemplate(templates[0]);
   listView.render(music);
 
   /**
@@ -240,16 +274,16 @@ $(function() {
          */
         switch (id) {
           case "music":
-            renderChosenTemplate(templates[0], music);
+            renderChosenTemplate(templates.music, music);
             break;
           case "documents":
-            renderChosenTemplate(templates[1], docs);
+            renderChosenTemplate(templates.documents, docs);
             break;
           case "recipes":
-            renderChosenTemplate(templates[2], recipes);
+            renderChosenTemplate(templates.recipes, recipes);
             break;
           case "favorites":
-            renderChosenTemplate(templates[3], favorites);
+            renderChosenTemplate(templates.favorites, favorites);
             break;
         }
       }
