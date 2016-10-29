@@ -1,22 +1,19 @@
 Running these examples
 =====================
 
-By default these examples are using the iOS theme. You can change the theme by changing the reference to the stylesheet the example uses. Possible choices are:
+By default these examples are using the iOS theme. You can change the theme by changing the reference to the stylesheet the example uses. You can switch any of them to iOS
 
   1. chui-ios.css
-  2. chui-ios.css
-  3. chui-windows.css
+  2. chui-android.css
 
 You can run these examples on the following desktop browsers for testing:
 
   Mac: Safari, Chrome
-  Windows: IE10, IE11, MSEdge, Chrome
+  Windows: Chrome
 
-There are a couple of things to note about running themes in these browsers. The windows theme uses Microsoft features for the busy and range input. Non Microsoft browsers will not show these properly.
-Sheets for Android and iOS use CSS filters to blur the background. These are not supported on IE or MSEdge.
+There is not really any difference in how both browsers render the themes since they are both Webkit-based.
 
-To get the best approximation of what iOS will look like, it is best to view the iOS theme in Safari. If you are on Windows, Chrome will do, but it may ont be 100% accurate. If you are testing the Android theme, use Chrome on Mac or Windows. For testing the Windows theme IE 11 or MS Edge are recommended.
 
-Other than that, your layouts should render fairly accurately in any browser, even Firefox.
+If you want to make sure your iOS theme is working correctly for iOS devices, it's best to use either the latest Safari or the Safari Technologoy Preview. There is no Chrome browser on iOS. If you're on Windows, then of course Chrome when be good enough.
 
-The folder `fetch` has examples of using the Fetch API for remote data access. The examples are using PHP and so they require a server running PHP. We use MAMP for this, putting the folder in a PHP htdocs directory. 
+Regardless of which platform you're target, test on emulator/similator and on real devices so you can catch any problems early.
