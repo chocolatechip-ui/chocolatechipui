@@ -13,7 +13,7 @@ $.extend({
     return {
       addRoute: options => {
         if ($.type(options) === 'array') {
-          options.forEach(item =>$.on(item.route, item.callback));
+          options.forEach(item => $.on(item.route, item.callback));
         }
       },
 
@@ -50,6 +50,7 @@ $.extend({
           $.ChuiRoutes.splice(position, 0, route);
         }
       },
+
       eq: function eq(number) {
         if ($.ChuiRoutes.length && number < 0) {
           return $.ChuiRoutes[$.ChuiRoutes.length - 1];

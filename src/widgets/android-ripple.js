@@ -60,7 +60,6 @@ $(function() {
         }
       }
 
-
       /**
        * Handle ripple color:
        */

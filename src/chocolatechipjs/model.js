@@ -86,7 +86,6 @@
   if ($('html').attr('lang') == 'en') errors = ModelErrorMessages.en;
   if ($('html').attr('lang') == 'es') errors = ModelErrorMessages.es;
 
-
   $.extend({
     Model: function(data) {
       let __events = {};
@@ -482,7 +481,6 @@
             } else {
               return mod.data.find(callback);
             }
-
           },
 
           indexOf: callback => {
@@ -493,7 +491,6 @@
             } else {
               return mod.data.indexOf(callback);
             }
-
           },
 
           findIndex: callback => {
@@ -504,7 +501,6 @@
             } else {
               return mod.data.findIndex(callback);
             }
-
           },
 
           forEach: (callback) => {

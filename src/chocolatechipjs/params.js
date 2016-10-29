@@ -35,9 +35,9 @@ $.extend({
           }
         });
 
-        /**
-         * Else its an object (use key/value loop): 
-         */
+      /**
+       * Else its an object (use key/value loop): 
+       */
       } else if ($.type(obj) === 'object') {
         for (let key in obj) {
           type = $.type(obj[key]);

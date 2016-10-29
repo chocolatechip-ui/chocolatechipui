@@ -76,9 +76,9 @@
           touch.y1 = e.pageY;
           twoTouches = false;
 
-          /** 
-           * Detect two or more finger gestures: 
-           */
+        /** 
+         * Detect two or more finger gestures: 
+         */
         } else {
           if (e.touches.length === 1) {
             touch.el = $(parentIfText(e.touches[0].target));
@@ -140,9 +140,9 @@
               }
             }, 0);
 
-            /** 
-             * Normal tap: 
-             */
+          /** 
+           * Normal tap: 
+           */
           } else if ('last' in touch) {
             /** 
              * Delay by one tick so we can cancel the 'tap' event if 'scroll' fires: 

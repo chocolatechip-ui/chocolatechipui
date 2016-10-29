@@ -138,6 +138,7 @@ $(() => {
   $('body').on('tap', 'li', function () {
     handleNavigationEvent($(this));
   });
+  
   $('body').on('doubletap', 'li', function () {
     if (!$.isNavigating) {
       handleNavigationEvent($(this));

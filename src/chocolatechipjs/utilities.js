@@ -380,7 +380,7 @@
        * Loop through topics and execute: 
        */
       topics[topic].forEach(item => {
-          item(payload != undefined ? payload : {});
+        item(payload != undefined ? payload : {});
       });
     },
 
