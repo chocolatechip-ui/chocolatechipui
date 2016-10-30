@@ -1,6 +1,7 @@
 import {luminaries} from './data/luminaries';
 import {VIPView} from './views/VIPView';
 import {chosenPersonView} from './views/chosenPersonView';
+
 $(() => {
 
   /**
