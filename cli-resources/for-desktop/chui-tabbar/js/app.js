@@ -164,6 +164,7 @@ $(function() {
       ]
     }
   ];
+  
   var favorites = [
     "Pizza",
     "Ice Cream",
@@ -176,6 +177,7 @@ $(function() {
     "Hiking",
     "Puzzles"
   ];
+
   /**
    * Options for Tab Bar:
    */
@@ -186,10 +188,12 @@ $(function() {
      screens: ["music", "documents", "recipes", "favorites"],
      showIcons: false
   };
+
   /**
    * Init Tab Bar:
    */
   $.MyTabbar = $.TabBar(opts);
+
   /**
    * Music View:
    */
@@ -198,6 +202,7 @@ $(function() {
     variable: "music"
   });
   musicView.render(music);
+
   /**
    * Docs View:
    */
@@ -206,6 +211,7 @@ $(function() {
     variable: "doc"
   });
   docsView.render(docs);
+
   /**
    * Recipes View:
    */
@@ -214,6 +220,7 @@ $(function() {
     variable: "recipe"
   });
   recipesView.render(recipes);
+
   /**
    * Favorites View:
    */

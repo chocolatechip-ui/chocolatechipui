@@ -85,10 +85,12 @@ $(function() {
         var whichPerson = LumsModel.filter(function(person) {
           return person.uuid === id;
         })[0];
+
         /**
          * Output peron"s name:
          */
         $("#chosenPerson").text("Welcome, " + whichPerson.firstName + ".");
+        
         /**
          * Output full route:
          */

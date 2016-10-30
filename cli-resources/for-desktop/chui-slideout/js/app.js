@@ -245,6 +245,7 @@ $(function() {
    * Define Routes:
    */
   var App = $.Router();
+  
   /**
    * Define routes to handle ids from slide out menu items:
    */
@@ -254,6 +255,7 @@ $(function() {
        * The route:
        */
       route: "choice", 
+
       /**
        * Callback to handle passed id:
        */
@@ -265,6 +267,7 @@ $(function() {
           listView.setTemplate(template);
           listView.render(item);
         };
+
         /**
          * Handle passed id:
          */
