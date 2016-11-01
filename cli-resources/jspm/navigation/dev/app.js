@@ -40,7 +40,7 @@ $(() => {
         /**
          * Filter model with id passed in route:
          */
-        const whichPerson = luminaries.filter(person => person.guid === id)[0];
+        const whichPerson = luminaries.filter(person => person.uuid === id)[0];
         /**
          * Output chosen peron's name:
          */

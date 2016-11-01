@@ -8,7 +8,7 @@ export const VIPView = $.View({
       console.log($(this).text());
     }
   }],
-  template: `<li data-goto='detail:{= data.guid }'>
+  template: `<li data-goto='detail:{= data.uuid }'>
     <h3>{= $.view.index }: {= data.firstName } {= data.lastName }</h3>
     <aside>
       <disclosure></disclosure>
