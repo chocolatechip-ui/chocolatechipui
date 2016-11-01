@@ -60,12 +60,16 @@
       };
 
       /**
-       * Define Polygon View:
+       * Define Polygon Model:
        */
       var polygonModel = $.Model({
         points: calculatePoints(6), 
         color: 'red'
       })
+
+      /**
+       * Define Polygon View:
+       */
       var PolygonView = $.View({
         element: '#polygon',
         model: polygonModel,
@@ -116,7 +120,6 @@
       $.on('update-polygon', function(obj) {
         polygonModel.set('points', obj.points);
         polygonModel.set('color', obj.color);
-
       });
 
       /**
@@ -130,7 +133,9 @@
         var lightness = $('#updateBrightness').val();
 
         /**
-         * Dispatch the new points for polygon:
+         * Dispatch the new points for polygon.
+         * This will update model, which will
+         * update the polygon view:
          */
         $.send('update-polygon', {points: points, color: `hsl(${hue}, ${saturation}%, ${lightness}%)`})
         NumberOfPointsView.render(val/2);
@@ -153,7 +158,9 @@
         points = calculatePoints(points);
 
         /**
-         * Dispatch new color values for polygon:
+         * Dispatch new color values for polygon.
+         * This will update model, which will
+         * update the polygon view:
          */
         $.send('update-polygon', {points: points, color: `hsl(${hue}, ${saturation}%, ${lightness}%)`});
         HueValueView.render(hue)
@@ -165,7 +172,9 @@
         var points = $('#updatePoints').val();
         points = calculatePoints(points);
         /**
-         * Dispatch new color values for polygon:
+         * Dispatch new color values for polygon.
+         * This will update model, which will
+         * update the polygon view:
          */
         var hue = $('#updateHue').val();
         $.send('update-polygon', {points: points, color: `hsl(${hue}, ${saturation}%, ${lightness}%)`});
@@ -178,7 +187,9 @@
         var points = $('#updatePoints').val();
         points = calculatePoints(points);
         /**
-         * Dispatch new color values for polygon:
+         * Dispatch new color values for polygon.
+         * This will update model, which will
+         * update the polygon view:
          */
         $.send('update-polygon', {points: points, color: `hsl(${hue}, ${saturation}%, ${lightness}%)`});
         LightnessValueView.render(lightness);
