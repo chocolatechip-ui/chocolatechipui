@@ -92,9 +92,8 @@ $(function() {
         $("#chosenPerson").text("Welcome, " + whichPerson.firstName + ".");
         
         /**
-         * Output full route:
+         * Output choice:
          */
-        $(".fullRoute").text($.TruckRoutes.getFullRoute());
         App.chosenPersonView.empty();
         App.chosenPersonView.render(whichPerson);
       }
