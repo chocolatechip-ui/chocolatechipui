@@ -47,6 +47,9 @@
        */
       $('#updateSVG').on('input', function() {
         var val = this.value;
+        /**
+         * Loop through model and set height on each entry:
+         */
         rectModel.forEach(function(rect, idx) {
           rectModel.setPropAt('height',val, idx);
         });
