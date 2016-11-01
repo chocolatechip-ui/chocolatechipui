@@ -4,10 +4,9 @@ import {numbers} from './data/numbers';
 $(() => {
 
   /**
-   * Reset the view's element.
-   * Cannot get element when imported, because this happens before DOM ready.
+   * Because the view is imported, we need to mount it so that it can find its target element:
    */
-  listView.setElement("#list");
+  listView.mount();
   listView.render(numbers)
 
 });

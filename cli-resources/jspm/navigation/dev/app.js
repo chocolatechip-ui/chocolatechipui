@@ -5,12 +5,11 @@ import {chosenPersonView} from './views/chosenPersonView';
 $(() => {
 
   /**
-   * Reset the view's element.
-   * Cannot get element when imported, because this happens before DOM ready.
+   * Because the views are imported, we need to mount them so that they can find their target elements:
    */
-  VIPView.setElement("#arrayTemplate1");
+  VIPView.mount();
   VIPView.setData(luminaries);
-  chosenPersonView.setElement("#chosenPersonList");
+  chosenPersonView.mount();
 
   /**
    * Render views:
