@@ -105,6 +105,10 @@ a.offsiteLink:hover {
   width: 100px;
   height: 80px;
 }
+#brewing-image {
+  display: block;
+  margin: 0 auto;
+}
 @media only screen and (orientation: landscape) {
   body {
     background-position: center center;
