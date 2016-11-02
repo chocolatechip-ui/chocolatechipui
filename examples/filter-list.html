@@ -105,9 +105,9 @@
       var val = filterInput.val();
       if (val) val = val.toLowerCase();
       /**
-       * Check that no backslashes were entered:
+       * Check that word characters were entered:
        */
-      if (/\\/.test(val)) return;
+      if (!/\w/.test(val)) return;
       /**
        * Find a match:
        */
