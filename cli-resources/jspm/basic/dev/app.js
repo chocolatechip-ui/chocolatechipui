@@ -1,4 +1,4 @@
-import {listView} from './views/ListView';
+import {listView} from './views/listView';
 import {numbers} from './data/numbers';
 
 $(() => {

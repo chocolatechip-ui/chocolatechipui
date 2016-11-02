@@ -1,7 +1,7 @@
 $(function() {
-  var ListView = $.View({
+  var listView = $.View({
     element: "#list",
     template: "<li><h3>Item {= data }</h3></li>"
   });
-  ListView.render(["One","Two","Three"])
+  listView.render(["One","Two","Three"])
 });
