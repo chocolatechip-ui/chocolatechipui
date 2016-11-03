@@ -64,7 +64,7 @@
         'Carl'
       ];
 
-      var namesModel = $.Model(names, 'names-model');
+      var namesModel = $.Model(names);
       /**
        * Use localCompare to deal with accent marks on lettters:
        */
@@ -107,7 +107,7 @@
 
       var dates = [date_1949, date_1999, today, date_1980, date_2001, date_1968];
 
-      var dateModel = $.Model(dates, 'dates-model');
+      var dateModel = $.Model(dates);
       dateModel.sort($.sortDate);
 
       var dateView = $.View({element: '#dates', model: dateModel, variable: 'date'});
@@ -129,7 +129,7 @@
         .02,
         7.5
       ];
-      var priceModel = $.Model(prices, 'price-model');
+      var priceModel = $.Model(prices);
       priceModel.sort($.sortNumbersDescending);
       var priceView = $.View({element: '#prices', model: priceModel, variable: 'price'});
       priceView.render();
