@@ -2,7 +2,7 @@
 /**
  * ChocolateChip-UI Model Factory.
  */
- (() => {
+(() => {
   const ModelErrorMessages = {
     en: {
       noPropertyOrDataError: "ChocolateChip-UI Model Error: No property or data were provided to set on the model.",
@@ -34,7 +34,7 @@
       noPosToInserInModel: "ChocolateChip-UI Model Error: No position was provided to insert data into the model collection. Please provide a position and some data to insert in the model colleciton.",
       noPropForPlucking: "ChocolateChip-UI Model Error: No property was provided to pluck from the model collection. Please provide a property.",
       noCallbackForModelFind: "ChocolateChip-UI Model Error: No callback was provided as an argument for the find on the model collection. Please provide one.",
-      noCallbackForIndexOf: "ChocolateChip-UI Model Error: No callback was provided for finding the index of an object in the model collection. Please provide one.",
+      noElementForIndexOf: "ChocolateChip-UI Model Error: No element was provided for finding the index of an object in the model collection. Please provide one.",
       noDataToConcat: "ChocolateChip-UI Model Error: No data was provided to concat to this model. Did you forget to provide the data?",
       noPropsForSortBy: "ChocolateChip-UI Model Error: No property was provided for sorting. Without a property we cannot sort.",
       noEventForEventDeletion: "ChocolateChip-UI Model Error: No event was provided to delete the callback for this model. Please provide both and event and an array position for the callback. An event can have more than one callback registered to it.",
@@ -72,7 +72,7 @@
       noPosToInserInModel: "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna posición para saber en dónde insertar los datos en la colección del modelo. Por favor proporcione una posición de valor numérico y unos datos para insertar en la colección del modelo.",
       noPropForPlucking: "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna propiedad para extraerla de la colección del modelo. Por favor proporcione una propiedad.",
       noCallbackForModelFind: "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna función callback como parámetro a fin de realizar una búsqueda en la colección del modelo. Por favor proporcione una.",
-      noCallbackForIndexOf: "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna función callback a fin de averiguar el índice de un objeto en la colección del modelo. Por favor proporcione una.",
+      noElementForIndexOf: "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ningun element a fin de averiguar el índice de un objeto en la colección del modelo. Por favor proporcione una.",
       noDataToConcat: "Hubo Error de Modelo ChocolateChip-UI: No se proporcionaron ningunos datos para concatenar en este modelo. ¿Se le olvidó proporcionar los datos?",
       noPropsForSortBy: "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna propiedad. Sin una no se puede ordenar los datos del modelo.",
       noEventForEventDeletion: "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ningún evento a fin de eliminar la función callback de este modelo. Por favor proporcione tanto un evento como una posición en la colección para la callback que se quiere eliminar. Es posible que un evento tenga más de una callback registrada a él.",
@@ -86,636 +86,576 @@
   if ($('html').attr('lang') == 'en') errors = ModelErrorMessages.en;
   if ($('html').attr('lang') == 'es') errors = ModelErrorMessages.es;
 
-  $.extend({
-    Model: function(data) {
-      let __events = {};
-      let __stopped = false;
-      let __id = $.uuid();
-      let mod = this;
-      mod.data = undefined;
-      mod.boundViews = [];
+  const dataStore = {
+    id: $.uuid()
+  };
 
-      /**
-       * Views get bound to a model in a view initialization.
-       * When you set a model to a view, it gets bound for auto-rendering.
-       */
-      function updateBoundViews(mod) {
-        /* No bound views, so exit: */
-        if (!mod.boundViews && !mod.boundViews.length) {
-          return;
-        };
+  class Model {
+    constructor (data) {
+      this.id = $.uuid();
+      this[dataStore] = data;
+      this.events = {};
+      this.stopped = false;
+      this.boundViews = [];
+    }
 
-        /** 
-         * Loop thru bound views to render: 
-         */
-        mod.boundViews.forEach(function(view) {
-          view.render();
-        })
+    /**
+     * This method is used internally by the model to update any views bound to it. There is never a situation where you will need to use it. It gets invoked whenever you perform an operation that changes the model's data.
+     */
+    updateBoundViews() {
+      /* No bound views, so exit: */
+      if (!this.boundViews || !this.boundViews.length) {
+        return;
       }
 
-      function createObjectModel(data) {
-
-        return {
-
-          id: __id,
-
-          data: data,
-
-          /**
-           * Set model state to `stopped`. Used to determine whether to execute a model event. 
-           */
-          stop: () => __stopped = true,
-
-          /** 
-           * Set model state to run: 
-           */
-          start: () => __stopped = false,
-
-          /** 
-           * Check if model is stopped; 
-           */
-          isStopped: () => __stopped,
-
-          /** 
-           * Get the value of an object property: 
-           */
-          get: prop => {
-            if (!prop) {
-              return mod.data
-            } else {
-              return mod.data[prop];
-            }
-          },
-
-          /** 
-           * Set the value of an object property: 
-           */
-          set: (prop, data) => {
-            if (!prop) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noPropertyOrDataError)
-              return;
-            } else if (!data) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noPropertyToSet + prop)
-              return;
-            }
-            mod.data[prop] = data;
-            updateBoundViews(mod);
-          },
-
-          /** 
-           * Clear out the model's data: 
-           */
-          purge: () => mod.data = {},
-
-          /**
-           * Merge new object into model's object.
-           * This will replace any existing properties of the same name.
-           */
-          merge: obj => {
-            if (!obj) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noObjectToMerge);
-              return;
-            } else if ($.type(obj) !== 'object') {
-              if ($.supressErrorMessages) return;
-              console.error(erros.incorrectDataForMerging)
-            } else {
-              $.extend(mod.data, obj);
-              updateBoundViews(mod);
-            }
-          },
-
-          /**
-           * Mixin new object into model's object.
-           * This will not replace any existing properties of the same name.
-           * Only new properties will be added.
-           */
-          mixin: obj => {
-            if (!obj) {
-              if ($.supressErrorMessages) return;
-              console.error(erros.noObjForMixin);
-              return;
-            }
-            for (let key in obj) {
-              /** 
-               * Do not replace property if it exists: 
-               */
-              if (!(key in mod.data)) {
-                  mod.data[key] = obj[key];
-                  updateBoundViews(mod);
-              }
-            }
-          },
-
-          remove: prop => {
-            if (!prop) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noPropertyToDelete);
-              return;
-            }
-            delete mod.data[prop];
-            updateBoundViews(mod);
-          },
-
-          events: () => __events,
-
-          on: (event, callback) => {
-            if (__stopped) return;
-            if (!callback) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noCallbackForModelOn);
-              return;
-            } else if (!event) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noEventForModelOn);
-              return;
-            }
-            if (!__events[event]) {
-              __events[event] = [callback];
-            } else {
-              __events[event].push(callback)
-            }
-          },
-
-          trigger: (event, data) => {
-            if (__stopped) return;
-            if (!event) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noEventForModelTrigger);
-              return;
-            }
-            data != undefined ? data : {}
-            __events[event].forEach(item => {
-                item(data);
-            });
-          },
-
-          off: event => {
-            if (!event) {
-              __events = [];
-            } else {
-              let idx = __events.indexOf(event);
-              __events.splice(idx, 1);
-            }
-          },
-
-          removeEventCallback: (event, position) => {
-            if (position === undefined) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noPosForEventDeletion);
-              return;
-            } else if(event === undefined) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noEventForEventDeletion)
-            }
-            __events[event].splice(position, 1);
-          },
-
-          /** 
-           * Clear out the model's data: 
-           */
-          purge: () => mod.data = [],
-
-          replace: (data, renderView) => {
-            if (data) {
-              mod.data = data;
-              if (renderView) updateBoundViews(mod);
-            } else {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noDataToReplaceInModel)
-            }
-          },
-
-          /** 
-           * Array of views bound to this model: 
-           */
-          boundViews: mod.boundViews
-
-        }
-      }
-      if (data) mod.data = data;
-
       /** 
-       * Define an object-based model: 
+       * Loop thru bound views to render: 
        */
-      if ($.type(data) === 'object') {
-        return createObjectModel(data);
+      this.boundViews.forEach(function(view) {
+        view.render();
+      })
+    }
 
-      /** 
-       * Define an array-based model: 
-       */
-      } else if ($.type(data) === 'array') {
-        return {
+    /**
+     * Set model state to `stopped`. Used to determine whether to execute a model event. 
+     */
+    stop() {
+     this.stopped = true
+    }
 
-          id: __id,
+    /** 
+     * Set model state to run: 
+     */
+    start() {
+      this.stopped = false
+    }
 
-          /**
-           * Set model state to `stopped`.
-           * Used to determine whether to execute a model event.
-           */
-          stop: () => __stopped = true,
+    /** 
+     * Check if model is stopped; 
+     */
+    isStopped() {
+      return this.stopped
+    }
 
-          /** 
-           * Set model state to run: 
-           */
-          start: () => __stopped = false,
-
-          /** 
-           * Check if model is stopped; 
-           */
-          isStopped: () => __stopped,
-
-          /** 
-           * Get property value at position: 
-           */
-          getPropAt: (prop, pos) => {
-            if (pos === undefined) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noPosForPropAt);
-              return;
-            } else if (!prop) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noPropForPropAt);
-              return;
-            }
-            return mod.data[pos][prop];
-          },
-
-          /** 
-           * Set the value of a property at position: 
-           */
-          setPropAt: (prop, value, pos) => {
-            if (pos === undefined) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noPosForSetPropAt);
-              return;
-            } else if (!value) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noValueForSetPropAt);
-              return;
-            } else if (!prop) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noPropForSetPropAt);
-              return;
-            }
-            mod.data[pos][prop] = value;
-            updateBoundViews(mod);
-          },
-
-          /** 
-           * Get all of the model's data: 
-           */
-          get: () => {
-            if (!mod.data) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.modelHasNoDataToReturn);
-            } else {
-              return mod.data
-            }
-          },
-
-          push: data => {
-            if (!data) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noDataToPushToModel);
-              return;
-            }
-            mod.data.push(data);
-            updateBoundViews(mod)
-          },
-
-          pop: () => {
-            mod.data.pop();
-            updateBoundViews(mod)
-          },
-
-          unshift: (data) => {
-            if (!data) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noDataForShiftToModel);
-              return;
-            } else {
-              mod.data.unshift(data);
-              updateBoundViews(mod);
-            }
-          },
-
-          /** 
-           * Push an object to the begging of the model: 
-           */
-          shift: () => {
-            mod.data.shift();
-            updateBoundViews(mod)
-          },
-
-          slice: (start, end) => {
-            if (end === undefined) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noEndForModelSlice);
-              return;
-            } else if (start === undefined) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noStartModelForSlice);
-              return;
-            }
-            return mod.data.slice(start, end);
-          },
-
-          splice: (start, end, data) => {
-            if (end === undefined) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noEndForModelSplice);
-              return;
-            } else if (start === undefined) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noStartForModelSplice);
-              return;
-            }
-            if (data) {
-              mod.data.splice(start, end, data);
-              updateBoundViews(mod);
-            } else {
-              mod.data.splice(start, end);
-              updateBoundViews(mod);
-            }
-          },
-
-          insert: (pos, data) => {
-            if (data === undefined) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noDataToInsertInModel);
-              return;
-            } else if (pos === undefined) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noPosToInserInModel);
-              return;
-            }
-            mod.data.splice(pos, 0, data);
-            updateBoundViews(mod);
-          },
-
-          pluck: property => {
-            if (!property) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noPropForPlucking);
-              return;
-            } else {
-              let ret = [];
-              if (mod.data && mod.data.length) {
-                const len = mod.data.length;
-                for (let i = 0; i < len; i++) {
-                  ret.push(mod.data[i][property]);
-                }
-                return ret;
-              }
-            }
-          },
-
-          find: callback => {
-            if (!callback) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noCallbackForModelFind);
-              return;
-            } else {
-              return mod.data.find(callback);
-            }
-          },
-
-          indexOf: callback => {
-            if (!callback) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noCallbackForIndexOf);
-              return;
-            } else {
-              return mod.data.indexOf(callback);
-            }
-          },
-
-          findIndex: callback => {
-            if (!callback) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noCallbackFoFindIndex);
-              return;
-            } else {
-              return mod.data.findIndex(callback);
-            }
-          },
-
-          forEach: (callback) => {
-            if (!callback) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noCallbackForForEach);
-              return;
-            }
-            if (mod.data && mod.data.length) {
-              let value = undefined;
-              let i = -1;
-              const len = mod.data.length;
-              while (++i < len) {
-                value = callback.call(mod.data[i], mod.data[i], i);
-                if (value === false) {
-                  break;
-                }
-              }
-            }
-          },
-
-          filter: (...args) => {
-            if (mod.data && mod.data.length) {
-              return mod.data.filter.apply(mod.data, args);
-            }
-          },
-
-          map: (...args) => {
-            if (mod.data && mod.data.length) {
-              return mod.data.map.apply(mod.data, args);
-            }
-          },
-
-          reverse: () => {
-            if (mod.data && mod.data.length) {
-              mod.data.reverse();
-              updateBoundViews(mod);
-            }
-          },
-
-          sort: (predicate) => {
-            if (mod.data && mod.data.length) {
-              if (predicate) {
-                mod.data.sort(predicate);
-                updateBoundViews(mod);
-              } else {
-                mod.data.sort();
-                updateBoundViews(mod);
-              }
-            }
-          },
-
-          orderBy(...props) {
-            if (!props || !props.length) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noPropsForSortBy);
-              return;
-            }
-            const orderBy = (args) => {
-              return (a, b) => {
-                const sortByProperty = (property) => {
-                  /** 
-                   * Default sort order: 
-                   */
-                  let sortOrder = 1;
-                  /** 
-                   * If user provided property with "-" prefix, make sort order descending: 
-                   */
-                  if (property[0] === "-") {
-                    sortOrder = -1;
-                    /** 
-                     * Extract property from hyphen prefix: 
-                     */
-                    property = property.substr(1);
-                  }
-                  /** 
-                   * Sort objects by provided properties:
-                   */
-                  return (a, b) => {
-                    const result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
-                    return result * sortOrder;
-                  };
-                };
-
-                /** 
-                 * Loop over all properties and sort objects 
-                based on those properties: 
-                */
-                let i = 0;
-                let result = 0;
-                const numberOfProperties = props.length;
-                while (result === 0 && i < numberOfProperties) {
-                  /** 
-                   * Use the private function to compare two values: 
-                   */
-                  result = sortByProperty(props[i])(a, b);
-                  i++;
-                }
-                return result;
-              };
-            };
-            if (mod.data && mod.data.length) {
-              mod.data.sort(orderBy.apply(null, props));
-              updateBoundViews(mod);
-            }
-          },
-
-          concat: data => {
-            if (!data) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noDataToConcat);
-              return;
-            }
-            let temp = mod.data.concat(data);
-            mod.data = temp;
-            updateBoundViews(mod);
-          },
-
-          mixin: data => {
-            if (!data) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noPosForEventDeletion);
-              return;
-            }
-            mod.data.concat(data).unique();
-            updateBoundViews(mod);
-          },
-
-          unique: () => {
-            let temp = mod.data.unique();
-            mod.data = temp;
-            updateBoundViews(mod);
-          },
-
-          events: () => __events,
-
-          on: (event, callback) => {
-            if (__stopped) return;
-            if (!callback) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noCallbackForModelOn);
-              return;
-            } else if (!event) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noEventForModelOn);
-              return;
-            }
-            if (!__events[event]) {
-              __events[event] = [callback];
-            } else {
-              __events[event].push(callback)
-            }
-          },
-
-          trigger: (event, data) => {
-            if (__stopped) return;
-            if (!event) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noEventForModelTrigger);
-              return;
-            }
-            data != undefined ? data : {}
-            __events[event].forEach(item => {
-                item(data);
-            });
-          },
-
-          off: event => {
-            if (!event) {
-              __events = [];
-            } else {
-              let idx = __events.indexOf(event);
-              __events.splice(idx, 1);
-            }
-          },
-
-          removeEventCallback: (event, position) => {
-            if (position === undefined) {
-              console.error(errors.noPosForEventDeletion);
-              return;
-            }
-            __events[event].splice(position, 1);
-          },
-
-          size: () => mod.data.length,
-
-          eq: position => mod.data[position],
-
-          /** 
-           * Clear out the model's data:
-           */
-          purge: () => mod.data = [],
-
-          replace: (data, renderView) => {
-            if (data) {
-              mod.data = data;
-              if (renderView) updateBoundViews(mod);
-            } else {
-              console.error(errors.noDataToReplaceInModel)
-            }
-          },
-
-          /** 
-           * Array of views bound to this model: 
-           */
-          boundViews: mod.boundViews
-        }
-
-      /**
-       * No data was provided, so define a default object-based model: 
-       */
-      } else if (!data) {
-        let data = {}
-        return createObjectModel(data);
+    /** 
+     * Get the value of an object property.
+     * This only works when the model's data is an object.
+     * If used without parameter, will return all data from model, whether object or array. 
+     */
+    get(property) {
+      if (property && $.type(this[dataStore]) === 'object') {
+        return this[dataStore][property];
+      } else {
+        return this[dataStore]
       }
     }
-  })
-})()
+
+    /** 
+     * Set the value of an object property.
+     * This only works when the model's data is an object.
+     */
+    set(property, data) {
+      if (!property) {
+        if ($.supressErrorMessages) return;
+        console.error(errors.noPropertyOrDataError)
+        return;
+      } else if (!data) {
+        if ($.supressErrorMessages) return;
+        console.error(errors.noPropertyToSet + property)
+        return;
+      }
+      if ($.type(this[dataStore]) === 'object') {
+        this[dataStore][property] = data;
+        this.updateBoundViews();
+      }
+    }
+
+    /** 
+     * Clear out the model's data.
+     * Works with models with objects or arrays.
+     */
+    purge() {
+      if ($.type(this[dataStore]) === 'object') {
+        this[dataStore] = {}
+      } else if ($.type(this[dataStore]) === 'array') {
+        this[dataStore] = [];
+      } else {
+        this[dataStore] = undefined;
+      }
+    }
+
+    /**
+     * Merge new object into model's object.
+     * This only works when the model's data is an object.
+     * Will replace any existing properties of the same name.
+     */
+    merge(obj) {
+      if (!obj) {
+        if ($.supressErrorMessages) return;
+        console.error(errors.noObjectToMerge);
+        return;
+      } else if ($.type(obj) !== 'object') {
+        if ($.supressErrorMessages) return;
+        console.error(errors.incorrectDataForMerging)
+      } else if ($.type(this[dataStore]) === 'object') {
+        for (let key in obj) {
+          this[dataStore][key] = obj[key];
+        }
+        this.updateBoundViews();
+      }
+    }
+
+    /**
+     * Mixin new object into model's object.
+     * This only works when the model's data is an object.
+     * This will not replace any existing properties of the same name.
+     * Only new properties will be added.
+     */
+    mixin(data) {
+      if (!data) {
+        if ($.supressErrorMessages) return;
+        console.error(errors.noObjForMixin);
+        return;
+      }
+      if ($.type(this[dataStore]) === 'object') {
+        for (let key in data) {
+          /** 
+           * Do not replace property if it exists: 
+           */
+          if (!(key in this[dataStore])) {
+            this[dataStore][key] = data[key];
+            this.updateBoundViews();
+          }
+        }
+      } else if ($.type(this[dataStore]) === 'array') {
+        this[dataStore].concat(data).unique();
+        this.updateBoundViews();
+      }
+    }
+
+    /**
+     * Replace the data of the model with the provided data.
+     * This works for models of an object or array.
+     */
+    replace(data, renderView) {
+      if (data) {
+        this[dataStore] = data;
+        this.updateBoundViews(this);
+      } else {
+        if ($.supressErrorMessages) return;
+        console.error(errors.noDataToReplaceInModel)
+      }
+    }
+
+    /**
+     * Remove a property from a model's data.
+     * Only works if the data is an object.
+     */
+    remove(prop) {
+      if (!prop) {
+        if ($.supressErrorMessages) return;
+        console.error(errors.noPropertyToDelete);
+        return;
+      }
+      if ($.type(this[dataStore]) !== 'object') return;
+      delete this[dataStore][prop];
+      this.updateBoundViews();
+    }
+
+    /**
+     * Register an event on the model:
+     */
+    on(event, callback) {
+      if (this.stopped) return;
+      if (!callback) {
+        if ($.supressErrorMessages) return;
+        console.error(errors.noCallbackForModelOn);
+        return;
+      } else if (!event) {
+        if ($.supressErrorMessages) return;
+        console.error(errors.noEventForModelOn);
+        return;
+      }
+      if (!this.events[event]) {
+        this.events[event] = [callback];
+      } else {
+        this.events[event].push(callback)
+      }
+    }
+
+    /**
+     * Trigger an event on the model:
+     */
+    trigger(event, data) {
+      if (this.stopped) return;
+      if (!event) {
+        if ($.supressErrorMessages) return;
+        console.error(errors.noEventForModelTrigger);
+        return;
+      }
+      data != undefined ? data : {}
+      this.events[event].forEach(item => {
+          item(data);
+      });
+    }
+
+    /**
+     * Remove an event on the model.
+     * If no event is provided, all events will be removed.
+     */
+    off(event) {
+      if (!event) {
+        this.events = {};
+      } else {
+        delete this.events[event];
+      }
+    }
+
+    /**
+     * Array specific methods:
+     */
+
+    getPropAt(property, position) {
+      if (position === undefined) {
+        if ($.supressErrorMessages) return;
+        console.error(errors.noPosForPropAt);
+        return;
+      } else if (!property) {
+        if ($.supressErrorMessages) return;
+        console.error(errors.noPropForPropAt);
+        return;
+      }
+      if ($.type(this[dataStore]) === 'array') {
+        return this[dataStore][position][property];
+      }
+    }
+
+    setPropAt(property, value, position) {
+      if (position === undefined) {
+        if ($.supressErrorMessages) return;
+        console.error(errors.noPosForSetPropAt);
+        return;
+      } else if (!value) {
+        if ($.supressErrorMessages) return;
+        console.error(errors.noValueForSetPropAt);
+        return;
+      } else if (!property) {
+        if ($.supressErrorMessages) return;
+        console.error(errors.noPropForSetPropAt);
+        return;
+      }
+      if ($.type(this[dataStore]) === 'array') {
+        this[dataStore][position][property] = value;
+        this.updateBoundViews();
+      }
+    }
+
+    push(data) {
+      if (!data) {
+        if ($.supressErrorMessages) return;
+        console.error(errors.noDataToPushToModel);
+        return;
+      }
+      if ($.type(this[dataStore]) === 'array') {
+        this[dataStore].push(data);
+        this.updateBoundViews();
+      }
+    }
+
+    pop() {
+      if ($.type(this[dataStore]) === 'array') {
+        this[dataStore].pop();
+        this.updateBoundViews();
+      }
+    }
+
+    unshift(data) {
+      if (!data) {
+        if ($.supressErrorMessages) return;
+        console.error(errors.noDataForShiftToModel);
+        return;
+      } else if ($.type(this[dataStore]) === 'array') {
+        this[dataStore].unshift(data);
+        this.updateBoundViews();
+      }
+    }
+          
+    shift() {
+      if ($.type(this[dataStore]) === 'array') {
+        this[dataStore].shift();
+        this.updateBoundViews();
+      }
+    }
+
+
+    slice(start, end) {
+      if (end === undefined) {
+        if ($.supressErrorMessages) return;
+        console.error(errors.noEndForModelSlice);
+        return;
+      } else if (start === undefined) {
+        if ($.supressErrorMessages) return;
+        console.error(errors.noStartModelForSlice);
+        return;
+      }
+      if ($.type(this[dataStore]) === 'array') {
+        return this[dataStore].slice(start, end)
+      }
+    }
+
+    splice(start, end, data) {
+      if (end === undefined) {
+        if ($.supressErrorMessages) return;
+        console.error(errors.noEndForModelSplice);
+        return;
+      } else if (start === undefined) {
+        if ($.supressErrorMessages) return;
+        console.error(errors.noStartForModelSplice);
+        return;
+      }
+      if ($.type(this[dataStore]) === 'array' && data) {
+        this[dataStore].splice(start, end, data);
+        this.updateBoundViews();
+      } else if ($.type(this[dataStore]) === 'array') {
+        this[dataStore].splice(start, end);
+        this.updateBoundViews();
+      }
+    }
+
+    /**
+     * Instert an object into the model's array at the designated position:
+     */
+    insert(position, data) {
+      if (data === undefined) {
+        if ($.supressErrorMessages) return;
+        console.error(errors.noDataToInsertInModel);
+        return;
+      } else if (position === undefined) {
+        if ($.supressErrorMessages) return;
+        console.error(errors.noPosToInserInModel);
+        return;
+      }
+      if ($.type(this[dataStore]) === 'array') {
+        this[dataStore].splice(position, 0, data);
+        this.updateBoundViews();
+      }
+    }
+
+    /**
+     * Get an array of the provided property values in the model's array:
+     */
+    pluck(property) {
+      if (!property) {
+        if ($.supressErrorMessages) return;
+        console.error(errors.noPropForPlucking);
+        return;
+      } else {
+        let ret = [];
+        if (this[dataStore] && this[dataStore].length) {
+          const len = this[dataStore].length;
+          for (let i = 0; i < len; i++) {
+            ret.push(this[dataStore][i][property]);
+          }
+          return ret;
+        }
+      }
+    }
+
+    /**
+     * 
+     */
+    indexOf(element, startFrom) {
+      if (!element) {
+        if ($.supressErrorMessages) return;
+        console.error(errors.noElementForIndexOf);
+        return;
+      } else if ($.type(this[dataStore]) === 'array') {
+        return this[dataStore].indexOf(element, startFrom);
+      }
+    }
+
+    /**
+     * This method lets you pass a callback that checks for a property or other state in the array's items and return the match. It returns the first match only.
+     */
+    find(callback) {
+      if (!callback) {
+        if ($.supressErrorMessages) return;
+        console.error(errors.noCallbackForModelFind);
+        return;
+      } else if ($.type(this[dataStore]) === 'array') {
+        return this[dataStore].find(callback);
+      }
+    }
+
+    findIndex(callback) {
+      if (!callback) {
+        if ($.supressErrorMessages) return;
+        console.error(errors.noCallbackFoFindIndex);
+        return;
+      } else if ($.type(this[dataStore]) === 'array') {
+        return this[dataStore].findIndex(callback);
+      }
+    }
+
+    forEach(callback) {
+      if (!callback) {
+        if ($.supressErrorMessages) return;
+        console.error(errors.noCallbackForForEach);
+        return;
+      }
+      if (this[dataStore] && this[dataStore].length) {
+        let value = undefined;
+        let i = -1;
+        const len = this[dataStore].length;
+        while (++i < len) {
+          value = callback.call(this[dataStore][i], this[dataStore][i], i);
+          if (value === false) {
+            break;
+          }
+        }
+      }
+    }
+
+    filter(...args) {
+      if (this[dataStore] && this[dataStore].length) {
+        return this[dataStore].filter.apply(this[dataStore], args);
+      }
+    }
+
+    map(...args) {
+      if (this[dataStore] && this[dataStore].length) {
+        return this[dataStore].map.apply(this[dataStore], args);
+      }
+    }
+
+    reverse() {
+      if (this[dataStore] && this[dataStore].length) {
+        this[dataStore].reverse();
+        this.updateBoundViews();
+      }
+    }
+
+    sort(compareFunction) {
+      if (this[dataStore] && this[dataStore].length) {
+        if (compareFunction) {
+          this[dataStore].sort(compareFunction);
+          this.updateBoundViews();
+        } else {
+          this[dataStore].sort();
+          this.updateBoundViews();
+        }
+      }
+    }
+
+    /**
+     * Sort the model's array based on passed properties. By default the ordering is ascendeing. By prefixing the property with a hyphen, the order will be descending. You can use more than one property separated by commas.
+     */
+    orderBy(...props) {
+      if (!props || !props.length) {
+        if ($.supressErrorMessages) return;
+        console.error(errors.noPropsForSortBy);
+        return;
+      }
+      const orderBy = (args) => {
+        return (a, b) => {
+          const sortByProperty = (property) => {
+            /** 
+             * Default sort order: 
+             */
+            let sortOrder = 1;
+            /** 
+             * If user provided property with "-" prefix, make sort order descending: 
+             */
+            if (property[0] === "-") {
+              sortOrder = -1;
+              /** 
+               * Extract property from hyphen prefix: 
+               */
+              property = property.substr(1);
+            }
+            /** 
+             * Sort objects by provided properties:
+             */
+            return (a, b) => {
+              const result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+              return result * sortOrder;
+            };
+          };
+
+          /** 
+           * Loop over all properties and sort objects based on those properties: 
+           */
+          let i = 0;
+          let result = 0;
+          const numberOfProperties = props.length;
+          while (result === 0 && i < numberOfProperties) {
+            /** 
+             * Use the private function to compare two values: 
+             */
+            result = sortByProperty(props[i])(a, b);
+            i++;
+          }
+          return result;
+        };
+      };
+      if (this[dataStore] && this[dataStore].length) {
+        this[dataStore].sort(orderBy.apply(null, props));
+        this.updateBoundViews();
+      }
+    }
+
+    /**
+     * Concat and array of data to the model's array.
+     * After concating, it will remove any duplicates.
+     */
+    concat(data) {
+      if (!data) {
+        if ($.supressErrorMessages) return;
+        console.error(errors.noDataToConcat);
+        return;
+      }
+      if ($.type(this[dataStore]) === 'array') {
+        let temp = this[dataStore].concat(data);
+        this[dataStore] = temp;
+        this.updateBoundViews();
+      }
+    }
+
+    /**
+     * Remove any duplicates from the model's array:
+     */
+    unique() {
+      if ($.type(this[dataStore]) === 'array') {
+        let temp = this[dataStore].unique();
+        this[dataStore] = temp;
+        this.updateBoundViews();
+      }
+    }
+
+    /**
+     * Get an object out of the model's array based on its index:
+     */
+    eq(position) {
+      if ($.type(this[dataStore]) === 'array') {
+        return this[dataStore][position]
+      }
+    } 
+
+    /**
+     * Get the length of the model's array.
+     * Only works if the data is an array.
+     */
+    size() {
+      if ($.type(this[dataStore]) === 'array') {
+        return this[dataStore].length
+      }
+    }
+  }
+
+  $.extend({
+    Model: function(data) {
+      return new Model(data)
+    }
+  });
+
+})();

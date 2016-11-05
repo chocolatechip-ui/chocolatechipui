@@ -2,7 +2,6 @@
 /**
  * ChocolateChip-UI - View Factory.
  */
-
 (() => {
   const ViewErrorMessages = {
     en: {

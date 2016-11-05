@@ -492,7 +492,7 @@ var DOMStack = function() {
    */
   $.extend({
     lib: "ChocolateChipJS",
-    version: 'VERSION_NUMBER',
+    version: '4.0.1',
     noop: function noop() {},
     uuid: function uuid() {
       var d = Date.now();
@@ -4522,7 +4522,7 @@ if (!Array.prototype.unique) {
       noValueForSetPropAt: "ChocolateChip-UI Model Error: No value or position was provided for setting an object by property in the model collection. Please provide a value and a position.",
       noPropForSetPropAt: "ChocolateChip-UI Model Error: No property, value or position were provided for setting the value of an object in the model collection. Please provide a property, value and position to set on the model.",
       noValueForPropEquals: "ChocolateChip-UI Model Error: No value was provided. With a value, we cannot find a matching object in the model collection. Please provide one"
-    }, _defineProperty(_en, 'noPropForPropEquals', "ChocolateChip-UI Model Error: No property or value were provided. Without these we cannot find a matching object in the model collection. Please provide both of them."), _defineProperty(_en, 'noDataToPushToModel', "ChocolateChip-UI Model Error: No data was provided to push onto the model collection."), _defineProperty(_en, 'noDataForShiftToModel', "ChocolateChip-UI Model Error: No data was provided to insert at the beginning of the model collection."), _defineProperty(_en, 'noEndForModelSlice', "ChocolateChip-UI Model Error: No end value was provided to slice the model collection. Please provide a numeral value."), _defineProperty(_en, 'noStartModelForSlice', "ChocolateChip-UI Model Error: No start value was provided for slicing the model collection. Please provide both a start and end numeral value so that we can slice the model collection for you."), _defineProperty(_en, 'noEndForModelSplice', "ChocolateChip-UI Model Error: No end position was provided to splice the model collection. Please provide one."), _defineProperty(_en, 'noStartForModelSplice', "ChocolateChip-UI Model Error: No start position was provided for splicing the model collection. Please provide a start and end position for splicing the model collection."), _defineProperty(_en, 'noDataToInsertInModel', "ChocolateChip-UI Model Error: No data was provided to insert into the model collection. Was expecting an object, but found nothing. Please provide some an object of data."), _defineProperty(_en, 'noPosToInserInModel', "ChocolateChip-UI Model Error: No position was provided to insert data into the model collection. Please provide a position and some data to insert in the model colleciton."), _defineProperty(_en, 'noPropForPlucking', "ChocolateChip-UI Model Error: No property was provided to pluck from the model collection. Please provide a property."), _defineProperty(_en, 'noCallbackForModelFind', "ChocolateChip-UI Model Error: No callback was provided as an argument for the find on the model collection. Please provide one."), _defineProperty(_en, 'noCallbackForIndexOf', "ChocolateChip-UI Model Error: No callback was provided for finding the index of an object in the model collection. Please provide one."), _defineProperty(_en, 'noDataToConcat', "ChocolateChip-UI Model Error: No data was provided to concat to this model. Did you forget to provide the data?"), _defineProperty(_en, 'noPropsForSortBy', "ChocolateChip-UI Model Error: No property was provided for sorting. Without a property we cannot sort."), _defineProperty(_en, 'noEventForEventDeletion', "ChocolateChip-UI Model Error: No event was provided to delete the callback for this model. Please provide both and event and an array position for the callback. An event can have more than one callback registered to it."), _defineProperty(_en, 'noCallbackForForEach', "ChocolateChip-UI Model Error: No callback was provided for the forEach method. This is required."), _defineProperty(_en, 'noDataToReplaceInModel', "ChocolateChip-UI Model Error: No data was provided to replace the data in the model. If you want to do so, please provide some data to complete this operation. Otherwise, if you are trying to empty the model, use `purge()`."), _defineProperty(_en, 'modelHasNoDataToReturn', "ChocolateChip-UI Model Error: This model has no data associated with it. Perhaps you forgot to give it any data when you created it."), _en),
+    }, _defineProperty(_en, 'noPropForPropEquals', "ChocolateChip-UI Model Error: No property or value were provided. Without these we cannot find a matching object in the model collection. Please provide both of them."), _defineProperty(_en, 'noDataToPushToModel', "ChocolateChip-UI Model Error: No data was provided to push onto the model collection."), _defineProperty(_en, 'noDataForShiftToModel', "ChocolateChip-UI Model Error: No data was provided to insert at the beginning of the model collection."), _defineProperty(_en, 'noEndForModelSlice', "ChocolateChip-UI Model Error: No end value was provided to slice the model collection. Please provide a numeral value."), _defineProperty(_en, 'noStartModelForSlice', "ChocolateChip-UI Model Error: No start value was provided for slicing the model collection. Please provide both a start and end numeral value so that we can slice the model collection for you."), _defineProperty(_en, 'noEndForModelSplice', "ChocolateChip-UI Model Error: No end position was provided to splice the model collection. Please provide one."), _defineProperty(_en, 'noStartForModelSplice', "ChocolateChip-UI Model Error: No start position was provided for splicing the model collection. Please provide a start and end position for splicing the model collection."), _defineProperty(_en, 'noDataToInsertInModel', "ChocolateChip-UI Model Error: No data was provided to insert into the model collection. Was expecting an object, but found nothing. Please provide some an object of data."), _defineProperty(_en, 'noPosToInserInModel', "ChocolateChip-UI Model Error: No position was provided to insert data into the model collection. Please provide a position and some data to insert in the model colleciton."), _defineProperty(_en, 'noPropForPlucking', "ChocolateChip-UI Model Error: No property was provided to pluck from the model collection. Please provide a property."), _defineProperty(_en, 'noCallbackForModelFind', "ChocolateChip-UI Model Error: No callback was provided as an argument for the find on the model collection. Please provide one."), _defineProperty(_en, 'noElementForIndexOf', "ChocolateChip-UI Model Error: No element was provided for finding the index of an object in the model collection. Please provide one."), _defineProperty(_en, 'noDataToConcat', "ChocolateChip-UI Model Error: No data was provided to concat to this model. Did you forget to provide the data?"), _defineProperty(_en, 'noPropsForSortBy', "ChocolateChip-UI Model Error: No property was provided for sorting. Without a property we cannot sort."), _defineProperty(_en, 'noEventForEventDeletion', "ChocolateChip-UI Model Error: No event was provided to delete the callback for this model. Please provide both and event and an array position for the callback. An event can have more than one callback registered to it."), _defineProperty(_en, 'noCallbackForForEach', "ChocolateChip-UI Model Error: No callback was provided for the forEach method. This is required."), _defineProperty(_en, 'noDataToReplaceInModel', "ChocolateChip-UI Model Error: No data was provided to replace the data in the model. If you want to do so, please provide some data to complete this operation. Otherwise, if you are trying to empty the model, use `purge()`."), _defineProperty(_en, 'modelHasNoDataToReturn', "ChocolateChip-UI Model Error: This model has no data associated with it. Perhaps you forgot to give it any data when you created it."), _en),
     es: (_es = {
       noPropertyOrDataError: "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna propiedad ni datos para establecer el valor del modelo.",
       noPropertyToSet: "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ningunos datos para establecer el valor de una propiedad del modelo.",
@@ -4542,603 +4542,622 @@ if (!Array.prototype.unique) {
       noValueForSetPropAt: "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninún valor ni posición para actualizar un objeto en la colección del modelo. Por favor proporcione un valor y una posición.",
       noPropForSetPropAt: "Hubo Error de Modelo ChocolateChip-UI: No se proporcionaron ninunga propiedad, valor ni posición para establecer el valor de un objeto en la colección del modelo. Por favor proporcione una propiedad, valor y posición para actualizar el objeto.",
       noValueForPropEquals: "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ningún valor. Sin algún valor no podemos encontrar a un objeto idéntico en la colección del modelo. Por favor proporcione uno."
-    }, _defineProperty(_es, 'noPropForPropEquals', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna propiedad ni valor. Sin ellos no podemos encontrar un objeto de iqual valor en la colección del modelo. Por favor proporcione los dos."), _defineProperty(_es, 'noDataToPushToModel', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionaron ningunos datos para añadir al fin de la colección del modelo."), _defineProperty(_es, 'noDataForShiftToModel', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninungos datos para agregar al inicio de la colección del modelo."), _defineProperty(_es, 'noEndForModelSlice', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ningún valor final para extraer de la colección del modelo. Por favor proporcione un valor numérico."), _defineProperty(_es, 'noStartModelForSlice', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ningún valor inicial para extraer datos de la colección del modelo. Por favor proporcione un valor numérico inicial así como un final para que podamos extraer los datos de la colección del modelo."), _defineProperty(_es, 'noEndForModelSplice', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna posición final para realizar una acción de «splice» en la colección del modelo. Por favor proporcione una."), _defineProperty(_es, 'noStartForModelSplice', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna posición inicial para realizar una acción de «splice» en la colección del modelo. Por favor proporcione una."), _defineProperty(_es, 'noDataToInsertInModel', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionaron ningunos datos para insertar en la colección del modelo. Se esperaba un objeto, pero no se encontró nada. Por favor proporcione un objeto de datos."), _defineProperty(_es, 'noPosToInserInModel', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna posición para saber en dónde insertar los datos en la colección del modelo. Por favor proporcione una posición de valor numérico y unos datos para insertar en la colección del modelo."), _defineProperty(_es, 'noPropForPlucking', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna propiedad para extraerla de la colección del modelo. Por favor proporcione una propiedad."), _defineProperty(_es, 'noCallbackForModelFind', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna función callback como parámetro a fin de realizar una búsqueda en la colección del modelo. Por favor proporcione una."), _defineProperty(_es, 'noCallbackForIndexOf', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna función callback a fin de averiguar el índice de un objeto en la colección del modelo. Por favor proporcione una."), _defineProperty(_es, 'noDataToConcat', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionaron ningunos datos para concatenar en este modelo. ¿Se le olvidó proporcionar los datos?"), _defineProperty(_es, 'noPropsForSortBy', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna propiedad. Sin una no se puede ordenar los datos del modelo."), _defineProperty(_es, 'noEventForEventDeletion', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ningún evento a fin de eliminar la función callback de este modelo. Por favor proporcione tanto un evento como una posición en la colección para la callback que se quiere eliminar. Es posible que un evento tenga más de una callback registrada a él."), _defineProperty(_es, 'noCallbackForForEach', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna función callback para el método «forEach». Ésta se requiere."), _defineProperty(_es, 'noDataToReplaceInModel', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionaron ningunos datos para reemplazar los del modelo. Si es lo que usted quiere hacer, por favor proporicone unos datos para realizar esta operación. En otro caso, si el propósito de esta operación es el de vaciar el modelo, use `purge()`."), _defineProperty(_es, 'modelHasNoDataToReturn', "Hubo Error de Modelo ChocolateChip-UI: Este modelo no tiene datos suyos. Quizás se le olvidó asignarselos cuando lo creó."), _es)
+    }, _defineProperty(_es, 'noPropForPropEquals', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna propiedad ni valor. Sin ellos no podemos encontrar un objeto de iqual valor en la colección del modelo. Por favor proporcione los dos."), _defineProperty(_es, 'noDataToPushToModel', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionaron ningunos datos para añadir al fin de la colección del modelo."), _defineProperty(_es, 'noDataForShiftToModel', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninungos datos para agregar al inicio de la colección del modelo."), _defineProperty(_es, 'noEndForModelSlice', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ningún valor final para extraer de la colección del modelo. Por favor proporcione un valor numérico."), _defineProperty(_es, 'noStartModelForSlice', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ningún valor inicial para extraer datos de la colección del modelo. Por favor proporcione un valor numérico inicial así como un final para que podamos extraer los datos de la colección del modelo."), _defineProperty(_es, 'noEndForModelSplice', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna posición final para realizar una acción de «splice» en la colección del modelo. Por favor proporcione una."), _defineProperty(_es, 'noStartForModelSplice', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna posición inicial para realizar una acción de «splice» en la colección del modelo. Por favor proporcione una."), _defineProperty(_es, 'noDataToInsertInModel', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionaron ningunos datos para insertar en la colección del modelo. Se esperaba un objeto, pero no se encontró nada. Por favor proporcione un objeto de datos."), _defineProperty(_es, 'noPosToInserInModel', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna posición para saber en dónde insertar los datos en la colección del modelo. Por favor proporcione una posición de valor numérico y unos datos para insertar en la colección del modelo."), _defineProperty(_es, 'noPropForPlucking', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna propiedad para extraerla de la colección del modelo. Por favor proporcione una propiedad."), _defineProperty(_es, 'noCallbackForModelFind', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna función callback como parámetro a fin de realizar una búsqueda en la colección del modelo. Por favor proporcione una."), _defineProperty(_es, 'noElementForIndexOf', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ningun element a fin de averiguar el índice de un objeto en la colección del modelo. Por favor proporcione una."), _defineProperty(_es, 'noDataToConcat', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionaron ningunos datos para concatenar en este modelo. ¿Se le olvidó proporcionar los datos?"), _defineProperty(_es, 'noPropsForSortBy', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna propiedad. Sin una no se puede ordenar los datos del modelo."), _defineProperty(_es, 'noEventForEventDeletion', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ningún evento a fin de eliminar la función callback de este modelo. Por favor proporcione tanto un evento como una posición en la colección para la callback que se quiere eliminar. Es posible que un evento tenga más de una callback registrada a él."), _defineProperty(_es, 'noCallbackForForEach', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna función callback para el método «forEach». Ésta se requiere."), _defineProperty(_es, 'noDataToReplaceInModel', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionaron ningunos datos para reemplazar los del modelo. Si es lo que usted quiere hacer, por favor proporicone unos datos para realizar esta operación. En otro caso, si el propósito de esta operación es el de vaciar el modelo, use `purge()`."), _defineProperty(_es, 'modelHasNoDataToReturn', "Hubo Error de Modelo ChocolateChip-UI: Este modelo no tiene datos suyos. Quizás se le olvidó asignarselos cuando lo creó."), _es)
   };
   var errors = undefined;
   if ($('html').attr('lang') == 'en') errors = ModelErrorMessages.en;
   if ($('html').attr('lang') == 'es') errors = ModelErrorMessages.es;
-  $.extend({
-    Model: function Model(data) {
-      var __events = {};
-      var __stopped = false;
-      var __id = $.uuid();
-      var mod = this;
-      mod.data = undefined;
-      mod.boundViews = [];
-      /**
-       * Views get bound to a model in a view initialization.
-       * When you set a model to a view, it gets bound for auto-rendering.
-       */
-      function updateBoundViews(mod) { /* No bound views, so exit: */
-        if (!mod.boundViews && !mod.boundViews.length) {
-          return;
-        };
-        /** 
-         * Loop thru bound views to render: 
+  var dataStore = {
+    id: $.uuid()
+  };
+  var _Model = function() {
+    function Model(data) {
+      _classCallCheck(this, Model);
+      this.id = $.uuid();
+      this[dataStore] = data;
+      this.events = {};
+      this.stopped = false;
+      this.boundViews = [];
+    }
+    /**
+     * This method is used internally by the model to update any views bound to it. There is never a situation where you will need to use it. It gets invoked whenever you perform an operation that changes the model's data.
+     */
+    _createClass(Model, [{
+      key: 'updateBoundViews',
+      value: function updateBoundViews() { /* No bound views, so exit: */
+          if (!this.boundViews || !this.boundViews.length) {
+            return;
+          }
+          /** 
+           * Loop thru bound views to render: 
+           */
+          this.boundViews.forEach(function(view) {
+            view.render();
+          });
+        }
+        /**
+         * Set model state to `stopped`. Used to determine whether to execute a model event. 
          */
-        mod.boundViews.forEach(function(view) {
-          view.render();
-        });
-      }
-
-      function createObjectModel(data) {
-        var _ref;
-        return _ref = {
-          id: __id,
-          data: data,
-          /**
-           * Set model state to `stopped`. Used to determine whether to execute a model event. 
-           */
-          stop: function stop() {
-            return __stopped = true;
-          },
-          /** 
-           * Set model state to run: 
-           */
-          start: function start() {
-            return __stopped = false;
-          },
-          /** 
-           * Check if model is stopped; 
-           */
-          isStopped: function isStopped() {
-            return __stopped;
-          },
-          /** 
-           * Get the value of an object property: 
-           */
-          get: function get(prop) {
-            if (!prop) {
-              return mod.data;
-            } else {
-              return mod.data[prop];
-            }
-          },
-          /** 
-           * Set the value of an object property: 
-           */
-          set: function set(prop, data) {
-            if (!prop) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noPropertyOrDataError);
-              return;
-            } else if (!data) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noPropertyToSet + prop);
-              return;
-            }
-            mod.data[prop] = data;
-            updateBoundViews(mod);
-          },
-          /** 
-           * Clear out the model's data: 
-           */
-          purge: function purge() {
-            return mod.data = {};
-          },
-          /**
-           * Merge new object into model's object.
-           * This will replace any existing properties of the same name.
-           */
-          merge: function merge(obj) {
-            if (!obj) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noObjectToMerge);
-              return;
-            } else if ($.type(obj) !== 'object') {
-              if ($.supressErrorMessages) return;
-              console.error(erros.incorrectDataForMerging);
-            } else {
-              $.extend(mod.data, obj);
-              updateBoundViews(mod);
-            }
-          },
-          /**
-           * Mixin new object into model's object.
-           * This will not replace any existing properties of the same name.
-           * Only new properties will be added.
-           */
-          mixin: function mixin(obj) {
-            if (!obj) {
-              if ($.supressErrorMessages) return;
-              console.error(erros.noObjForMixin);
-              return;
-            }
+    }, {
+      key: 'stop',
+      value: function stop() {
+          this.stopped = true;
+        }
+        /** 
+         * Set model state to run: 
+         */
+    }, {
+      key: 'start',
+      value: function start() {
+          this.stopped = false;
+        }
+        /** 
+         * Check if model is stopped; 
+         */
+    }, {
+      key: 'isStopped',
+      value: function isStopped() {
+          return this.stopped;
+        }
+        /** 
+         * Get the value of an object property.
+         * This only works when the model's data is an object.
+         * If used without parameter, will return all data from model, whether object or array. 
+         */
+    }, {
+      key: 'get',
+      value: function get(property) {
+          if (property && $.type(this[dataStore]) === 'object') {
+            return this[dataStore][property];
+          } else {
+            return this[dataStore];
+          }
+        }
+        /** 
+         * Set the value of an object property.
+         * This only works when the model's data is an object.
+         */
+    }, {
+      key: 'set',
+      value: function set(property, data) {
+          if (!property) {
+            if ($.supressErrorMessages) return;
+            console.error(errors.noPropertyOrDataError);
+            return;
+          } else if (!data) {
+            if ($.supressErrorMessages) return;
+            console.error(errors.noPropertyToSet + property);
+            return;
+          }
+          if ($.type(this[dataStore]) === 'object') {
+            this[dataStore][property] = data;
+            this.updateBoundViews();
+          }
+        }
+        /** 
+         * Clear out the model's data.
+         * Works with models with objects or arrays.
+         */
+    }, {
+      key: 'purge',
+      value: function purge() {
+          if ($.type(this[dataStore]) === 'object') {
+            this[dataStore] = {};
+          } else if ($.type(this[dataStore]) === 'array') {
+            this[dataStore] = [];
+          } else {
+            this[dataStore] = undefined;
+          }
+        }
+        /**
+         * Merge new object into model's object.
+         * This only works when the model's data is an object.
+         * Will replace any existing properties of the same name.
+         */
+    }, {
+      key: 'merge',
+      value: function merge(obj) {
+          if (!obj) {
+            if ($.supressErrorMessages) return;
+            console.error(errors.noObjectToMerge);
+            return;
+          } else if ($.type(obj) !== 'object') {
+            if ($.supressErrorMessages) return;
+            console.error(errors.incorrectDataForMerging);
+          } else if ($.type(this[dataStore]) === 'object') {
             for (var key in obj) {
+              this[dataStore][key] = obj[key];
+            }
+            this.updateBoundViews();
+          }
+        }
+        /**
+         * Mixin new object into model's object.
+         * This only works when the model's data is an object.
+         * This will not replace any existing properties of the same name.
+         * Only new properties will be added.
+         */
+    }, {
+      key: 'mixin',
+      value: function mixin(data) {
+          if (!data) {
+            if ($.supressErrorMessages) return;
+            console.error(errors.noObjForMixin);
+            return;
+          }
+          if ($.type(this[dataStore]) === 'object') {
+            for (var key in data) {
               /** 
                * Do not replace property if it exists: 
                */
-              if (!(key in mod.data)) {
-                mod.data[key] = obj[key];
-                updateBoundViews(mod);
+              if (!(key in this[dataStore])) {
+                this[dataStore][key] = data[key];
+                this.updateBoundViews();
               }
             }
-          },
-          remove: function remove(prop) {
-            if (!prop) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noPropertyToDelete);
-              return;
-            }
-            delete mod.data[prop];
-            updateBoundViews(mod);
-          },
-          events: function events() {
-            return __events;
-          },
-          on: function on(event, callback) {
-            if (__stopped) return;
-            if (!callback) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noCallbackForModelOn);
-              return;
-            } else if (!event) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noEventForModelOn);
-              return;
-            }
-            if (!__events[event]) {
-              __events[event] = [callback];
-            } else {
-              __events[event].push(callback);
-            }
-          },
-          trigger: function trigger(event, data) {
-            if (__stopped) return;
-            if (!event) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noEventForModelTrigger);
-              return;
-            }
-            data != undefined ? data : {};
-            __events[event].forEach(function(item) {
-              item(data);
-            });
-          },
-          off: function off(event) {
-            if (!event) {
-              __events = [];
-            } else {
-              var idx = __events.indexOf(event);
-              __events.splice(idx, 1);
-            }
-          },
-          removeEventCallback: function removeEventCallback(event, position) {
-            if (position === undefined) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noPosForEventDeletion);
-              return;
-            } else if (event === undefined) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noEventForEventDeletion);
-            }
-            __events[event].splice(position, 1);
+          } else if ($.type(this[dataStore]) === 'array') {
+            this[dataStore].concat(data).unique();
+            this.updateBoundViews();
           }
-        }, _defineProperty(_ref, 'purge', function purge() {
-          return mod.data = [];
-        }), _defineProperty(_ref, 'replace', function replace(data, renderView) {
+        }
+        /**
+         * Replace the data of the model with the provided data.
+         * This works for models of an object or array.
+         */
+    }, {
+      key: 'replace',
+      value: function replace(data, renderView) {
           if (data) {
-            mod.data = data;
-            if (renderView) updateBoundViews(mod);
+            this[dataStore] = data;
+            this.updateBoundViews(this);
           } else {
             if ($.supressErrorMessages) return;
             console.error(errors.noDataToReplaceInModel);
           }
-        }), _defineProperty(_ref, 'boundViews', mod.boundViews), _ref;
-      }
-      if (data) mod.data = data;
-      /** 
-       * Define an object-based model: 
-       */
-      if ($.type(data) === 'object') {
-        return createObjectModel(data);
-        /** 
-         * Define an array-based model: 
-         */
-      } else if ($.type(data) === 'array') {
-        return {
-          id: __id,
-          /**
-           * Set model state to `stopped`.
-           * Used to determine whether to execute a model event.
-           */
-          stop: function stop() {
-            return __stopped = true;
-          },
-          /** 
-           * Set model state to run: 
-           */
-          start: function start() {
-            return __stopped = false;
-          },
-          /** 
-           * Check if model is stopped; 
-           */
-          isStopped: function isStopped() {
-            return __stopped;
-          },
-          /** 
-           * Get property value at position: 
-           */
-          getPropAt: function getPropAt(prop, pos) {
-            if (pos === undefined) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noPosForPropAt);
-              return;
-            } else if (!prop) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noPropForPropAt);
-              return;
-            }
-            return mod.data[pos][prop];
-          },
-          /** 
-           * Set the value of a property at position: 
-           */
-          setPropAt: function setPropAt(prop, value, pos) {
-            if (pos === undefined) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noPosForSetPropAt);
-              return;
-            } else if (!value) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noValueForSetPropAt);
-              return;
-            } else if (!prop) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noPropForSetPropAt);
-              return;
-            }
-            mod.data[pos][prop] = value;
-            updateBoundViews(mod);
-          },
-          /** 
-           * Get all of the model's data: 
-           */
-          get: function get() {
-            if (!mod.data) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.modelHasNoDataToReturn);
-            } else {
-              return mod.data;
-            }
-          },
-          push: function push(data) {
-            if (!data) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noDataToPushToModel);
-              return;
-            }
-            mod.data.push(data);
-            updateBoundViews(mod);
-          },
-          pop: function pop() {
-            mod.data.pop();
-            updateBoundViews(mod);
-          },
-          unshift: function unshift(data) {
-            if (!data) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noDataForShiftToModel);
-              return;
-            } else {
-              mod.data.unshift(data);
-              updateBoundViews(mod);
-            }
-          },
-          /** 
-           * Push an object to the begging of the model: 
-           */
-          shift: function shift() {
-            mod.data.shift();
-            updateBoundViews(mod);
-          },
-          slice: function slice(start, end) {
-            if (end === undefined) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noEndForModelSlice);
-              return;
-            } else if (start === undefined) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noStartModelForSlice);
-              return;
-            }
-            return mod.data.slice(start, end);
-          },
-          splice: function splice(start, end, data) {
-            if (end === undefined) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noEndForModelSplice);
-              return;
-            } else if (start === undefined) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noStartForModelSplice);
-              return;
-            }
-            if (data) {
-              mod.data.splice(start, end, data);
-              updateBoundViews(mod);
-            } else {
-              mod.data.splice(start, end);
-              updateBoundViews(mod);
-            }
-          },
-          insert: function insert(pos, data) {
-            if (data === undefined) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noDataToInsertInModel);
-              return;
-            } else if (pos === undefined) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noPosToInserInModel);
-              return;
-            }
-            mod.data.splice(pos, 0, data);
-            updateBoundViews(mod);
-          },
-          pluck: function pluck(property) {
-            if (!property) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noPropForPlucking);
-              return;
-            } else {
-              var ret = [];
-              if (mod.data && mod.data.length) {
-                var len = mod.data.length;
-                for (var i = 0; i < len; i++) {
-                  ret.push(mod.data[i][property]);
-                }
-                return ret;
-              }
-            }
-          },
-          find: function find(callback) {
-            if (!callback) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noCallbackForModelFind);
-              return;
-            } else {
-              return mod.data.find(callback);
-            }
-          },
-          indexOf: function indexOf(callback) {
-            if (!callback) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noCallbackForIndexOf);
-              return;
-            } else {
-              return mod.data.indexOf(callback);
-            }
-          },
-          findIndex: function findIndex(callback) {
-            if (!callback) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noCallbackFoFindIndex);
-              return;
-            } else {
-              return mod.data.findIndex(callback);
-            }
-          },
-          forEach: function forEach(callback) {
-            if (!callback) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noCallbackForForEach);
-              return;
-            }
-            if (mod.data && mod.data.length) {
-              var value = undefined;
-              var i = -1;
-              var len = mod.data.length;
-              while (++i < len) {
-                value = callback.call(mod.data[i], mod.data[i], i);
-                if (value === false) {
-                  break;
-                }
-              }
-            }
-          },
-          filter: function filter() {
-            for (var _len9 = arguments.length, args = Array(_len9), _key11 = 0; _key11 < _len9; _key11++) {
-              args[_key11] = arguments[_key11];
-            }
-            if (mod.data && mod.data.length) {
-              return mod.data.filter.apply(mod.data, args);
-            }
-          },
-          map: function map() {
-            for (var _len10 = arguments.length, args = Array(_len10), _key12 = 0; _key12 < _len10; _key12++) {
-              args[_key12] = arguments[_key12];
-            }
-            if (mod.data && mod.data.length) {
-              return mod.data.map.apply(mod.data, args);
-            }
-          },
-          reverse: function reverse() {
-            if (mod.data && mod.data.length) {
-              mod.data.reverse();
-              updateBoundViews(mod);
-            }
-          },
-          sort: function sort(predicate) {
-            if (mod.data && mod.data.length) {
-              if (predicate) {
-                mod.data.sort(predicate);
-                updateBoundViews(mod);
-              } else {
-                mod.data.sort();
-                updateBoundViews(mod);
-              }
-            }
-          },
-          orderBy: function orderBy() {
-            for (var _len11 = arguments.length, props = Array(_len11), _key13 = 0; _key13 < _len11; _key13++) {
-              props[_key13] = arguments[_key13];
-            }
-            if (!props || !props.length) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noPropsForSortBy);
-              return;
-            }
-            var orderBy = function orderBy(args) {
-              return function(a, b) {
-                var sortByProperty = function sortByProperty(property) {
-                  /** 
-                   * Default sort order: 
-                   */
-                  var sortOrder = 1;
-                  /** 
-                   * If user provided property with "-" prefix, make sort order descending: 
-                   */
-                  if (property[0] === "-") {
-                    sortOrder = -1;
-                    /** 
-                     * Extract property from hyphen prefix: 
-                     */
-                    property = property.substr(1);
-                  }
-                  /** 
-                   * Sort objects by provided properties:
-                   */
-                  return function(a, b) {
-                    var result = a[property] < b[property] ? -1 : a[property] > b[property] ? 1 : 0;
-                    return result * sortOrder;
-                  };
-                };
-                /** 
-                                 * Loop over all properties and sort objects 
-                                based on those properties: 
-                                */
-                var i = 0;
-                var result = 0;
-                var numberOfProperties = props.length;
-                while (result === 0 && i < numberOfProperties) {
-                  /** 
-                   * Use the private function to compare two values: 
-                   */
-                  result = sortByProperty(props[i])(a, b);
-                  i++;
-                }
-                return result;
-              };
-            };
-            if (mod.data && mod.data.length) {
-              mod.data.sort(orderBy.apply(null, props));
-              updateBoundViews(mod);
-            }
-          },
-          concat: function concat(data) {
-            if (!data) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noDataToConcat);
-              return;
-            }
-            var temp = mod.data.concat(data);
-            mod.data = temp;
-            updateBoundViews(mod);
-          },
-          mixin: function mixin(data) {
-            if (!data) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noPosForEventDeletion);
-              return;
-            }
-            mod.data.concat(data).unique();
-            updateBoundViews(mod);
-          },
-          unique: function unique() {
-            var temp = mod.data.unique();
-            mod.data = temp;
-            updateBoundViews(mod);
-          },
-          events: function events() {
-            return __events;
-          },
-          on: function on(event, callback) {
-            if (__stopped) return;
-            if (!callback) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noCallbackForModelOn);
-              return;
-            } else if (!event) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noEventForModelOn);
-              return;
-            }
-            if (!__events[event]) {
-              __events[event] = [callback];
-            } else {
-              __events[event].push(callback);
-            }
-          },
-          trigger: function trigger(event, data) {
-            if (__stopped) return;
-            if (!event) {
-              if ($.supressErrorMessages) return;
-              console.error(errors.noEventForModelTrigger);
-              return;
-            }
-            data != undefined ? data : {};
-            __events[event].forEach(function(item) {
-              item(data);
-            });
-          },
-          off: function off(event) {
-            if (!event) {
-              __events = [];
-            } else {
-              var idx = __events.indexOf(event);
-              __events.splice(idx, 1);
-            }
-          },
-          removeEventCallback: function removeEventCallback(event, position) {
-            if (position === undefined) {
-              console.error(errors.noPosForEventDeletion);
-              return;
-            }
-            __events[event].splice(position, 1);
-          },
-          size: function size() {
-            return mod.data.length;
-          },
-          eq: function eq(position) {
-            return mod.data[position];
-          },
-          /** 
-           * Clear out the model's data:
-           */
-          purge: function purge() {
-            return mod.data = [];
-          },
-          replace: function replace(data, renderView) {
-            if (data) {
-              mod.data = data;
-              if (renderView) updateBoundViews(mod);
-            } else {
-              console.error(errors.noDataToReplaceInModel);
-            }
-          },
-          /** 
-           * Array of views bound to this model: 
-           */
-          boundViews: mod.boundViews
-        };
+        }
         /**
-         * No data was provided, so define a default object-based model: 
+         * Remove a property from a model's data.
+         * Only works if the data is an object.
          */
-      } else if (!data) {
-        var _data = {};
-        return createObjectModel(_data);
+    }, {
+      key: 'remove',
+      value: function remove(prop) {
+          if (!prop) {
+            if ($.supressErrorMessages) return;
+            console.error(errors.noPropertyToDelete);
+            return;
+          }
+          if ($.type(this[dataStore]) !== 'object') return;
+          delete this[dataStore][prop];
+          this.updateBoundViews();
+        }
+        /**
+         * Register an event on the model:
+         */
+    }, {
+      key: 'on',
+      value: function on(event, callback) {
+          if (this.stopped) return;
+          if (!callback) {
+            if ($.supressErrorMessages) return;
+            console.error(errors.noCallbackForModelOn);
+            return;
+          } else if (!event) {
+            if ($.supressErrorMessages) return;
+            console.error(errors.noEventForModelOn);
+            return;
+          }
+          if (!this.events[event]) {
+            this.events[event] = [callback];
+          } else {
+            this.events[event].push(callback);
+          }
+        }
+        /**
+         * Trigger an event on the model:
+         */
+    }, {
+      key: 'trigger',
+      value: function trigger(event, data) {
+          if (this.stopped) return;
+          if (!event) {
+            if ($.supressErrorMessages) return;
+            console.error(errors.noEventForModelTrigger);
+            return;
+          }
+          data != undefined ? data : {};
+          this.events[event].forEach(function(item) {
+            item(data);
+          });
+        }
+        /**
+         * Remove an event on the model.
+         * If no event is provided, all events will be removed.
+         */
+    }, {
+      key: 'off',
+      value: function off(event) {
+          if (!event) {
+            this.events = {};
+          } else {
+            delete this.events[event];
+          }
+        }
+        /**
+         * Array specific methods:
+         */
+    }, {
+      key: 'getPropAt',
+      value: function getPropAt(property, position) {
+        if (position === undefined) {
+          if ($.supressErrorMessages) return;
+          console.error(errors.noPosForPropAt);
+          return;
+        } else if (!property) {
+          if ($.supressErrorMessages) return;
+          console.error(errors.noPropForPropAt);
+          return;
+        }
+        if ($.type(this[dataStore]) === 'array') {
+          return this[dataStore][position][property];
+        }
       }
+    }, {
+      key: 'setPropAt',
+      value: function setPropAt(property, value, position) {
+        if (position === undefined) {
+          if ($.supressErrorMessages) return;
+          console.error(errors.noPosForSetPropAt);
+          return;
+        } else if (!value) {
+          if ($.supressErrorMessages) return;
+          console.error(errors.noValueForSetPropAt);
+          return;
+        } else if (!property) {
+          if ($.supressErrorMessages) return;
+          console.error(errors.noPropForSetPropAt);
+          return;
+        }
+        if ($.type(this[dataStore]) === 'array') {
+          this[dataStore][position][property] = value;
+          this.updateBoundViews();
+        }
+      }
+    }, {
+      key: 'push',
+      value: function push(data) {
+        if (!data) {
+          if ($.supressErrorMessages) return;
+          console.error(errors.noDataToPushToModel);
+          return;
+        }
+        if ($.type(this[dataStore]) === 'array') {
+          this[dataStore].push(data);
+          this.updateBoundViews();
+        }
+      }
+    }, {
+      key: 'pop',
+      value: function pop() {
+        if ($.type(this[dataStore]) === 'array') {
+          this[dataStore].pop();
+          this.updateBoundViews();
+        }
+      }
+    }, {
+      key: 'unshift',
+      value: function unshift(data) {
+        if (!data) {
+          if ($.supressErrorMessages) return;
+          console.error(errors.noDataForShiftToModel);
+          return;
+        } else if ($.type(this[dataStore]) === 'array') {
+          this[dataStore].unshift(data);
+          this.updateBoundViews();
+        }
+      }
+    }, {
+      key: 'shift',
+      value: function shift() {
+        if ($.type(this[dataStore]) === 'array') {
+          this[dataStore].shift();
+          this.updateBoundViews();
+        }
+      }
+    }, {
+      key: 'slice',
+      value: function slice(start, end) {
+        if (end === undefined) {
+          if ($.supressErrorMessages) return;
+          console.error(errors.noEndForModelSlice);
+          return;
+        } else if (start === undefined) {
+          if ($.supressErrorMessages) return;
+          console.error(errors.noStartModelForSlice);
+          return;
+        }
+        if ($.type(this[dataStore]) === 'array') {
+          return this[dataStore].slice(start, end);
+        }
+      }
+    }, {
+      key: 'splice',
+      value: function splice(start, end, data) {
+          if (end === undefined) {
+            if ($.supressErrorMessages) return;
+            console.error(errors.noEndForModelSplice);
+            return;
+          } else if (start === undefined) {
+            if ($.supressErrorMessages) return;
+            console.error(errors.noStartForModelSplice);
+            return;
+          }
+          if ($.type(this[dataStore]) === 'array' && data) {
+            this[dataStore].splice(start, end, data);
+            this.updateBoundViews();
+          } else if ($.type(this[dataStore]) === 'array') {
+            this[dataStore].splice(start, end);
+            this.updateBoundViews();
+          }
+        }
+        /**
+         * Instert an object into the model's array at the designated position:
+         */
+    }, {
+      key: 'insert',
+      value: function insert(position, data) {
+          if (data === undefined) {
+            if ($.supressErrorMessages) return;
+            console.error(errors.noDataToInsertInModel);
+            return;
+          } else if (position === undefined) {
+            if ($.supressErrorMessages) return;
+            console.error(errors.noPosToInserInModel);
+            return;
+          }
+          if ($.type(this[dataStore]) === 'array') {
+            this[dataStore].splice(position, 0, data);
+            this.updateBoundViews();
+          }
+        }
+        /**
+         * Get an array of the provided property values in the model's array:
+         */
+    }, {
+      key: 'pluck',
+      value: function pluck(property) {
+          if (!property) {
+            if ($.supressErrorMessages) return;
+            console.error(errors.noPropForPlucking);
+            return;
+          } else {
+            var ret = [];
+            if (this[dataStore] && this[dataStore].length) {
+              var len = this[dataStore].length;
+              for (var i = 0; i < len; i++) {
+                ret.push(this[dataStore][i][property]);
+              }
+              return ret;
+            }
+          }
+        }
+        /**
+         * 
+         */
+    }, {
+      key: 'indexOf',
+      value: function indexOf(element, startFrom) {
+          if (!element) {
+            if ($.supressErrorMessages) return;
+            console.error(errors.noElementForIndexOf);
+            return;
+          } else if ($.type(this[dataStore]) === 'array') {
+            return this[dataStore].indexOf(element, startFrom);
+          }
+        }
+        /**
+         * This method lets you pass a callback that checks for a property or other state in the array's items and return the match. It returns the first match only.
+         */
+    }, {
+      key: 'find',
+      value: function find(callback) {
+        if (!callback) {
+          if ($.supressErrorMessages) return;
+          console.error(errors.noCallbackForModelFind);
+          return;
+        } else if ($.type(this[dataStore]) === 'array') {
+          return this[dataStore].find(callback);
+        }
+      }
+    }, {
+      key: 'findIndex',
+      value: function findIndex(callback) {
+        if (!callback) {
+          if ($.supressErrorMessages) return;
+          console.error(errors.noCallbackFoFindIndex);
+          return;
+        } else if ($.type(this[dataStore]) === 'array') {
+          return this[dataStore].findIndex(callback);
+        }
+      }
+    }, {
+      key: 'forEach',
+      value: function forEach(callback) {
+        if (!callback) {
+          if ($.supressErrorMessages) return;
+          console.error(errors.noCallbackForForEach);
+          return;
+        }
+        if (this[dataStore] && this[dataStore].length) {
+          var value = undefined;
+          var i = -1;
+          var len = this[dataStore].length;
+          while (++i < len) {
+            value = callback.call(this[dataStore][i], this[dataStore][i], i);
+            if (value === false) {
+              break;
+            }
+          }
+        }
+      }
+    }, {
+      key: 'filter',
+      value: function filter() {
+        if (this[dataStore] && this[dataStore].length) {
+          for (var _len9 = arguments.length, args = Array(_len9), _key11 = 0; _key11 < _len9; _key11++) {
+            args[_key11] = arguments[_key11];
+          }
+          return this[dataStore].filter.apply(this[dataStore], args);
+        }
+      }
+    }, {
+      key: 'map',
+      value: function map() {
+        if (this[dataStore] && this[dataStore].length) {
+          for (var _len10 = arguments.length, args = Array(_len10), _key12 = 0; _key12 < _len10; _key12++) {
+            args[_key12] = arguments[_key12];
+          }
+          return this[dataStore].map.apply(this[dataStore], args);
+        }
+      }
+    }, {
+      key: 'reverse',
+      value: function reverse() {
+        if (this[dataStore] && this[dataStore].length) {
+          this[dataStore].reverse();
+          this.updateBoundViews();
+        }
+      }
+    }, {
+      key: 'sort',
+      value: function sort(compareFunction) {
+          if (this[dataStore] && this[dataStore].length) {
+            if (compareFunction) {
+              this[dataStore].sort(compareFunction);
+              this.updateBoundViews();
+            } else {
+              this[dataStore].sort();
+              this.updateBoundViews();
+            }
+          }
+        }
+        /**
+         * Sort the model's array based on passed properties. By default the ordering is ascendeing. By prefixing the property with a hyphen, the order will be descending. You can use more than one property separated by commas.
+         */
+    }, {
+      key: 'orderBy',
+      value: function orderBy() {
+          for (var _len11 = arguments.length, props = Array(_len11), _key13 = 0; _key13 < _len11; _key13++) {
+            props[_key13] = arguments[_key13];
+          }
+          if (!props || !props.length) {
+            if ($.supressErrorMessages) return;
+            console.error(errors.noPropsForSortBy);
+            return;
+          }
+          var orderBy = function orderBy(args) {
+            return function(a, b) {
+              var sortByProperty = function sortByProperty(property) {
+                /** 
+                 * Default sort order: 
+                 */
+                var sortOrder = 1;
+                /** 
+                 * If user provided property with "-" prefix, make sort order descending: 
+                 */
+                if (property[0] === "-") {
+                  sortOrder = -1;
+                  /** 
+                   * Extract property from hyphen prefix: 
+                   */
+                  property = property.substr(1);
+                }
+                /** 
+                 * Sort objects by provided properties:
+                 */
+                return function(a, b) {
+                  var result = a[property] < b[property] ? -1 : a[property] > b[property] ? 1 : 0;
+                  return result * sortOrder;
+                };
+              };
+              /** 
+               * Loop over all properties and sort objects based on those properties: 
+               */
+              var i = 0;
+              var result = 0;
+              var numberOfProperties = props.length;
+              while (result === 0 && i < numberOfProperties) {
+                /** 
+                 * Use the private function to compare two values: 
+                 */
+                result = sortByProperty(props[i])(a, b);
+                i++;
+              }
+              return result;
+            };
+          };
+          if (this[dataStore] && this[dataStore].length) {
+            this[dataStore].sort(orderBy.apply(null, props));
+            this.updateBoundViews();
+          }
+        }
+        /**
+         * Concat and array of data to the model's array.
+         * After concating, it will remove any duplicates.
+         */
+    }, {
+      key: 'concat',
+      value: function concat(data) {
+          if (!data) {
+            if ($.supressErrorMessages) return;
+            console.error(errors.noDataToConcat);
+            return;
+          }
+          if ($.type(this[dataStore]) === 'array') {
+            var temp = this[dataStore].concat(data);
+            this[dataStore] = temp;
+            this.updateBoundViews();
+          }
+        }
+        /**
+         * Remove any duplicates from the model's array:
+         */
+    }, {
+      key: 'unique',
+      value: function unique() {
+          if ($.type(this[dataStore]) === 'array') {
+            var temp = this[dataStore].unique();
+            this[dataStore] = temp;
+            this.updateBoundViews();
+          }
+        }
+        /**
+         * Get an object out of the model's array based on its index:
+         */
+    }, {
+      key: 'eq',
+      value: function eq(position) {
+          if ($.type(this[dataStore]) === 'array') {
+            return this[dataStore][position];
+          }
+        }
+        /**
+         * Get the length of the model's array.
+         * Only works if the data is an array.
+         */
+    }, {
+      key: 'size',
+      value: function size() {
+        if ($.type(this[dataStore]) === 'array') {
+          return this[dataStore].length;
+        }
+      }
+    }]);
+    return Model;
+  }();
+  $.extend({
+    Model: function Model(data) {
+      return new _Model(data);
     }
   });
 })();

@@ -141,6 +141,7 @@ gulp.task('chui-box', function() {
     .pipe(babel({
       presets: ['es2015']
     }))
+    .pipe(replaceWith('VERSION_NUMBER', pkg.version))
     .pipe(beautify({indentSize: 2}))
     .pipe(gulp.dest('./dist'))
     .pipe(uglify())
