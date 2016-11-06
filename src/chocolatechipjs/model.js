@@ -31,7 +31,7 @@
       noEndForModelSplice: "ChocolateChip-UI Model Error: No end position was provided to splice the model collection. Please provide one.",
       noStartForModelSplice: "ChocolateChip-UI Model Error: No start position was provided for splicing the model collection. Please provide a start and end position for splicing the model collection.",
       noDataToInsertInModel: "ChocolateChip-UI Model Error: No data was provided to insert into the model collection. Was expecting an object, but found nothing. Please provide some an object of data.",
-      noPosToInserInModel: "ChocolateChip-UI Model Error: No position was provided to insert data into the model collection. Please provide a position and some data to insert in the model colleciton.",
+      noPosToInserInModel: "ChocolateChip-UI Model Error: No position was provided to insert data into the model collection. Please provide a position and some data to insert in the model colleciton. The first argument should be a numerical value for the position, followed by the data to insert.",
       noPropForPlucking: "ChocolateChip-UI Model Error: No property was provided to pluck from the model collection. Please provide a property.",
       noCallbackForModelFind: "ChocolateChip-UI Model Error: No callback was provided as an argument for the find on the model collection. Please provide one.",
       noElementForIndexOf: "ChocolateChip-UI Model Error: No element was provided for finding the index of an object in the model collection. Please provide one.",
@@ -69,7 +69,7 @@
       noEndForModelSplice: "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna posición final para realizar una acción de «splice» en la colección del modelo. Por favor proporcione una.",
       noStartForModelSplice: "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna posición inicial para realizar una acción de «splice» en la colección del modelo. Por favor proporcione una.",
       noDataToInsertInModel: "Hubo Error de Modelo ChocolateChip-UI: No se proporcionaron ningunos datos para insertar en la colección del modelo. Se esperaba un objeto, pero no se encontró nada. Por favor proporcione un objeto de datos.",
-      noPosToInserInModel: "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna posición para saber en dónde insertar los datos en la colección del modelo. Por favor proporcione una posición de valor numérico y unos datos para insertar en la colección del modelo.",
+      noPosToInserInModel: "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna posición para saber en dónde insertar los datos en la colección del modelo. Por favor proporcione una posición de valor numérico y unos datos para insertar en la colección del modelo. El primer argumento debe de ser un valor numérico para la posición, y entonces unos datos que insertar.",
       noPropForPlucking: "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna propiedad para extraerla de la colección del modelo. Por favor proporcione una propiedad.",
       noCallbackForModelFind: "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna función callback como parámetro a fin de realizar una búsqueda en la colección del modelo. Por favor proporcione una.",
       noElementForIndexOf: "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ningun element a fin de averiguar el índice de un objeto en la colección del modelo. Por favor proporcione una.",
@@ -417,6 +417,7 @@
         this[dataStore].splice(start, end, data);
         this.updateBoundViews();
       } else if ($.type(this[dataStore]) === 'array') {
+        if(!start || !end) return;
         this[dataStore].splice(start, end);
         this.updateBoundViews();
       }
@@ -430,12 +431,13 @@
         if ($.supressErrorMessages) return;
         console.error(errors.noDataToInsertInModel);
         return;
-      } else if (position === undefined) {
+      } else if (position === undefined || $.type(position) !== 'number') {
         if ($.supressErrorMessages) return;
         console.error(errors.noPosToInserInModel);
         return;
       }
       if ($.type(this[dataStore]) === 'array') {
+        if ($.type(position) !== 'number') return;
         this[dataStore].splice(position, 0, data);
         this.updateBoundViews();
       }
