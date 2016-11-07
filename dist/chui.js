@@ -492,7 +492,7 @@ var DOMStack = function() {
    */
   $.extend({
     lib: "ChocolateChipJS",
-    version: '4.0.2',
+    version: '4.0.3',
     noop: function noop() {},
     uuid: function uuid() {
       var d = Date.now();
@@ -3613,6 +3613,7 @@ $.extend({
             });
             __model.boundViews.splice(pos, 1);
           }
+          __model = undefined;
         },
         getModel: function getModel() {
           if (__model) {

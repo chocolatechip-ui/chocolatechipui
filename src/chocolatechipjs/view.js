@@ -394,6 +394,7 @@
             })
             __model.boundViews.splice(pos,1);
           }
+          __model = undefined;
         },
 
         getModel() {
