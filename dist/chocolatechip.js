@@ -4878,7 +4878,7 @@ if (!Array.prototype.unique) {
           if ($.supressErrorMessages) return;
           console.error(errors.noPropForSetPropAt);
           return;
-        } else if (!value) {
+        } else if (value === undefined) {
           if ($.supressErrorMessages) return;
           console.error(errors.noValueForSetPropAt);
           return;
