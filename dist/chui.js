@@ -4775,7 +4775,7 @@ if (!Array.prototype.unique) {
          */
     }, {
       key: 'replace',
-      value: function replace(data, renderView) {
+      value: function replace(data) {
           if (data) {
             this[dataStore] = data;
             this.updateBoundViews(this);
@@ -4807,13 +4807,13 @@ if (!Array.prototype.unique) {
       key: 'on',
       value: function on(event, callback) {
           if (this.stopped) return;
-          if (!callback) {
-            if ($.supressErrorMessages) return;
-            console.error(errors.noCallbackForModelOn);
-            return;
-          } else if (!event) {
+          if (!event) {
             if ($.supressErrorMessages) return;
             console.error(errors.noEventForModelOn);
+            return;
+          } else if (!callback) {
+            if ($.supressErrorMessages) return;
+            console.error(errors.noCallbackForModelOn);
             return;
           }
           if (!this.events[event]) {
@@ -4858,13 +4858,13 @@ if (!Array.prototype.unique) {
     }, {
       key: 'getPropAt',
       value: function getPropAt(property, position) {
-        if (position === undefined) {
-          if ($.supressErrorMessages) return;
-          console.error(errors.noPosForPropAt);
-          return;
-        } else if (!property) {
+        if (!property) {
           if ($.supressErrorMessages) return;
           console.error(errors.noPropForPropAt);
+          return;
+        } else if (position === undefined) {
+          if ($.supressErrorMessages) return;
+          console.error(errors.noPosForPropAt);
           return;
         }
         if ($.type(this[dataStore]) === 'array') {
@@ -4874,17 +4874,17 @@ if (!Array.prototype.unique) {
     }, {
       key: 'setPropAt',
       value: function setPropAt(property, value, position) {
-        if (position === undefined) {
+        if (!property) {
           if ($.supressErrorMessages) return;
-          console.error(errors.noPosForSetPropAt);
+          console.error(errors.noPropForSetPropAt);
           return;
         } else if (!value) {
           if ($.supressErrorMessages) return;
           console.error(errors.noValueForSetPropAt);
           return;
-        } else if (!property) {
+        } else if (position === undefined) {
           if ($.supressErrorMessages) return;
-          console.error(errors.noPropForSetPropAt);
+          console.error(errors.noPosForSetPropAt);
           return;
         }
         if ($.type(this[dataStore]) === 'array') {

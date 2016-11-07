@@ -237,7 +237,7 @@
      * Replace the data of the model with the provided data.
      * This works for models of an object or array.
      */
-    replace(data, renderView) {
+    replace(data) {
       if (data) {
         this[dataStore] = data;
         this.updateBoundViews(this);
@@ -267,15 +267,15 @@
      */
     on(event, callback) {
       if (this.stopped) return;
-      if (!callback) {
-        if ($.supressErrorMessages) return;
-        console.error(errors.noCallbackForModelOn);
-        return;
-      } else if (!event) {
+      if (!event) {
         if ($.supressErrorMessages) return;
         console.error(errors.noEventForModelOn);
         return;
-      }
+      } else if (!callback) {
+        if ($.supressErrorMessages) return;
+        console.error(errors.noCallbackForModelOn);
+        return;
+      } 
       if (!this.events[event]) {
         this.events[event] = [callback];
       } else {
@@ -316,34 +316,34 @@
      */
 
     getPropAt(property, position) {
-      if (position === undefined) {
-        if ($.supressErrorMessages) return;
-        console.error(errors.noPosForPropAt);
-        return;
-      } else if (!property) {
+      if (!property) {
         if ($.supressErrorMessages) return;
         console.error(errors.noPropForPropAt);
         return;
-      }
+      } else if (position === undefined) {
+        if ($.supressErrorMessages) return;
+        console.error(errors.noPosForPropAt);
+        return;
+      } 
       if ($.type(this[dataStore]) === 'array') {
         return this[dataStore][position][property];
       }
     }
 
     setPropAt(property, value, position) {
-      if (position === undefined) {
+      if (!property) {
         if ($.supressErrorMessages) return;
-        console.error(errors.noPosForSetPropAt);
+        console.error(errors.noPropForSetPropAt);
         return;
       } else if (!value) {
         if ($.supressErrorMessages) return;
         console.error(errors.noValueForSetPropAt);
         return;
-      } else if (!property) {
+      } else if (position === undefined) {
         if ($.supressErrorMessages) return;
-        console.error(errors.noPropForSetPropAt);
+        console.error(errors.noPosForSetPropAt);
         return;
-      }
+      } 
       if ($.type(this[dataStore]) === 'array') {
         this[dataStore][position][property] = value;
         this.updateBoundViews();
