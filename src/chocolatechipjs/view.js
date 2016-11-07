@@ -345,7 +345,7 @@
         },
 
         setElement(element) {
-          if (!__element) {
+          if (!element) {
             if ($.supressErrorMessages) return;
             console.error(errors.noElementForView)
             return;
