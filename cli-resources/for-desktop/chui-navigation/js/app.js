@@ -24,7 +24,7 @@ $(function() {
   //=============
   var App = {
     VIPView: $.View({
-      element: "#arrayTemplate1", 
+      element: "#navigationList", 
       model: LumsModel,
       startIndexFrom: 1,
       events: [{

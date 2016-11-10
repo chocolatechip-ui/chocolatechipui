@@ -1,5 +1,5 @@
 export const VIPView = $.View({
-  element: "#arrayTemplate1",
+  element: "#navigationList",
   startIndexFrom: 1,
   events: [{
     event: "tap",
