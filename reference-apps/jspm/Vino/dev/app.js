@@ -6,8 +6,6 @@ import {wines} from '../data/californiaWines';
 import {wineRoute} from './routes/router';
 import {searchPanelInit} from './controllers/search/searchPanelInit';
 import {searchPanelControlsSetup} from './controllers/search/searchPanelControlsSetup';
-import {showChosenSearchParameters} from './controllers/search/showChosenSearchParameters';
-import {searchParameters} from './controllers/search/searchParameters';
 import {handleWineSearch} from './controllers/search/handleWineSearch';
 import {handlePurchaseProgressBar} from './controllers/purchase/handlePurchaseProgressBar';
 import {handlePurchase} from './controllers/purchase/handlePurchase';
