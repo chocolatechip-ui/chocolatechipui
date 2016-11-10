@@ -19,7 +19,6 @@ var replace = require('replace-in-file');
 var replaceWith = require('gulp-replace');
 var cssnano = require('gulp-cssnano');
 var sourcemaps = require('gulp-sourcemaps');
-var cleanCSS = require('gulp-clean-css');
 
 //Add Trailing slash to projectPath if not exists.
 if (pkg.projectPath !== "")
@@ -153,7 +152,7 @@ gulp.task('chui-box', function() {
 gulp.task('minify-android-css', function() {
   return gulp.src('./src/css/chui-android.css')
     .pipe(sourcemaps.init())
-    .pipe(cleanCSS({advanced: true, aggressiveMerging: true}))
+    .pipe(cssnano({advanced: true, aggressiveMerging: true}))
     .pipe(rename('chui-android.min.css'))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('dist/css'));
@@ -161,7 +160,7 @@ gulp.task('minify-android-css', function() {
 gulp.task('minify-ios-css', function() {
   return gulp.src('./src/css/chui-ios.css')
     .pipe(sourcemaps.init())
-    .pipe(cleanCSS({advanced: true, aggressiveMerging: true}))
+    .pipe(cssnano({advanced: true, aggressiveMerging: true}))
     .pipe(rename('chui-ios.min.css'))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('dist/css'));

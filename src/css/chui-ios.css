@@ -145,8 +145,8 @@ section {
   overflow-y: scroll;
   padding: 10px 0;
   padding-bottom: 45px;
-  -webkit-flex: 1;
   flex: 1;
+  -webkit-flex: 1;
   height: 100%;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -165,22 +165,22 @@ nav {
   height: 45px;
   border-bottom: solid 2px #ccc;
   background-color: #eee;
-  display: -webkit-flex;
-  -webkit-flex-direction: row;
-  -webkit-align-items: center;
-  -webkit-justify-content: space-between;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  display: -webkit-flex;
+  -webkit-flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-justify-content: space-between;
   padding: 0 10px;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 nav > h1 {
   margin: 0;
-  -webkit-flex: 1;
   flex: 1;
+  -webkit-flex: 1;
   text-align: center;
   white-space: nowrap;
   overflow: hidden;
@@ -244,28 +244,28 @@ ul.list > li > div + div {
   margin-left: 10px;
 }
 ul.list > li > div {
-  -webkit-flex: 1;
   flex: 1;
+  -webkit-flex: 1;
 }
 ul.list > li > div.no-flex {
-  -webkit-flex: none !important;
   flex: none !important;
+  -webkit-flex: none !important;
 }
 ul.list > li > div.auto-width {
-  -webkit-flex: none;
   flex: none;
+  -webkit-flex: none;
   width: auto;
 }
 li > div:not(:first-child) {
   margin-left: 10px;
 }
 ul.list > li > h3 {
-  -webkit-flex: 2;
   flex: 2;
+  -webkit-flex: 2;
 }
 ul.list > li > h4 {
-  -webkit-flex: 1;
   flex: 1;
+  -webkit-flex: 1;
   text-align: right;
 }
 ul.list > li.center-vertical {
@@ -466,12 +466,14 @@ button.backTo {
   color: #007aff;
   border: none;
   position: relative;
-  display: -moz-flex;
   display: flex;
-  -moz-flex-direction: row;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  display: -webkit-flex;
+  -webkit-flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-justify-content: space-between;
   height: 30px;
   width: auto;
 }
@@ -564,16 +566,16 @@ tabbar > button {
   padding: 1px;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  display: -webkit-flex;
-  -webkit-flex-direction: column;
-  -webkit-justify-content: center;
-  -webkit-align-items: center;
-  -webkit-flex: 1 !important;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   flex: 1 !important;
+  display: -webkit-flex;
+  -webkit-flex-direction: column;
+  -webkit-justify-content: center;
+  -webkit-align-items: center;
+  -webkit-flex: 1 !important;
   font-size: 9pt;
 }
 tabbar > button > label {
@@ -652,6 +654,7 @@ slideout > section {
   padding: 10px 0;
   padding-bottom: 45px;
   flex: 1;
+  -webkit-flex: 1;
   height: 100%;
   width: 100%;
   -webkit-box-sizing: border-box;
@@ -1009,7 +1012,7 @@ li input[type=radio] {
 }
 html[dir=rtl] label + input {
   margin-left: 0;
-  margin-right: 10px;ß
+  margin-right: 10px;
 }
 
 /*=============*/
@@ -1341,9 +1344,9 @@ html[dir=rtl] switch.checked > em {
 }
 .dialog footer > button {
   display: block;
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
   flex: 1;
+  -webkit-flex: 1;
+  -webkit-box-flex: 1;
   margin: 0;
   height: 100%;
   line-height: 30pt;
@@ -1393,9 +1396,9 @@ html[dir=rtl] .dialog footer > button + button {
   -webkit-box-align: center;
   -webkit-align-items: center;
   align-items: center;
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
   flex: 1;
+  -webkit-flex: 1;
+  -webkit-box-flex: 1;
   text-align: center;
   color: #007aff;
 }
@@ -1418,9 +1421,9 @@ div.horizontal.centered > .segmented {
   display: flex;
   display: -webkit-flex;
   display: -webkit-box;
+  flex: 1;
   -webkit-box-flex: 1;
   -webkit-flex: 1;
-  flex: 1;
   margin: 10px 15px;
 }
 html[dir=rtl] .segmented > button:first-of-type {

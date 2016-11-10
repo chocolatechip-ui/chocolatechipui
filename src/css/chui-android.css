@@ -24,6 +24,10 @@ body {
   flex-direction: column;
   align-items: stretch;
   justify-content: center;
+  display: -webkit-flex;
+  -webkit-flex-direction: column;
+  -webkit-align-items: stretch;
+  -webkit-justify-content: center;
 }
 template {
   display: none;
@@ -96,10 +100,10 @@ body, screen {
   background-color: #fafafa;
 }
 screen {
-  display: -webkit-flex;
-  -webkit-flex-direction: column;
   display: flex;
   flex-direction: column;
+  display: -webkit-flex;
+  -webkit-flex-direction: column;
   -webkit-transition: all .25s ease-out;
   transition: all .25s ease-out;
   box-shadow: -10px 0 10px 1px rgba(0, 0, 0, .1);
@@ -131,14 +135,12 @@ section {
   overflow-y: scroll;
   padding: 20px 0 45px;
   flex: 1;
+  -webkit-flex: 1;
   height: 100%;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   -webkit-overflow-scrolling: touch;
-  -ms-overflow-style: -ms-autohiding-scrollbar;
-  overflow-style: autohiding-scrollbar;
-  -ms-scroll-chaining: none;
-  scroll-chaining: none;
+  overflow-scrolling: touch;
   background-color: #fafafa;
 }
 
@@ -152,10 +154,6 @@ nav {
   background-color: #eee;
   position: relative;
   z-index: 100;
-  display: -webkit-flex;
-  -webkit-flex-direction: row;
-  -webkit-align-items: center;
-  -webkit-justify-content: start;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -426,29 +424,22 @@ footer, toolbar {
   height: 50px;
   padding: 0 15px;
   -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   box-sizing: border-box;
-  display: -moz-box;
   display: flex;
   display: -webkit-flex;
   display: -webkit-box;
   -webkit-box-orient: horizontal;
-  -moz-box-orient: horizontal;
   -webkit-flex-direction: row;
   flex-direction: row;
-  -moz-box-pack: start;
   -webkit-justify-content: start;
   justify-content: flex-start;
   -webkit-box-align: center;
-  -moz-box-align: center;
   -webkit-align-items: center;
   align-items: center;
   display: -webkit-box !important;
   -webkit-transition: all 0.45s ease-out;
-  -moz-transition: all 0.45s ease-out;
   transition: all 0.45s ease-out;
   -webkit-transform: translate3d(0, 0, 0);
-  -moz-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
   padding: 0 16px;
   vertical-align: middle;
@@ -470,19 +461,15 @@ button {
   display: -webkit-inline-flex;
   display: inline-flex;
   -webkit-box-orient: horizontal;
-  -moz-box-orient: horizontal;
   -webkit-flex-direction: row;
   flex-direction: row;
-  -moz-box-pack: center;
   -webkit-justify-content: center;
   justify-content: center;
   -webkit-box-align: center;
-  -moz-box-align: center;
   -webkit-align-items: center;
   align-items: center;
   height: 40px;
   -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
   -webkit-user-select: none;
@@ -499,7 +486,6 @@ button {
   font-size: 12px;
   border-radius: 2px;
   -webkit-transition: all 0.35s ease-out;
-  -moz-transition: all 0.35s ease-out;
   transition: all 0.35s ease-out;
   -webkit-animation-duration: 0.35s;
   -webkit-animation-timing-function: ease-out;
@@ -807,6 +793,7 @@ slideout > section {
   overflow-y: scroll;
   padding: 10px 0;
   padding-bottom: 45px;
+  -webkit-flex: 1;
   flex: 1;
   height: 100%;
   width: 100%;
@@ -988,7 +975,6 @@ html[dir=rtl] button.slide-out-button {
   display: flex;
   display: -webkit-flex;
   display: -webkit-box;
-  -moz-box-orient: vertical;
   -webkit-flex-direction: column;
   flex-direction: column;
   -webkit-justify-content: center;
@@ -1218,7 +1204,7 @@ label + input {
 }
 html[dir=rtl] label + input {
   margin-left: 0;
-  margin-right: 10px;ß
+  margin-right: 10px;
 }
 /*=============*/
 /* Select List */
@@ -1310,19 +1296,15 @@ switch {
   display: inline-block;
   width: 40px;
   height: 20px;
-  display: -moz-box;
   display: inline-flex;
   display: -webkit-inline-flex;
   display: -webkit-box;
   -webkit-box-orient: horizontal;
-  -moz-box-orient: horizontal;
   -webkit-flex-direction: row;
   flex-direction: row;
-  -moz-box-pack: justify;
   -webkit-justify-content: distribute;
   justify-content: space-around;
   -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   box-sizing: border-box;
   background-image: -webkit-linear-gradient(left, #66afff, #66afff), -webkit-linear-gradient(left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
   background-image: linear-gradient(to left, #66afff, #66afff), linear-gradient(to left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
@@ -1343,7 +1325,6 @@ switch {
   animation-timing-function: ease-in-out;
   animation-fill-mode: forwards;
   -webkit-transition: all 0.1s ease-out;
-  -moz-transition: all 0.1s ease-out;
   transition: all 0.1s ease-out;
   position: relative;
 }
@@ -1380,7 +1361,6 @@ switch.traditional.checked {
 }
 switch.traditional.checked > em {
   -webkit-transform: translate3d(36px, 0, 0);
-  -moz-transform: translate3d(36px, 0, 0);
   transform: translate3d(36px, 0, 0);
   background-color: #007aff;
   border: solid 1px #007aff;
@@ -1393,7 +1373,6 @@ switch > input {
 }
 html[dir=rtl] switch.checked > em {
   -webkit-transform: translate3d(-20px, 0, 0);
-  -moz-transform: translate3d(-20px, 0, 0);
   transform: translate3d(-20px, 0, 0);
 }
 
@@ -1455,7 +1434,6 @@ html[dir=rtl] switch.checked > em {
   min-height: 100px;
   z-index: 11111111111;
   -webkit-transition: all 0.25s ease-in-out;
-  -moz-transition: all 0.25s ease-in-out;
   transition: all 0.25s ease-in-out;
   -webkit-transform: scale(0);
   transform: scale(0);
@@ -1541,11 +1519,9 @@ html[dir=rtl] .dialog footer > button + button {
 .popup > .dialog > footer > button.selected {
   display: block !important;
   -webkit-box-flex: 1 !important;
-  -moz-box-flex: 1 !important;
   -webkit-flex: 1 !important;
   flex: 1 !important;
   -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   box-sizing: border-box;
   height: 100%;
   line-height: 30pt;
@@ -1571,23 +1547,18 @@ html[dir=rtl] .dialog footer > button + button {
 /* Segmented Control */
 /*===================*/
 .segmented {
-  display: -moz-box;
   display: inline-flex;
   display: -webkit-inline-flex;
   display: -webkit-box;
   -webkit-box-orient: horizontal;
-  -moz-box-orient: horizontal;
   -webkit-flex-direction: row;
   flex-direction: row;
-  -moz-box-pack: center;
   -webkit-justify-content: center;
   justify-content: center;
   -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   box-sizing: border-box;
   margin: 0px 10px;
   -webkit-box-flex: 1 !important;
-  -moz-box-flex: 1 !important;
   -webkit-flex: 1 !important;
   flex: 1 !important;
   height: auto;
@@ -1616,19 +1587,15 @@ html[dir=rtl] .dialog footer > button + button {
   animation-duration: .5s;
   -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
-  display: -moz-box;
   display: flex;
   display: -webkit-flex;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -moz-box-orient: vertical;
   -webkit-flex-direction: column;
   flex-direction: column;
-  -moz-box-pack: center;
   -webkit-justify-content: center;
   justify-content: center;
   -webkit-box-align: center;
-  -moz-box-align: center;
   -webkit-align-items: center;
   align-items: center;
   border: solid 1px #979797;
@@ -1639,7 +1606,6 @@ html[dir=rtl] .dialog footer > button + button {
   box-shadow: none !important;
   font-size: 13px;
   -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   box-sizing: border-box;
   height: 30px;
   cursor: pointer;
@@ -1658,12 +1624,10 @@ html[dir=rtl] .dialog footer > button + button {
   padding: 11px 10px 3px;
 }
 div.horizontal.centered > .segmented {
-  display: -moz-box;
   display: flex;
   display: -webkit-flex;
   display: -webkit-box;
   -webkit-box-flex: 1 !important;
-  -moz-box-flex: 1 !important;
   -webkit-flex: 1 !important;
   flex: 1 !important;
   margin: 10px 16px;
@@ -1700,7 +1664,6 @@ input[type="range"]::-webkit-slider-thumb {
   border: solid 1px transparent;
   box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.15);
   -webkit-transition: all 0.5s ease-in-out;
-  -moz-transition: all 0.5s ease-in-out;
   transition: all 0.5s ease-in-out;
 }
 input[type="range"]:active::-webkit-slider-thumb,
@@ -2016,7 +1979,6 @@ button.show-popover::after {
   border-top: solid 4px transparent;
   border-left: solid 4px transparent;
   -webkit-transform: rotate(45deg);
-  -moz-transform: rotate(45deg);
   transform: rotate(45deg);
 }
 nav > button.show-popover::after {
@@ -2056,19 +2018,15 @@ html[dir=rtl] .isDesktop .button.show-popover:hover::after {
 /* Stepper Control */
 /*=================*/
 .stepper {
-  display: -moz-box;
   display: inline-flex;
   display: -webkit-inline-flex;
   display: -webkit-box;
   -webkit-box-orient: horizontal;
-  -moz-box-orient: horizontal;
   -webkit-flex-direction: row;
   flex-direction: row;
-  -moz-box-pack: center;
   -webkit-justify-content: center;
   justify-content: center;
   -webkit-box-align: start;
-  -moz-box-align: start;
   -webkit-align-items: flex-start;
   align-items: flex-start;
   padding: 1px;
@@ -2080,7 +2038,6 @@ html[dir=rtl] .isDesktop .button.show-popover:hover::after {
 .stepper > label {
   display: block;
   -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   box-sizing: border-box;
   border: solid 1px #cbcbcb;
   width: 40px;
@@ -2098,7 +2055,6 @@ html[dir=rtl] .isDesktop .button.show-popover:hover::after {
   width: 30px;
   height: 30px;
   -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   box-sizing: border-box;
   text-align: center;
   font-weight: bold;
@@ -2116,6 +2072,7 @@ html[dir=rtl] .isDesktop .button.show-popover:hover::after {
   font-size: inherit;
   font-weight: inherit;
   display: block;
+  -webkit-flex: 1;
   flex: 1;
 }
 .isDesktop .stepper > button:hover {
@@ -2214,7 +2171,6 @@ section > .chui-busy {
   background-color: #ccc;
   padding: 20px;
   -webkit-overflow-scrolling: touch;
-  -ms-overflow-style: -ms-autohiding-scrollbar;
   overflow-y: hidden !important;
   overflow-x: scroll;
   white-space: nowrap;
@@ -2265,9 +2221,6 @@ section > .chui-busy {
   display: -webkit-flex;
   -webkit-flex-direction: row;
   -webkit-align-items: stretch;
-  display: -ms-flexbox;
-  -ms-flex-direction: row;
-  -ms-align-items: stretch;
   display: flex;
   flex-direction: row;
   align-items: stretch;
@@ -2276,80 +2229,65 @@ section > .chui-busy {
 .grid.wrap {
   -webkit-box-wrap: wrap;
   -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
   flex-wrap: wrap;
 }
 /* Column: */
 .col {
   -webkit-box-flex: 1 1 auto;
   -webkit-flex: 1 1 auto;
-  -ms-flex: 1 1 auto;
   flex: 1 1 auto;
 }
 /* Centered grids: */
 .grid.center {
   -webkit-box-pack: center;
   -webkit-justify-content: center;
-  -ms-justify-content: center;
   justify-content: center;
 }
 .center .col {
   -webkit-flex-grow: 0;
   -webkit-flex-shrink: 0;
-  -ms-flex-grow: 0;
-  -ms-flex-shrink: 0;
   flex-grow: 0;
   flex-shrink: 0;
 }
 /* Columns: */
 .flex-1 {
   -webkit-flex-basis: 10%;
-  -ms-flex-basis: 10%;
   flex-basis: 10%;
 }
 .flex-2 {
   -webkit-flex-basis: 20%;
-  -ms-flex-basis: 20%;
   flex-basis: 20%;
 }
 .flex-3 {
   -webkit-flex-basis: 30%;
-  -ms-flex-basis: 30%;
   flex-basis: 30%;
 }
 .flex-4 {
   -webkit-flex-basis: 40%;
-  -ms-flex-basis: 40%;
   flex-basis: 40%;
 }
 .flex-5 {
   -webkit-flex-basis: 50%;
-  -ms-flex-basis: 50%;
   flex-basis: 50%;
 }
 .flex-6 {
   -webkit-flex-basis: 60%;
-  -ms-flex-basis: 60%;
   flex-basis: 60%;
 }
 .flex-7 {
   -webkit-flex-basis: 70%;
-  -ms-flex-basis: 70%;
   flex-basis: 70%;
 }
 .flex-8 {
   -webkit-flex-basis: 80%;
-  -ms-flex-basis: 80%;
   flex-basis: 80%;
 }
 .flex-9 {
   -webkit-flex-basis: 90%;
-  -ms-flex-basis: 90%;
   flex-basis: 90%;
 }
 .flex-10 {
   -webkit-flex-basis: 100%;
-  -ms-flex-basis: 100%;
   flex-basis: 100%;
 }
 .gutter-5 .col {
@@ -2391,7 +2329,6 @@ body.isNativeAndroidBrowser .flex-10 {
 html[dir=rtl] .grid {
   -webkit-box-direction: horizontal;
   -webkit-flex-direction: row;
-  -ms-flex-direction: row;
   flex-direction: row;
 }
 @media only screen and (max-width: 480px) {
