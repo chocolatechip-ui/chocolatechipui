@@ -12,8 +12,9 @@ import {emptyCartWarning} from './controllers/emptyCartWarning';
 
 $(() => {
 
-  // Mount imported views:
-  //======================
+  /**
+   * Mount imported views:
+   */
   app.fragranceGenresView.mount();
   app.availableFragrancesView.mount();
   app.fragrancesGenreTitleView.mount();
@@ -25,21 +26,25 @@ $(() => {
   app.totalPurchasedItemsView.mount();
   app.totalPurchaseCostView.mount();
 
-  // Set model on these views:
-  //==========================
+  /**
+   * Set model on these views:
+   */
   app.cartView.bindModel(cartModel);
   app.totalPurchasedItemsView.bindModel(cartModel)
 
-  // Render list view with default data:
-  //====================================
+  /**
+   * Render list view with default data:
+   */
   app.fragranceGenresView.render(['ladies','men','kids']);
 
-  // Mount imported routes:
-  //=======================
+  /**
+   * Mount imported routes:
+   */
   fragranzRoutes.mount();
 
-  // Initialize imported controllers:
-  //=================================
+  /**
+   * Initialize imported controllers:
+   */
   addToCart();
   goToCart();
   cancelOrder();

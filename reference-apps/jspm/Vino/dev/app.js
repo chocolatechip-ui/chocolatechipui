@@ -12,23 +12,26 @@ import {handlePurchase} from './controllers/purchase/handlePurchase';
 
 $(function() {
 
-  // Mount imported views:
-  //======================
+  /**
+   * Mount imported views:
+   */
   app.specialRedsView.mount();
   app.specialWhitesView.mount();
   app.selectedWineView.mount();
   app.filteredWinesView.mount();
   app.wineryView.mount();
 
-  // Mount imported router:
-  //=======================
+  /**
+   * Mount imported router:
+   */
   wineRoute.mount();
 
   app.specialRedsView.render(bestWines[0].data);
   app.specialWhitesView.render(bestWines[1].data);
 
-  // Mount imported controllers:
-  //============================
+  /**
+   * Mount imported controllers:
+   */
   aboutSheet();
   outputHeroImg();
   searchPanelInit();

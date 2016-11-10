@@ -1,5 +1,7 @@
 export function handlePurchase() {
-  // Get purchase sheet template:
+  /**
+   * Get purchase sheet template:
+   */
   var purchaseSheetTemplate = `<div id='progressPanel'>
     <p>
       <progress max='500' value='0'></progress>
@@ -12,11 +14,14 @@ export function handlePurchase() {
       <button class='action centered'>OK</button>
     </div>
   </div>`;
-  // Initialize purchase sheet:
-  //===========================
+  /**
+   * Initialize purchase sheet:
+   */
   $.Sheet({id:'purchaseSheet'});
   
-  // Populate purchase sheet
+  /**
+   * Populate purchase sheet
+   */
   $('#purchaseSheet').find('section').html(purchaseSheetTemplate);    
   $('#selectedWine').on('tap', '.price', function(e) {
     var wine = $('#selectedWineVarietal').text().trim();
@@ -25,15 +30,17 @@ export function handlePurchase() {
     $('#purchasePopup').ShowPopup();
   });
 
-  // Define handler to display purchase sheet:
-  //==========================================
+  /**
+   * Define handler to display purchase sheet:
+   */
   $('#confirmationPanel button').on('tap', function() {
     $.HideSheet('#purchaseSheet');
     $('#confirmationPanel').hide();
     $('#purchaseSheet').css('height', 80);
 
-    // Delay showing the progress bar so
-    // it doesn't show while hiding the sheet:
+    /**
+     * Delay showing the progress bar so it doesn't show while hiding the sheet:
+     */
     setTimeout(function() {
       $('#progressPanel').show();
     }, 200);

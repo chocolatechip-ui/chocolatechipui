@@ -6,26 +6,31 @@ import {getCoffeShops} from './controllers/getCoffeShops';
 import {handleAboutSheet} from './controllers/handleAboutSheet';
 $(() => {
 
-	// Init model:
-	//============
+	/**
+   * Init model:
+	 */
 	const shopsModel = $.Model(coffeeshops);
 
-  // Mount imported views:
-  //======================
+  /**
+   * Mount imported views:
+   */
   shopsView.mount();
   shopDetailView.mount();
 
-  // Render coffeeshops list:
-  //=========================
+  /**
+   * Render coffeeshops list:
+   */
   shopsView.bindModel(shopsModel);
 	shopsView.render();
 
-  // Mount imported route:
-  //======================
+  /**
+   * Mount imported route:
+   */
   selectedCoffeeRoute.mount();
 
-  // Mount controllers:
-  //===================
+  /**
+   * Mount controllers:
+   */
   getCoffeShops();
   handleAboutSheet();
 

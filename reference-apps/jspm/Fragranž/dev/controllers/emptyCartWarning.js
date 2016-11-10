@@ -1,6 +1,7 @@
 export function emptyCartWarning() {
-  // Popup for empty cart:
-  //======================
+  /**
+   * Popup for empty cart:
+   */
   $.Popup({
     id: "emptyCart",
     title: 'Warning!', 

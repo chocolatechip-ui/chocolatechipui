@@ -1,17 +1,20 @@
 $(function() {
 
-  // Default variables:
-  //===================
+  /**
+   * Default variables:
+   */
   var chosenGenre;
 
-  // Define cart model:
-  //===================
+  /**
+   * Define cart model:
+   */
   var CartModel = $.Model([]);
   window.CartModel = CartModel;
 
 
-  // Define App namespace:
-  //======================
+  /**
+   * Define App namespace:
+   */
   var App = {
 
     GenreView: $.View({
@@ -68,8 +71,9 @@ $(function() {
 
   App.GenreView.render(['ladies','men','kids']);
 
-  // Add to cart:
-  //=============
+  /**
+   * Add to cart:
+   */
   $('#addToCart').on('tap', function() {
     var fragrance = $(this).data('fragrance');
     CartModel.push(fragrance);
@@ -88,8 +92,9 @@ $(function() {
     $('#backToFragrance').find('span').text(fragrance.product_title);
   });
 
-  // Popup for empty cart:
-  //======================
+  /**
+   * Popup for empty cart:
+   */
   $.Popup({
     id: "emptyCart",
     title: 'Warning!', 
@@ -97,8 +102,9 @@ $(function() {
     continueButton: 'OK'
   });
 
-  // Go to cart:
-  //============
+  /**
+   * Go to cart:
+   */
   $('#shoppingCart').on('tap', function() {
     if (!CartModel.size() > 0) {
       $('#emptyCart').ShowPopup();
@@ -107,8 +113,9 @@ $(function() {
     }
   });
 
-  // Cancel purchase:
-  //=================
+  /**
+   * Cancel purchase:
+   */
   $('#cancelOrder').on('tap', function() {
     CartModel.purge();
     App.TotalItemsView.empty();
@@ -117,8 +124,9 @@ $(function() {
     $.GoBackToScreen('main');
   });
 
-  // Place order:
-  //==============
+  /**
+   * Place order:
+   */
   $('#placeOrder').on('tap', function() {
     $.GoToScreen('confirmation');
     App.TotalPurchasedItemsViews.render();
@@ -142,8 +150,9 @@ $(function() {
     App.CartView.empty();
   });
 
-  // Define Routes:
-  //===============
+  /**
+   * Define Routes:
+   */
   var FragranzRoutes = $.Router();
   FragranzRoutes.addRoute([
     {

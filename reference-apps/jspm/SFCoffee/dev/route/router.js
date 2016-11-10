@@ -1,7 +1,9 @@
 import {coffeeshops} from '../data/coffee-shops';
 import {shopDetailView} from '../views/shopDetailView';
 
-// Set up router:
+/**
+ * Set up router:
+ */
 export const selectedCoffeeRoute = $.Router();
 selectedCoffeeRoute.addRoute([
   {

@@ -4,10 +4,10 @@ import {outputHeroImg} from '../controllers/heroImage/outputHeroImg';
 
 export const wineRoute = $.Router();
 
-//================================
-// Define handlers to show select 
-// wines from scroll panel:
-//================================
+/**
+ * Define handlers to show select 
+ * wines from scroll panel:
+ */
 wineRoute.addRoute([
   {
     route: 'selectedWine',

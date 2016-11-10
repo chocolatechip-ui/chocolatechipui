@@ -1,6 +1,7 @@
 $(function() {
-	// Defined model and views:
-	//=========================
+	/**
+   * Defined model and views:
+	 */
 	var ShopsModel = $.Model(shops);
 	var ShopsView = $.View({
 		element: '#shop-list',
@@ -33,11 +34,15 @@ $(function() {
     </li>'
 	});
 
-	// Event handler to get to list of shops:
+	/**
+   * Event handler to get to list of shops:
+   */
 	$('#exploreButton').on('tap', function() {
 		$.GoToScreen('shops');
 	});
-	// Set up router:
+	/**
+   * Set up router:
+   */
   var SelectedCoffeeRoute = $.Router();
   SelectedCoffeeRoute.addRoute([
     {
@@ -51,8 +56,9 @@ $(function() {
     }
   ]);
 
-  // Setup up About info sheet:
-  //===========================
+  /**
+   * Setup up About info sheet:
+   */
   var aboutApp = $('#aboutThisAppTemplate').html();
   $.Sheet({
     id: 'aboutSheet',
@@ -60,15 +66,21 @@ $(function() {
     slideDown: true
   });
   
-  // Register event to show sheet:
+  /**
+   * Register event to show sheet:
+   */
   $('#aboutSheet').find('section').html(aboutApp);
 
-  // Open About sheet:
+  /**
+   * Open About sheet:
+   */
   $('#aboutThisApp').on('tap', function() {
 		$.ShowSheet('#aboutSheet');
 	});
 
-  // Close About sheet:
+  /**
+   * Close About sheet:
+   */
 	$('#aboutSheet').find('button').on('tap', function() {
 		$.HideSheet('#aboutSheet');
 	});

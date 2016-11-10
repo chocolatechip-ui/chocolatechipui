@@ -1,18 +1,21 @@
 $(function() {
   $('nav h1').removeAttr('style');
 
-  // Configure $.Box for
-  // local data persistence:
-  //========================
+  /**
+   * Configure $.Box for local data persistence:
+   */
   $.Box.config({
     boxName: 'chui-todo-mvc'
   });
 
-  // Setup array for todos:
+  /**
+   * Setup array for todos:
+   */
   var todosData = [];
 
-  // Define Todo View:
-  //==================
+  /**
+   * Define Todo View:
+   */
   var todoView = $.View({
     element: '#todo-items',
     variable: 'todo',
@@ -25,15 +28,17 @@ $(function() {
       </li>'
   });
 
-  // Define templates for singular and plural:
-  //==========================================
+  /**
+   * Define templates for singular and plural:
+   */
   var todoStateTemplate = [
     '<span>{= number } item left.</span>',
     '<span>{= number } items left.</span>'
   ];
 
-  // Define Totals View:
-  //====================
+  /**
+   * Define Totals View:
+   */
   var TotalsView = $.View({
     element: '#totals-view',
     variable: 'number',
@@ -41,8 +46,9 @@ $(function() {
   });
   window.TotalsView = TotalsView;
 
-  // Display number of active todos:
-  //================================
+  /**
+   * Display number of active todos:
+   */
   function renderActiveTodos(data) {
     var active = data.filter(function(item) {
       return item.state === 'active';
@@ -62,8 +68,9 @@ $(function() {
     }
   }
 
-  // Get all todos stored in $.Box:
-  //===============================
+  /**
+   * Get all todos stored in $.Box:
+   */
   $.Box.get('chui-todos', function(err, value) {
     if (value.length) {
       value.forEach(function(todo) {
@@ -76,8 +83,9 @@ $(function() {
     }
   });
 
-  // Create a view to register events:
-  //==================================
+  /**
+   * Create a view to register events:
+   */
   var AppView = $.View({
     element: 'screen',
     noTemplate: true,
@@ -99,8 +107,9 @@ $(function() {
           }
         }
       },
-      // Add todo item:
-      //===============
+      /**
+       * Add todo item:
+       */
       {
         event: 'tap',
         element: '.add',
@@ -116,8 +125,9 @@ $(function() {
           $.Box.set('chui-todos', todosData, function(err, value) {});
         }
       },
-      // Set state of todo:
-      //===================
+      /**
+       * Set state of todo:
+       */
       {
         event: 'tap',
         element: '.set-state',
@@ -131,8 +141,9 @@ $(function() {
           $.Box.set('chui-todos', todosData, function(err, value) {});
         }
       },
-      // Delete a todo:
-      //===============
+      /**
+       * Delete a todo:
+       */
       {
         event: 'tap',
         element: '.delete-item',
@@ -145,8 +156,9 @@ $(function() {
           $.Box.set('chui-todos', todosData, function(err, value) {});
         }
       },
-      // Handle visibility of todo items  by state:
-      //===========================================
+      /**
+       * Handle visibility of todo items  by state:
+       */
       {
         event: 'tap',
         element: 'button',
@@ -154,18 +166,24 @@ $(function() {
           var id = this.id;
           var todoItems = $('#todo-items li');
           switch(id) {
-            // Show all todos:
+            /**
+             * Show all todos:
+             */
             case 'show-all':
               todoItems.css({display: '-webkit-flex',display: 'flex'});
               toggleButtonState(this);
               break;
-            // Show only active todos:
+            /**
+             * Show only active todos:
+             */
             case 'show-active':
               todoItems.hazClass('active').css({display: '-webkit-flex',display: 'flex'});
               todoItems.hazntClass('active').hide();
               toggleButtonState(this);
             break;
-            // Show only completed todos:
+            /**
+             * Show only completed todos:
+             */
             case 'show-completed':
               todoItems.hazClass('active').hide();
               todoItems.hazntClass('active').css({display: '-webkit-flex',display: 'flex'});
@@ -177,8 +195,9 @@ $(function() {
     ]
   });
 
-  // Show todos by state:
-  //=====================
+  /**
+   * Show todos by state:
+   */
 
   function toggleButtonState(elem) {
     $(elem).siblings().removeClass('selected');

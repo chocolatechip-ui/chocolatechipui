@@ -2,10 +2,14 @@ import {fragrances} from '../data/fragrances';
 import * as app from '../views/views';
 export const fragranzRoutes = $.Router();
 
-// Variable for all routes:
+/**
+ * Variable for all routes:
+ */
 let chosenGenre;
 
-// Define routes:
+/**
+ * Define routes:
+ */
 fragranzRoutes.addRoute([
   {
     route: 'fragranceList',

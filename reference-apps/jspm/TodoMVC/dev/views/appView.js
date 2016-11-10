@@ -23,8 +23,9 @@ export const appView = $.View({
         }
       }
     },
-    // Add todo item:
-    //===============
+    /**
+     * Add todo item:
+     */
     {
       event: 'tap',
       element: '.add',
@@ -41,8 +42,9 @@ export const appView = $.View({
         $.Box.set('chui-todos', todosData, function(err, value) {});
       }
     },
-    // Set state of todo:
-    //===================
+    /**
+     * Set state of todo:
+     */
     {
       event: 'tap',
       element: '.set-state',
@@ -56,22 +58,26 @@ export const appView = $.View({
         $.Box.set('chui-todos', todosData, function(err, value) {});
       }
     },
-    // Delete a todo:
-    //===============
+    /**
+     * Delete a todo:
+     */
     {
       event: 'tap',
       element: '.delete-item',
       callback: function() {
         const index = $(this).closest('li').index();
-        // Remove item from list:
+        /**
+         * Remove item from list:
+         */
         todosData.splice(index, 1);
         todoView.render(todosData);
         renderActiveTodos(todosData);
         $.Box.set('chui-todos', todosData, function(err, value) {});
       }
     },
-    // Handle visibility of todo items  by state:
-    //===========================================
+    /**
+     * Handle visibility of todo items  by state:
+     */
     {
       event: 'tap',
       element: 'button',
@@ -79,18 +85,24 @@ export const appView = $.View({
         const id = this.id;
         const todoItems = $('#todo-items li');
         switch(id) {
-          // Show all todos:
+          /**
+           * Show all todos:
+           */
           case 'show-all':
             todoItems.css({display: '-webkit-flex',display: 'flex'});
             toggleButtonState(this);
             break;
-          // Show only active todos:
+          /**
+           * Show only active todos:
+           */
           case 'show-active':
             todoItems.hazClass('active').css({display: '-webkit-flex',display: 'flex'});
             todoItems.hazntClass('active').hide();
             toggleButtonState(this);
           break;
-          // Show only completed todos:
+          /**
+           * Show only completed todos:
+           */
           case 'show-completed':
             todoItems.hazClass('active').hide();
             todoItems.hazntClass('active').css({display: '-webkit-flex',display: 'flex'});

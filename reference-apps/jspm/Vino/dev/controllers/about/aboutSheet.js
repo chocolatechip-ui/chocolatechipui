@@ -1,7 +1,7 @@
 export function aboutSheet() {
-  //===========================
-  // Setup up About info sheet:
-  //===========================
+  /**
+   * Setup up About info sheet:
+   */
   var aboutContent = `<h2>California Wines</h2>
     <p>This is an app about wines of Northern California. We built it with TruckJS using views, routing, layouts and widgets. It's using the iOS theme and should render reasonably on most browsers.</p>
     <ul>
@@ -23,9 +23,10 @@ export function aboutSheet() {
   });
   $('#aboutSheet').find('section').html(aboutContent);
 
-  // Define handler to show about sheet
-  // when use taps the info icon button:
-  //====================================
+  /**
+   * Define handler to show about sheet
+   * when use taps the info icon button:
+   */
   $('#getInfo').on('tap', function() {
     $.ShowSheet('#aboutSheet');
   });

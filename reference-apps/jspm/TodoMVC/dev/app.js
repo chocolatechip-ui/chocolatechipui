@@ -10,12 +10,14 @@ import {boxSetupAndLoad} from './controllers/boxSetupAndLoad';
 $(function() {
   $('nav h1').removeAttr('style');
 
-  // Init $.Box and load all todos:
-  //===============================
+  /**
+   * Init $.Box and load all todos:
+   */
   boxSetupAndLoad();
 
-  // Mount Imported Views:
-  //======================
+  /**
+   * Mount Imported Views:
+   */
   appView.mount();
   todoView.mount();
   totalsView.mount();
