@@ -195,6 +195,9 @@ $.extend({
               $(list).removeClass('showIndicators');
               $(list).find('li').removeClass('selected');
               $($this).siblings('.cancel').hide();
+              if (settings.deletable) {
+                $(list).find('li').append(deleteButton);
+              }
               $.AdjustNavbarLayout(screen);
             });
             const movedItems = [];
@@ -389,7 +392,9 @@ $.extend({
           $(list).removeClass('showIndicators');
           $(list).find('li').removeClass('selected');
           $(this).hide();
-          $(list).find('li').append(deleteButton);
+          if (settings.deletable) {
+            $(list).find('li').append(deleteButton);
+          }
         });
       });
     };
