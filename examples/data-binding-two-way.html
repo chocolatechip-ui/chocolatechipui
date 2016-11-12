@@ -65,12 +65,13 @@
       $('#myText1').val(myDataModel.get().message);
 
       /**
-       * Run mediator when user types:
+       * Run mediator when user types.
+       * Throttle it at one second intervals:
        */
-      $('#myText1').on('input change', function() {
+      $('#myText1').on('input change', $.throttle(function() {
         var data = this.value;
         mediateTextInput.run(data);
-      })
+      }, 1000));
 
       /**
        * Run mediator when user taps:
