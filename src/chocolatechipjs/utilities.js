@@ -402,7 +402,52 @@
 
         return result;
       };
+    },
+
+    /**
+     * Execute a function only once.
+     */
+    once: function(func) {
+      var times = 2;
+      var memo;
+      return function() {
+        if (--times > 0) {
+          memo = func.apply(this, arguments);
+        }
+        if (times <= 1) func = null;
+        return memo;
+      };
+    },
+
+    /**
+     * Execute a function only upto x times.
+     * This takes two arguments: the times upto when execution can happen and the callback to execute.
+     */
+
+    before: function(times, func) {
+      var memo;
+      return function() {
+        if (--times > 0) {
+          memo = func.apply(this, arguments);
+        }
+        if (times <= 1) func = null;
+        return memo;
+      }
+    },
+
+    /**
+     * Execute a function only after x times.
+     * This takes two arguments: the times to wait before execution and the callback to execute.
+     */
+
+     after: function(times, func) {
+      return function() {
+        if (--times < 1) {
+          return func.apply(this, arguments);
+        }
+      }
     }
+    
   });
 
   
