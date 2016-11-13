@@ -7537,10 +7537,13 @@ $(function() {
        * If it is, get navbar background color and base ripple on that:
        */
       if (target.nodeName === 'BUTTON' && target.classList.contains('slide-out-button')) {
-        var _navBkColor = $('nav').eq(0).css('background-color');
+        var _navBkColor = $('screen > nav').eq(0).css('background-color');
         backgroundColor = new $.ChuiColor(_navBkColor).toHex();
       } else if (target.nodeName === 'BUTTON' && $(target).closest('nav')[0]) {
         navBkColor = $(target).closest('nav').css('background-color');
+        backgroundColor = new $.ChuiColor(navBkColor).toHex();
+      } else if (target.nodeName === 'BUTTON' && $(target).closest('toolbar')[0]) {
+        navBkColor = $(target).closest('toolbar').css('background-color');
         backgroundColor = new $.ChuiColor(navBkColor).toHex();
       } else {
         backgroundColor = $(this).css('background-color');

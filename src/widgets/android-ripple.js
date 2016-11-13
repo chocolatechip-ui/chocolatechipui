@@ -47,10 +47,14 @@ $(function() {
        */
 
       if (target.nodeName === 'BUTTON' && target.classList.contains('slide-out-button')) {
-        let navBkColor = $('nav').eq(0).css('background-color');
+        let navBkColor = $('screen > nav').eq(0).css('background-color');
         backgroundColor = new $.ChuiColor(navBkColor).toHex();
       } else if ((target.nodeName === 'BUTTON' && $(target).closest('nav')[0])) {
         navBkColor = $(target).closest('nav').css('background-color');
+        backgroundColor = new $.ChuiColor(navBkColor).toHex();
+
+      } else if ((target.nodeName === 'BUTTON' && $(target).closest('toolbar')[0])) {
+        navBkColor = $(target).closest('toolbar').css('background-color');
         backgroundColor = new $.ChuiColor(navBkColor).toHex();
 
       } else {
