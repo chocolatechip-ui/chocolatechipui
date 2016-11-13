@@ -30,10 +30,10 @@ tabbar > span.androidSelectionBorder {
 .list.deletable > li.selected > .deletion-indicator {
   box-shadow: 0 0 2px 1px red;
 }
-.multi-select-list > li > span.multi-selection-indicator {
+.multi-select-list > li > aside span.multi-selection-indicator {
   border: solid 1px red;
 }
-.multi-select-list > li.selected > span.multi-selection-indicator {
+.multi-select-list > li.selected > aside > span.multi-selection-indicator {
   box-shadow: 0 0 2px 1px red;
 }
 #pagination-icons path#page-previous,
