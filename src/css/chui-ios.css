@@ -1055,7 +1055,7 @@ ul.multi-select-list > li {
 .multi-select-list > li #multi-select-icon {
   stroke: #007aff;
 }
-.multi-select-list > li path#mulit-select-checkmark {
+.multi-select-list > li > aside path#multi-select-checkmark {
   display: none;
 }
 .multi-select-list > li > input{
@@ -1064,7 +1064,7 @@ ul.multi-select-list > li {
 .multi-select-list > li.selected > span.multi-selection-indicator {
   display: inline-block;
 }
-.multi-select-list > li.selected path#mulit-select-checkmark {
+.multi-select-list > li.selected path#multi-select-checkmark {
   display: block;
 }
 html[dir=rtl] .multi-select-list > li > span.multi-selection-indicator { 
