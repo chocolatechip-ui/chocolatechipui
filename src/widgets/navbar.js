@@ -18,6 +18,7 @@ $(() => {
       screen = $(screen);
       if (!screen[0]);
       const h1 = screen.find('h1');
+      if (h1.hasClass('do-not-adjust')) return;
       const siblings = h1.siblings();
       let whichSide = undefined;
       let oppositeSide = undefined;

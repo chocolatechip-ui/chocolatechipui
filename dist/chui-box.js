@@ -6051,6 +6051,7 @@ $(function() {
       screen = $(screen);
       if (!screen[0]);
       var h1 = screen.find('h1');
+      if (h1.hasClass('do-not-adjust')) return;
       var siblings = h1.siblings();
       var whichSide = undefined;
       var oppositeSide = undefined;

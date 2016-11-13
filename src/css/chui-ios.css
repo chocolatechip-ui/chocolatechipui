@@ -186,6 +186,12 @@ nav > h1 {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+nav > h1.do-not-adjust {
+  text-align: left;
+}
+html[dir=rtl] nav > h1.do-not-adjust {
+  text-align: right;
+}
 
 /*=======*/
 /* Lists */
