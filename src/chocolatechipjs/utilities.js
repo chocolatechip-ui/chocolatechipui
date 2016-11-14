@@ -331,11 +331,27 @@
     },
 
     /**
+     * Recursively flatten an array.
+     */
+    flatten: (array, ret) => {
+      if (!array || !array.length) return;
+      ret || (ret = []);
+      var len = array.length;
+      var x;
+      for (var i = 0; i < len; i++) {
+        x = array[i];
+        if (Array.isArray(x)) flatten(x, ret);
+        else ret.push(x);
+      }
+      return ret;
+    },
+
+    /**
      * Fires an event once during provided wait period. Options are: {leading: true/false, trailing: true/false}.
      * By default leading is true, meaning that the first event input will fire. Setting leading to false will disable this.
      * By default trailing is true. Set this to false to disable it.
      */
-    throttle: function(func, wait, options) {
+    throttle: (func, wait, options) => {
       var context, args, result;
       var timeout = null;
       var previous = 0;
@@ -372,7 +388,7 @@
      * In the case of an input, this will start with the first keypress. After the last keypress and the wait time, the event will fire.
      * You can make the event fire after the time by passing a third optional truthy argument.
      */
-    debounce: function(func, wait, immediate) {
+    debounce: (func, wait, immediate) => {
       var timeout, args, context, timestamp, result;
 
       var later = function() {
@@ -407,7 +423,7 @@
     /**
      * Execute a function only once.
      */
-    once: function(func) {
+    once: func => {
       var times = 2;
       var memo;
       return function() {
@@ -424,7 +440,7 @@
      * This takes two arguments: the times upto when execution can happen and the callback to execute.
      */
 
-    before: function(times, func) {
+    before: (times, func) => {
       var memo;
       return function() {
         if (--times > 0) {
@@ -440,7 +456,7 @@
      * This takes two arguments: the times to wait before execution and the callback to execute.
      */
 
-     after: function(times, func) {
+     after: (times, func) => {
       return function() {
         if (--times < 1) {
           return func.apply(this, arguments);

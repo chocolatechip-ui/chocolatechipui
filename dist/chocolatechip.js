@@ -492,7 +492,7 @@ var DOMStack = function() {
    */
   $.extend({
     lib: "ChocolateChipJS",
-    version: '4.0.5',
+    version: '4.0.6',
     noop: function noop() {},
     uuid: function uuid() {
       var d = Date.now();
@@ -798,6 +798,29 @@ var DOMStack = function() {
       }
       return ret;
     },
+    /**
+     * Recursively flatten an array.
+     */
+    flatten: function(_flatten) {
+      function flatten(_x, _x2) {
+        return _flatten.apply(this, arguments);
+      }
+      flatten.toString = function() {
+        return _flatten.toString();
+      };
+      return flatten;
+    }(function(array, ret) {
+      if (!array || !array.length) return;
+      ret || (ret = []);
+      var len = array.length;
+      var x;
+      for (var i = 0; i < len; i++) {
+        x = array[i];
+        if (Array.isArray(x)) flatten(x, ret);
+        else ret.push(x);
+      }
+      return ret;
+    }),
     /**
      * Fires an event once during provided wait period. Options are: {leading: true/false, trailing: true/false}.
      * By default leading is true, meaning that the first event input will fire. Setting leading to false will disable this.
