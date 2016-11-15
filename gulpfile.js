@@ -51,8 +51,7 @@ var chocolateChipFiles = [
   'fetch',
   'array-extras',
   'model',
-  'browsers',
-  'color-contrast'
+  'browsers'
 ].map(function (file) {
   return ['./src/chocolatechipjs/', file, '.js'].join('')
 });
@@ -80,12 +79,13 @@ var chuiWidgets = [
   'stepper',
   'switches',
   'tabbar',
+  'color-contrast',
   'android-ripple'
 ].map(function (file) {
   return './src/widgets/' + file + '.js'
 });
 
-gulp.task('chocolatechipjs', function() {
+gulp.task('chocolatechip', function() {
   gulp.src(chocolateChipFiles)
     .pipe(concat('chocolatechip.js'))
     .pipe(sourcemaps.init())
