@@ -492,7 +492,7 @@ var DOMStack = function() {
    */
   $.extend({
     lib: "ChocolateChipJS",
-    version: '4.1.0',
+    version: '4.1.1',
     noop: function noop() {},
     uuid: function uuid() {
       var d = Date.now();
@@ -4857,8 +4857,16 @@ if (!Array.prototype.unique) {
   var _Model = function() {
     function Model(data) {
       _classCallCheck(this, Model);
+      var d = undefined;
+      if ($.type(data) == 'array') {
+        d = data.slice();
+      } else if ($.type(data) == 'object') {
+        d = Object.create(data);
+      } else {
+        d = data;
+      }
       this.id = $.uuid();
-      this[dataStore] = data;
+      this[dataStore] = d;
       this.events = {};
       this.stopped = false;
       this.boundViews = [];
@@ -5012,7 +5020,15 @@ if (!Array.prototype.unique) {
       key: 'replace',
       value: function replace(data) {
           if (data) {
-            this[dataStore] = data;
+            var d = undefined;
+            if ($.type(data) == 'array') {
+              d = data.slice();
+            } else if ($.type(data) == 'object') {
+              d = Object.create(data);
+            } else {
+              d = data;
+            }
+            this[dataStore] = d;
             this.updateBoundViews(this);
           } else {
             if ($.supressErrorMessages) return;

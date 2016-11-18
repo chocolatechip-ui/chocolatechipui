@@ -92,8 +92,16 @@
 
   class Model {
     constructor (data) {
+      let d = undefined;
+      if ($.type(data) == 'array') {
+        d = data.slice();
+      } else if ($.type(data) == 'object') {
+        d = Object.create(data);
+      } else {
+        d = data;
+      }
       this.id = $.uuid();
-      this[dataStore] = data;
+      this[dataStore] = d;
       this.events = {};
       this.stopped = false;
       this.boundViews = [];
@@ -238,8 +246,16 @@
      * This works for models of an object or array.
      */
     replace(data) {
-      if (data) {
-        this[dataStore] = data;
+      if (data) {      
+      let d = undefined;
+      if ($.type(data) == 'array') {
+        d = data.slice();
+      } else if ($.type(data) == 'object') {
+        d = Object.create(data);
+      } else {
+        d = data;
+      }
+        this[dataStore] = d;
         this.updateBoundViews(this);
       } else {
         if ($.supressErrorMessages) return;
