@@ -53,7 +53,7 @@ var chocolateChipFiles = [
   'model',
   'browsers'
 ].map(function (file) {
-  return ['./src/chocolatechipjs/', file, '.js'].join('')
+  return ['./src/chocolatechip/', file, '.js'].join('')
 });
 
 var chuiWidgets = [

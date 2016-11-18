@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="msapplication-tap-highlight" content="no">
+  <title>ChocolateChip-UI View</title>
+  <link rel="stylesheet" href="../dist/css/chui-ios.min.css">
+  <script src="../dist/chui.min.js"></script>
+  <script type="application/json" src="../dist/chui.min.js.map"></script>
+  <script>
+    $(function() {
+      var people = [
+        {
+          name: 'Joe',
+          age: 34
+        },
+        {
+          name: 'Ellen',
+          age: 25
+        },
+        {
+          name: 'Sam',
+          age: 21
+        },
+        {
+          name: 'Mary',
+          age: 29
+        }
+      ]
+
+      var listView1 = $.View({
+        element: '#list1',
+        variable: 'person',
+        template: 
+        `<li>
+          <div>
+            <h3>Name: {= person.name }</h3>
+            <h4>Age: {= person.age }</h4>
+          </div>
+        </li>`,
+        data: people,
+        styles: {
+          'list-style': 'none',
+          border: 'solid 1px #4169E1',
+          padding: 0,
+          margin: 20,
+          '> li': {
+            position: 'relative',
+            padding: '2px 10px 2px 20px',
+            backgroundColor: '#F0F8FF',
+            '::before': {
+              content: ' ',
+              display: 'block',
+              position: 'absolute',
+              bottom: 0,
+              left: 20,
+              right: 0,
+              'border': 'solid .5px #4169E1',
+            },
+            '> div > h3': {
+              color: '#8B2500'
+            },
+            '> div > h4': {
+              color: '#104E8B'
+            }
+          },
+          '> li:last-of-type::before': {
+            display: 'none'
+          }
+        }
+      });
+
+      listView1.render();
+
+      var listView2 = $.View({
+        element: '#list2',
+        variable: 'person',
+        template: 
+        `<div>
+          <h3>Name: {= person.name }</h3>
+          <h4>Age: {= person.age }</h4>
+        </div>`,
+        data: people,
+        styles: {
+          margin: '10px 40px',
+          'border': 'solid 2px #333',
+          position: 'relative',
+          'border-radius': '6px',
+          overflow: 'hidden',
+          boxShadow: '0 6px 10px rgba(0,0,0,0.5)',
+          '> div': {
+            display: 'flex',
+            display: '-webkit-flex',
+            position: 'relative',
+            'background-color': '#FFFFF3',
+            '::before': {
+              content: '',
+              display: 'block',
+              width: '100%',
+              'border-bottom': 'solid 1px #333',
+              position: 'absolute',
+              bottom: 0
+            },
+            '> h3': {
+              color: '#333',
+              flex: 1,
+              'padding': '5px 20px',
+              cursor: 'pointer',
+              transition: 'all .25s ease-out',
+              '-wekbit-transition': 'all .25s ease-out',
+              ':hover': {
+                backgroundColor: '#333',
+                color: '#fff'
+              }
+            },
+            '> h4': {
+              color: 'pink',
+              'min-width': 80,
+              textAlign: 'right',
+              'padding-right': '20px !important',
+              'background-color': '#71C671',
+              'border-left': 'solid 1px #333',
+              color: '#333',
+              'padding': 5,
+              transition: 'all .25s ease-out',
+              '-webkit-transtion': 'all .25s ease-out',
+              ':hover': {
+                cursor: 'pointer',
+                'background-color': '#333',
+                color: '#fff'
+              }
+            }
+          },
+          '> div:last-of-type': {
+            '::before': {
+              display: 'none'
+            }
+          }
+        }
+      });
+      listView2.render();
+    });
+  </script>
+</head>
+<body>
+  <screen id="main" class="current">
+    <nav>
+      <h1>Views with Styles</h1>
+    </nav>
+    <section>
+      <h2 class='normal-case'>Open this file and examine the views to see how their styles are defined directly in the views.</h2>
+      <h2>First View</h2>
+      <ul id="list1"></ul>
+
+      <h2>Second View</h2>
+      <h2 class='normal-case'>Hover over the items to see the effect.</h2>
+      <div class="list" id="list2"></div>
+      <br><br><br>
+    </section>
+  </screen>
+
+</body>
+</html>

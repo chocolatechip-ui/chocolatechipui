@@ -16,7 +16,8 @@
       noModelToBindToView: "ChocolateChip-UI View Error: No model was provided to bind the view to. Please provide a valid model to complete this operation.",
       viewHasNoModel: "ChocolateChip-UI View Error: Could not get this view's model because it is not bound to one. You can use `bindModel()` to bind a model to this view.",
       viewHasNoData: "ChocolateChip-UI View Error: This view has no data. Did you render it with data, or did you bind it to a model? Try using `getModel()` to see if this view is using a model.",
-      viewHasNoTemplate: "ChocolateChip-UI View Error: This view has no template. Either you created it without a template, or there was some problem parsing the template. Please check how this view is set up."
+      viewHasNoTemplate: "ChocolateChip-UI View Error: This view has no template. Either you created it without a template, or there was some problem parsing the template. Please check how this view is set up.",
+      noStyleObject: "ChocolateChip-UI View Error: No style object was provided for the view style property. Check that a proper style object was provided. If you are not sure,  consult the documentation."
     },
     es: {
       noDataForViewRender: "Hubo Error de Vista ChocolateChip-UI: : No se proporcionó datos para que la vista los utilice. Si desea renderizar la vista, proporcione datos o redefinir la vista con un valor para sus datos o un modelo de datos. De lo contrario, la vista no se renderizará.",
@@ -30,13 +31,183 @@
       noModelToBindToView: "Hubo Error de Vista ChocolateChip-UI: No se proporcionó un modelo para establecer un enlace entre él y la vista. Por favor proporcione un modelo válido para completar esta operación.",
       viewHasNoModel: "Hubo Error de Vista ChocolateChip-UI: No pudimos acceder al modelo de esta vista porque no está asociada con uno. Puede realizar esto usando `bindModel()`.",
       viewHasNoData: "Hubo Error de Vista ChocolateChip-UI: Esta vista no tiene datos. A caso no se renderizó con datos o no se asoció con ningún modelo. Trate de executar `getModel()` para averiguar si esta vista está usando un modelo.",
-      viewHasNoTemplate: "Hubo Error de Vista ChocolateChip-UI: Esta vista no tiene plantilla. Ó se creó la vista sin plantilla, ó hubo algún error al procesar la plantilla. Debe chequear cómo se definó la vista."
+      viewHasNoTemplate: "Hubo Error de Vista ChocolateChip-UI: Esta vista no tiene plantilla. Ó se creó la vista sin plantilla, ó hubo algún error al procesar la plantilla. Debe chequear cómo se definó la vista.",
+      noStyleObject: "Hubo Error de Vista ChocolateChip-UI: No se proporcionó un objeto de estilos para la propiedad de estilos de la vista. Debe de chequear que el objeto de estilos está correcto. Si Usted no está serguro de eso, consulte la documentación."
+
     }
   }
 
   let errors = undefined;
   if ($('html').attr('lang') == 'en') errors = ViewErrorMessages.en;
   if ($('html').attr('lang') == 'es') errors = ViewErrorMessages.es;
+
+  /**
+   * Private function to parse style object in view and convert it into virtual stylesheet based on the view's element.
+   */
+  function ChuiStyle() {
+
+    /**
+     * Reuse the same style sheet for all instances.
+     */
+    var sharedSheet = null;
+
+    /**
+     * Properties that accept a number but do not need a unit.
+     */
+    var unitlessProps = {
+      columnCount: true,
+      fillOpacity: true,
+      flex: true,
+      flexGrow: true,
+      flexShrink: true,
+      fontWeight: true,
+      lineClamp: true,
+      lineHeight: true,
+      opacity: true,
+      order: true,
+      orphans: true,
+      widows: true,
+      zIndex: true,
+      zoom: true
+    };
+
+    /**
+     * If auto units is enabled, any property value that is a number will be converted to a string with the specified unit appended.
+     */
+    function CreateStyleSheet(options) {
+      if (!(this instanceof CreateStyleSheet)) {
+        return new CreateStyleSheet(options);
+      }
+      options || (options = {});
+      options.prefix = !options.hasOwnProperty("prefix") ? true : !!options.prefix;
+      options.unit = options.hasOwnProperty("unit") ? options.unit : "px";
+
+      this._sheet = null;
+      this._prefix = null;
+
+      /**
+       * Insert one or more style objects in a stylesheet.
+       */
+      this.css = function (element, styles, selector) {
+        if (styles == null) return "";
+        if (this._sheet == null) {
+          this._sheet = sharedSheet = (sharedSheet || createStyleSheet());
+        }
+        selector = element;
+
+        var rules = rulesFromStyles(selector, styles);
+        if (options.prefix || options.unit !== "") {
+          rules.forEach(function(set) {
+            if (options.unit !== "") {
+              addUnit(set[1], options.unit);
+            }
+          });
+        }
+        insertRules(rules, this._sheet);
+      };
+
+    }
+
+    /**
+     * Returns {CSSStyleSheet}
+     */
+    function createStyleSheet() {
+      if (document.head == null) {
+        throw new Error("Can't add stylesheet before <head> is available. Make sure your document has a head element.");
+      }
+      var style = document.createElement("style");
+      style.id = "chui_styles_" + $.uuid();
+      document.head.appendChild(style);
+      return style.sheet;
+    }
+
+    /**
+     * Returns CSS rule sets as selector/style vectors.
+     */
+    function rulesFromStyles(selector, styles) {
+      if (!Array.isArray(styles)) styles = [styles];
+      var prop, value, style = {}, rules = [];
+      styles = $.flatten(styles);
+      styles.forEach(function(block) {
+        for (prop in block) {
+          value = block[prop];
+          if (isPlainObject(value) || Array.isArray(value)) {
+            rules = rules.concat(
+              rulesFromStyles(combineSelectors(selector, prop), value)
+            );
+          } else {
+            if (prop === "content") value = "'"+value+"'";
+            style[prop] = value;
+          }
+        }
+      });
+      rules.push([ selector, style ]);
+      return rules;
+    }
+
+    /**
+     * Add rule sets to stylesheet.
+     */
+    function insertRules(rules, sheet) {
+      function hyphenate(str) {
+        return str.replace(/[A-Z]/g, function($0) { return '-'+$0.toLowerCase(); });
+      }
+      rules.forEach(function(rule) {
+        var pairs = [], prop;
+        for (prop in rule[1]) {
+          pairs.push(hyphenate(prop) + ":" + rule[1][prop]);
+        }
+        if (pairs.length > 0) {
+          sheet.insertRule(rule[0] + "{" + pairs.join(";") + "}", 0);
+        }
+      });
+    }
+
+    /**
+     * Pseudo classes/elements and attribute selectors should immediately follow the previous selector, others should be space separated.
+     */
+    function combineSelectors(parent, child) {
+      var pseudoRe = /^[:\[]/;
+      var parents = parent.split(","), children = child.split(",");
+      return parents.map(function(parent) {
+        return children.map(function(part) {
+          var separator = pseudoRe.test(part) ? "" : " ";
+          return parent + separator + part;
+        }).join(",");
+      }).join(",");
+    }
+
+    /**
+     * Add unit to numeric values not in |unitlessProps|.
+     */
+    function addUnit(style, unit) {
+      var value, prop;
+      for (prop in style) {
+        value = style[prop] + "";
+        if (!isNaN(value) && !unitlessProps[prop]) {
+          value = value + unit;
+        }
+        style[prop] = value;
+      }
+      return style;
+    }
+
+    var style = document.createElement("div").style;
+    function supports(prop, value) {
+      style[prop] = "";
+      style[prop] = value;
+      return !!style[prop];
+    }
+
+    function isPlainObject(obj) {
+      return obj === Object(obj)
+          && Object.prototype.toString === obj.toString;
+    }
+
+    var stylesheets = {};
+    stylesheets.css = CreateStyleSheet().css;
+    return stylesheets;
+  }
 
   $.extend({
 
@@ -96,11 +267,12 @@
       let __es6Template = options.es6Template || false;
       let __noTemplate = options.noTemplate || false;
       const __id = $.uuid();
+      let __styles = options.styles;
 
       /**
        * Private Functions:
        */
-      
+
       let parsedTemplate = undefined;
 
       const parseView = (template, variable) => {
@@ -128,7 +300,7 @@
       };
 
       /**
-       * Binding any events provided in View options: 
+       * Binding any events provided in View options:
        */
       const handleEvents = () => {
         if (!__element) return;
@@ -144,7 +316,7 @@
       };
 
       /**
-       * Get template from element: 
+       * Get template from element:
        */
       const extractTemplate = () => {
         if (!__element || !__element.size() || __noTemplate) {
@@ -173,6 +345,15 @@
         } else {
           __template = __template.replace(__re, 'src');
           parseView(__template, __variable);
+        }
+        if (__styles && options.element) {
+          var styles = ChuiStyle();
+          if ($.type(__styles) !== 'object') {
+            if ($.supressErrorMessages) return;
+            console.error(errors.noStyleObject)
+            return;
+          }
+          styles.css(options.element, __styles)
         }
       };
       parsedTemplate = extractTemplate();
@@ -233,7 +414,7 @@
            */
 
           /**
-           * Uncloaks, checks index and loops data: 
+           * Uncloaks, checks index and loops data:
            */
           const renderIterableData = data => {
             const Data = data ? data : __data;
@@ -249,7 +430,7 @@
           };
 
           /**
-           * Check extracted template: 
+           * Check extracted template:
            */
           if (__template && $.type(__template) === 'string') {
             parsedTemplate = parseView(__template, __variable);
@@ -281,7 +462,7 @@
             return;
 
             /**
-             * Else if it is an object: 
+             * Else if it is an object:
              */
           } else if ($.type(data) === 'object' || $.type(data) === 'string' || $.type(data) === 'number') {
             if (!parsedTemplate) {
@@ -353,6 +534,8 @@
           __element = $(element);
           $(element).empty();
           handleEvents();
+          var styles = ChuiStyle();
+          styles.css(element, __styles)
         },
 
         getTemplate() {
@@ -481,6 +664,9 @@
           }
         },
 
+        /**
+         * This method is for use after importing a view as an ES6 module. It resets the view's element since this cannot be determined at the time of import.
+         */
         mount() {
           __element = $(__origElement);
           handleEvents();
@@ -489,5 +675,5 @@
       });
       return view;
     }
-  }); 
+  });
 })();
