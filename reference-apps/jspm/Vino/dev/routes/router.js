@@ -1,4 +1,4 @@
-import * as app from '../views/views';
+import {selectedWineView} from '../views/views';
 import {wines} from '../../data/californiaWines';
 import {outputHeroImg} from '../controllers/heroImage/outputHeroImg';
 
@@ -17,7 +17,7 @@ wineRoute.addRoute([
       })[0];
       $('#selectWineType').text(selectedWine.type);
       $('#selectedWineVarietal').text(selectedWine.varietal);
-      app.selectedWineView.render(selectedWine);
+      selectedWineView.render(selectedWine);
       outputHeroImg();
       $('#viewWinery').attr('data-location', selectedWine.location);
     }
