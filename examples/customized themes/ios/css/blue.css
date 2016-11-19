@@ -1,5 +1,5 @@
 /* Color navbar and toolbar */
-nav, screen > footer, 
+nav, #globalNav, screen > footer, 
 screen > toolbar,
 input[type="range"] -webkit-track,
 .isDesktop .segmented > button:hover,
@@ -18,8 +18,8 @@ footer button,
 nav .back, 
 #chui-back-arrow,
 .pager > button.selected   {
-  color: #555 !important;
-  stroke: #555 !important;
+  color: #333 !important;
+  stroke: #333 !important;
 }
 /* Callout text */
 .attentionGrapper {
@@ -34,7 +34,7 @@ nav .back,
 /* Paging Control */
 #pagination-icons path#page-previous,
 #pagination-icons path#page-next {
-  stroke: #555;
+  stroke: #333;
 }
 /* Range Control */
 input[type="range"] {
@@ -47,7 +47,7 @@ input[type="range"] {
 }
 .isDesktop .segmented > button:hover,
 .segmented > button.selected {
-  color: #555;
+  color: #333;
 }
 /* Slideout Button */
 button.slide-out-button {

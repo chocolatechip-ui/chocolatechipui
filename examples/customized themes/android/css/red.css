@@ -1,5 +1,5 @@
 /* Color navbar and toolbar */
-nav, screen > footer, screen > toolbar {
+nav, #globalNav, screen > footer, screen > toolbar {
   background-color: red;
 }
 /* Color title and buttons in nav and toolbars */

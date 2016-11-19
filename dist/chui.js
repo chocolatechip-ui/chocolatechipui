@@ -492,7 +492,7 @@ var DOMStack = function() {
    */
   $.extend({
     lib: "ChocolateChipJS",
-    version: '4.1.1',
+    version: '4.1.2',
     noop: function noop() {},
     uuid: function uuid() {
       var d = Date.now();
@@ -6125,6 +6125,10 @@ $(function() {
    * Check on widths of siblings:
    */
   $.extend({
+    /**
+     * Track whether to add a global nav for styling navbars.
+     */
+    globalNav: false,
     AdjustNavbarLayout: function AdjustNavbarLayout(screen) {
       if (!$('link[href*=ios]')[0]) return;
       if (document.body && document.body.hasAttribute('nocenterheader')) {
@@ -6252,6 +6256,9 @@ $(function() {
     }
   });
   setTimeout(function() {
+    if ($.globalNav === true && !$('#globalNav')[0]) {
+      $('body').prepend('<nav id="globalNav"></nav>');
+    }
     $('screen').forEach(function(screen) {
       $.AdjustNavbarLayout(screen);
     });

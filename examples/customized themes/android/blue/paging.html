@@ -13,6 +13,8 @@
   <script type="application/json" src="../../../../dist/chui.min.js.map"></script>
   <script type="text/javascript">
     $(function() {
+      $.globalNav = true;
+
       var pagingData = [
         {title: 'First',
          items: [
@@ -76,7 +78,8 @@
   </script>
 </head>
 <body>
-  <screen id="main" class="current">
+  <nav id="globalNav"></nav>
+  <screen id="main" class='current'>
     <nav>
       <h1>Paging</h1>
     </nav>

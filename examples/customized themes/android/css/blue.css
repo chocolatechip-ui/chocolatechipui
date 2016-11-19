@@ -1,11 +1,11 @@
 /* Color navbar and toolbar */
-nav, screen > footer, screen > toolbar {
+nav, #globalNav, screen > footer, screen > toolbar {
   background-color: #9fc5e8;
 }
 /* Color title and buttons in nav and toolbars */
 nav h1, nav button, toolbar button, footer button, nav .back, #chui-back-arrow  {
-  color: #555 !important;
-  stroke: #555 !important;
+  color: #333 !important;
+  stroke: #333 !important;
 }
 /* Color segmented control marker */
 span.androidSelectionBorder,
@@ -38,11 +38,11 @@ tabbar > span.androidSelectionBorder {
 }
 #pagination-icons path#page-previous,
 #pagination-icons path#page-next {
-  stroke: #555 !important;
+  stroke: #333 !important;
 }
 .pager > button.selected   {
-  color: #555 !important;
-  stroke: #555 !important;
+  color: #333 !important;
+  stroke: #333 !important;
 }
 input[type="range"] {
   background-image: -webkit-linear-gradient(top, #9fc5e8, #9fc5e8), -webkit-linear-gradient(top, #cccccc, #cccccc);
@@ -67,12 +67,12 @@ input[type="range"]:active::-webkit-slider-thumb,
   fill: #9fc5e8 !important;
 }
 button.slide-out-button {
-  background-image: -webkit-linear-gradient(left, #555, #555) !important;
-  background-image: linear-gradient(left, #555, #555) !important;
+  background-image: -webkit-linear-gradient(left, #333, #333) !important;
+  background-image: linear-gradient(left, #333, #333) !important;
 }
 button.slide-out-button::before,
 button.slide-out-button::after {
-  background-color: #555;
+  background-color: #333;
 }
 switch {
   background-image: -webkit-linear-gradient(left, #9fc5e8, #9fc5e8), -webkit-linear-gradient(left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));

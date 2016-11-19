@@ -10,6 +10,11 @@ $(() => {
    */
   $.extend({
 
+    /**
+     * Track whether to add a global nav for styling navbars.
+     */
+    globalNav: false,
+
     AdjustNavbarLayout: function(screen) {
       if (!$('link[href*=ios]')[0]) return;
       if (document.body && document.body.hasAttribute('nocenterheader')) {
@@ -141,6 +146,9 @@ $(() => {
     }
   });
   setTimeout(function() {
+    if ($.globalNav === true && !$('#globalNav')[0]) {
+      $('body').prepend('<nav id="globalNav"></nav>')
+    }
     $('screen').forEach(function(screen) {
       $.AdjustNavbarLayout(screen);
     });

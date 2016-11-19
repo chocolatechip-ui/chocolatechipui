@@ -189,6 +189,14 @@ nav > h1 {
 nav > h1.do-not-adjust {
   text-align: left;
 }
+#globalNav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 45px;
+  z-index: 0;
+}
 html[dir=rtl] nav > h1.do-not-adjust {
   text-align: right;
 }

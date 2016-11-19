@@ -1,5 +1,5 @@
 /* Color navbar and toolbar */
-nav, screen > footer, 
+nav, #globalNav, screen > footer, 
 screen > toolbar,
 input[type="range"] -webkit-track,
 .isDesktop .segmented > button:hover,

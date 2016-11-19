@@ -175,6 +175,14 @@ nav button.back + h1,
 nav button.backTo + h1 {
   margin-left: 10px;
 }
+#globalNav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  z-index: 0;
+}
 html[dir=rtl] nav > h1 {
   text-align: right;
 }
