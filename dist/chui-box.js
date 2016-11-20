@@ -492,7 +492,7 @@ var DOMStack = function() {
    */
   $.extend({
     lib: "ChocolateChipJS",
-    version: '4.1.2',
+    version: '4.2.0',
     noop: function noop() {},
     uuid: function uuid() {
       var d = Date.now();
@@ -6110,6 +6110,9 @@ $.extend({
       }
     });
     return {
+      val: function val() {
+        return __selection;
+      },
       getSelection: function getSelection() {
         return __selection;
       }
@@ -6956,6 +6959,12 @@ $(function() {
         }
       });
       return {
+        val: function val() {
+          return {
+            index: __selection,
+            element: __element
+          };
+        },
         getSelection: function getSelection() {
           return {
             index: __selection,
@@ -7025,6 +7034,9 @@ $.extend({
       settings.callback.apply(this, arguments);
     });
     return {
+      val: function val() {
+        return __selection;
+      },
       getSelection: function getSelection() {
         return __selection;
       }
@@ -7252,6 +7264,9 @@ $.extend({
       decreaseStepperValue.call(this, stepper);
     });
     return {
+      val: function val() {
+        return stepper.find('input').val();
+      },
       getValue: function getValue() {
         return stepper.find('input').val();
       }
@@ -7340,6 +7355,9 @@ $.extend({
       }
     });
     return {
+      val: function val() {
+        return __selection;
+      },
       getValue: function getValue() {
         return __selection;
       }

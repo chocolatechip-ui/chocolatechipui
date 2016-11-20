@@ -75,7 +75,7 @@
        */
       var renderSelection = function() {
         var temp = [];
-        myMulitSelectList.getSelection().forEach(function(item) {
+        myMulitSelectList.val().forEach(function(item) {
           temp.push(item.value);
         });
         temp.sort()

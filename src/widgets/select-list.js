@@ -71,6 +71,7 @@ $.extend({
     });
 
     return {
+      val: () => __selection,
       getSelection: () => __selection
     };
   }

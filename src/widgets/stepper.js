@@ -64,9 +64,8 @@ $.extend({
     });
 
     return {
-      getValue: () => {
-        return stepper.find('input').val();
-      }
+      val: () => stepper.find('input').val(),
+      getValue: () => stepper.find('input').val()
     }
   }
 });

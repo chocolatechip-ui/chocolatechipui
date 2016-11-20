@@ -94,6 +94,12 @@ $(() => {
       });
 
       return {
+        val: function() {
+          return {
+            index: __selection,
+            element: __element
+          }
+        },
         getSelection: function() {
           return {
             index: __selection,

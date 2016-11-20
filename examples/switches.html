@@ -56,7 +56,7 @@
         checked: false,
         onCallback: function() {
           $('#switchCallbacks').text('On callback: Just turned switch one on!');
-          $('#response').text(sleepSwitch.getValue().value);
+          $('#response').text(sleepSwitch.val().value);
         },
         offCallback: function() {
           $('#switchCallbacks').text('Off callback: Turned switch one off!');
@@ -70,7 +70,7 @@
         checked: false,
         onCallback: function() {
           $('#switchCallbacks').text('On callback: Just turned switch two on!');
-          $('#response').text(vacationSwitch.getValue().value);
+          $('#response').text(vacationSwitch.val().value);
         },
         offCallback: function() {
           $('#switchCallbacks').text('Off callback: Turned switch two off!');
@@ -84,7 +84,7 @@
         checked: false,
         onCallback: function() {
           $('#switchCallbacks').text('On callback: Just turned switch three on!');
-          $('#response').text(breakfastSwitch.getValue().value);
+          $('#response').text(breakfastSwitch.val().value);
         },
         offCallback: function() {
           $('#switchCallbacks').text('Off callback: Turned switch three off!');

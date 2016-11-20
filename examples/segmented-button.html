@@ -23,7 +23,7 @@
        * Define callback for Segmented Control:
        */
       var segmentedResponse = function() {
-        var selection = segCtrl.getSelection().index;
+        var selection = segCtrl.val().index;
         var choice;
         var img;
         switch(selection) {
@@ -40,7 +40,7 @@
             img = 'images/music/Willy Moon.jpg';
             break;
         }
-        segmentValueView.render({value: choice, text: segCtrl.getSelection().element.text(), imagePath: img});
+        segmentValueView.render({value: choice, text: segCtrl.val().element.text(), imagePath: img});
       };
 
       /**
@@ -60,6 +60,7 @@
         callback: segmentedResponse
       });
       segmentValueView.render({value: 'three', text: 'Yeah, Yeah', imagePath: 'images/music/Willy Moon.jpg'});
+      window.segCtrl = segCtrl;
     });
   </script>
 </head>

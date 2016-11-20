@@ -89,9 +89,8 @@ $.extend({
     });
 
     return {
-      getValue: () => {
-        return __selection;
-      }
+      val: () => __selection,
+      getValue: () => __selection
     };
   }
 });
