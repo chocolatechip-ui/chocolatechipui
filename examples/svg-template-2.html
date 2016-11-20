@@ -118,6 +118,7 @@
        * Define dispatch receiver for polygon:
        */
       $.on('update-polygon', function(obj) {
+        console.log(obj)
         polygonModel.set('points', obj.points);
         polygonModel.set('color', obj.color);
       });
@@ -194,6 +195,11 @@
         $.send('update-polygon', {points: points, color: `hsl(${hue}, ${saturation}%, ${lightness}%)`});
         LightnessValueView.render(lightness);
       });
+
+      /**
+       * First render of polygon.
+       */
+      $.send('update-polygon', polygonModel.get())
     });
   </script>
 </head>
