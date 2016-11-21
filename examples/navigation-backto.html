@@ -12,6 +12,9 @@
   <script type="application/json" src="../dist/chui.min.js.map"></script>
   <script>
     $(function() {
+      // Create global nav:
+      $.globalNav = true;
+      
       $("#goToLast").on("tap", function() {
          $.GoToScreen("screen3");
        });
