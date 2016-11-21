@@ -11,7 +11,7 @@ $.extend({
     let settings = {
       element: undefined,
       selected: [],
-      name: $.uuid(),
+      name: $.uuid() + '[]',
       callback: $.noop,
       model: undefined
     };
