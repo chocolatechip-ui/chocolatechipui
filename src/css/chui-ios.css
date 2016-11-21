@@ -250,6 +250,10 @@ ul.list > li > h3 {
 ul.list > li p {
   margin: 0;
 }
+html[dir=rtl] ul.list > li::before {
+  right: 10px;
+  left: 0px;
+}
 
 /*=======*/
 /* Lists */
@@ -404,7 +408,7 @@ div:first-of-type.separator {
   padding-left: 0;
 }
 html[dir=rtl] aside {
-  margin: 0 0 0 10px;
+  margin: 0 10px 0 0;
 }
 html[dir=rtl] aside > disclosure {
   -webkit-transform: rotate(-130deg);
