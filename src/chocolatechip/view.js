@@ -262,6 +262,7 @@
       let __variable = options.variable || 'data';
       let __events = options.events || [];
       let __startIndexFrom = options.startIndexFrom || false;
+      if (options.startIndexFrom === 0) __startIndexFrom = 0;
       const __re = /data-src/img;
       let __safeHTML = options.safeHTML || false;
       let __es6Template = options.es6Template || false;
@@ -442,6 +443,7 @@
            */
           if ($.type(data) === 'array') {
             $.view.index = __startIndexFrom || 1;
+            if (__startIndexFrom === 0) $.view.index = 0;
             if (!append) __element.empty();
             data.forEach(item => {
               if (!__safeHTML) {

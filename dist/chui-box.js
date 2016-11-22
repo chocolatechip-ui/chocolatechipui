@@ -492,7 +492,7 @@ var DOMStack = function() {
    */
   $.extend({
     lib: "ChocolateChipJS",
-    version: '4.2.2',
+    version: '4.2.3',
     noop: function noop() {},
     uuid: function uuid() {
       var d = Date.now();
@@ -3565,6 +3565,7 @@ $.extend({
       var __variable = options.variable || 'data';
       var __events = options.events || [];
       var __startIndexFrom = options.startIndexFrom || false;
+      if (options.startIndexFrom === 0) __startIndexFrom = 0;
       var __re = /data-src/img;
       var __safeHTML = options.safeHTML || false;
       var __es6Template = options.es6Template || false;
@@ -3720,6 +3721,7 @@ $.extend({
            */
           if ($.type(data) === 'array') {
             $.view.index = __startIndexFrom || 1;
+            if (__startIndexFrom === 0) $.view.index = 0;
             if (!append) __element.empty();
             data.forEach(function(item) {
               if (!__safeHTML) {
