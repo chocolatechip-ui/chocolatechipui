@@ -410,6 +410,9 @@ div:first-of-type.separator {
 html[dir=rtl] aside {
   margin: 0 10px 0 0;
 }
+html[dir=rtl] aside:first-child {
+  margin: 0 0 0 10px;
+}
 html[dir=rtl] aside > disclosure {
   -webkit-transform: rotate(-130deg);
   transform: rotate(-130deg);
