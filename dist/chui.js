@@ -492,7 +492,7 @@ var DOMStack = function() {
    */
   $.extend({
     lib: "ChocolateChipJS",
-    version: '4.2.1',
+    version: '4.2.2',
     noop: function noop() {},
     uuid: function uuid() {
       var d = Date.now();
@@ -5119,7 +5119,12 @@ if (!Array.prototype.unique) {
           return;
         }
         if ($.type(this[dataStore]) === 'array') {
-          return this[dataStore][position][property];
+          if (position < 0) {
+            var pos = this[dataStore].length + position;
+            return this[dataStore][pos][property];
+          } else {
+            return this[dataStore][position][property];
+          }
         }
       }
     }, {
@@ -5139,8 +5144,14 @@ if (!Array.prototype.unique) {
           return;
         }
         if ($.type(this[dataStore]) === 'array') {
-          this[dataStore][position][property] = value;
-          this.updateBoundViews();
+          if (position < 0) {
+            var pos = this[dataStore].length + position;
+            this[dataStore][pos][property] = value;
+            this.updateBoundViews();
+          } else {
+            this[dataStore][position][property] = value;
+            this.updateBoundViews();
+          }
         }
       }
     }, {

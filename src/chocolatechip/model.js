@@ -342,7 +342,12 @@
         return;
       } 
       if ($.type(this[dataStore]) === 'array') {
-        return this[dataStore][position][property];
+        if (position < 0) {
+          const pos = this[dataStore].length + position;
+          return this[dataStore][pos][property];
+        } else {
+          return this[dataStore][position][property];
+        }
       }
     }
 
@@ -361,8 +366,14 @@
         return;
       } 
       if ($.type(this[dataStore]) === 'array') {
-        this[dataStore][position][property] = value;
-        this.updateBoundViews();
+        if (position < 0) {
+          const pos = this[dataStore].length + position;
+          this[dataStore][pos][property] = value;
+          this.updateBoundViews();
+        } else {
+          this[dataStore][position][property] = value;
+          this.updateBoundViews();
+        }
       }
     }
 
