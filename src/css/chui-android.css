@@ -1674,7 +1674,8 @@ input[type="range"]::-webkit-slider-thumb {
   transition: all 0.5s ease-in-out;
 }
 input[type="range"]:active::-webkit-slider-thumb,
-.isDesktop input[type="range"]::-webkit-slider-thumb:hover {
+.isDesktop input[type="range"]::-webkit-slider-thumb:hover,
+.isDesktop input[type="range"]:hover::-webkit-slider-thumb {
   box-shadow: 0 0 0 1px #007aff, 0 0 0 8px rgba(0, 0, 0, 0.08);
 }
 .isDesktop input[type="range"]::-webkit-slider-thumb:hover::before {

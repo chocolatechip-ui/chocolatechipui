@@ -1,6 +1,6 @@
 /* Color navbar and toolbar */
 nav, #globalNav, screen > footer, screen > toolbar {
-  background-color: #9fc5e8;
+  background-color: skyblue;
 }
 /* Color title and buttons in nav and toolbars */
 nav h1, nav button, toolbar button, footer button, nav .back, #chui-back-arrow  {
@@ -10,31 +10,31 @@ nav h1, nav button, toolbar button, footer button, nav .back, #chui-back-arrow  
 /* Color segmented control marker */
 span.androidSelectionBorder,
 tabbar > span.androidSelectionBorder {
-  border-bottom: solid 3px #9fc5e8 !important;
+  border-bottom: solid 3px skyblue !important;
 }
 /* Callout text */
 .attentionGrabber {
-  /*color: #9fc5e8;*/
+  /*color: skyblue;*/
 }
 /* Editable Lists */
 #move-indicator,
 .list li > .deletion-indicator #checkmark,
 .multi-select-list > li #multi-select-icon,
 .select-list > li.selected #outer-circle {
-  /*stroke: #9fc5e8 !important;*/
+  /*stroke: skyblue !important;*/
 }
 .list li > .deletion-indicator {
-  /*border: solid 1px #9fc5e8;*/
+  /*border: solid 1px skyblue;*/
 }
 .list.editable > li.selected > .deletion-indicator,
 .list.deletable > li.selected > .deletion-indicator {
-  box-shadow: 0 0 2px 1px #9fc5e8;
+  box-shadow: 0 0 2px 1px skyblue;
 }
 .multi-select-list > li > span.multi-selection-indicator {
-  border: solid 1px #9fc5e8;
+  border: solid 1px skyblue;
 }
 .multi-select-list > li.selected > span.multi-selection-indicator {
-  box-shadow: 0 0 2px 1px #9fc5e8;
+  box-shadow: 0 0 2px 1px skyblue;
 }
 #pagination-icons path#page-previous,
 #pagination-icons path#page-next {
@@ -45,26 +45,27 @@ tabbar > span.androidSelectionBorder {
   stroke: #333 !important;
 }
 input[type="range"] {
-  background-image: -webkit-linear-gradient(top, #9fc5e8, #9fc5e8), -webkit-linear-gradient(top, #cccccc, #cccccc);
+  background-image: -webkit-linear-gradient(top, skyblue, skyblue), -webkit-linear-gradient(top, #cccccc, #cccccc);
 }
 input[type="range"]::-webkit-slider-thumb {
-  background-color: #9fc5e8;
+  background-color: skyblue;
 }
 input[type="range"]:active::-webkit-slider-thumb,
-.isDesktop input[type="range"]::-webkit-slider-thumb:hover {
-  box-shadow: 0 0 0 1px #9fc5e8, 0 0 0 8px rgba(0, 0, 0, 0.08);
+.isDesktop input[type="range"]::-webkit-slider-thumb:hover,
+.isDesktop input[type="range"]:hover::-webkit-slider-thumb {
+  box-shadow: 0 0 0 1px skyblue, 0 0 0 8px rgba(0, 0, 0, 0.08);
 }
 .isDesktop input[type="range"]::-webkit-slider-thumb:hover::before {
-  background-color: #9fc5e8;
+  background-color: skyblue;
 }
 .isNativeAndroidBrowser input[type="range"] {
-  background-image: -webkit-linear-gradient(top, #9fc5e8, #9fc5e8);
+  background-image: -webkit-linear-gradient(top, skyblue, skyblue);
 }
 .segmented > span.androidSelectionBorder {
-  border-bottom: solid 3px #9fc5e8;
+  border-bottom: solid 3px skyblue;
 }
 .select-list > li.selected #inner-circle {
-  fill: #9fc5e8 !important;
+  fill: skyblue !important;
 }
 button.slide-out-button {
   background-image: -webkit-linear-gradient(left, #333, #333) !important;
@@ -75,18 +76,18 @@ button.slide-out-button::after {
   background-color: #333;
 }
 switch {
-  background-image: -webkit-linear-gradient(left, #9fc5e8, #9fc5e8), -webkit-linear-gradient(left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
-  background-image: linear-gradient(to left, #9fc5e8, #9fc5e8), linear-gradient(to left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+  background-image: -webkit-linear-gradient(left, skyblue, skyblue), -webkit-linear-gradient(left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+  background-image: linear-gradient(to left, skyblue, skyblue), linear-gradient(to left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
 }
 switch.checked > em {
-  background-color: #9fc5e8;
+  background-color: skyblue;
 }
 switch.traditional.checked > em {
-  background-color: #9fc5e8;
-  border: solid 1px #9fc5e8;
+  background-color: skyblue;
+  border: solid 1px skyblue;
 }
 .isDesktop tabbar>button:hover, tabbar>button.selected {
-  color: #9fc5e8 !important;
+  color: skyblue !important;
 }
 tabbar ~ screen > nav {
   background-color: #f0f0f0 !important;

@@ -2,7 +2,7 @@ import {cartModel} from '../data/cartModel';
 import * as app from '../views/views';
 
 export function addToCart() {
-    $('#addToCart').on('tap', function() {
+  $('#addToCart').on('tap', function() {
     const fragrance = $(this).data('fragrance');
     cartModel.push(fragrance);
     $.GoToScreen('cart');
