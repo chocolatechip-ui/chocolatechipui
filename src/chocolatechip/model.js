@@ -41,7 +41,7 @@
       noCallbackForForEach: "ChocolateChip-UI Model Error: No callback was provided for the forEach method. This is required.",
       noDataToReplaceInModel: "ChocolateChip-UI Model Error: No data was provided to replace the data in the model. If you want to do so, please provide some data to complete this operation. Otherwise, if you are trying to empty the model, use `purge()`.",
       modelHasNoDataToReturn: "ChocolateChip-UI Model Error: This model has no data associated with it. Perhaps you forgot to give it any data when you created it.",
-      positionGreaterThanModelLength: "ChocolateChip-UI Model Error: The position you provided is to set a property is greater than the number of items in this model."
+      positionGreaterThanModelLength: "ChocolateChip-UI Model Error: The position you provided to set a property is greater than the number of items in this model."
     },
     es: {
       noPropertyOrDataError: "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna propiedad ni datos para establecer el valor del modelo.",
