@@ -40,7 +40,8 @@
       noEventForEventDeletion: "ChocolateChip-UI Model Error: No event was provided to delete the callback for this model. Please provide both and event and an array position for the callback. An event can have more than one callback registered to it.",
       noCallbackForForEach: "ChocolateChip-UI Model Error: No callback was provided for the forEach method. This is required.",
       noDataToReplaceInModel: "ChocolateChip-UI Model Error: No data was provided to replace the data in the model. If you want to do so, please provide some data to complete this operation. Otherwise, if you are trying to empty the model, use `purge()`.",
-      modelHasNoDataToReturn: "ChocolateChip-UI Model Error: This model has no data associated with it. Perhaps you forgot to give it any data when you created it."
+      modelHasNoDataToReturn: "ChocolateChip-UI Model Error: This model has no data associated with it. Perhaps you forgot to give it any data when you created it.",
+      positionGreaterThanModelLength: "ChocolateChip-UI Model Error: The position you provided is to set a property is greater than the number of items in this model."
     },
     es: {
       noPropertyOrDataError: "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna propiedad ni datos para establecer el valor del modelo.",
@@ -78,7 +79,8 @@
       noEventForEventDeletion: "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ningún evento a fin de eliminar la función callback de este modelo. Por favor proporcione tanto un evento como una posición en la colección para la callback que se quiere eliminar. Es posible que un evento tenga más de una callback registrada a él.",
       noCallbackForForEach: "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna función callback para el método «forEach». Ésta se requiere.",
       noDataToReplaceInModel: "Hubo Error de Modelo ChocolateChip-UI: No se proporcionaron ningunos datos para reemplazar los del modelo. Si es lo que usted quiere hacer, por favor proporicone unos datos para realizar esta operación. En otro caso, si el propósito de esta operación es el de vaciar el modelo, use `purge()`.",
-      modelHasNoDataToReturn: "Hubo Error de Modelo ChocolateChip-UI: Este modelo no tiene datos suyos. Quizás se le olvidó asignarselos cuando lo creó."
+      modelHasNoDataToReturn: "Hubo Error de Modelo ChocolateChip-UI: Este modelo no tiene datos suyos. Quizás se le olvidó asignarselos cuando lo creó.",
+      positionGreaterThanModelLength: "Hubo Error de Modelo ChocolateChip-UI: The position you provided is to set a property is greater than the number of items in this model. La positición que se proporicionó es más grande que el número de objetos en este modelo."
     }
   };
 
@@ -364,7 +366,11 @@
         if ($.supressErrorMessages) return;
         console.error(errors.noPosForSetPropAt);
         return;
-      } 
+      } else if (position > this[dataStore].length -1) {
+        if ($.supressErrorMessages) return;
+        console.error(errors.positionGreaterThanModelLength);
+        return;
+      }
       if ($.type(this[dataStore]) === 'array') {
         if (position < 0) {
           const pos = this[dataStore].length + position;
