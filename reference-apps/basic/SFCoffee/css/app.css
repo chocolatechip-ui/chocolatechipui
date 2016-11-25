@@ -1,15 +1,35 @@
 /*============*/
 /* App Styles */
 /*============*/
-body {
-   background-image: url(../images/SFCoffee.png);
-   background-repeat: no-repeat;
-   background-size: 100% auto;
-   background-position: center top !important;
-   background-color: #2e2e2e;
+#main {
+  background-image: url(../images/SF-Coffee-Bkgnd.jpg);
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+  background-position: center center !important;
+}
+#SFCoffeeLogo {
+  background-image: url(../images/SF-Coffee-Logo.png);
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+  background-position: center center !important;
+  height: 120px;
+  margin: 150px auto 0;
+}
+li > div > div.horizontal-panel {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+li > div > div.horizontal-panel > div {
+  flex: 1;
+}
+screen {
+  background-image: url('../images/coffee-beans-1.jpg');
+  background-size: 100% auto;
 }
 screen, nav {
   background-color: transparent !important;
+  background-color: #2e2e2e !important;
 }
 screen > section {
   padding-top: 0;
@@ -100,10 +120,13 @@ a.offsiteLink:hover {
   border-color: #fff;
   color: #fff;
 }
-#shopDetail > li > img,
+#shopDetail > li > div > div > img,
 #shop-list > li > img {
   width: 100px;
   height: 80px;
+}
+#shopDetail > li > div > div > img {
+  margin-right: 10px
 }
 #brewing-image {
   display: block;
@@ -112,6 +135,13 @@ a.offsiteLink:hover {
 @media only screen and (orientation: landscape) {
   body {
     background-position: center center;
+  }
+  #exploreButton {
+    position: absolute;
+    bottom: 50px;
+  }
+  #SFCoffeeLogo {
+    margin-top: 50px !important;
   }
 }
 @media only screen and (device-width: 320px) {
@@ -127,4 +157,8 @@ a.offsiteLink:hover {
     bottom: auto;
     top: 100px;
   }
+}
+
+@media only screen and (min-width: 414px) {
+  
 }
