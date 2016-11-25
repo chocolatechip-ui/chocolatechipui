@@ -55,7 +55,8 @@
 				/**
 				 * Set a Box key/value pair:
 				 */
-				$.Box.set(key, value).then(function(item) {
+				$.Box.set(key, value)
+				.then(function(item) {
 					$('#boxList').empty();
 					$.Box.each(function(value, key) {
 						boxView.render({key: key, value: value}, 'append');
@@ -68,12 +69,16 @@
 			var key;
 			if (data) {
 				key = data;
-				$.Box.remove(key, function(err) {
+				$.Box.remove(key)
+				.then(function() {
 					$('#boxList').empty();
 					$.Box.each(function(value, key) {
 						boxView.render({key: key, value: value}, 'append');
 					});
-				});	
+				})
+				.catch(function(error) {
+					console.error(error);
+				})
 			}
 		});
 
