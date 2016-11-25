@@ -34,7 +34,8 @@ $(function() {
           console.log($(this).text());
         }
       }],
-      template: "<li data-goto='detail:{= data.uuid }'>\
+      template: 
+      "<li data-goto='detail:{= data.uuid }'>\
         <h3>{= $.view.index }: {= data.firstName } {= data.lastName }</h3>\
         <aside>\
           <disclosure></disclosure>\
@@ -44,7 +45,8 @@ $(function() {
     
     chosenPersonView: $.View({
       element: "#chosenPersonList",
-      template: "<li>\
+      template: 
+      "<li>\
         <h3>First Name: {= data.firstName }</h3>\
       </li>\
       <li>\
