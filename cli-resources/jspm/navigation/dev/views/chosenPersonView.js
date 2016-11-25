@@ -1,6 +1,7 @@
 export const chosenPersonView = $.View({
   element: "#chosenPersonList",
-  template: `<li>
+  template: 
+  `<li>
     <h3>First Name: {= data.firstName }</h3>
   </li>
   <li>
