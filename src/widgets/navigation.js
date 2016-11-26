@@ -126,9 +126,7 @@ $(() => {
     let destination = element.attr('data-goto');
     if (!destination) return;
     element.addClass('selected');
-    setTimeout(function () {
-      element.removeClass('selected');
-    }, 1000);
+    setTimeout(() => element.removeClass('selected'), 1000);
     /**
      * Handle navigation:
      */

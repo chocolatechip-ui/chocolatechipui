@@ -76,7 +76,7 @@ $(function() {
       }
 
       /**
-       * If ripple sheath has custom color for ripple, use that:
+       * If ripple parent has custom color for ripple, use that:
        */
       if (target.dataset.rippleColor) {
         rippleColor = target.dataset.rippleColor

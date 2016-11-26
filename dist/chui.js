@@ -5760,13 +5760,13 @@ $.extend({
       enableDeletable = 'swiperight';
     }
     if (settings.deletable) {
-      deleteButton = '<button class="delete">\n  <label>' + settings.deleteLabel + '</label>\n  <svg width="27px" height="30px" viewBox="0 0 27 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">\n    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">\n      <g id="delete-icon" fill="#3A3A3A">\n        <g transform="translate(3.000000, 1.000000)">\n          <path d="M1,6 L20,6 L20,24.9986131 C20,26.6562333 18.6639569,28 16.9998779,28 L4.00012207,28 C2.3432004,28 1,26.6569187 1,24.9986131 L1,6 Z M4,9 L5,9 L5,25 L4,25 L4,9 Z M8,9 L9,9 L9,25 L8,25 L8,9 Z M12,9 L13,9 L13,25 L12,25 L12,9 Z M16,9 L17,9 L17,25 L16,25 L16,9 Z" id="can"></path><path d="M0,4.96611425 L0,1.67759301 L5.1776507,1.7511163 L6.482399,0 L14.5847825,0 L15.8789491,1.7511163 L21,1.7511163 L21,4.9447157 L0,4.96611425 L0,4.96611425 Z" id="lid"></path>\n        </g>\n      </g>\n    </g>        \n  </svg>      \n</button>';
-      deletionIndicator = '<span class="deletion-indicator">\n  <svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">\n    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">\n      <g id="deletion-indicator">\n        <g id="ios-indicator">\n          <circle id="ios-circle" fill="#FF0000" cx="10" cy="10" r="10"></circle>\n          <path d="M3.5,10 L16.5,10" id="ios-bar" stroke="#FFFFFF" stroke-width="2" stroke-linecap="square"></path>\n        </g>\n        <path d="M2,13 L9.9294326,16.8406135 L17.1937075,1.90173332" id="checkmark" stroke="#FA0303" stroke-width="2"></path>\n      </g>\n    </g>\n  </svg>\n</span>';
+      deleteButton = '<button class="delete">\n          <label>' + settings.deleteLabel + '</label>\n          <svg width="27px" height="30px" viewBox="0 0 27 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">\n            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">\n              <g id="delete-icon" fill="#3A3A3A">\n                <g transform="translate(3.000000, 1.000000)">\n                  <path d="M1,6 L20,6 L20,24.9986131 C20,26.6562333 18.6639569,28 16.9998779,28 L4.00012207,28 C2.3432004,28 1,26.6569187 1,24.9986131 L1,6 Z M4,9 L5,9 L5,25 L4,25 L4,9 Z M8,9 L9,9 L9,25 L8,25 L8,9 Z M12,9 L13,9 L13,25 L12,25 L12,9 Z M16,9 L17,9 L17,25 L16,25 L16,9 Z" id="can"></path><path d="M0,4.96611425 L0,1.67759301 L5.1776507,1.7511163 L6.482399,0 L14.5847825,0 L15.8789491,1.7511163 L21,1.7511163 L21,4.9447157 L0,4.96611425 L0,4.96611425 Z" id="lid"></path>\n                </g>\n              </g>\n            </g>        \n          </svg>      \n        </button>';
+      deletionIndicator = '<span class="deletion-indicator">\n          <svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">\n            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">\n              <g id="deletion-indicator">\n                <g id="ios-indicator">\n                  <circle id="ios-circle" fill="#FF0000" cx="10" cy="10" r="10"></circle>\n                  <path d="M3.5,10 L16.5,10" id="ios-bar" stroke="#FFFFFF" stroke-width="2" stroke-linecap="square"></path>\n                </g>\n                <path d="M2,13 L9.9294326,16.8406135 L17.1937075,1.90173332" id="checkmark" stroke="#FA0303" stroke-width="2"></path>\n              </g>\n            </g>\n          </svg>\n        </span>';
       $(element).addClass('deletable');
     }
     if (settings.movable) {
-      moveUpIndicator = '<span class=\'move-up\'>\n  <svg width="22px" height="22px" viewBox="0 0 22 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">\n    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">\n      <g id="move-indicator">\n        <circle id="circle" cx="11" cy="11" r="10"></circle>\n        <path d="M4,13.9645823 L10.9316382,5.94630319 L17.795297,13.9073417" id="move-up"></path>\n      </g>\n    </g>\n  </svg>\n</span>';
-      moveDownIndicator = '<span class=\'move-down\'>\n  <svg width="22px" height="22px" viewBox="0 0 22 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">\n    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">\n      <g id="move-indicator">\n        <circle id="circle" cx="11" cy="11" r="10"></circle>\n        <path d="M4.0421421,7.98172087 L10.912246,16 L17.7960071,8.1103389" id="move-down"></path>\n      </g>\n    </g>\n  </svg>\n</span>';
+      moveUpIndicator = '<span class=\'move-up\'>\n          <svg width="22px" height="22px" viewBox="0 0 22 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">\n            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">\n              <g id="move-indicator">\n                <circle id="circle" cx="11" cy="11" r="10"></circle>\n                <path d="M4,13.9645823 L10.9316382,5.94630319 L17.795297,13.9073417" id="move-up"></path>\n              </g>\n            </g>\n          </svg>\n        </span>';
+      moveDownIndicator = '<span class=\'move-down\'>\n          <svg width="22px" height="22px" viewBox="0 0 22 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">\n            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">\n              <g id="move-indicator">\n                <circle id="circle" cx="11" cy="11" r="10"></circle>\n                <path d="M4.0421421,7.98172087 L10.912246,16 L17.7960071,8.1103389" id="move-down"></path>\n              </g>\n            </g>\n          </svg>\n        </span>';
       $(element).addClass('editable');
     }
     editButton = '<button class="edit">' + settings.editLabel + '</button>';
@@ -6405,7 +6405,7 @@ $(function() {
     if (!destination) return;
     element.addClass('selected');
     setTimeout(function() {
-      element.removeClass('selected');
+      return element.removeClass('selected');
     }, 1000);
     /**
      * Handle navigation:
@@ -6432,13 +6432,13 @@ $.extend({
     if (!options || !options.element) return;
     var screen = $(options.element);
     var pager = '<div class="pager">\n\
-    <button class="previous">\n\
-      <svg width="24px" height="36px" viewBox="0 0 24 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="pagination-icons" stroke="#979797"><path d="M19.7729197,3 L4.25431067,17.8699971 L19.7729196,32.9558941" id="page-previous"></path></g></g></svg>\n\
-    </button>\n\
-    <button class="next">\n\
-      <svg width="24px" height="36px" viewBox="0 0 24 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="pagination-icons" stroke="#979797"><path d="M4.08862955,3.06871359 L20.0261609,18.0528447 L4.08862956,32.9999994" id="page-next"></path></g></g></svg>\n\
-    </button>\n\
-    </div>';
+        <button class="previous">\n\
+          <svg width="24px" height="36px" viewBox="0 0 24 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="pagination-icons" stroke="#979797"><path d="M19.7729197,3 L4.25431067,17.8699971 L19.7729196,32.9558941" id="page-previous"></path></g></g></svg>\n\
+        </button>\n\
+        <button class="next">\n\
+          <svg width="24px" height="36px" viewBox="0 0 24 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="pagination-icons" stroke="#979797"><path d="M4.08862955,3.06871359 L20.0261609,18.0528447 L4.08862956,32.9999994" id="page-next"></path></g></g></svg>\n\
+        </button>\n\
+      </div>';
     $(screen).find('nav').append(pager);
     var currentSection = $(screen).find('section');
     var articles = function articles() {
@@ -7091,7 +7091,7 @@ $.extend({
       settings.slideFrom = '';
     }
     if (settings.handle === false) settings.handle = '';
-    else settings.handle = '<chui-sheet-handle><svg width="100%" height="100%" viewBox="0 0 76 27" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:butt;stroke-linejoin:butt;stroke-miterlimit:1.41421;"><g id="sheet-handle" transform="matrix(1,0,0,1,-29.7966,-15.7797)"><path id="sheet-handle-path" d="M36.25,26.242L67.645,34.215L98.176,25.789" style="fill:none;"/></g></svg></chui-sheet-handle>';
+    else settings.handle = '<chui-sheet-handle>\n        <svg width="100%" height="100%" viewBox="0 0 76 27" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:butt;stroke-linejoin:butt;stroke-miterlimit:1.41421;">\n          <g id="sheet-handle" transform="matrix(1,0,0,1,-29.7966,-15.7797)">\n            <path id="sheet-handle-path" d="M36.25,26.242L67.645,34.215L98.176,25.789" style="fill:none;"/>\n          </g>\n        </svg>\n      </chui-sheet-handle>';
     var sheet = '<sheet id="' + settings.id + '"' + settings.slideDown + settings.background + '>' + settings.handle + '<section></section></sheet>';
     $('body').append(sheet);
     $('#' + settings.id).find('chui-sheet-handle').on($.eventStart, function() {
@@ -7817,7 +7817,7 @@ $(function() {
         rippleColor = '#fff';
       }
       /**
-       * If ripple sheath has custom color for ripple, use that:
+       * If ripple parent has custom color for ripple, use that:
        */
       if (target.dataset.rippleColor) {
         rippleColor = target.dataset.rippleColor;
