@@ -19,11 +19,7 @@
     <section>
       <h2>After Editing the List, Reload the Page to See the Changes Persisted</h2>
       <p>Delete or move items in the list.</p>
-      <ul class='list' id="editList">
-        <li data-id="{= person.guid }">
-          <h3>{= person.name.first } {= person.name.last }</h3>
-        </li>
-      </ul>
+      <ul class='list' id="editList"></ul>
     </section>
 </screen>
 
@@ -31,7 +27,7 @@
   $(function() {
     var people = [   
       {
-        "guid": "02cd3a66-2a4f-48b9-ac6b-e32c1868a8e8",
+        "uuid": "02cd3a66-2a4f-48b9-ac6b-e32c1868a8e8",
         "name": {
           "first": "Jeanie",
           "last": "Nolan"
@@ -42,7 +38,7 @@
         "address": "185 Decatur Street, Greenbackville, Wisconsin, 2311"
       },
       {
-        "guid": "4cf0c7b3-2df1-42c8-99af-377955cd1690",
+        "uuid": "4cf0c7b3-2df1-42c8-99af-377955cd1690",
         "name": {
           "first": "Sean",
           "last": "Daugherty"
@@ -53,7 +49,7 @@
         "address": "109 Varick Street, Faywood, North Dakota, 5887"
       },
       {
-        "guid": "0f17f9e0-fb41-4b8f-b3f7-9b0426c50066",
+        "uuid": "0f17f9e0-fb41-4b8f-b3f7-9b0426c50066",
         "name": {
           "first": "Diane",
           "last": "Foley"
@@ -64,7 +60,7 @@
         "address": "523 Bryant Street, Fresno, Alaska, 7005"
       },
       {
-        "guid": "e90dd256-4ee9-4681-a5fa-dd428d455c16",
+        "uuid": "e90dd256-4ee9-4681-a5fa-dd428d455c16",
         "name": {
           "first": "Paul",
           "last": "Kirkland"
@@ -75,7 +71,7 @@
         "address": "237 Blake Court, Gibbsville, Iowa, 233"
       },
       {
-        "guid": "ed17ad1c-1dfd-4d70-bbd2-56a96cc7fe02",
+        "uuid": "ed17ad1c-1dfd-4d70-bbd2-56a96cc7fe02",
         "name": {
           "first": "Dan",
           "last": "Finley"
@@ -86,7 +82,7 @@
         "address": "488 Williams Court, Sunnyside, Arkansas, 6302"
       },
       {
-        "guid": "d2867a0e-1ea1-408e-9450-0876804675db",
+        "uuid": "d2867a0e-1ea1-408e-9450-0876804675db",
         "name": {
           "first": "Reynold",
           "last": "Montoya"
@@ -97,7 +93,7 @@
         "address": "239 Holly Street, Ivanhoe, South Carolina, 1146"
       },
       {
-        "guid": "cea10dc6-b63c-46b0-8e51-3081638275c2",
+        "uuid": "cea10dc6-b63c-46b0-8e51-3081638275c2",
         "name": {
           "first": "Hallie",
           "last": "Yang"
@@ -108,7 +104,7 @@
         "address": "798 Withers Street, Kula, Nebraska, 5470"
       },
       {
-        "guid": "4bac88a3-3afe-4df1-b0ce-8b6bde3dba6b",
+        "uuid": "4bac88a3-3afe-4df1-b0ce-8b6bde3dba6b",
         "name": {
           "first": "Carole",
           "last": "Anthony"
@@ -119,7 +115,7 @@
         "address": "175 Metropolitan Avenue, Disautel, Minnesota, 8916"
       },
       {
-        "guid": "6d6f5e3a-988c-48a6-ad62-d6741346102f",
+        "uuid": "6d6f5e3a-988c-48a6-ad62-d6741346102f",
         "name": {
           "first": "Paul",
           "last": "Mckenzie"
@@ -130,7 +126,7 @@
         "address": "677 Denton Place, Sanborn, Indiana, 2527"
       },
       {
-        "guid": "4fcc9d85-5e9f-4f9c-8f45-5997e159707e",
+        "uuid": "4fcc9d85-5e9f-4f9c-8f45-5997e159707e",
         "name": {
           "first": "Kathrine",
           "last": "Waller"
@@ -141,7 +137,7 @@
         "address": "848 Hanover Place, Lafferty, Federated States Of Micronesia, 640"
       },
       {
-        "guid": "905ce47a-cf92-42d7-94b8-95a497903154",
+        "uuid": "905ce47a-cf92-42d7-94b8-95a497903154",
         "name": {
           "first": "Michelle",
           "last": "Ochoa"
@@ -152,7 +148,7 @@
         "address": "940 Wilson Street, Walker, Massachusetts, 2754"
       },
       {
-        "guid": "56615e29-7289-4a70-81a3-1075c2acb191",
+        "uuid": "56615e29-7289-4a70-81a3-1075c2acb191",
         "name": {
           "first": "Marcy",
           "last": "Jackson"
@@ -163,7 +159,7 @@
         "address": "763 Congress Street, Moscow, Ohio, 6242"
       },
       {
-        "guid": "e0497613-15e0-446f-a596-b390935fe905",
+        "uuid": "e0497613-15e0-446f-a596-b390935fe905",
         "name": {
           "first": "Shelia",
           "last": "Stanley"
@@ -174,7 +170,7 @@
         "address": "181 Commercial Street, Tioga, Maryland, 9447"
       },
       {
-        "guid": "dff782d7-4ae5-437b-98c6-6b8d7516800b",
+        "uuid": "dff782d7-4ae5-437b-98c6-6b8d7516800b",
         "name": {
           "first": "Camacho",
           "last": "Contreras"
@@ -185,7 +181,7 @@
         "address": "604 Joval Court, Glenville, West Virginia, 2605"
       },
       {
-        "guid": "f3440ed5-e999-457d-bbeb-dfdbe44c8326",
+        "uuid": "f3440ed5-e999-457d-bbeb-dfdbe44c8326",
         "name": {
           "first": "Holder",
           "last": "Mosley"
@@ -211,6 +207,10 @@
         element: '#editList',
         model: peopleModel,
         variable: 'person',
+        template:
+        '<li data-id="{= person.uuid }">\
+          <h3>{= person.name.first } {= person.name.last }</h3>\
+        </li>'
       });
     }
 
@@ -222,7 +222,7 @@
         deletable: true,
         movable: true,
         model: peopleModel,
-        modelProp: 'guid',
+        modelProp: 'uuid',
         element: '#editList',
         view: editPeopleView,
         callback: function(_model) {
