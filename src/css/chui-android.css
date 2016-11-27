@@ -508,12 +508,15 @@ button {
 button:focus {
   outline: none !important;
 }
-nav > button:hover,
-toolbar > button:hover,
-footer > button:hover,
-nav > button.selected,
-toolbar > button.selected,
-footer > button.selected {
+button:active {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.45);
+}
+nav button:hover,
+toolbar button:hover,
+footer button:hover,
+nav button.selected,
+toolbar button.selected,
+footer button.selected {
   box-shadow: none !important;
 }
 li > button {
@@ -545,6 +548,7 @@ button.backTo {
   animation-duration: 1.5s;
   animation-timing-function: ease-out;
   animation-fill-mode: forwards;
+  margin-left: -10px !important;
 }
 nav button.back > span,
 nav button.backTo > span {
@@ -605,13 +609,14 @@ button.action.centered {
 html[dir=rtl] button.action {
   margin: 0 0 0 10px;
 }
-button.raised {
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.45) !important;
+button.raised,
+nav button.raised {
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.45);
 }
 button.raised:active {
-  box-shadow: 0 0 0 rgba(0, 0, 0, 0) !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.45);
 }
-toolbar > button, footer > button, nav > button {
+toolbar button, footer button, nav button {
   -webkit-appearance: none;
   height: 36px;
   background-color: transparent !important;
@@ -626,10 +631,10 @@ toolbar > button, footer > button, nav > button {
 .isDesktop nav > button:hover {
   background-color: transparent !important;
 }
-toolbar > button.selected,
-footer > button.selected, 
-nav > button.selected, 
-nav > button.selected {
+toolbar button.selected,
+footer button.selected, 
+nav button.selected, 
+nav button.selected {
   background-color: transparent !important;
   box-shadow: 0 3px 5px 1px rgba(0, 0, 0, 0.25) !important;
 }
@@ -639,6 +644,57 @@ nav > button.back.selected,
 nav > button.backTo.selected {
   background-color: transparent !important;
   box-shadow: none !important;
+}
+
+/*============*/
+/* FAB Button */
+/*============*/
+button.fab {
+  border: none;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.55);
+  background-color: #555;
+  border-radius: 100%;
+  height: 56px;
+  width: 56px;
+  padding: 0 !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  display: -webkit-inline-flex;
+  -webkit-align-items: center;
+  -webkit-justify-content: center;
+}
+button.fab > span {
+  display: block;
+  text-align: center;
+  flex: 1;
+  -webkit-flex: 1;
+}
+button.fab.small {
+  height: 40px;
+  width: 40px;
+}
+button.fab * {
+  color: #fff;
+  stroke: #fff;
+}
+toolbar button.fab:active, 
+footer.fab:active button.fab:active, 
+nav button.fab:active,
+button.fab:active {
+  box-shadow: 0 5px 12px rgba(0,0,0,0.65);
+}
+button.red,
+button.raised.red {
+  background-color: #FC4482 !important;
+}
+button.blue,
+button.raised.blue {
+  background-color: #2B98F0 !important;
+}
+button.green,
+button.raised.green {
+  background-color: #1D9C5A !important;
 }
 
 /*=========*/

@@ -10,6 +10,10 @@ input[type="range"] -webkit-track,
 .isDesktop .stepper > button.selected > span  {
   background-color: red;
 }
+button, button.fab {
+  color: red;
+  border-color: red;
+}
 /* Color title and buttons in nav and toolbars */
 nav h1, 
 nav button, 

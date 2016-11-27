@@ -555,6 +555,47 @@ html[dir=rtl] button.action {
   margin: 0 0 0 10px;
 }
 
+/*============*/
+/* FAB Button */
+/*============*/
+button.fab {
+  border: solid 1px #007aff ;
+  padding: 0;
+  border-radius: 100%;
+  height: 45px;
+  width: 45px;
+}
+button.fab > span {
+  display: block;
+  text-align: center;
+  flex: 1;
+  -webkit-flex: 1;
+}
+button.red,
+button.raised.red {
+  border-color: #FC4482 !important;
+}
+button.red *,
+button.raised.red * {
+  color: #FC4482 !important;
+}
+button.blue,
+button.raised.blue {
+  border-color: #2B98F0 !important;
+}
+button.blue *,
+button.raised.blue * {
+  color: #2B98F0 !important;
+}
+button.green,
+button.raised.green {
+  border-color: #1D9C5A !important;
+}
+button.green *,
+button.raised.green * {
+  color: #1D9C5A !important;
+}
+
 /*=========*/
 /* Tab Bar */
 /*=========*/

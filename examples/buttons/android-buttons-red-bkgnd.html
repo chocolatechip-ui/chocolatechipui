@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="msapplication-tap-highlight" content="no">
+  <title>ChocolateChip-UI</title>
+  <link rel="stylesheet" href="../../dist/css/chui-android.min.css">
+  <link rel="stylesheet" href="./../customized themes/android/css/custom-android-red.css/">
+  <script src="../../dist/chui.min.js"></script>
+  <script type="application/json" src="../../dist/chui.min.js.map"></script>
+  <style>
+    .fab > span {
+      font-size: 30pt;
+      margin-top: -5px;
+    }
+    /* Custom marign for iOS FAB button */
+    .themeIsiOS .fab > span {
+      margin-top: -8px;
+    }
+    /* Custom color for Android raised button */
+    .themeIsAndroid button.raised.red {
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body>
+  <screen id='main' class='current'>
+    <nav>
+      <h1>Android Button Types</h1>
+      <button>Plain Button</button>
+    </nav>
+    <section>
+      <ul class='list'>
+        <li>
+          <h3>Plain Button:</h3>
+          <button data-ripple-color='red'>Click</button>
+        </li>
+        <li>
+          <h3>Raised Button:</h3>
+          <button class="raised">Click</button>
+        </li>
+        <li>
+          <h3>Rasied Button Red:</h3>
+          <button class="raised red">Click</button>
+        </li>
+        <li>
+          <h3>Action Button:</h3>
+          <button class="action">Click</button>
+        </li>
+        <li>
+          <h3>Action Button Raised:</h3>
+          <button class="action raised">Click</button>
+        </li>
+        <li>
+          <h3>Plain FAB Button:</h3>
+          <button class='fab'><span>+</span></button>
+        </li>
+        <li>
+          <h3>FAB Button Red:</h3>
+          <button class="fab red"><span>+</span></button>
+        </li>
+        <li>
+          <h3>FAB Button Green:</h3>
+          <button class="fab green"><span>+</span></button>
+        </li>
+        <li>
+          <h3>FAB Button Blue:</h3>
+          <button class="fab blue"><span>+</span></button>
+        </li>
+      </ul>
+    </section>
+    <toolbar>
+      <button>Plain Button</button>
+    </toolbar>
+  </screen>
+</body>
+</html>

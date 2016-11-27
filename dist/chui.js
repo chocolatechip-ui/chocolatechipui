@@ -492,7 +492,7 @@ var DOMStack = function() {
    */
   $.extend({
     lib: "ChocolateChipJS",
-    version: '4.2.4',
+    version: '4.2.5',
     noop: function noop() {},
     uuid: function uuid() {
       var d = Date.now();
@@ -5795,7 +5795,7 @@ $.extend({
     /**
      * Callback to setup indicator interactions:
      */
-    var setupDeletability = function setupDeletability(callback, list, button) {
+    var makeEditable = function makeEditable(callback, list, button) {
       $(function() {
         /**
          * Check for view and update its template:
@@ -6032,7 +6032,7 @@ $.extend({
     /**
      * Initialize the editable list:
      */
-    setupDeletability(settings.callback, element, button);
+    makeEditable(settings.callback, element, button);
     return {
       getModel: function getModel() {
         return __model;
