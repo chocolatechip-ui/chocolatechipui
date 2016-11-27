@@ -342,7 +342,7 @@ aside:first-child {
   margin: 0;
   padding: 0;
 }
-aside > disclosure {
+disclosure {
   display: block;
   width: 12px;
   height: 12px;
