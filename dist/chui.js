@@ -492,7 +492,7 @@ var DOMStack = function() {
    */
   $.extend({
     lib: "ChocolateChipJS",
-    version: '4.2.5',
+    version: '4.2.6',
     noop: function noop() {},
     uuid: function uuid() {
       var d = Date.now();
@@ -6376,11 +6376,11 @@ $(function() {
         return dest = destination;
       });
       var destinationScreen = getScreen(destination);
-      var temp = undefined;
       while ($.ChuiRoutes.length > position + 1) {
-        temp = $.ChuiRoutes.pop();
-        temp = getScreen(temp);
-        makeScreenNext(temp);
+        var route = $.ChuiRoutes.pop();
+        route = route.split(':')[0];
+        var screen = getScreen(route);
+        makeScreenNext(screen);
       }
       makeScreenCurrent(destinationScreen);
       $.Router.dispatch(destination);

@@ -96,11 +96,11 @@ $(() => {
         return dest = destination
       });
       const destinationScreen = getScreen(destination);
-      let temp = undefined;
       while ($.ChuiRoutes.length > position + 1) {
-        temp = $.ChuiRoutes.pop();
-        temp = getScreen(temp);
-        makeScreenNext(temp);
+        let route = $.ChuiRoutes.pop();
+        route = route.split(':')[0];
+        let screen = getScreen(route);
+        makeScreenNext(screen);
       }
       makeScreenCurrent(destinationScreen);
       $.Router.dispatch(destination);
