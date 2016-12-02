@@ -492,7 +492,7 @@ var DOMStack = function() {
    */
   $.extend({
     lib: "ChocolateChipJS",
-    version: '4.2.6',
+    version: '4.2.7',
     noop: function noop() {},
     uuid: function uuid() {
       var d = Date.now();
@@ -3900,6 +3900,8 @@ $.extend({
         safeHTML: function safeHTML(boolean) {
           if (boolean) {
             __safeHTML = true;
+          } else {
+            __safeHTML = false;
           }
         },
         isEscapingHTML: function isEscapingHTML() {

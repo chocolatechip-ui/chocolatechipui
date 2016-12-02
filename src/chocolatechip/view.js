@@ -638,6 +638,8 @@
         safeHTML(boolean) {
           if (boolean) {
             __safeHTML = true;
+          } else {
+            __safeHTML = false;
           }
         },
 
