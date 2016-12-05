@@ -492,7 +492,7 @@ var DOMStack = function() {
    */
   $.extend({
     lib: "ChocolateChipJS",
-    version: '4.2.8',
+    version: '4.2.9',
     noop: function noop() {},
     uuid: function uuid() {
       var d = Date.now();
@@ -5859,7 +5859,7 @@ $.extend({
                 var __newarray = [];
                 __data.filter(function(item) {
                   var ret = __model.filter(function(b) {
-                    return b[settings.modelProp] === item;
+                    return b[settings.modelProp] == item;
                   });
                   __newarray.push(ret[0]);
                 });

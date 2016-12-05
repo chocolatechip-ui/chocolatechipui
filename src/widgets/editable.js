@@ -217,7 +217,7 @@ $.extend({
                 let __newarray = [];
                 __data.filter(function (item) {
                   const ret = __model.filter(function (b) {
-                    return b[settings.modelProp] === item;
+                    return b[settings.modelProp] == item;
                   });
                   __newarray.push(ret[0]);
                 });
