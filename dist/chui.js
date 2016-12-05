@@ -492,7 +492,7 @@ var DOMStack = function() {
    */
   $.extend({
     lib: "ChocolateChipJS",
-    version: '4.2.7',
+    version: '4.2.8',
     noop: function noop() {},
     uuid: function uuid() {
       var d = Date.now();
@@ -7780,8 +7780,8 @@ $(function() {
        */
       w = d;
       h = d;
-      var x = e.pageX - offset.left;
-      var y = e.pageY - offset.top;
+      var x = $.isAndroid ? e.touches[0].pageX - offset.left : e.pageX - offset.left;
+      var y = $.isAndroid ? e.touches[0].pageY - offset.top : e.pageY - offset.top;
       var navBkColor = undefined;
       var backgroundColor = undefined;
       /**

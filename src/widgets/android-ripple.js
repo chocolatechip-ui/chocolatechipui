@@ -29,8 +29,8 @@ $(function() {
       w = d;
       h = d;
 
-      const x = e.pageX - offset.left;
-      const y = e.pageY - offset.top;
+      const x = $.isAndroid ? e.touches[0].pageX - offset.left : e.pageX - offset.left;
+      const y = $.isAndroid ? e.touches[0].pageY - offset.top :  e.pageY - offset.top;
 
       let navBkColor = undefined;
       let backgroundColor = undefined;
