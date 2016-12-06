@@ -35,6 +35,7 @@ $.extend({
     };
 
     let __data = [];
+    let __editMade = false;
     if (!options) {
       return;
     }
@@ -200,10 +201,12 @@ $.extend({
               $(list).find('li').removeClass('selected');
               $($this).siblings('.cancel').hide();
               if (settings.deletable) {
+                if ($(list).find('button.delete')[0]) return;
                 $(list).find('li').append(deleteButton);
               }
               $.AdjustNavbarLayout(screen);
             });
+            if (!__editMade) return;
             const movedItems = [];
             $(list).find('li').forEach(function (ctx, idx) {
               __data.push($(ctx).attr('data-id'));
@@ -230,6 +233,7 @@ $.extend({
             if ($(list).data('list-edit')) {
               callback.call(callback, __model);
             }
+            __editMade = false;
           }
           setTimeout(function () {
             $.AdjustNavbarLayout(screen);
@@ -279,6 +283,7 @@ $.extend({
          */
         $(list).on('tap', '.move-up', function (e) {
           const _this = this;
+          __editMade = true;
 
           let item = $(this).closest('li');
           if (item.is('li:first-child')) {
@@ -322,6 +327,7 @@ $.extend({
          * Move list item down:
          */
         $(list).on('tap', '.move-down', function (e) {
+          __editMade = true;
           const item = $(this).closest('li');
           const next = item.next();
           if (item.is('li:last-child')) {
@@ -365,6 +371,7 @@ $.extend({
          */
         $(list).on('tap', '.delete', function () {
           const $this = this;
+          __editMade = true;
           const listItem = $(this).parent();
 
           /**
@@ -389,6 +396,7 @@ $.extend({
          * Cancel edits:
          */
         nav.find('.cancel').on('tap', function () {
+          __editMade = false;
           nav.find('.back').show();
           $(this).hide();
           __view.render();

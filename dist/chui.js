@@ -492,7 +492,7 @@ var DOMStack = function() {
    */
   $.extend({
     lib: "ChocolateChipJS",
-    version: '4.2.9',
+    version: '4.2.10',
     noop: function noop() {},
     uuid: function uuid() {
       var d = Date.now();
@@ -5735,6 +5735,7 @@ $.extend({
       view: undefined
     };
     var __data = [];
+    var __editMade = false;
     if (!options) {
       return;
     }
@@ -5843,10 +5844,12 @@ $.extend({
               $(list).find('li').removeClass('selected');
               $($this).siblings('.cancel').hide();
               if (settings.deletable) {
+                if ($(list).find('button.delete')[0]) return;
                 $(list).find('li').append(deleteButton);
               }
               $.AdjustNavbarLayout(screen);
             });
+            if (!__editMade) return;
             var movedItems = [];
             $(list).find('li').forEach(function(ctx, idx) {
               __data.push($(ctx).attr('data-id'));
@@ -5872,6 +5875,7 @@ $.extend({
             if ($(list).data('list-edit')) {
               callback.call(callback, __model);
             }
+            __editMade = false;
           }
           setTimeout(function() {
             $.AdjustNavbarLayout(screen);
@@ -5917,6 +5921,7 @@ $.extend({
          */
         $(list).on('tap', '.move-up', function(e) {
           var _this = this;
+          __editMade = true;
           var item = $(this).closest('li');
           if (item.is('li:first-child')) {
             return;
@@ -5957,6 +5962,7 @@ $.extend({
          * Move list item down:
          */
         $(list).on('tap', '.move-down', function(e) {
+          __editMade = true;
           var item = $(this).closest('li');
           var next = item.next();
           if (item.is('li:last-child')) {
@@ -5997,6 +6003,7 @@ $.extend({
          */
         $(list).on('tap', '.delete', function() {
           var $this = this;
+          __editMade = true;
           var listItem = $(this).parent();
           /**
            * Mark list as edited:
@@ -6018,6 +6025,7 @@ $.extend({
          * Cancel edits:
          */
         nav.find('.cancel').on('tap', function() {
+          __editMade = false;
           nav.find('.back').show();
           $(this).hide();
           __view.render();
