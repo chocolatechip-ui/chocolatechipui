@@ -35,47 +35,6 @@ $.extend({
         $.send(route);
       },
 
-      pushRoute: route => $.ChuiRoutes.push(route),
-
-      popRoute: () => $.ChuiRoutes.pop(),
-
-      unshiftRoute: route => $.ChuiRoutes.unshift(route),
-
-      shiftRoute: () => $.ChuiRoutes.shift(),
-
-      insert: (position, route) => {
-        if ($.ChuiRoutes.length >= position) {
-          $.ChuiRoutes.push(route);
-        } else {
-          $.ChuiRoutes.splice(position, 0, route);
-        }
-      },
-
-      eq: function eq(number) {
-        if ($.ChuiRoutes.length && number < 0) {
-          return $.ChuiRoutes[$.ChuiRoutes.length - 1];
-        } else if ($.ChuiRoutes.length && !isNaN(number) && number > -1) {
-          return $.ChuiRoutes[number];
-        }
-      },
-
-      indexOf: route => $.ChuiRoutes.indexOf(route),
-
-      remove: (route, baseRouteOnly) => {
-        if (baseRouteOnly) {
-          const index = $.ChuiRoutes.indexOf(route);
-          $.ChuiRoutes.splice(index, 1);
-
-        } else {
-          $.ChuiRoutes.forEach(r => {
-            if (r && route === r.split(':')[0]) {
-              const index = $.ChuiRoutes.indexOf(r);
-              $.ChuiRoutes.splice(index, 1);
-            }
-          });
-        }
-      },
-
       mount: function() {
         if ($('screen').size() && !$.ChuiRoutes.length) {
           $.ChuiRoutes.push($('screen')[0].id);

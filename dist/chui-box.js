@@ -6795,48 +6795,6 @@ $.extend({
         }
         $.send(route);
       },
-      pushRoute: function pushRoute(route) {
-        return $.ChuiRoutes.push(route);
-      },
-      popRoute: function popRoute() {
-        return $.ChuiRoutes.pop();
-      },
-      unshiftRoute: function unshiftRoute(route) {
-        return $.ChuiRoutes.unshift(route);
-      },
-      shiftRoute: function shiftRoute() {
-        return $.ChuiRoutes.shift();
-      },
-      insert: function insert(position, route) {
-        if ($.ChuiRoutes.length >= position) {
-          $.ChuiRoutes.push(route);
-        } else {
-          $.ChuiRoutes.splice(position, 0, route);
-        }
-      },
-      eq: function eq(number) {
-        if ($.ChuiRoutes.length && number < 0) {
-          return $.ChuiRoutes[$.ChuiRoutes.length - 1];
-        } else if ($.ChuiRoutes.length && !isNaN(number) && number > -1) {
-          return $.ChuiRoutes[number];
-        }
-      },
-      indexOf: function indexOf(route) {
-        return $.ChuiRoutes.indexOf(route);
-      },
-      remove: function remove(route, baseRouteOnly) {
-        if (baseRouteOnly) {
-          var index = $.ChuiRoutes.indexOf(route);
-          $.ChuiRoutes.splice(index, 1);
-        } else {
-          $.ChuiRoutes.forEach(function(r) {
-            if (r && route === r.split(':')[0]) {
-              var _index = $.ChuiRoutes.indexOf(r);
-              $.ChuiRoutes.splice(_index, 1);
-            }
-          });
-        }
-      },
       mount: function mount() {
         if ($('screen').size() && !$.ChuiRoutes.length) {
           $.ChuiRoutes.push($('screen')[0].id);
