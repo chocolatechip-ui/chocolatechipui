@@ -492,7 +492,7 @@ var DOMStack = function() {
    */
   $.extend({
     lib: "ChocolateChipJS",
-    version: '4.2.10',
+    version: '4.2.11',
     noop: function noop() {},
     uuid: function uuid() {
       var d = Date.now();
@@ -7208,9 +7208,16 @@ $.extend({
     var defaultValue = options.defaultValue ? options.defaultValue : options.min;
     var increaseSymbol = '+';
     var decreaseSymbol = '-';
-    var decreaseButton = '<button class="decrease"><span>-</span></button>';
+    var disabledDecrease = '';
+    var disabledIncrease = '';
+    if (min === defaultValue) {
+      disabledDecrease = ' disabled ';
+    } else if (max === defaultValue) {
+      disabledIncrease = ' disabled ';
+    }
+    var decreaseButton = '<button ' + disabledDecrease + ' class="decrease"><span>-</span></button>';
     var label = '<label>' + defaultValue + '</label><input type="text" value="' + defaultValue + '">';
-    var increaseButton = '<button class="increase"><span>+</span></button>';
+    var increaseButton = '<button ' + disabledIncrease + '  class="increase"><span>+</span></button>';
     stepper.append(decreaseButton + label + increaseButton);
     stepper.data('data-value', {
       min: min,

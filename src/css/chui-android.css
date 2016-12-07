@@ -2082,6 +2082,7 @@ html[dir=rtl] .isDesktop .button.show-popover:hover::after {
 /*=================*/
 /* Stepper Control */
 /*=================*/
+stepper,
 .stepper {
   display: inline-flex;
   display: -webkit-inline-flex;
@@ -2096,10 +2097,12 @@ html[dir=rtl] .isDesktop .button.show-popover:hover::after {
   align-items: flex-start;
   padding: 1px;
 }
+stepper > input,
 .stepper > input {
   margin: 0;
   display: none;
 }
+stepper > label,
 .stepper > label {
   display: block;
   -webkit-box-sizing: border-box;
@@ -2111,6 +2114,7 @@ html[dir=rtl] .isDesktop .button.show-popover:hover::after {
   text-align: center;
   background-color: #ffffff;
 }
+stepper > button ,
 .stepper > button {
   background-color: #ddd !important;
   background-image: -webkit-radial-gradient(circle, rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, 0.05) 10%) !important;
@@ -2133,6 +2137,7 @@ html[dir=rtl] .isDesktop .button.show-popover:hover::after {
   box-shadow: none !important;
 
 }
+stepper > button > span,
 .stepper > button > span {
   font-size: inherit;
   font-weight: inherit;
@@ -2140,35 +2145,42 @@ html[dir=rtl] .isDesktop .button.show-popover:hover::after {
   -webkit-flex: 1;
   flex: 1;
 }
+.isDesktop stepper > button:hover,
 .isDesktop .stepper > button:hover {
   box-shadow: none !important;
   background-color: #666 !important;
   border-color: #666;
   color: #fff;
 }
+stepper > button:first-of-type,
 .stepper > button:first-of-type {
   border-right: none;
   border-top-left-radius: 2px;
   border-bottom-left-radius: 2px;
 }
+stepper > button:last-of-type,
 .stepper > button:last-of-type {
   border-left: none;
   border-top-right-radius: 2px;
   border-bottom-right-radius: 2px;
 }
+stepper > button[disabled],
 .stepper > button[disabled] {
   opacity: .5;
 }
+.isDesktop stepper > button[disabled]:hover,
 .isDesktop .stepper > button[disabled]:hover {
   background-color: #ddd !important;
   color: #333 !important;
   cursor: default !important;
 }
+html[dir=rtl] stepper > button:first-of-type,
 html[dir=rtl] .stepper > button:first-of-type {
   border-right: solid 1px #cbcbcb;
   border-left: none;
   margin: 0;
 }
+html[dir=rtl] stepper > button:last-of-type,
 html[dir=rtl] .stepper > button:last-of-type {
   border-left: solid 1px #cbcbcb;
   border-right: none;

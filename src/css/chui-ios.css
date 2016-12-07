@@ -1743,6 +1743,7 @@ html[dir=rtl] section.paging > article.next {
 /*=================*/
 /* Stepper Control */
 /*=================*/
+stepper, 
 .stepper {
   display: flex;
   display: -webkit-flex;
@@ -1757,10 +1758,12 @@ html[dir=rtl] section.paging > article.next {
   align-items: flex-start;
   padding: 1px;
 }
+stepper > input, 
 .stepper > input {
   margin: 0;
   display: none;
 }
+stepper > label, 
 .stepper > label {
   display: block;
   -webkit-box-sizing: border-box;
@@ -1772,6 +1775,7 @@ html[dir=rtl] section.paging > article.next {
   text-align: center;
   background-color: #ffffff;
 }
+stepper > button, 
 .stepper > button {
   display: inline-block;
   background-color: rgba(255, 255, 255, 0.35);
@@ -1790,6 +1794,10 @@ html[dir=rtl] section.paging > article.next {
   box-sizing: border-box;
   color: #2d2d2d;
 }
+.isDesktop stepper > button:hover,
+.isDesktop stepper > button.selected,
+.isDesktop stepper > button:hover > span,
+.isDesktop stepper > button.selected > span,
 .isDesktop .stepper > button:hover,
 .isDesktop .stepper > button.selected,
 .isDesktop .stepper > button:hover > span,
@@ -1797,35 +1805,42 @@ html[dir=rtl] section.paging > article.next {
   background-color: #007aff;
   color: #fff;
 }
+stepper > button > span,
 .stepper > button > span {
   display: block;
   margin: -4px auto auto auto;
 }
+stepper > button:first-of-type,
 .stepper > button:first-of-type {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
   border-right: none;
   margin: 0;
 }
+stepper > button:last-of-type,
 .stepper > button:last-of-type {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   border-left: none;
   margin: 0;
 }
+stepper > button[disabled],
 .stepper > button[disabled] {
   opacity: .5;
 }
+.isDesktop stepper > button[disabled]:hover,
 .isDesktop .stepper > button[disabled]:hover {
   opacity: .5;
   background-color: rgba(255, 255, 255, 0.35);
   color: #2d2d2d;
   cursor: default;
 }
+.isDesktop stepper > button[disabled]:hover > span,
 .isDesktop .stepper > button[disabled]:hover > span {
   background-color: rgba(255, 255, 255, 0.35);
   color: #2d2d2d;
 }
+html[dir=rtl] stepper > button:first-of-type,
 html[dir=rtl] .stepper > button:first-of-type {
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
@@ -1835,6 +1850,7 @@ html[dir=rtl] .stepper > button:first-of-type {
   border-left: none;
   margin: 0;
 }
+html[dir=rtl] stepper > button:last-of-type,
 html[dir=rtl] .stepper > button:last-of-type {
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;

@@ -18,9 +18,16 @@ $.extend({
     const defaultValue = options.defaultValue ? options.defaultValue : options.min;
     let increaseSymbol = '+';
     let decreaseSymbol = '-';
-    const decreaseButton = '<button class="decrease"><span>-</span></button>';
+    let disabledDecrease = '';
+    let disabledIncrease = '';
+    if (min === defaultValue) {
+      disabledDecrease = ' disabled ';
+    } else if (max === defaultValue) {
+      disabledIncrease = ' disabled ';
+    }
+    const decreaseButton = '<button ' + disabledDecrease + ' class="decrease"><span>-</span></button>';
     const label = `<label>${ defaultValue }</label><input type="text" value="${ defaultValue }">`;
-    const increaseButton = '<button class="increase"><span>+</span></button>';
+    const increaseButton = '<button ' + disabledIncrease + '  class="increase"><span>+</span></button>';
     stepper.append(decreaseButton + label + increaseButton);
     stepper.data('data-value', {
       min: min,
