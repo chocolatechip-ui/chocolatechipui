@@ -188,17 +188,17 @@ var bums = [
       },
       {
         route: 'detail',
-        callback: function(id) {
+        callback: function(param) {
           /**
-           * Filter model with id passed in route:
+           * Filter model with param passed in route:
            */
           if (AppViews.chosenData === 'lums') {
             var whichPerson = lums.filter(function(person) {
-              return person.guid === id;
+              return person.guid === param;
             })[0];
           } else {
             var whichPerson = bums.filter(function(person) {
-              return person.guid === id;
+              return person.guid === param;
             })[0];
           }
           /**

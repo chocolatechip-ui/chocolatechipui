@@ -51,9 +51,9 @@ $(function() {
   SelectedCoffeeRoute.addRoute([
     {
       route: 'coffeeShopDetail',
-      callback: function(id) {
+      callback: function(param) {
         var selectedShop = shops.filter(function(shop) {
-          return shop.id === id;
+          return shop.id === param;
         })[0];
         ShopDetailView.render(selectedShop);
       }

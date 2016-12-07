@@ -167,9 +167,9 @@
           route: 'choice', 
 
           /**
-           * Callback to handle passed id:
+           * Callback to handle passed param:
            */
-          callback: function(id) {
+          callback: function(param) {
 
             /**
              * Method to render templates in switch statement:
@@ -181,10 +181,10 @@
             };
 
             /**
-             * Handle passed id.
+             * Handle passed param.
              * Based on id, render the view with a different template and data.
              */
-            switch (id) {
+            switch (param) {
               case 'music':
                 $('#gridOfImages').empty();
                 $('#myList').show();

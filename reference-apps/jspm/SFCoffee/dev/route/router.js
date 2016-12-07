@@ -8,9 +8,9 @@ export const selectedCoffeeRoute = $.Router();
 selectedCoffeeRoute.addRoute([
   {
     route: 'coffeeShopDetail',
-    callback(id) {
+    callback(param) {
       const selectedShop = coffeeshops.filter(shop => {
-        return shop.id === id;
+        return shop.id === param;
       })[0];
       shopDetailView.render(selectedShop);
     }

@@ -219,7 +219,7 @@
       $.AppRoutes.addRoute([
         {
           route: 'chosenFruit',
-          callback: function(id) {
+          callback: function(param) {
             /**
              * Render chosen fruit:
              */
@@ -228,7 +228,7 @@
               $('#chosenFruitTitle').text(fruits[whichOne].name);
             };
 
-            switch (id) {
+            switch (param) {
               case 'apples':
                 renderChosenFruit(0);
                 break;

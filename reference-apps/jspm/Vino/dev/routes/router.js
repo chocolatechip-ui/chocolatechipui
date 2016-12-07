@@ -11,9 +11,9 @@ export const wineRoute = $.Router();
 wineRoute.addRoute([
   {
     route: 'selectedWine',
-    callback: function(id) {
+    callback: function(param) {
       var selectedWine = wines.filter(function(wine) {
-        return wine.id === id;
+        return wine.id === param;
       })[0];
       $('#selectWineType').text(selectedWine.type);
       $('#selectedWineVarietal').text(selectedWine.varietal);
