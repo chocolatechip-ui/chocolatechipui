@@ -121,7 +121,7 @@ var bestWines = [
       },
       {
         "id": "144",
-        "name": "Chardonnay",
+        "name": "Sauvignon Blanc",
         "winery": "Franciscan",
         "year": "2013",
         "location": "Franciscan+Estate"
