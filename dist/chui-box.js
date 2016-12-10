@@ -492,7 +492,7 @@ var DOMStack = function() {
    */
   $.extend({
     lib: "ChocolateChipJS",
-    version: '4.2.11',
+    version: '4.3.0',
     noop: function noop() {},
     uuid: function uuid() {
       var d = Date.now();
@@ -7280,6 +7280,8 @@ $.extend({
       name: undefined,
       value: undefined,
       checked: false,
+      on: $.noop,
+      off: $.noop,
       onCallback: $.noop,
       offCallback: $.noop
     };
@@ -7314,14 +7316,22 @@ $.extend({
         checkbox.removeAttribute('checked');
         __selection.checked = false;
         __checked = false;
-        settings.offCallback.call(this);
+        if (options.offCallback) {
+          settings.offCallback.call(this);
+        } else {
+          settings.off.call(this);
+        }
       } else {
         this.classList.add('checked');
         checkbox.setAttribute('checked', 'checked');
         this.setAttribute('aria-checked', true);
         __selection.checked = true;
         __checked = true;
-        settings.onCallback.call(this);
+        if (options.onCallback) {
+          settings.onCallback.call(this);
+        } else {
+          settings.on.call(this);
+        }
       }
     });
     __element.on(swipeOn, function() {
@@ -7332,7 +7342,11 @@ $.extend({
         checkbox.removeAttribute('checked');
         __selection.checked = true;
         __checked = true;
-        settings.offCallback.call(this);
+        if (options.onCallback) {
+          settings.onCallback.call(this);
+        } else {
+          settings.on.call(this);
+        }
       }
     });
     __element.on(swipeOff, function() {
@@ -7343,7 +7357,11 @@ $.extend({
         this.setAttribute('aria-checked', true);
         __selection.checked = false;
         __checked = false;
-        settings.onCallback.call(this);
+        if (options.offCallback) {
+          settings.offCallback.call(this);
+        } else {
+          settings.off.call(this);
+        }
       }
     });
     return {

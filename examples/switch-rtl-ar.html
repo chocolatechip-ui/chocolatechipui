@@ -18,11 +18,11 @@
         name: 'sleep',
         value: 'خذ قسطا من النوم',
         checked: false,
-        onCallback: function() {
+        on: function() {
           $('#switchCallbacks').text('على التبديل: التبديل ١');
           $('#response').text(sleepSwitch.val().value);
         },
-        offCallback: function() {
+        off: function() {
           $('#switchCallbacks').text('قبالة التحول: التبديل ١');
           $('#response').empty();
         }
@@ -32,11 +32,11 @@
         name: 'vacation',
         value: 'خد اجازة',
         checked: false,
-        onCallback: function() {
+        on: function() {
           $('#switchCallbacks').text('على التبديل: التبديل ٢');
           $('#response').text(vacationSwitch.val().value);
         },
-        offCallback: function() {
+        off: function() {
           $('#switchCallbacks').text('قبالة التحول: التبديل ٢');
           $('#response').empty();
         }
@@ -46,11 +46,11 @@
         name: 'breakfast',
         value: 'تناول وجبة الفطور',
         checked: false,
-        onCallback: function() {
+        on: function() {
           $('#switchCallbacks').text('على التبديل: التبديل ٣');
           $('#response').text(breakfastSwitch.val().value);
         },
-        offCallback: function() {
+        off: function() {
           $('#switchCallbacks').text('قبالة التحول: التبديل ٣');
           $('#response').empty();
         }

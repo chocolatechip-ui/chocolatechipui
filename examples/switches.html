@@ -54,11 +54,11 @@
         name: 'sleep',
         value: 'get some sleep',
         checked: false,
-        onCallback: function() {
+        on: function() {
           $('#switchCallbacks').text('On callback: Just turned switch one on!');
           $('#response').text(sleepSwitch.val().value);
         },
-        offCallback: function() {
+        off: function() {
           $('#switchCallbacks').text('Off callback: Turned switch one off!');
           $('#response').empty();
         }
@@ -68,11 +68,11 @@
         name: 'vacation',
         value: 'take a vacation',
         checked: false,
-        onCallback: function() {
+        on: function() {
           $('#switchCallbacks').text('On callback: Just turned switch two on!');
           $('#response').text(vacationSwitch.val().value);
         },
-        offCallback: function() {
+        off: function() {
           $('#switchCallbacks').text('Off callback: Turned switch two off!');
           $('#response').empty();
         }
@@ -82,11 +82,11 @@
         name: 'breakfast',
         value: 'have some breakfast',
         checked: false,
-        onCallback: function() {
+        on: function() {
           $('#switchCallbacks').text('On callback: Just turned switch three on!');
           $('#response').text(breakfastSwitch.val().value);
         },
-        offCallback: function() {
+        off: function() {
           $('#switchCallbacks').text('Off callback: Turned switch three off!');
           $('#response').empty();
         }
