@@ -492,7 +492,7 @@ var DOMStack = function() {
    */
   $.extend({
     lib: "ChocolateChipJS",
-    version: '4.3.1',
+    version: '4.3.2',
     noop: function noop() {},
     uuid: function uuid() {
       var d = Date.now();
@@ -6657,6 +6657,7 @@ $.extend({
     } else {
       popup = '<div class="popup" id="' + id + '"><div class="dialog" role="alertdialog"><div class="panel">' + title + message + '</div><footer>' + cancelButton + continueButton + '</footer></div></div>';
     }
+    $('#' + id).remove();
     $('body').append(popup);
     if (settings.empty) {
       var _$$css;

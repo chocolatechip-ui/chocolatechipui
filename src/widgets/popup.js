@@ -41,7 +41,7 @@ $.extend({
     } else {
       popup = `<div class="popup" id="${id}"><div class="dialog" role="alertdialog"><div class="panel">${title}${message}</div><footer>${cancelButton}${continueButton}</footer></div></div>`;
     }
-
+    $('#' + id).remove();
     $('body').append(popup);
     if (settings.empty) {
       $('.dialog').css({
