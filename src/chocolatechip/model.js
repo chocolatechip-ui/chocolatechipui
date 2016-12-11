@@ -450,7 +450,7 @@
         this[dataStore].splice(start, end, data);
         this.updateBoundViews();
       } else if ($.type(this[dataStore]) === 'array') {
-        if(!start || !end) return;
+        if(start == null || !end) return;
         this[dataStore].splice(start, end);
         this.updateBoundViews();
       }

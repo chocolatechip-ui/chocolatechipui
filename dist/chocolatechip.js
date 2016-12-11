@@ -492,7 +492,7 @@ var DOMStack = function() {
    */
   $.extend({
     lib: "ChocolateChipJS",
-    version: '4.3.0',
+    version: '4.3.1',
     noop: function noop() {},
     uuid: function uuid() {
       var d = Date.now();
@@ -5235,7 +5235,7 @@ if (!Array.prototype.unique) {
             this[dataStore].splice(start, end, data);
             this.updateBoundViews();
           } else if ($.type(this[dataStore]) === 'array') {
-            if (!start || !end) return;
+            if (start == null || !end) return;
             this[dataStore].splice(start, end);
             this.updateBoundViews();
           }
