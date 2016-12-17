@@ -10,7 +10,7 @@ export function outputHeroImg() {
   /**
    * Set random image on page:
    */
-  const imagePath = "./images/barrels/img-";
+  let imagePath = "./images/barrels/img-";
   if (window.innerWidth > 767) imagePath = "./images/barrels-ipad/img-";
   $('.hero').css('background-image', 'url(' + imagePath + randomImg + '.jpg)');
 }
