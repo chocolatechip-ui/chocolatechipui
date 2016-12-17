@@ -3,17 +3,22 @@ Fragranz
 
 A reference app for ChocolateChip-UI about perfumes and colognes.
 
+## Setup
 
-To see this running, you'll need to first run a server instance in this directory. To get a server running, first install the NPM server - http-server:
+To use this, first open you terminal, cd to this folder and run:
 
-```
-npm i -g http-server
-```
+    npm i
 
-Then you can `cd` to the folder and run:
+When that finishes, run:
 
-```
-http-server
-```
+    jpsm i
 
-This is just a prototype. It's purpose is to show how to use ChocolateChip-UI's views, models, routes, etc. to put an app together. Because this is not a real app, it has no data persistence or actual commercial transaction.
+When that finishes, you have two options. You can just run:
+
+    gulp
+
+That will build and launch the app in your browser with a server instance and watchers ro automatic reload when you save changes to your files.
+
+Or, you can just build your app and launch it by double clicking the index.html file:
+
+    gulp build
