@@ -492,7 +492,7 @@ var DOMStack = function() {
    */
   $.extend({
     lib: "ChocolateChipJS",
-    version: '4.3.2',
+    version: '4.4.2',
     noop: function noop() {},
     uuid: function uuid() {
       var d = Date.now();
@@ -3598,10 +3598,11 @@ $.extend({
         if (!__element) return;
         if (__events.length) {
           __events.forEach(function(item) {
+            var bubble = item.bubble || false;
             if (item && item.element === 'self' || item && !item.element) {
-              __element.on(item.event, item.callback);
+              __element.on(item.event, item.callback, bubble);
             } else {
-              __element.on(item.event, item.element, item.callback);
+              __element.on(item.event, item.element, item.callback, bubble);
             }
           });
         }
