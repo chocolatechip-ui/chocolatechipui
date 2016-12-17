@@ -2,7 +2,7 @@ export function handleAboutSheet() {
   /**
    * Setup up About info sheet:
    */
-  var aboutApp = $('#aboutThisAppTemplate').html();
+  const aboutApp = $('#aboutThisAppTemplate').html();
   $.Sheet({
     id: 'aboutSheet',
     handle: true,

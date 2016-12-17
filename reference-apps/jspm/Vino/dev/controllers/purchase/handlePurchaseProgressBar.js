@@ -2,9 +2,9 @@ export function handlePurchaseProgressBar() {
   // Define method for purchase process.
   // This will animate the progress bar:
   //====================================
-  var pval = 0;
-  var progressInterval;
-  var processProgress = function() {
+  let pval = 0;
+  let progressInterval;
+  const processProgress = function() {
     if (pval === 500) {
       // Make sure we are starting clean:
       clearInterval(progressInterval);

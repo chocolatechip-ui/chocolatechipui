@@ -2,7 +2,7 @@ export function handlePurchase() {
   /**
    * Get purchase sheet template:
    */
-  var purchaseSheetTemplate = `<div id='progressPanel'>
+  const purchaseSheetTemplate = `<div id='progressPanel'>
     <p>
       <progress max='500' value='0'></progress>
       <h2>Processing...</h2>
@@ -24,8 +24,8 @@ export function handlePurchase() {
    */
   $('#purchaseSheet').find('section').html(purchaseSheetTemplate);    
   $('#selectedWine').on('tap', '.price', function(e) {
-    var wine = $('#selectedWineVarietal').text().trim();
-    var price = $(this).text().trim();
+    const wine = $('#selectedWineVarietal').text().trim();
+    const price = $(this).text().trim();
     $('#purchasePopup').find('.panel p').text('Do you want to purchase ' + wine + ' for ' + price + '?');
     $('#purchasePopup').ShowPopup();
   });
