@@ -199,4 +199,5 @@ gulp.task('minify-css', ['minify-android-css','minify-ios-css'])
 
 gulp.task('build', ['chocolatechipjs', 'concatWidgets']);
 gulp.task('default', ['chui', 'minify-css']);
+gulp.task('all', ['chocolatechip', 'chui', 'chui-box', 'minify-css'])
 

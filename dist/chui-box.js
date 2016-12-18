@@ -492,7 +492,7 @@ var DOMStack = function() {
    */
   $.extend({
     lib: "ChocolateChipJS",
-    version: '4.5.2',
+    version: '4.5.3',
     noop: function noop() {},
     uuid: function uuid() {
       var d = Date.now();
@@ -3438,12 +3438,12 @@ $.extend({
      */
     function rulesFromStyles(selector, styles) {
       if (!Array.isArray(styles)) styles = [styles];
-      var prop, value, style = {},
-        rules = [];
+      var style = {};
+      var rules = [];
       styles = $.flatten(styles);
       styles.forEach(function(block) {
-        for (prop in block) {
-          value = block[prop];
+        for (var prop in block) {
+          var value = block[prop];
           if (isPlainObject(value) || Array.isArray(value)) {
             rules = rules.concat(rulesFromStyles(combineSelectors(selector, prop), value));
           } else {
@@ -3465,9 +3465,8 @@ $.extend({
         });
       }
       rules.forEach(function(rule) {
-        var pairs = [],
-          prop;
-        for (prop in rule[1]) {
+        var pairs = [];
+        for (var prop in rule[1]) {
           pairs.push(hyphenate(prop) + ":" + rule[1][prop]);
         }
         if (pairs.length > 0) {
@@ -3493,9 +3492,8 @@ $.extend({
      * Add unit to numeric values not in |unitlessProps|.
      */
     function addUnit(style, unit) {
-      var value, prop;
-      for (prop in style) {
-        value = style[prop] + "";
+      for (var prop in style) {
+        var value = style[prop] + "";
         if (!isNaN(value) && !unitlessProps[prop]) {
           value = value + unit;
         }
@@ -3638,6 +3636,7 @@ $.extend({
           parseView(__template, __variable);
         }
         if (__styles && options.element) {
+          if (!$(options.element)[0]) return;
           var styles = ChuiStyle();
           if ($.type(__styles) !== 'object') {
             if ($.supressErrorMessages) return;
@@ -3933,6 +3932,8 @@ $.extend({
         mount: function mount() {
           __element = $(__origElement);
           handleEvents();
+          var styles = ChuiStyle();
+          styles.css(options.element, __styles);
         }
       });
       return view;

@@ -49,12 +49,12 @@
     /**
      * Reuse the same style sheet for all instances.
      */
-    var sharedSheet = null;
+    let sharedSheet = null;
 
     /**
      * Properties that accept a number but do not need a unit.
      */
-    var unitlessProps = {
+    const unitlessProps = {
       columnCount: true,
       fillOpacity: true,
       flex: true,
@@ -95,7 +95,7 @@
         }
         selector = element;
 
-        var rules = rulesFromStyles(selector, styles);
+        const rules = rulesFromStyles(selector, styles);
         if (options.prefix || options.unit !== "") {
           rules.forEach(function(set) {
             if (options.unit !== "") {
@@ -115,7 +115,7 @@
       if (document.head == null) {
         throw new Error("Can't add stylesheet before <head> is available. Make sure your document has a head element.");
       }
-      var style = document.createElement("style");
+      const style = document.createElement("style");
       style.id = "chui_styles_" + $.uuid();
       document.head.appendChild(style);
       return style.sheet;
@@ -126,11 +126,12 @@
      */
     function rulesFromStyles(selector, styles) {
       if (!Array.isArray(styles)) styles = [styles];
-      var prop, value, style = {}, rules = [];
+      const style = {};
+      let rules = [];
       styles = $.flatten(styles);
       styles.forEach(function(block) {
-        for (prop in block) {
-          value = block[prop];
+        for (const prop in block) {
+          let value = block[prop];
           if (isPlainObject(value) || Array.isArray(value)) {
             rules = rules.concat(
               rulesFromStyles(combineSelectors(selector, prop), value)
@@ -153,8 +154,8 @@
         return str.replace(/[A-Z]/g, function($0) { return '-'+$0.toLowerCase(); });
       }
       rules.forEach(function(rule) {
-        var pairs = [], prop;
-        for (prop in rule[1]) {
+        const pairs = [];
+        for (const prop in rule[1]) {
           pairs.push(hyphenate(prop) + ":" + rule[1][prop]);
         }
         if (pairs.length > 0) {
@@ -167,11 +168,11 @@
      * Pseudo classes/elements and attribute selectors should immediately follow the previous selector, others should be space separated.
      */
     function combineSelectors(parent, child) {
-      var pseudoRe = /^[:\[]/;
-      var parents = parent.split(","), children = child.split(",");
+      const pseudoRe = /^[:\[]/;
+      const parents = parent.split(","), children = child.split(",");
       return parents.map(function(parent) {
         return children.map(function(part) {
-          var separator = pseudoRe.test(part) ? "" : " ";
+          let separator = pseudoRe.test(part) ? "" : " ";
           return parent + separator + part;
         }).join(",");
       }).join(",");
@@ -181,9 +182,8 @@
      * Add unit to numeric values not in |unitlessProps|.
      */
     function addUnit(style, unit) {
-      var value, prop;
-      for (prop in style) {
-        value = style[prop] + "";
+      for (const prop in style) {
+        let value = style[prop] + "";
         if (!isNaN(value) && !unitlessProps[prop]) {
           value = value + unit;
         }
@@ -192,7 +192,7 @@
       return style;
     }
 
-    var style = document.createElement("div").style;
+    const style = document.createElement("div").style;
     function supports(prop, value) {
       style[prop] = "";
       style[prop] = value;
@@ -200,11 +200,10 @@
     }
 
     function isPlainObject(obj) {
-      return obj === Object(obj)
-          && Object.prototype.toString === obj.toString;
+      return obj === Object(obj) && Object.prototype.toString === obj.toString;
     }
 
-    var stylesheets = {};
+    const stylesheets = {};
     stylesheets.css = CreateStyleSheet().css;
     return stylesheets;
   }
@@ -349,7 +348,8 @@
           parseView(__template, __variable);
         }
         if (__styles && options.element) {
-          var styles = ChuiStyle();
+          if (!$(options.element)[0]) return;
+          const styles = ChuiStyle();
           if ($.type(__styles) !== 'object') {
             if ($.supressErrorMessages) return;
             console.error(errors.noStyleObject)
@@ -537,7 +537,7 @@
           __element = $(element);
           $(element).empty();
           handleEvents();
-          var styles = ChuiStyle();
+          const styles = ChuiStyle();
           styles.css(element, __styles)
         },
 
@@ -675,6 +675,8 @@
         mount() {
           __element = $(__origElement);
           handleEvents();
+          const styles = ChuiStyle();
+          styles.css(options.element, __styles)
         }
 
       });
