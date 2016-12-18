@@ -1,0 +1,150 @@
+
+/*=======*/
+/* Popup */
+/*=======*/
+.isNativeAndroidBrowser .popup {
+  box-shadow: 0 0 6px 4px #666;
+}
+.isNativeAndroidBrowser .popup > .panel > header {
+  padding-top: 1px;
+}
+.popup {
+  transform: scale(0);
+  display: flex;  
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0,0,0,0.25);
+  box-shadow: 0 0 6px 4px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 99999;
+  cursor: pointer;
+}
+.popup.opened {
+  transform: scale(1);
+}
+.dialog {
+  display: block;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 300px;
+  padding: 1px;
+  background-color: #ffffff;
+  box-shadow: 0 0 6px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 0;
+  min-height: 100px;
+  z-index: 11111111111;
+  -webkit-transition: all 0.25s ease-in-out;
+  transition: all 0.25s ease-in-out;
+  -webkit-transform: scale(0);
+  transform: scale(0);
+}
+
+.dialog.noTitle {
+  padding-top: 20px;
+}
+.dialog > .panel {
+  display: flex;
+  display: -webkit-flex;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+  align-items: flex-start;
+}
+.dialog > .panel > p {
+  padding: 0 15px;
+  margin-top: 0;
+  text-align: center;
+}
+.dialog header,
+.dialog footer {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  -webkit-justify-content: distribute;
+  justify-content: space-around;
+  -webkit-align-items: stretch;
+  align-items: stretch;
+  width: 100%;
+  box-sizing: border-box;
+}
+.dialog .panel > header {
+  padding: 8px 16px;
+}
+.dialog .panel > header > h1 {
+  position: static;
+  text-align: center;
+  margin: 0;
+  width: 100%;
+  line-height: 32pt;
+  font-size: 16pt;
+  font-weight: bold;
+}
+.dialog footer {
+  width: 100%;
+  padding: 0;
+}
+.dialog footer > button {
+  display: block;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  flex: 1;
+  margin: 0;
+  height: 100%;
+  line-height: 30pt;
+  max-width: 320px;
+  font-weight: bold;
+  border-top: solid 1px #b5b5b5;
+  color: #2d2d2d;
+}
+.dialog footer > button + button {
+  border-left: solid 1px #b5b5b5;
+}
+html[dir=rtl] .dialog footer > button + button {
+  border-left: none;
+  border-right: solid 1px #b5b5b5;
+}
+.popup.opened > .dialog {
+  display: block;
+  -webkit-transform: scale(1);
+  transform: scale(1);
+}
+.popup > .dialog > footer > button,
+.popup > .dialog > footer > button:hover,
+.popup > .dialog > footer > button.selected {
+  display: block !important;
+  -webkit-box-flex: 1 !important;
+  -webkit-flex: 1 !important;
+  flex: 1 !important;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  height: 100%;
+  line-height: 30pt;
+  background-color: #ffffff;
+  color: #666666;
+  font-size: 12pt;
+  padding: 4px 20px !important;
+  max-width: 320px !important;
+  margin: 0 !important;
+  border: none;
+  box-shadow: none !important;
+}
+.isDesktop .popup > .dialog > footer > button:hover {
+  box-shadow: none;
+  background-color: transparent;
+}
+.popup > p {
+  padding: 0 15px;
+  text-align: center;
+}

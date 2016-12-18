@@ -10,6 +10,10 @@ input[type="range"] -webkit-track,
 .isDesktop .stepper > button.selected > span  {
   background-color: skyblue;
 }
+/* Color disclosure indicators */
+disclosure {
+  border-color: skyblue;
+}
 /* Color title and buttons in nav and toolbars */
 nav h1, 
 nav button, 
@@ -51,12 +55,12 @@ input[type="range"] {
 }
 /* Slideout Button */
 button.slide-out-button {
-  background-image: -webkit-linear-gradient(left, #fafafa, #fafafa) !important;
-  background-image: linear-gradient(left, #fafafa, #fafafa) !important;
+  background-image: -webkit-linear-gradient(left, #333, #333) !important;
+  background-image: linear-gradient(left, #333, #333) !important;
 }
 button.slide-out-button::before,
 button.slide-out-button::after {
-  background-color: #fafafa;
+  background-color: #333;
 }
 /* Stepper Control */
 .stepper > label,

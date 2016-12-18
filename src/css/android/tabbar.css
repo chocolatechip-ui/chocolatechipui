@@ -1,0 +1,126 @@
+
+/*=========*/
+/* Tab Bar */
+/*=========*/
+tabbar {
+  display: -webkit-flex;
+  -webkit-flex-direction: row;
+  -webkit-justify-content: start;
+  -webkit-align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  position: absolute;
+  z-index: 11111111;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 30px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  border-top: solid 1px #929292;
+  background-color: #f7f7f7; 
+}
+tabbar > span.androidSelectionBorder {
+  display: block;
+  position: absolute;
+  z-index: 91111111;
+  bottom: 0;
+  left: 0;
+  border-bottom: solid 3px #007aff;
+  transition: left .25s ease-out;
+}
+tabbar.showIcons {
+  height: 50px;
+}
+tabbar ~ screen {
+  top: 30px !important;
+}
+tabbar.showIcons ~ screen {
+  top: 50px !important;
+}
+tabbar > button {
+  height: 100%;
+  position: relative;
+  margin: 0;
+  padding: 1px;
+  padding-top: 8px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  display: -webkit-flex;
+  -webkit-flex-direction: column;
+  -webkit-justify-content: center;
+  -webkit-align-items: center;
+  -webkit-flex: 1 !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1 !important;
+  font-size: 9pt;
+  border-radius: 0;
+}
+tabbar.showIcons > button {
+  padding-top: 1px !important;
+}
+.isDesktop tabbar > button:hover,
+tabbar > button.selected {
+  border-color: rgba(0,0,0,0.25) !important;
+}
+tabbar > button > label {
+  display: block;
+}
+tabbar > button > .icon {
+  margin: 0 auto;
+  content: '';
+  display: none;
+  height: 30px;
+  width: 30px;      
+}
+tabbar.showIcons > button > .icon {
+  display: block !important;
+}
+tabbar ~ screen.previous,
+tabbar ~ screen.next {
+  display: none;
+  -webkit-transform: none !important;
+  transform: none !important;
+}
+tabbar ~ screen.current {
+  display: block;
+  -webkit-transform: none !important;
+  transform: none !important;
+  z-index: 111111;
+}
+tabbar > button.more > label {
+  display: none !important;
+}
+tabbar > button.more > .icon::before {
+  content: '…';
+  display: block;
+  width: 100%;
+  height: 100%;
+  color: #333;
+  font-size: 2rem;
+  line-height: 1rem;
+  vertical-align: middle;
+}
+.isDesktop tabbar > button:hover > .icon::before,
+tabbar > button.selected > .icon::before {
+  color: #007aff;
+}
+tabbar > button.more > .icon {
+  display: -webkit-flex;
+  -webkit-align-items: center;
+  -webkit-justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+tabbar ~ screen > nav {
+  border-top: solid 1px #ccc !important;
+}
+html[dir=rtl] tabbar > button.more > label {
+  display: none;
+}

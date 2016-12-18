@@ -1,0 +1,237 @@
+
+/*=================*/
+/* Editable Lists */
+/*=================*/
+.list.deletable.editable > li {
+  padding: 8px 20px 8px 30px;
+}
+.list.editable > li {
+  padding: 8px 20px 8px 10px;
+}
+.list li > .deletion-indicator {
+  display: inline-block;
+  overflow: hidden;
+  width: 20px;
+  height: 20px;
+  -webkit-transition: all 0.25s ease-out;
+  transition: all 0.25s ease-out;
+  margin-left: -55px;
+  margin-right: 10px;
+  cursor: pointer;
+  position: relative;
+  z-index: 100;
+  border: solid 1px #007aff;
+}
+.list li > .deletion-indicator #ios-circle,
+.list li > .deletion-indicator #ios-bar {
+  display: none;
+}
+.list li > .deletion-indicator #checkmark {
+  stroke: #007aff;
+  display: none;
+}
+.list li > .move-up,
+.list li > .move-down {
+  width: 21px;
+  height: 21px;
+  display: inline-block;
+  position: relative;
+  -webkit-transition: all 0.25s ease-out;
+  transition: all 0.25s ease-out;
+  -webkit-transform: translate3d(150px, 0, 0);
+  transform: translate3d(150px, 0, 0);
+}
+#move-indicator {
+  stroke: #007aff;
+}
+.list li > .move-up::before,
+.list li > .move-down::before {
+  display: block;
+  content: '';
+  width: 21px;
+  height: 21px;
+  position: absolute;
+}
+.list li > .move-down {
+  margin-right: 10px;
+  -webkit-transform: translate3d(120px, 0, 0);
+  transform: translate3d(130px, 0, 0);
+}
+.list li > .move-down path#mode-up {
+  display: none;
+}
+.list li > button.delete {
+  float: right;
+  background-color: transparent;
+  color: #ffffff;
+  text-align: center;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 60px;
+  position: absolute;
+  right: -100px;
+  top: 0;
+  bottom: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  display: flex;
+  display: -webkit-flex;
+  display: -webkit-box;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-transition: all 0.25s ease-out;
+  transition: all 0.25s ease-out;
+  cursor: pointer;
+  padding: 0;
+  background-color: rgba(102, 102, 102, 0.2);
+  box-shadow: inset 2px 2px 2px rgba(51, 51, 51, 0.2);
+  border-radius: 0;
+  border-bottom: 1px solid rgba(51, 51, 51, 0.2);
+  border-right: 1px solid rgba(51, 51, 51, 0.2);
+}
+.list li > button.delete > svg {
+  display: block;
+  position: absolute;
+  top: 8px;
+  left: 12px;
+  height: 60%;
+  width: 60%;
+}
+.list li > button.delete > label {
+  display: none
+}
+.list li:first-of-type > .move-up {
+  opacity: .35;
+}
+.list li:last-of-type > .move-down {
+  opacity: .35;
+}
+.list.editable > li,
+.list.deletable > li {
+  -webkit-transition: all 0.25s ease-out;
+  transition: all 0.25s ease-out;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+.list.editable > li.selected,
+.list.deletable > li.selected {
+  background-color: #ffffff;
+}
+.list.editable > li.selected h3,
+.list.deletable > li.selected h3,
+.list.editable > li.selected h4,
+.list.deletable > li.selected h4,
+.list.editable > li.selected p,
+.list.deletable > li.selected p {
+  position: relative;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -webkit-transition: all 0.25s ease-out;
+  transition: all 0.25s ease-out;
+}
+.list.editable > li.selected > button.delete,
+.list.deletable > li.selected > button.delete {
+  -webkit-transform: translate3d(85px, 0, 0);
+  transform: translate3d(85px, 0, 0);
+  right: 75px;
+}
+.list.editable > li.selected > .deletion-indicator,
+.list.deletable > li.selected > .deletion-indicator {
+  box-shadow: 0 0 2px 1px #007aff;
+}
+.list.editable > li.selected > .deletion-indicator #checkmark,
+.list.deletable > li.selected > .deletion-indicator #checkmark {
+  display: block;
+}
+.list.showIndicators .deletion-indicator {
+  margin-left: -20px;
+}
+.list.showIndicators .move-up {
+  -webkit-transform: translate3d(10px, 0, 0);
+  transform: translate3d(10px, 0, 0);
+  margin-right: 10px;
+}
+.list.showIndicators .move-down {
+  -webkit-transform: translate3d(10px, 0, 0);
+  transform: translate3d(10px, 0, 0);
+}
+.list.showIndicators > li.selected .move-up {
+  margin-right: 70px;
+}
+.list.showIndicators > li.selected .move-down {
+  margin-right: 10px;
+}
+.list.showIndicators > li > h3 {
+  width: 55%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.list > li[data-goto] > .deletion-indicator {
+  position: absolute;
+  left: -40px;
+  margin-left: 0px;
+}
+.list > li[data-goto] > .deletion-indicator + div + aside {
+  margin: -20px;
+  position: relative;
+  right: 15px;
+}
+html[dir=rtl] .list.editable > li {
+  padding: 8px 30px 8px 20px;
+} 
+html[dir=rtl] .list li > .deletion-indicator {
+  margin-right: -50px;
+  margin-left: 10px;
+}
+html[dir=rtl] .list li > .move-up,
+html[dir=rtl] .list li > .move-down {
+  -webkit-transform: translate3d(-150px, 0, 0);
+  transform: translate3d(-150px, 0, 0);
+} 
+html[dir=rtl] .list li > .move-down {
+  margin-right: 0;
+  margin-left: 10px;
+  -webkit-transform: translate3d(-130px, 0, 0);
+  transform: translate3d(-130px, 0, 0);
+}
+html[dir=rtl] .list.showIndicators .move-up {
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  margin-right: 0;
+  margin-left: 0;
+}
+html[dir=rtl] .list.showIndicators .move-down {
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+html[dir=rtl] .list.showIndicators > li.selected .move-up {
+  margin-right: 0;
+  margin-left: 70px;
+}
+html[dir=rtl] .list.showIndicators > li.selected .move-down {
+  margin-right: 0;
+  margin-left: 10px;
+} 
+html[dir=rtl] .list li > button.delete {
+  float: left;
+  right: auto;
+  left: -100px;
+}
+html[dir=rtl] .list.editable > li.selected > button.delete,
+html[dir=rtl] .list.deletable > li.selected > button.delete {
+  -webkit-transform: translate3d(-100px, 0, 0);
+  transform: translate3d(-100px, 0, 0);
+  right: auto;
+  left: 90px;
+} 
+html[dir=rtl] .list.showIndicators .deletion-indicator {
+  margin-left: 10px;
+  margin-right: -20px;
+}

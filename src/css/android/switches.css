@@ -1,0 +1,87 @@
+
+/*==========*/
+/* Switches */
+/*==========*/
+switch {
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+  display: inline-flex;
+  display: -webkit-inline-flex;
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  -webkit-justify-content: distribute;
+  justify-content: space-around;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  background-image: -webkit-linear-gradient(left, #66afff, #66afff), -webkit-linear-gradient(left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+  background-image: linear-gradient(to left, #66afff, #66afff), linear-gradient(to left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+  background-position: left 3px, left 3px;
+  background-size: 0% 14px, 100% 14px;
+  background-repeat: no-repeat, no-repeat;
+  -webkit-tap-highlight-color: transparent;
+  overflow: visible;
+  cursor: pointer;
+  border-radius: 50% !important;
+  -webkit-user-select: none;
+  -webkit-animation-duration: .65s;
+  -webkit-animation-timing-function: ease-in-out;
+  -webkit-animation-fill-mode: forwards;
+  -webkit-animation-name: switchAnimationOff;
+  user-select: none;
+  animation-duration: .65s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+  -webkit-transition: all 0.1s ease-out;
+  transition: all 0.1s ease-out;
+  position: relative;
+}
+switch > em {
+  display: block;
+  position: relative;
+  z-index: 30;
+  top: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #fff;
+  box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+  -webkit-transform: translate3d(-1px, 0, 0);
+  transform: translate3d(-1px, 0, 0);
+  -webkit-transition: all 0.1s ease-in-out;
+  transition: all 0.1s ease-in-out;
+  animation-duration: .65s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+switch.checked {
+  background-size: 100% 14px, 100% 14px;
+}
+switch.checked > em {
+  -webkit-transform: translate3d(20px, 0, 0);
+  transform: translate3d(20px, 0, 0);
+  background-color: #007aff;
+}
+switch.traditional.checked {
+  border-color: #003166;
+  background-size: 100% 100%;
+}
+switch.traditional.checked > em {
+  -webkit-transform: translate3d(36px, 0, 0);
+  transform: translate3d(36px, 0, 0);
+  background-color: #007aff;
+  border: solid 1px #007aff;
+  border-top: solid 1px #3d9aff;
+  border-left-color: #003166;
+  animation-name: '';
+}
+switch > input {
+  display: none;
+}
+html[dir=rtl] switch.checked > em {
+  -webkit-transform: translate3d(-20px, 0, 0);
+  transform: translate3d(-20px, 0, 0);
+}

@@ -1,0 +1,71 @@
+
+/*===============*/
+/* Range Control */
+/*===============*/
+input[type="range"] {
+  -webkit-appearance: none !important;
+  outline: none;
+  display: block;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: auto;
+  height: 4px;
+  border-radius: 2px;
+  background-color: transparent;
+  background-image: -webkit-linear-gradient(top, #007aff, #007aff), -webkit-linear-gradient(top, #cccccc, #cccccc);
+  background-size: 20px 3px, 100% 3px;
+  background-position: left center;
+  background-repeat: no-repeat;
+  padding: 0;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  display: block;
+  width: 14px;
+  height: 14px;
+  border-radius: 18px;
+  margin: 0;
+  background-color: #007aff;
+  border: solid 1px transparent;
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.15);
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+input[type="range"]:active::-webkit-slider-thumb,
+input[type="range"]:focus::-webkit-slider-thumb,
+input[type="range"]::-webkit-slider-thumb:hover,
+input[type="range"]:hover::-webkit-slider-thumb {
+  box-shadow: 0 0 0 1px #007aff, 0 0 0 8px rgba(0, 0, 0, 0.08);
+}
+.isDesktop input[type="range"]::-webkit-slider-thumb:hover::before {
+  content: '';
+  display: block;
+  background-color: #007aff;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.isNativeAndroidBrowser input[type="range"] {
+  -webkit-appearance: none !important;
+  outline: none;
+  display: block;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: auto;
+  height: 2px;
+  border-radius: 2px;
+  background-color: #cccccc;
+  background-image: -webkit-linear-gradient(top, #007aff, #007aff);
+  background-size: 0px 2px;
+  background-position: left center;
+  background-repeat: no-repeat;
+  padding: 0;
+}
+.isNativeAndroidBrowser input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  display: block;
+}
+html[dir=rtl] input[type="range"] {
+  background-position: right center;
+}

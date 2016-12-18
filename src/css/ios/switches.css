@@ -1,0 +1,154 @@
+
+/*==========*/
+/* Switches */
+/*==========*/
+switch {
+  display: inline-block;
+  width: 54px;
+  height: 32px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid 2px #e6e6e6;
+  border-radius: 20px;
+  position: relative;
+  box-shadow: inset 0 0 0 15px #ffffff;
+  cursor: pointer;
+  -webkit-animation-duration: .65s;
+  -webkit-animation-timing-function: ease-in-out;
+  -webkit-animation-fill-mode: forwards;
+  -webkit-animation-name: switchAnimationOff;
+  animation-duration: .65s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+  animation-name: switchAnimationOff;
+}
+switch > em {
+  display: block;
+  width: 27px;
+  height: 27px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5), 0 5px 6px rgba(0, 0, 0, 0.25);
+  background-color: #ffffff;
+  border-radius: 50%;
+  -webkit-transition: -webkit-transform 0.1s ease-in-out;
+  -webkit-animation-duration: .45s;
+  -webkit-animation-timing-function: ease-in-out;
+  -webkit-animation-fill-mode: forwards;
+  -webkit-animation-name: switchThumbAnimationOff;
+  transition: -webkit-transform 0.1s ease-in-out;
+  animation-duration: .45s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+  animation-name: switchThumbAnimationOff;
+  pointer-events: none;
+}
+switch > input {
+  display: none;
+}
+switch.checked {
+  border-color: #6ee102;
+  box-shadow: inset 0 0 0 15px #6ee102;
+  -webkit-animation-name: none;
+  animation-name: none;
+}
+switch.checked > em {
+  -webkit-transform: translate3d(23px, 0, 0);
+  -webkit-transition-duration: .2s;
+  -webkit-animation-duration: .45s;
+  -webkit-animation-timing-function: ease-in-out;
+  -webkit-animation-fill-mode: forwards;
+  -webkit-animation-name: switchThumbAnimation;
+  transform: translate3d(23px, 0, 0);
+  transition-duration: .2s;
+  animation-duration: .45s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+  animation-name: switchThumbAnimation;
+}
+@-webkit-keyframes switchAnimationOff {
+  0% {
+    box-shadow: inset 0 0 0 15px #e6e6e6;
+  }
+  49.999% {
+    box-shadow: inset 0 0 0 0 #e6e6e6;
+  }
+  50% {
+    box-shadow: inset 0 0 0 0 #fff;
+  }
+  100% {
+    box-shadow: inset 0 0 0 15px #fff;
+  }
+}
+@-webkit-keyframes switchThumbAnimation {
+  0% {
+    width: 27px;
+  }
+  1% {
+    width: 40px;
+  }
+  50% {
+    width: 27px;
+  }
+  100% {
+    width: 27px;
+  }
+}
+@-webkit-keyframes switchThumbAnimationOff {
+  0% {
+    width: 27px;
+  }
+  5% {
+    width: 45px;
+  }
+  50% {
+    width: 27px;
+  }
+  100% {
+    width: 27px;
+  }
+}
+@keyframes switchAnimationOff {
+  0% {
+    box-shadow: inset 0 0 0 15px #e6e6e6;
+  }
+  49.999% {
+    box-shadow: inset 0 0 0 0 #e6e6e6;
+  }
+  50% {
+    box-shadow: inset 0 0 0 0 #fff;
+  }
+  100% {
+    box-shadow: inset 0 0 0 15px #fff;
+  }
+}
+@keyframes switchThumbAnimation {
+  0% {
+    width: 27px;
+  }
+  1% {
+    width: 40px;
+  }
+  50% {
+    width: 27px;
+  }
+  100% {
+    width: 27px;
+  }
+}
+@keyframes switchThumbAnimationOff {
+  0% {
+    width: 27px;
+  }
+  5% {
+    width: 45px;
+  }
+  50% {
+    width: 27px;
+  }
+  100% {
+    width: 27px;
+  }
+}
+html[dir=rtl] switch.checked > em {
+  -webkit-transform: translate3d(-23px, 0, 0);
+  transform: translate3d(-23px, 0, 0);
+}

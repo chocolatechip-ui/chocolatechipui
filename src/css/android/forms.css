@@ -1,0 +1,73 @@
+
+/*=======*/
+/* Forms */
+/*=======*/
+input::-webkit-inner-spin-button {
+  display: none !important;
+}
+textarea,
+input[type=text],
+input[type=number],
+input[type=password],
+input[type=email],
+input[type=url],
+input[type=text] {
+  -webkit-appearance: none;
+  border: none;
+  background-color: transparent !important;
+  border: none;
+  background-image: 
+     -webkit-linear-gradient(left, #007aff, #007aff),
+     -webkit-linear-gradient(left, #ccc, #ccc);
+  background-image: 
+     linear-gradient(to right, #007aff, #007aff),
+     linear-gradient(to right, #ccc, #ccc);
+  background-position: center bottom, center bottom;
+  background-size: 0% 2px, 100% 1px;
+  background-repeat: no-repeat;
+  transition: all .5s ease;
+  padding-bottom: 4px;
+  font-size: 12pt;
+  border-radius: 0;
+}
+textarea:focus,
+input[type=text]:focus,
+input[type=number]:focus,
+input[type=password]:focus,
+input[type=email]:focus,
+input[type=url]:focus,
+input[type=text]:focus {
+  background-size: 100% 2px, 100% 1px;
+  outline: none !important;
+}
+textarea.invalid,
+input[type=text].invalid,
+input[type=number].invalid,
+input[type=password].invalid,
+input[type=email].invalid,
+input[type=url].invalid,
+input[type=text].invalid {
+  box-shadow: 0 0 3px 1px red !important;
+}
+textarea.invalid:focus,
+input[type=text].invalid:focus,
+input[type=number].invalid:focus,
+input[type=password].invalid:focus,
+input[type=email].invalid:focus,
+input[type=url].invalid:focus,
+input[type=text].invalid:focus {
+  box-shadow: none !important;
+}
+textarea {
+  border: solid 1px #ccc;
+  padding: 5px;
+  resize: none;
+}
+
+label + input {
+  margin-left: 10px;
+}
+html[dir=rtl] label + input {
+  margin-left: 0;
+  margin-right: 10px;
+}

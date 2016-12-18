@@ -7,6 +7,10 @@ nav h1, nav button, toolbar button, footer button, nav .back, #chui-back-arrow  
   color: #fafafa !important;
   stroke: #fafafa !important;
 }
+/* Color disclosure indicators */
+disclosure {
+  border-color: red;
+}
 /* Color segmented control marker */
 span.androidSelectionBorder,
 tabbar > span.androidSelectionBorder {

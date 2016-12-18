@@ -1,0 +1,49 @@
+
+/*=======*/
+/* Forms */
+/*=======*/
+input::-webkit-inner-spin-button {
+  display: none !important;
+}
+textarea,
+input[type=text],
+input[type=number],
+input[type=password],
+input[type=email],
+input[type=url],
+input[type=text] {
+  border: solid 1px #ccc;
+  padding: 3px 5px;
+  border-radius: 0 !important;
+  resize: none;
+  font-size: 10pt;
+}
+
+input[type=text]:focus,
+input[type=number]:focus,
+input[type=password]:focus,
+input[type=email]:focus,
+input[type=url]:focus,
+input[type=text]:focus {
+  outline: none;
+}
+
+input[type=text].invalid,
+input[type=number].invalid,
+input[type=password].invalid,
+input[type=email].invalid,
+input[type=url].invalid,
+input[type=text].invalid {
+  box-shadow: 0 0 3px 1px red;
+}
+label + input {
+  margin-left: 10px;
+}
+li input[type=checkbox],
+li input[type=radio] {
+  height: 20px;
+}
+html[dir=rtl] label + input {
+  margin-left: 0;
+  margin-right: 10px;
+}

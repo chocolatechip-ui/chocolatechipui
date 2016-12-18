@@ -1,0 +1,40 @@
+
+/*=============*/
+/* Select List */
+/*=============*/
+.select-list > li {
+  cursor: pointer;
+}
+.select-list > li > aside > span.selection-indicator {
+  /*display: none;*/
+  height: 20px;
+  width: 20px;
+}
+.select-list > li > input {
+  display: none;
+}
+.select-list > li #checkmark {
+  display: none;
+}
+.select-list > li.selected > aside > span.selection-indicator,
+.select-list > li.selected #inner-circle {
+  display: inline-block;
+}
+.select-list > li #outer-circle {
+  stroke: #ccc !important;
+}
+.select-list > li #inner-circle {
+  transition: all .25s ease;
+  -webkit-transition: all .25s ease;
+  transform: scale(0);
+  -webkit-transform: scale(0);
+  transform-origin: center center;
+  -webkit-transform-origin: center center;
+}
+.select-list > li.selected #inner-circle {
+  transform: scale(1);
+  -webkit-transform: scale(1);
+}
+.select-list > li.selected #outer-circle {
+  stroke: #007AFF !important;
+}

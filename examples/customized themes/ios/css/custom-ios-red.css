@@ -10,6 +10,10 @@ input[type="range"] -webkit-track,
 .isDesktop .stepper > button.selected > span  {
   background-color: red;
 }
+/* Color disclosure indicators */
+disclosure {
+  border-color: red;
+}
 button, button.fab {
   color: red;
   border-color: red;

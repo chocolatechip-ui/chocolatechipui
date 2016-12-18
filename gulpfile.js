@@ -85,6 +85,28 @@ var chuiWidgets = [
   return './src/widgets/' + file + '.js'
 });
 
+var cssFiles = [
+  'base',
+  'busy',
+  'cards',
+  'editable-list',
+  'forms',
+  'grid',
+  'multi-select',
+  'paging',
+  'popover',
+  'popup',
+  'range',
+  'scroll-panel',
+  'segmented',
+  'select-list',
+  'sheet',
+  'slideout',
+  'stepper',
+  'switches',
+  'tabbar'
+]
+
 gulp.task('chocolatechip', function() {
   gulp.src(chocolateChipFiles)
     .pipe(concat('chocolatechip.js'))
@@ -129,7 +151,7 @@ gulp.task('chui', function() {
     .pipe(uglify())
     .pipe(rename('chui.min.js'))
     .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('./dist'))
+    .pipe(gulp.dest('./dist'));
 })
 
 gulp.task('chui-box', function() {
@@ -146,22 +168,29 @@ gulp.task('chui-box', function() {
     .pipe(uglify())
     .pipe(rename('chui-box.min.js'))
     .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('./dist'))
+    .pipe(gulp.dest('./dist'));
 })
 
 gulp.task('minify-android-css', function() {
-  return gulp.src('./src/css/chui-android.css')
+  var css = cssFiles.map(function(file) {
+    return './src/css/android/' + file + '.css'
+  })
+  return gulp.src(css)
     .pipe(sourcemaps.init())
+    .pipe(concat('chui-android.min.css'))
     .pipe(cssnano({advanced: true, aggressiveMerging: true}))
-    .pipe(rename('chui-android.min.css'))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('dist/css'));
 });
-gulp.task('minify-ios-css', function() {
-  return gulp.src('./src/css/chui-ios.css')
+gulp.task('minify-ios-css', function() {  
+  var css = [];
+   cssFiles.forEach(function(file) {
+    css.push('./src/css/ios/' + file + '.css')
+  })
+  return gulp.src(css)
     .pipe(sourcemaps.init())
+    .pipe(concat('chui-ios.min.css'))
     .pipe(cssnano({advanced: true, aggressiveMerging: true}))
-    .pipe(rename('chui-ios.min.css'))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('dist/css'));
 });

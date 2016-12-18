@@ -1,0 +1,36 @@
+
+/*===============*/
+/* Range Control */
+/*===============*/
+input[type="range"] {
+  -webkit-appearance: none;
+  outline: none;
+  display: block;
+  width: auto;
+  height: 4px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+  background-color: #b3b3b4;
+  background-image: -webkit-linear-gradient(top, #007aff, #007aff);
+  background-size: 0px 4px;
+  background-position: left center;
+  background-repeat: no-repeat;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  display: block;
+  width: 27px;
+  height: 27px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5), 0 5px 6px rgba(0, 0, 0, 0.25);
+  background-color: #ffffff;
+  border-radius: 50%;
+  -webkit-transition: -webkit-transform 0.1s ease-in-out;
+  transition: -webkit-transform 0.1s ease-in-out;
+}
+.isDesktop input[type="range"]::-webkit-slider-thumb:hover {
+  background-color: #f9f9f9;
+}
+html[dir=rtl] input[type="range"] {
+  background-position: right center;
+}
