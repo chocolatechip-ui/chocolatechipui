@@ -18,8 +18,8 @@ wineRoute.addRoute([
       $('#selectWineType').text(selectedWine.type);
       $('#selectedWineVarietal').text(selectedWine.varietal);
       selectedWineView.render(selectedWine);
-      outputHeroImg();
       $('#viewWinery').attr('data-location', selectedWine.location);
+      outputHeroImg();
     }
   }
 ]);
