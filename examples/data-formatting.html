@@ -71,12 +71,16 @@
 
     var currencyData = {
       n1: {
+        description: '$.currency(9123456789.99, 0)',
+        value: 9123456789.99
+      },
+      n2: {
         description: '$.currency(9123456789.2382, "€")',
         value: 9123456789.2382
       },
-      n2: {
-        description: '$.currency(9123456789.99, "$", ",", 0)',
-        value: 9123456789.2382
+      n3: {
+        description: '$.currency(9123456789.92612, "¥", ",", "2")',
+        value: 9123456789.92612
       }
     };
 
@@ -177,14 +181,23 @@
     <ul id='currency'class='list'>
       <li>
         <div>
+          <p>Dollars (default):</p>
           <h3>{= currency.n1.description }</h3>
-          <h4>{= $.currency(currency.n1.value, "€") }</h4>
+          <h4>{= $.currency(currency.n1.value, 0) }</h4>
         </div>
       </li>
       <li>
         <div>
+          <p>Euros:</p>
           <h3>{= currency.n2.description }</h3>
-          <h4>{= $.currency(currency.n2.value, "$", ",", 0) }</h4>
+          <h4>{= $.currency(currency.n2.value, "€") }</h4>
+        </div>
+      </li>
+      <li>
+        <div>
+          <p>Yuan (RMB):</p>
+          <h3>{= currency.n3.description }</h3>
+          <h4>{= $.currency(currency.n3.value, "¥", ",", 2) }</h4>
         </div>
       </li>
     </ul>
