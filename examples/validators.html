@@ -231,6 +231,17 @@
           </div>
         </li>
       </ul>
+
+      <h2 class='normal-case'>Custom Validator</h2>
+      <h2 class='normal-case'>Words with Spaces Allowed</h2>
+      <ul class="list">
+        <li>
+          <div>
+            <input id='customFormInput' name='text' type="text">
+            <button id="customValidatorBtn">Validate Text</button>
+          </div>
+        </li>
+      </ul>
     </section>
   </screen>
   <script>
@@ -464,6 +475,24 @@
           selectboxLabel.text('Please make a selection.');
           selectboxLabel.removeClass('valid').addClass('invalid');
         } 
+      });
+
+      $.registerCustomValidator('custom-textWithSpaces', /^[A-Za-z\W]+$/);
+      $('#customValidatorBtn').on('click', function() {
+        var customValidator = $.Form([
+          {
+            element: '#customFormInput',
+            // Important: prefix custom validator with "custom-":
+            type: 'custom-textWithSpaces',
+            callback: function() {
+              alert('The first name needs to be text!')
+            }
+          }
+        ]);
+        if(!customValidator.errors()) {
+          var formData = customValidator.get();
+          console.dir(formData)
+        }
       });
     });
   </script>
