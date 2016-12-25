@@ -44,7 +44,6 @@ var chocolateChipFiles = [
   'params',
   'form',
   'formatters',
-  'formToJson',
   'view',
   'component',
   'promises',

@@ -228,10 +228,13 @@ $.fn.extend({
 
   validateAge: function(minimum) {
     if (this[0].nodeName !== 'INPUT') return;
-    if (!minimum) return;
     const age = this[0].value;
-    if (age) {
+    if(!age) {
+      return checkValidity(this, false);
+    } else if (age && minimum) {
       return checkValidity(this, age >= minimum);
+    } else if (age) {
+      return checkValidity(this, true);
     } else {
       return checkValidity(this, false);
     }
@@ -319,7 +322,7 @@ $.extend({
   },
 
   validateWithRegex: function(input, regex) {
-    if (!regex) {
+    if (!input || !regex) {
       console.error('This method requires a regular expression.');
       return;
     }
