@@ -259,6 +259,14 @@ var DOMStack = function() {
       this.length = this.array.length;
     }
   }, {
+    key: 'get',
+    value: function get() {
+        return this.array;
+      }
+      /**
+       * Deprecated. Use `get()`.
+       */
+  }, {
     key: 'getData',
     value: function getData() {
       return this.array;
@@ -492,7 +500,7 @@ var DOMStack = function() {
    */
   $.extend({
     lib: "ChocolateChipJS",
-    version: '4.5.4',
+    version: '4.6.0',
     noop: function noop() {},
     uuid: function uuid() {
       var d = Date.now();
@@ -802,18 +810,18 @@ var DOMStack = function() {
      * Recursively flatten an array.
      */
     flatten: function(_flatten) {
-      function flatten(_x, _x2) {
+      function flatten(_x) {
         return _flatten.apply(this, arguments);
       }
       flatten.toString = function() {
         return _flatten.toString();
       };
       return flatten;
-    }(function(array, ret) {
+    }(function(array) {
       if (!array || !array.length) return;
-      ret || (ret = []);
+      var ret = [];
       var len = array.length;
-      var x;
+      var x = void 0;
       for (var i = 0; i < len; i++) {
         x = array[i];
         if (Array.isArray(x)) flatten(x, ret);
@@ -827,7 +835,9 @@ var DOMStack = function() {
      * By default trailing is true. Set this to false to disable it.
      */
     throttle: function throttle(func, wait, options) {
-      var context, args, result;
+      var context = void 0,
+        args = void 0,
+        result = void 0;
       var timeout = null;
       var previous = 0;
       if (!options) options = {};
@@ -863,7 +873,11 @@ var DOMStack = function() {
      * You can make the event fire after the time by passing a third optional truthy argument.
      */
     debounce: function debounce(func, wait, immediate) {
-      var timeout, args, context, timestamp, result;
+      var timeout = void 0,
+        args = void 0,
+        context = void 0,
+        timestamp = void 0,
+        result = void 0;
       var later = function later() {
         var last = new Date().getTime() - timestamp;
         if (last < wait && last >= 0) {
@@ -894,7 +908,7 @@ var DOMStack = function() {
      */
     once: function once(func) {
       var times = 2;
-      var memo;
+      var memo = void 0;
       return function() {
         if (--times > 0) {
           memo = func.apply(this, arguments);
@@ -908,7 +922,7 @@ var DOMStack = function() {
      * This takes two arguments: the times upto when execution can happen and the callback to execute.
      */
     before: function before(times, func) {
-      var memo;
+      var memo = void 0;
       return function() {
         if (--times > 0) {
           memo = func.apply(this, arguments);
@@ -2987,6 +3001,10 @@ $.extend({
      */
     options.forEach(function(item) {
       if (!$(item.element)[0]) return;
+      if (!item.type) {
+        convertToObject($(item.element).attr('name'), $(item.element).val());
+        return;
+      }
       switch (item.type) {
         case 'notempty':
           __passed = validateElement(item.element, item.type);
@@ -3721,6 +3739,7 @@ $.extend({
           }
           this.unbindModel(__model);
           __model = model;
+          if (__data) __data = undefined;
           bindToModel(__model, view);
         },
         unbindModel: function unbindModel() {
@@ -3806,6 +3825,7 @@ $.extend({
             return;
           }
           if (data) {
+            if (__model) __model = undefined;
             __data = data;
           }
         },
@@ -4625,10 +4645,14 @@ if (!Array.prototype.findIndex) {
 }
 if (!Array.prototype.pluck) {
   $.extend(Array.prototype, {
-    pluck: function pluck(p) {
-      return this.map(function(prop) {
-        return prop[p];
+    pluck: function pluck(prop) {
+      var ret = [];
+      this.forEach(function(item) {
+        if (item[prop]) {
+          ret.push(item[prop]);
+        }
       });
+      return ret;
     }
   });
 }
@@ -4686,7 +4710,11 @@ if (!Array.prototype.unique) {
           obj[arrayItem]++;
         }
       }
-      return ret;
+      this.length = 0;
+      var self = this;
+      ret.forEach(function(item) {
+        self.push(item);
+      });
     }
   });
 }
@@ -4897,7 +4925,7 @@ if (!Array.prototype.unique) {
               }
             }
           } else if ($.type(this[dataStore]) === 'array') {
-            this[dataStore].concat(data).unique();
+            this[dataStore] = this[dataStore].concat(data).unique();
             this.updateBoundViews();
           }
         }
@@ -5011,6 +5039,9 @@ if (!Array.prototype.unique) {
           if (position < 0) {
             var pos = this[dataStore].length + position;
             return this[dataStore][pos][property];
+          } else if (position > this[dataStore].length) {
+            console.error(errors.noPosForPropAt);
+            return;
           } else {
             return this[dataStore][position][property];
           }
@@ -6680,11 +6711,6 @@ $.extend({
           route = temp[0];
         }
         $.send(route);
-      },
-      mount: function mount() {
-        if ($('screen').size() && !$.ChuiRoutes.length) {
-          $.ChuiRoutes.push($('screen')[0].id);
-        }
       }
     };
   }
@@ -7523,7 +7549,6 @@ $.extend({
   ChuiColor: function ChuiColor(color) {
     this.ok = false;
     /** 
-     * console.log(color)
      * Check for hex color value.
      * String "#" if found.
      */

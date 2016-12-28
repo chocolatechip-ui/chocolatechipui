@@ -56,10 +56,14 @@ if (!Array.prototype.findIndex) {
 
 if (!Array.prototype.pluck) {
   $.extend(Array.prototype, {
-    pluck(p) {
-      return this.map(function(prop) {
-        return prop[p];
+    pluck(prop) {
+      let ret = [];
+      this.forEach(function(item) {
+        if (item[prop]) {
+          ret.push(item[prop])
+        }
       })
+      return ret;
     }
   })
 }
@@ -121,7 +125,11 @@ if (!Array.prototype.unique) {
           obj[arrayItem]++;
         }
       }
-      return ret;
+      this.length = 0;
+      const self = this;
+      ret.forEach(function(item) {
+        self.push(item);
+      })
     }
   })
 }

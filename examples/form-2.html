@@ -20,8 +20,12 @@
       <h2>Custom Validator</h2>
       <ul class="list">
         <li>
-          <label for="text">Name: </label>
-          <input type="text" name='person_name' id='name'>
+          <label for="nameFirst">First Name: </label>
+          <input type="text" name='person_name_first' id='nameFirst'>
+        </li>
+        <li>
+          <label for="nameLast">Last Name: </label>
+          <input type="text" name='person_name_last' id='nameLast'>
         </li>
         <li>
           <label for="age">Age: </label>
@@ -51,10 +55,17 @@
       $('#validateForm').on('click', function() {
         var myForm = $.Form([
           {
-            element: '#name',
+            element: '#nameFirst',
             type: 'custom-nameWithSpaces',
             callback: function() {
               alert('The first name needs to be text!')
+            }
+          },
+          {
+            element: '#nameLast',
+            type: 'custom-nameWithSpaces',
+            callback: function() {
+              alert('The last name needs to be text!')
             }
           },
           {
@@ -64,10 +75,6 @@
             callback: function() {
               alert("Please provide a proper age.")
             }
-          },
-          {
-            element: '#bongo',
-            type: 'text'
           }
         ]);
         if(!myForm.errors()) {

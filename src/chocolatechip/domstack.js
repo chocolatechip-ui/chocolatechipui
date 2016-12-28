@@ -176,6 +176,12 @@ class DOMStack {
     this.length = this.array.length;
   }
 
+  get() {
+    return this.array;
+  }
+  /**
+   * Deprecated. Use `get()`.
+   */
   getData() {
     return this.array;
   }

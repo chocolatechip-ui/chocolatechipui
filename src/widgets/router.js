@@ -33,12 +33,6 @@ $.extend({
           route = temp[0];
         }
         $.send(route);
-      },
-
-      mount: function() {
-        if ($('screen').size() && !$.ChuiRoutes.length) {
-          $.ChuiRoutes.push($('screen')[0].id);
-        }
       }
     };
   }

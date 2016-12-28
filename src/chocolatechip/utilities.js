@@ -333,12 +333,12 @@
     /**
      * Recursively flatten an array.
      */
-    flatten: (array, ret) => {
+    flatten: (array) => {
       if (!array || !array.length) return;
-      ret || (ret = []);
-      var len = array.length;
-      var x;
-      for (var i = 0; i < len; i++) {
+      const ret = [];
+      let len = array.length;
+      let x;
+      for (let i = 0; i < len; i++) {
         x = array[i];
         if (Array.isArray(x)) flatten(x, ret);
         else ret.push(x);
@@ -352,20 +352,20 @@
      * By default trailing is true. Set this to false to disable it.
      */
     throttle: (func, wait, options) => {
-      var context, args, result;
-      var timeout = null;
-      var previous = 0;
+      let context, args, result;
+      let timeout = null;
+      let previous = 0;
       if (!options) options = {};
-      var later = function() {
+      const later = function() {
         previous = options.leading === false ? 0 : new Date().getTime();
         timeout = null;
         result = func.apply(context, args);
         if (!timeout) context = args = null;
       };
       return function() {
-        var now = new Date().getTime();
+        const now = new Date().getTime();
         if (!previous && options.leading === false) previous = now;
-        var remaining = wait - (now - previous);
+        let remaining = wait - (now - previous);
         context = this;
         args = arguments;
         if (remaining <= 0 || remaining > wait) {
@@ -389,10 +389,10 @@
      * You can make the event fire after the time by passing a third optional truthy argument.
      */
     debounce: (func, wait, immediate) => {
-      var timeout, args, context, timestamp, result;
+      let timeout, args, context, timestamp, result;
 
-      var later = function() {
-        var last = new Date().getTime() - timestamp;
+      const later = function() {
+        const last = new Date().getTime() - timestamp;
 
         if (last < wait && last >= 0) {
           timeout = setTimeout(later, wait - last);
@@ -409,7 +409,7 @@
         context = this;
         args = arguments;
         timestamp = new Date().getTime();
-        var callNow = immediate && !timeout;
+        const callNow = immediate && !timeout;
         if (!timeout) timeout = setTimeout(later, wait);
         if (callNow) {
           result = func.apply(context, args);
@@ -424,8 +424,8 @@
      * Execute a function only once.
      */
     once: func => {
-      var times = 2;
-      var memo;
+      let times = 2;
+      let memo;
       return function() {
         if (--times > 0) {
           memo = func.apply(this, arguments);
@@ -441,7 +441,7 @@
      */
 
     before: (times, func) => {
-      var memo;
+      let memo;
       return function() {
         if (--times > 0) {
           memo = func.apply(this, arguments);

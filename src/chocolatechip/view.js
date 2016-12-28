@@ -570,6 +570,7 @@
           }
           this.unbindModel(__model);
           __model = model;
+          if (__data) __data = undefined;
           bindToModel(__model, view);
         },
 
@@ -665,6 +666,7 @@
             return;
           }
           if (data) {
+            if (__model) __model = undefined;
             __data = data;
           }
         },

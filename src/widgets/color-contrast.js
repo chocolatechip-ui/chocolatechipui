@@ -20,7 +20,6 @@ $.extend({
   ChuiColor: function(color) {
     this.ok = false;
     /** 
-     * console.log(color)
      * Check for hex color value.
      * String "#" if found.
      */

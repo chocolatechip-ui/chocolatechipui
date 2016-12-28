@@ -238,7 +238,7 @@
           }
         }
       } else if ($.type(this[dataStore]) === 'array') {
-        this[dataStore].concat(data).unique();
+        this[dataStore] = this[dataStore].concat(data).unique();
         this.updateBoundViews();
       }
     }
@@ -347,6 +347,9 @@
         if (position < 0) {
           const pos = this[dataStore].length + position;
           return this[dataStore][pos][property];
+        } else if (position > this[dataStore].length) {
+          console.error(errors.noPosForPropAt);
+          return;
         } else {
           return this[dataStore][position][property];
         }

@@ -103,6 +103,10 @@ $.extend({
      */
     options.forEach(item => {
       if (!$(item.element)[0]) return;
+      if (!item.type) {
+        convertToObject($(item.element).attr('name'), $(item.element).val());
+        return;
+      }
       switch (item.type) {
         case 'notempty':
           __passed = validateElement(item.element, item.type);
