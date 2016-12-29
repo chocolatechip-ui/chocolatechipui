@@ -18,6 +18,7 @@ class DOMStack {
     } else if (args) {
       if (args === document) {
         this.array[0] = document;
+        this[0] = document;
       } else {
         const array = Array.prototype.slice.apply(arguments);
         array.forEach(function(ctx, idx) {

@@ -60,6 +60,7 @@ var DOMStack = function() {
     } else if (args) {
       if (args === document) {
         this.array[0] = document;
+        this[0] = document;
       } else {
         var array = Array.prototype.slice.apply(arguments);
         array.forEach(function(ctx, idx) {
@@ -500,7 +501,7 @@ var DOMStack = function() {
    */
   $.extend({
     lib: "ChocolateChipJS",
-    version: '4.7.0',
+    version: '4.7.1',
     noop: function noop() {},
     uuid: function uuid() {
       var d = Date.now();

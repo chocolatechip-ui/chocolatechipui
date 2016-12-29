@@ -1014,6 +1014,14 @@ interface DOMStack extends Object {
    * @return void
    */
   purge(): void;
+
+
+  /**
+   * You can access the raw DOM through the [0]. If there are multple items, this only gives you access to the first node. You can get other using `eq(number)[0]` pattern. If the DOMStack contains the document or window, these will be available with this as well.
+   *
+   * @return DOM node, document or window.
+   */
+   [0]: HTMLElement | Element;
 }
 
 /**
