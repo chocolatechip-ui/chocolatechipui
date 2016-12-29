@@ -3,8 +3,8 @@ $(function() {
     element: "#list",
     template: 
     "<li>\
-      <h3>Item {= data }</h3>\
+      <h3>{= data }</h3>\
     </li>"
   });
-  listView.render(["One","Two","Three"])
+  listView.render(["One","Two","Three"]);
 });

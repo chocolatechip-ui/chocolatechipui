@@ -49,4 +49,4 @@ export const templates = {
     </ol>
   </div>
 </li>`
-} 
+};

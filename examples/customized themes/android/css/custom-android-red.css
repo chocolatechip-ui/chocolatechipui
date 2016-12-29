@@ -65,6 +65,20 @@ input[type="range"]:active::-webkit-slider-thumb,
 .isNativeAndroidBrowser input[type="range"] {
   background-image: -webkit-linear-gradient(top, red, red);
 }
+textarea,
+input[type=text],
+input[type=number],
+input[type=password],
+input[type=email],
+input[type=url],
+input[type=text] {
+  background-image: 
+     -webkit-linear-gradient(left, red, red),
+     -webkit-linear-gradient(left, #ccc, #ccc);
+  background-image: 
+     linear-gradient(to right, red, red),
+     linear-gradient(to right, #ccc, #ccc);
+}
 .segmented > span.androidSelectionBorder {
   border-bottom: solid 3px red;
 }

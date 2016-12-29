@@ -15,4 +15,4 @@ export const VIPView = $.View({
       <disclosure></disclosure>
     </aside>
   </li>`
-})
+});

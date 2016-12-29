@@ -7,4 +7,4 @@ export const chosenPersonView = $.View({
   <li>
     <h3>Last Name: {= data.lastName }</h3>
   </li>`
-})
+});
