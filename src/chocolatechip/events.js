@@ -260,7 +260,7 @@
         });
       },
 
-      trigger: function(event) {
+      trigger: function(event, data) {
         if (!event) {
           if ($.supressErrorMessages) return;
           console.error(errors.noEventToTrigger);
@@ -271,6 +271,7 @@
           if (document.createEvent) {
             const evtObj = document.createEvent('Events');
             evtObj.initEvent(event, true, false);
+            evtObj.data = data;
             ctx.dispatchEvent(evtObj);
           }
         });

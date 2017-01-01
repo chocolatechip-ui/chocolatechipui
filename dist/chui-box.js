@@ -501,7 +501,7 @@ var DOMStack = function() {
    */
   $.extend({
     lib: "ChocolateChipJS",
-    version: '4.7.1',
+    version: '4.7.2',
     noop: function noop() {},
     uuid: function uuid() {
       var d = Date.now();
@@ -2038,7 +2038,7 @@ var DOMStack = function() {
           }
         });
       },
-      trigger: function trigger(event) {
+      trigger: function trigger(event, data) {
         if (!event) {
           if ($.supressErrorMessages) return;
           console.error(errors.noEventToTrigger);
@@ -2049,6 +2049,7 @@ var DOMStack = function() {
           if (document.createEvent) {
             var evtObj = document.createEvent('Events');
             evtObj.initEvent(event, true, false);
+            evtObj.data = data;
             ctx.dispatchEvent(evtObj);
           }
         });
