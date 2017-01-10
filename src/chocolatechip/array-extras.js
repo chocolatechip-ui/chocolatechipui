@@ -92,11 +92,8 @@ if (!Array.prototype.intersection) {
   $.extend(Array.prototype, {
     intersection(array) {
       const self = this;
-      const arr1 = self.difference(array);
-      const arr2 = array.difference(this);
-      const totalDiff = arr1.concat(arr2);
-      const total = self.concat(array);
-      return total.difference(totalDiff).unique()
+      const diff = self.difference(array);
+      return this.difference(diff);
     }
   })
 }
@@ -104,7 +101,13 @@ if (!Array.prototype.intersection) {
 if (!Array.prototype.mixin) {
   $.extend(Array.prototype, {
     mixin(array) {
-      return this.unique(this.concate(array));
+      var self = this;
+      var ret = this.concat(array);
+      ret.unique();
+      self.splice(0);
+      ret.forEach(function(item) {
+        self.push(item);
+      })
     }
   })
 }

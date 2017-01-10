@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Testing utilities.js</title>
+    <link rel="stylesheet" href="../node_modules/mocha/mocha.css" />
+    <script src="../dist/chui.js"></script>
+  </head>
+  <body>
+    <div id="mocha"></div>
+    <div id="HTML-tests" style='display: none'>
+      <h5>The Title</h5>
+      <div id="someStuff">Stuff</div>
+      <div class="whatever">This is whatever</div>
+      <input type="text" hidden id='input' value='some stuff' style='display: block;'>
+      <ul>
+        <li class="listItem">One</li>
+        <li class="listItem">Two</li>
+        <li class="listItem">Three</li>
+      </ul>
+      <button id="trottleBtn">Throttle</button>
+      <button id="debounceBtn">Debounce</button>
+      <button id="onceBtn">Once</button>
+      <button id="beforeBtn">Before</button>
+      <button id="afterBtn">After</button>
+    </div>
+    <script src="../node_modules/mocha/mocha.js"></script>
+    <script src="../node_modules/chai/chai.js"></script>
+    <script>
+      mocha.ui('bdd'); 
+      mocha.reporter('html');
+      var expect = chai.expect;
+    </script>
+    <script src="../tests/04-utilities.js"></script>
+    <script>
+      if (window.mochaPhantomJS) { 
+        mochaPhantomJS.run(); 
+      } else { 
+        mocha.run(); 
+      }
+    //   var count = 0;
+    //   var result = [];
+    //   var input = $('#input');input.on('keyup', $.debounce(function(e) {
+    //   count++;
+    //   result.push(count);
+    // }, 1000));
+    </script>
+  </body>
+</html>

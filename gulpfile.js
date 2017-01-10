@@ -41,7 +41,6 @@ var chocolateChipFiles = [
   'collection-utilities',
   'validators',
   'serialize',
-  'params',
   'form',
   'formatters',
   'view',

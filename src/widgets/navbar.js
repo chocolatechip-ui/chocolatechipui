@@ -146,7 +146,7 @@ $(() => {
     }
   });
   setTimeout(function() {
-    if ($.globalNav === true && !$('#globalNav')[0]) {
+    if (!$('#globalNav')[0]) {
       $('body').prepend('<nav id="globalNav"></nav>')
     }
     $('screen').forEach(function(screen) {

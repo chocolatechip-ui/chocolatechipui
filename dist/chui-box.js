@@ -35,6 +35,17 @@ function _defineProperty(obj, key, value) {
   return obj;
 }
 
+function _toConsumableArray(arr) {
+  if (Array.isArray(arr)) {
+    for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
+      arr2[i] = arr[i];
+    }
+    return arr2;
+  } else {
+    return Array.from(arr);
+  }
+}
+
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
@@ -61,6 +72,7 @@ var DOMStack = function() {
       if (args === document) {
         this.array[0] = document;
         this[0] = document;
+        this.length = 1;
       } else {
         var array = Array.prototype.slice.apply(arguments);
         array.forEach(function(ctx, idx) {
@@ -79,6 +91,7 @@ var DOMStack = function() {
         temp = this.array[this.array.length + index];
         ret.push(temp);
       } else {
+        if (index >= this.array.length) return new DOMStack();
         temp = this.array[index];
         ret.push(temp);
       }
@@ -89,7 +102,11 @@ var DOMStack = function() {
   }, {
     key: 'push',
     value: function push(data) {
-      this.array.push(data);
+      if (data && data.objectType === 'domstack') {
+        this.array = this.array.concat(data.array);
+      } else {
+        this.array.push(data);
+      }
       this.length = this.array.length;
       this[0] = this.array[0];
     }
@@ -97,12 +114,17 @@ var DOMStack = function() {
     key: 'pop',
     value: function pop() {
       this.length = this.array.length - 1;
-      return this.array.pop();
+      var ret = this.array.pop();
+      return $(ret);
     }
   }, {
     key: 'unshift',
     value: function unshift(data) {
-      this.array.unshift(data);
+      if (data && data.objectType === 'domstack') {
+        this.array.unshift(data.array[0]);
+      } else {
+        this.array.unshift(data);
+      }
       this[0] = this.array[0];
       this.length = this.array.length;
     }
@@ -110,7 +132,8 @@ var DOMStack = function() {
     key: 'shift',
     value: function shift() {
       this.length = this.array.length - 1;
-      return this.array.shift();
+      var ret = this.array.shift();
+      return $(ret);
     }
   }, {
     key: 'size',
@@ -151,18 +174,19 @@ var DOMStack = function() {
         args[_key3] = arguments[_key3];
       }
       ret.concat(this.array.slice.apply(this.array, args));
-      ret.length = ret.array.length;
-      return ret;
+      return $(ret);
     }
   }, {
     key: 'splice',
     value: function splice() {
+      var ret = new DOMStack();
       for (var _len2 = arguments.length, args = Array(_len2), _key4 = 0; _key4 < _len2; _key4++) {
         args[_key4] = arguments[_key4];
       }
-      this.array.splice.apply(this.array, args);
+      ret.concat(this.array.splice.apply(this.array, args));
       this[0] = this.array[0];
-      return this;
+      this.length = this.array.length;
+      return $(ret);
     }
   }, {
     key: 'filter',
@@ -185,6 +209,21 @@ var DOMStack = function() {
       ret.concat(this.array.map.apply(this.array, args));
       ret[0] = ret.array[0];
       return ret;
+    }
+  }, {
+    key: 'indexOf',
+    value: function indexOf(node) { // return this.array.indexOf.apply(this.array, args);
+      if (!node) return -1;
+      if (node.nodeType && node.nodeType === 1) {
+        return this.array.indexOf(node);
+      } else if (node && node.objectType === 'domstack') {
+        return this.array.indexOf(node[0]);
+      } else if (node && Array.isArray(node)) {
+        return this.array.indexOf(node[0]);
+      } else if (node && $.type(node) === 'string') {
+        var _el = this[0].parentNode.querySelector(node);
+        return this.array.indexOf(_el);
+      }
     }
   }, {
     key: 'concat',
@@ -216,26 +255,18 @@ var DOMStack = function() {
       this[0] = this.array[0];
     }
   }, {
-    key: 'indexOf',
-    value: function indexOf() {
-      for (var _len6 = arguments.length, args = Array(_len6), _key8 = 0; _key8 < _len6; _key8++) {
-        args[_key8] = arguments[_key8];
-      }
-      return this.array.indexOf.apply(this.array, args);
-    }
-  }, {
     key: 'every',
     value: function every() {
-      for (var _len7 = arguments.length, args = Array(_len7), _key9 = 0; _key9 < _len7; _key9++) {
-        args[_key9] = arguments[_key9];
+      for (var _len6 = arguments.length, args = Array(_len6), _key8 = 0; _key8 < _len6; _key8++) {
+        args[_key8] = arguments[_key8];
       }
       return this.array.every.apply(this.array, args);
     }
   }, {
     key: 'some',
     value: function some() {
-      for (var _len8 = arguments.length, args = Array(_len8), _key10 = 0; _key10 < _len8; _key10++) {
-        args[_key10] = arguments[_key10];
+      for (var _len7 = arguments.length, args = Array(_len7), _key9 = 0; _key9 < _len7; _key9++) {
+        args[_key9] = arguments[_key9];
       }
       return this.array.some.apply(this.array, args);
     }
@@ -501,7 +532,7 @@ var DOMStack = function() {
    */
   $.extend({
     lib: "ChocolateChipJS",
-    version: '4.7.2',
+    version: '4.8.0',
     noop: function noop() {},
     uuid: function uuid() {
       var d = Date.now();
@@ -705,16 +736,28 @@ var DOMStack = function() {
         return tagsToReplace[tag] || tag;
       };
       var safe_tags_replace = function safe_tags_replace(str) {
-        return str.replace(/[&<>]/g, replaceTag);
+        return str.replace(/[&<>\(\)]/g, replaceTag);
       };
       str = safe_tags_replace(str);
       return JSON.parse(str);
     },
     /** 
-     * Concat arrays:
+     * Concat arguments into a string:
      */
-    concat: function concat(args) {
-      return args instanceof Array ? args.join('') : [].slice.apply(_arguments).join('');
+    concat: function concat() {
+      for (var _len8 = arguments.length, args = Array(_len8), _key10 = 0; _key10 < _len8; _key10++) {
+        args[_key10] = arguments[_key10];
+      }
+      if (Array.isArray(args)) {
+        if (Array.isArray(args[0])) {
+          return args[0].join('');
+        } else {
+          return args.join('');
+        }
+      } else {
+        return Array.prototype.slice(args).join('');
+      }
+      Array.isArray(args) ? args[0].split('') : Array.prototype.slice(args).join('');
     },
     /**
      * Mixin one object into another:
@@ -727,6 +770,9 @@ var DOMStack = function() {
       }
       return targetObj;
     },
+    /**
+     * Compare one value with another, one object with another, one array with another, etc.
+     */
     compare: function compare(value1, value2) {
       function compareNativeSubtypes(value1, value2) {
         /**
@@ -791,45 +837,34 @@ var DOMStack = function() {
       }
     },
     /** 
-     * Chunk an array into pieces based on itemsPerPage.
+     * Chunk an array into pieces based on itemsPerChunk.
      * You can use this to paginate an array of data.
      */
-    paginate: function paginate(data, itemsPerPage) {
+    paginate: function paginate(data, itemsPerChunk) {
       var ret = [];
-      var pages = Math.floor(data.length / itemsPerPage);
+      var pages = Math.floor(data.length / itemsPerChunk);
       if (data.length % pages) pages++;
       var temp = 0;
       for (var i = 0; i < pages; i++) {
         if (temp === data.length) break;
-        var thing = data.slice(temp, itemsPerPage + temp);
+        var thing = data.slice(temp, itemsPerChunk + temp);
         ret.push(thing);
-        temp += itemsPerPage;
+        temp += itemsPerChunk;
       }
       return ret;
     },
     /**
-     * Recursively flatten an array.
+     * Recursively flatten an array with nested arrays.
      */
-    flatten: function(_flatten) {
-      function flatten(_x) {
-        return _flatten.apply(this, arguments);
+    flatten: function flatten(array) {
+      var flat = Array.prototype.concat(array);
+      for (var i = 0; i < flat.length; i++) {
+        if (Array.isArray(flat[i])) {
+          flat.splice.apply(flat, [i, 1].concat(_toConsumableArray(flat[i--])));
+        }
       }
-      flatten.toString = function() {
-        return _flatten.toString();
-      };
-      return flatten;
-    }(function(array) {
-      if (!array || !array.length) return;
-      var ret = [];
-      var len = array.length;
-      var x = void 0;
-      for (var i = 0; i < len; i++) {
-        x = array[i];
-        if (Array.isArray(x)) flatten(x, ret);
-        else ret.push(x);
-      }
-      return ret;
-    }),
+      return flat;
+    },
     /**
      * Fires an event once during provided wait period. Options are: {leading: true/false, trailing: true/false}.
      * By default leading is true, meaning that the first event input will fire. Setting leading to false will disable this.
@@ -912,7 +947,9 @@ var DOMStack = function() {
       var memo = void 0;
       return function() {
         if (--times > 0) {
-          memo = func.apply(this, arguments);
+          if ($.type(func) === 'function') {
+            memo = func.apply(this, arguments);
+          }
         }
         if (times <= 1) func = null;
         return memo;
@@ -926,7 +963,9 @@ var DOMStack = function() {
       var memo = void 0;
       return function() {
         if (--times > 0) {
-          memo = func.apply(this, arguments);
+          if ($.type(func) === 'function') {
+            memo = func.apply(this, arguments);
+          }
         }
         if (times <= 1) func = null;
         return memo;
@@ -934,7 +973,7 @@ var DOMStack = function() {
     },
     /**
      * Execute a function only after x times.
-     * This takes two arguments: the times to wait before execution and the callback to execute.
+     * This takes two arguments: the times or attempts before execution and a callback to execute.
      */
     after: function after(times, func) {
       return function() {
@@ -1016,7 +1055,7 @@ var DOMStack = function() {
   $.fn.extend({
     find: function find(selector, context) {
       var ret = new DOMStack();
-      if (!this.size()) return ret;
+      if (!this.array.length) return ret;
       if (context) {
         $(context).forEach(function() {
           Array.prototype.slice.apply(context.querySelectorAll(selector)).forEach(function(node) {
@@ -1037,8 +1076,8 @@ var DOMStack = function() {
     is: function is(arg) {
       var _this2 = this;
       var ret = false;
-      if (!this.size() || !arg) return;
-      if (!this.size()) return;
+      if (!this.array.length || !arg) return;
+      if (!this.array.length) return;
       var that = this;
       var __is = function __is(node, arg) {
         if (typeof arg === 'string') {
@@ -1057,7 +1096,7 @@ var DOMStack = function() {
           if (arg.call(that)) {
             ret = true;
           }
-        } else if (arg.objectType && arg.objectType === 'domstack') {
+        } else if (arg && arg.objectType && arg.objectType === 'domstack') {
           if (node === arg[0]) {
             ret = true;
           }
@@ -1081,82 +1120,98 @@ var DOMStack = function() {
       });
       return ret;
     },
-    not: function not(selector) {
-      if (!this.size() || !selector) return new DOMStack();
+    not: function not(arg) {
       var ret = new DOMStack();
-      var temp = [];
-      var elems = undefined;
-      if (typeof selector === 'string') {
-        elems = Array.prototype.slice.apply(this.array[0].parentNode.querySelectorAll(selector));
-        this.forEach(function(element) {
-          if (!elems[0]) {
-            ret.push(element);
-          } else {
-            elems.forEach(function(item) {
-              if (element !== item) {
-                ret.push(element);
-              }
-            });
+      if (!this.array.length || !arg) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
+      var that = this;
+      var __nots = function __nots(node, arg) {
+        var result = [];
+        if (typeof arg === 'string') {
+          var nodes = undefined;
+          if (node.parentNode) nodes = node.parentNode.querySelectorAll(arg);
+          var elements = undefined;
+          if (nodes && nodes.length) {
+            elements = Array.prototype.slice.apply(node.parentNode.querySelectorAll(arg));
           }
-        });
-        return ret;
-      } else if (selector && selector.objectType && selector.objectType === 'domstack') {
-        this.forEach(function(element) {
-          selector.forEach(function(node) {
-            if (node !== element) {
-              temp.push(element);
+          if (elements && elements.length) {
+            if (elements.indexOf(node) == -1) {
+              result.push(node);
             }
-          });
-        });
-        if (temp.length) {
-          ret.concat(temp);
-        }
-        return ret;
-      } else if (selector && selector.nodeType === 1) {
-        this.forEach(function(element) {
-          if (element !== selector) {
-            temp.push(element);
+          } else {
+            result.push(node);
           }
-        });
-        if (temp.length) {
-          ret.concat(temp);
+        } else if (arg.nodeType === 1) {
+          if (node === arg) {
+            result.push(node);
+          }
+        } else if (Array.isArray(arg) && arg.length) {
+          if (Array.prototype.slice.apply(arg).indexOf(node) !== -1) {
+            result.push(node);
+          }
+        } else if (arg.objectType && arg.objectType === 'domstack') {
+          if (node === arg[0]) {
+            result.push(node);
+          }
+        } else if (typeof arg === 'function') {
+          if (arg.call(that)) {
+            result.push(node);
+          }
+        } else {
+          return new DOMStack();
         }
-        return ret;
-      }
+        return result;
+      };
+      var temp = [];
+      this.forEach(function(item) {
+        temp.push(__nots(item, arg));
+      });
+      temp = $.flatten(temp);
+      ret.concat(temp);
+      return ret;
     },
     has: function has(arg) {
       var _this3 = this;
-      if (!this.size()) return new DOMStack();
-      var items = new DOMStack();
+      if (!this.array.length) return new DOMStack();
+      var ret = new DOMStack();
+      var self = this;
+      var children = this.children();
       var __has = function __has(node, arg) {
         if (typeof arg === 'string') {
           if (node.querySelector(arg)) {
             return true;
           }
-        } else if (arg.nodeType === 1) {
-          if (Array.prototype.slice(_this3.children).data.indexOf(arg)) {
+        } else if (arg && arg.nodeType === 1) {
+          if (Array.prototype.slice.apply(self.children).indexOf(arg)) {
             return true;
           }
-        } else {
-          return false;
+        } else if (arg && arg.objectType === 'domstack') {
+          var _children = _this3.children();
+          if (_children.array.indexOf(arg[0]) != -1) {
+            return true;
+          }
         }
+        return false;
       };
       this.forEach(function(element) {
         if (__has(element, arg)) {
-          items.push(element);
+          ret.push(element);
         }
       });
-      return items;
+      return ret;
     },
     prev: function prev(selector) {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       var ret = new DOMStack();
       var children = undefined;
-      var prevElement = this[0].previousElementSibling;
+      var previousElement = this[0].previousElementSibling;
       if (selector && typeof selector === 'string') {
         children = this.siblings(selector);
-        children.forEach(function(element) {
-          if (prevElement === element) ret.push(element);
+        var selectorCheck = this.parent().children(selector);
+        selectorCheck.forEach(function(element) {
+          if (element === previousElement) {
+            ret.push(element);
+          }
         });
       } else {
         ret.push(this[0].previousElementSibling);
@@ -1164,37 +1219,38 @@ var DOMStack = function() {
       return ret;
     },
     prevAll: function prevAll(selector) {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       var ret = new DOMStack();
       var __siblings = undefined;
+      var __parent = undefined;
       var __self = this[0];
       var __sibs = Array.prototype.slice.apply(this[0].parentNode.children);
       var pos = __sibs.indexOf(__self);
-      __sibs.splice(pos, __sibs.length - 1);
       if (selector && typeof selector === 'string') {
-        __siblings = this.siblings(selector).array;
-        __sibs.forEach(function(element) {
-          if (__siblings.indexOf(element) > -1) {
-            ret.push(element);
+        __parent = this.array[0].parentNode;
+        __siblings = $(__parent).find(selector);
+        __siblings.forEach(function(el) {
+          if (__sibs.indexOf(el) < pos) {
+            ret.push(el);
           }
         });
       } else {
-        __siblings = Array.prototype.slice.apply(this[0].parentNode.children);
-        pos = __siblings.indexOf(__self);
-        __siblings.splice(pos, __siblings.length - 1);
-        ret.concat(__siblings);
+        __sibs.splice(pos);
+        ret.concat(__sibs);
       }
       return ret;
     },
     next: function next(selector) {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       var ret = new DOMStack();
       var children = undefined;
       var nextElement = this[0].nextElementSibling;
       if (selector && typeof selector === 'string') {
         children = this.siblings(selector);
         children.forEach(function(element) {
-          if (nextElement === element) ret.push(element);
+          if (nextElement === element) {
+            ret.push(element);
+          }
         });
       } else {
         ret.push(this[0].nextElementSibling);
@@ -1202,7 +1258,7 @@ var DOMStack = function() {
       return ret;
     },
     nextAll: function nextAll(selector) {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       var ret = new DOMStack();
       var __siblings = undefined;
       var __parent = undefined;
@@ -1228,17 +1284,23 @@ var DOMStack = function() {
       return ret;
     },
     first: function first() {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       return this.eq(0);
     },
     last: function last() {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       return this.eq(-1);
     },
     index: function index(element) {
-      if (!this.size()) return undefined;
+      if (!this.array.length) return undefined;
       if (!element) {
-        return Array.prototype.slice.apply(this[0].parentNode.children).indexOf(this[0]);
+        if (this.length >= 0) {
+          return 1;
+        } else if (this.length == 0) {
+          return -1;
+        } else {
+          return -1;
+        }
       } else {
         if (element && element.objectType && element.objectType === 'domstack') {
           return this.indexOf(element.getData()[0]);
@@ -1250,7 +1312,7 @@ var DOMStack = function() {
       }
     },
     children: function children(selector) {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       var ret = new DOMStack();
       if (!selector) {
         this.forEach(function(node) {
@@ -1272,39 +1334,57 @@ var DOMStack = function() {
       return ret;
     },
     siblings: function siblings(selector) {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       var __siblings = undefined;
       var ret = new DOMStack();
       var $this = this;
       var parent = undefined;
-      var children = Array.prototype.slice.apply(this.array[0].parentNode.children);
+      var children = Array.prototype.slice.apply($this[0].parentNode.children);
       /**
        * Remove this from siblings:
        */
-      var pos = children.indexOf($this[0]);
-      children.splice(pos, 1);
-      children.splice(children.indexOf(this.array[0]), 0);
       if (selector && typeof selector === 'string') {
         parent = this.array[0].parentNode;
         __siblings = $(parent).find(selector);
-        __siblings.array.splice(__siblings.array.indexOf(this.array[0]), 0);
-        ret.concat(__siblings.array);
+        var newPos = __siblings.array.indexOf($this[0]);
+        __siblings.array.splice(newPos, 1);
+        ret.concat(__siblings);
       } else {
+        var pos = children.indexOf($this[0]);
+        children.splice(pos, 1);
         ret.concat(children);
       }
       return ret;
     },
-    parent: function parent() {
-      if (!this.size()) return new DOMStack();
+    parent: function parent(selector) {
+      if (!this.array.length) return new DOMStack();
       var ret = new DOMStack();
-      this.forEach(function(ctx) {
-        return ret.push(ctx.parentNode);
-      });
+      var parents = undefined;
+      var self = this[0];
+      var result = [];
+      if (selector) {
+        parents = Array.prototype.slice.apply(self.parentNode.parentNode.querySelectorAll(selector));
+        parents.forEach(function(el) {
+          if (el === self.parentNode) {
+            result.push(el);
+          }
+        });
+        result.unique();
+        ret.concat(result);
+      } else {
+        this.forEach(function(ctx) {
+          return ret.push(ctx.parentNode);
+        });
+      }
       ret.unique();
-      return ret;
+      if (ret == undefined) {
+        return new DOMStack();
+      } else {
+        return ret;
+      }
     },
     closest: function closest(selector) {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       var ret = new DOMStack();
       if (typeof selector === 'undefined') {
         return new DOMStack();
@@ -1319,30 +1399,19 @@ var DOMStack = function() {
       }
       if (typeof selector === 'string') {
         selector.trim();
-      }
-      if (typeof selector === 'number') {
-        position = selector || 1;
-        for (var i = 1; i < position; i++) {
-          if (p && p.nodeName === 'HTML') {
-            return p;
-          } else {
-            if (p !== null) {
-              p = p.parentNode;
-            }
-          }
-        }
-        ret.push(p);
-      } else if (typeof selector === 'string') {
         if (p && $(p).is(selector)) {
           ret.push(p);
         } else {
           ret.push($(p).closest(selector).array[0]);
         }
       }
+      if (ret[0] === undefined) {
+        ret.splice(0);
+      }
       return ret;
     },
     css: function css(property, value) {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       var pixelRE = /top|bottom|left|right|margin|padding/img;
       var postFix = '';
       var ret = new DOMStack();
@@ -1363,7 +1432,7 @@ var DOMStack = function() {
           ret.push(node);
         });
       } else if (!value && typeof property === 'string') {
-        if (!this.size()) return;
+        if (!this.array.length) return;
         return document.defaultView.getComputedStyle(this.eq(0).array[0], null).getPropertyValue(property.toLowerCase());
       } else if (!!value) {
         this.forEach(function(node) {
@@ -1375,7 +1444,7 @@ var DOMStack = function() {
       return ret;
     },
     width: function width(amount) {
-      if (!this.size()) return;
+      if (!this.array.length) return;
       if (amount) {
         if (/px]+|[pt]+|[em]+|[en]+|[%]+|[ex]+|[in]+|[cm]+|[mm]+|[ch]+|[in]+|[rem]+|[vw]+|[vh]+$/.test(amount)) {
           this.forEach(function(element) {
@@ -1387,11 +1456,12 @@ var DOMStack = function() {
           });
         }
       } else {
-        return this.eq(0).array[0].clientWidth;
+        var styles = window.getComputedStyle(this[0]);
+        return parseInt(styles.width, 10);
       }
     },
     height: function height(amount) {
-      if (!this.size()) return;
+      if (!this.array.length) return;
       if (amount) {
         if (/px]+|[pt]+|[em]+|[en]+|[%]+|[ex]+|[in]+|[cm]+|[mm]+|[ch]+|[in]+|[rem]+|[vw]+|[vh]+$/.test(amount)) {
           this.forEach(function(element) {
@@ -1403,12 +1473,13 @@ var DOMStack = function() {
           });
         }
       } else {
-        return this.eq(0).array[0].clientHeight;
+        var styles = window.getComputedStyle(this[0]);
+        return parseInt(styles.height, 10);
       }
     },
     before: function before(content) {
       var _this4 = this;
-      if (!this.size()) {
+      if (!this.array.length) {
         return new DOMStack();
       }
       var __before = function __before(node, content) {
@@ -1432,9 +1503,9 @@ var DOMStack = function() {
       });
       return this;
     },
-    after: function after(args) {
+    after: function after(content) {
       var _this5 = this;
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       var __after = function __after(node, content) {
         var parent = node.parentNode;
         if (typeof content === 'string' || typeof content === 'number') {
@@ -1457,12 +1528,12 @@ var DOMStack = function() {
         return _this5;
       };
       this.forEach(function(node) {
-        return __after(node, args);
+        return __after(node, content);
       });
       return this;
     },
     prepend: function prepend(content) {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       if (typeof content === 'string' || typeof content === 'number') {
         this.forEach(function(element) {
           element.insertAdjacentHTML('afterbegin', content);
@@ -1475,13 +1546,13 @@ var DOMStack = function() {
         });
       } else if (content && content.nodeType === 1) {
         this.forEach(function(element) {
-          element.insertBefore(node, element.firstChild);
+          element.insertBefore(content, element.firstChild);
         });
       }
       return this;
     },
     append: function append(content) {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       if (typeof content === 'string' || typeof content === 'number') {
         this.forEach(function(element) {
           element.insertAdjacentHTML('beforeend', content);
@@ -1494,13 +1565,13 @@ var DOMStack = function() {
         });
       } else if (content && content.nodeType === 1) {
         this.forEach(function(element) {
-          element.insertBefore(node, null);
+          element.insertBefore(content, null);
         });
       }
       return this;
     },
     prependTo: function prependTo(selector) {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       this.reverse();
       this.forEach(function(item) {
         return $(selector).prepend(item);
@@ -1508,14 +1579,14 @@ var DOMStack = function() {
       return this;
     },
     appendTo: function appendTo(selector) {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       this.forEach(function(item) {
         return $(selector).append(item);
       });
       return this;
     },
     clone: function clone(value) {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       var ret = new DOMStack();
       this.forEach(function(ctx) {
         if (value === true || !value) {
@@ -1527,7 +1598,7 @@ var DOMStack = function() {
       return ret;
     },
     wrap: function wrap(string) {
-      if (!this.size() || !string) return new DOMStack();
+      if (!this.array.length || !string) return new DOMStack();
       var tempNode = undefined;
       var empNode = undefined;
       var whichClone = undefined;
@@ -1541,7 +1612,7 @@ var DOMStack = function() {
       });
     },
     unwrap: function unwrap() {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       var parentNode = null;
       this.forEach(function(node) {
         if (node.parentNode === parentNode) {
@@ -1555,8 +1626,8 @@ var DOMStack = function() {
       });
     },
     offset: function offset() {
-      if (!this.size()) return;
-      var offset = this.eq(0).array[0].getBoundingClientRect();
+      if (!this.array.length) return;
+      var offset = this[0].getBoundingClientRect();
       return {
         top: Math.round(offset.top),
         left: Math.round(offset.left),
@@ -1565,23 +1636,17 @@ var DOMStack = function() {
       };
     },
     position: function position() {
+      var parent = this[0].parentNode;
+      var pos = this[0].getBoundingClientRect();
+      var parentPos = parent.getBoundingClientRect();
       var obj = {
-        top: 0,
-        left: 0
+        top: pos.top - parentPos.top,
+        left: pos.left - parentPos.left
       };
-      var pos = this.array[0].getBoundingClientRect();
-      var borderTop = parseInt(this.parent().css('border-top-width'), 10) || 0;
-      var borderLeft = parseInt(this.parent().css('border-left-width'), 10) || 0;
-      var parentPos = this.array[0].parentNode.getBoundingClientRect();
-      var compareOffsets1 = function compareOffsets1(val1, val2) {
-        return Math.round(val1 - val2);
-      };
-      obj.top = compareOffsets1(pos.top, parentPos.top + borderTop);
-      obj.left = compareOffsets1(pos.left, parentPos.left + borderLeft);
       return obj;
     },
     empty: function empty() {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       var ret = new DOMStack();
       this.forEach(function(ctx) {
         $(ctx).children().off();
@@ -1591,7 +1656,7 @@ var DOMStack = function() {
       return ret;
     },
     html: function html(content) {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       if (content === '') {
         this.forEach(function(node) {
           node.innerHTML = '';
@@ -1608,7 +1673,7 @@ var DOMStack = function() {
     },
     text: function text(string) {
       var ret = '';
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       if (!!string || string === 0) {
         this.forEach(function(element) {
           element.innerText = string;
@@ -1638,14 +1703,14 @@ var DOMStack = function() {
       });
     },
     remove: function remove() {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       this.forEach(function(node) {
         $(node).off();
         if (node.parentNode) node.parentNode.removeChild(node);
       });
     },
     addClass: function addClass(className) {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       if (typeof className !== "string") return;
       var ret = new DOMStack();
       var classes = undefined;
@@ -1663,7 +1728,7 @@ var DOMStack = function() {
       return ret;
     },
     hasClass: function hasClass(className) {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       var temp = false;
       this.forEach(function(element) {
         if (element.classList.contains(className)) {
@@ -1673,7 +1738,7 @@ var DOMStack = function() {
       return temp;
     },
     removeClass: function removeClass(className) {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       var ret = new DOMStack();
       var classes = undefined;
       this.forEach(function(node) {
@@ -1694,7 +1759,7 @@ var DOMStack = function() {
       return ret;
     },
     toggleClass: function toggleClass(className) {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       var ret = new DOMStack();
       this.forEach(function(node) {
         node.classList.toggle(className);
@@ -1702,23 +1767,25 @@ var DOMStack = function() {
       });
       return ret;
     },
-    attr: function attr(property, value) {
-      if (!this.size()) return new DOMStack();
+    attr: function attr(attribute, value) {
+      if (!this.array.length) return new DOMStack();
       var ret = new DOMStack();
-      var __attr = function __attr(node, property, value) {
+      var __attr = function __attr(node, attribute, value) {
         if (value === undefined) {
-          return node.getAttribute(property);
+          return node.getAttribute(attribute);
         } else {
-          return node.setAttribute(property, value);
+          return node.setAttribute(attribute, value);
         }
       };
       if (value === undefined) {
-        if (this[0].hasAttribute(property)) {
-          return this[0].getAttribute(property);
+        if (this[0].hasAttribute(attribute)) {
+          return this[0].getAttribute(attribute);
+        } else {
+          return '';
         }
       } else {
         this.forEach(function(node) {
-          __attr(node, property, value);
+          __attr(node, attribute, value);
           ret.push(node);
         });
       }
@@ -1727,7 +1794,7 @@ var DOMStack = function() {
       }
     },
     removeAttr: function removeAttr(attribute) {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       var ret = new DOMStack();
       this.forEach(function(node) {
         if (!!node.hasAttribute(attribute)) {
@@ -1738,7 +1805,7 @@ var DOMStack = function() {
       return ret;
     },
     prop: function prop(property, value) {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       if (value === false || !!value) {
         this.forEach(function(element) {
           element[property] = value;
@@ -1749,12 +1816,12 @@ var DOMStack = function() {
       }
     },
     removeProp: function removeProp(property) {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       this[0][property] = false;
       return [this[0]];
     },
     disable: function disable() {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       this.forEach(function(node) {
         node.classList.add('disabled');
         node.disabled = true;
@@ -1763,7 +1830,7 @@ var DOMStack = function() {
       return this;
     },
     enable: function enable() {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       this.forEach(function(node) {
         node.classList.remove('disabled');
         node.removeAttribute('disabled');
@@ -1772,7 +1839,7 @@ var DOMStack = function() {
       return this;
     },
     val: function val(value) {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       if (value) {
         this.array[0].value = value;
         return this;
@@ -1789,10 +1856,29 @@ var DOMStack = function() {
     },
     show: function show() {
       var display = this.data('display_attr');
-      if (display === 'none' || !display) {
+      if (!display) return this;
+      if (display === 'none') {
         display = 'block';
       }
       this.css('display', display);
+    },
+    unique: function unique() {
+      var ret = [];
+      var sort = this.array.sort();
+      sort.forEach(function(ctx, idx) {
+        if (ret.indexOf(ctx) === -1) {
+          ret.push(ctx);
+        }
+      });
+      ret.sort(function(a, b) {
+        return a - b;
+      });
+      this.array.splice(0);
+      var self = this.array;
+      ret.forEach(function(node) {
+        self.push(node);
+      });
+      this.length = this.array.length;
     }
   });
   /**
@@ -2352,7 +2438,21 @@ $.extend({
         } else if (Object.prototype.toString.call(_type) === '[object RegExp]') {
           return 'regexp';
         } else if (Object.prototype.toString.call(_type) === '[object Object]') {
-          return 'object';
+          if (_type.objectType && _type.objectType === 'domstack') {
+            return 'domstack'; /* If Promise polyfill, then should support `then`. */
+          } else if (_type.then) {
+            return 'promise'; /* Otherwise we got a normal object here. */
+          } else {
+            return 'object';
+          }
+        } else if (Object.prototype.toString.call(_type) === '[object Number]') {
+          return 'number';
+        } else if (Object.prototype.toString.call(_type) === '[object String]') {
+          return 'string';
+        } else if (Object.prototype.toString.call(_type) === '[object Promise]') {
+          return 'promise';
+        } else if (Object.prototype.toString.call(_type) === '[object Boolean]') {
+          return 'boolean';
         }
     }
   }
@@ -2845,67 +2945,6 @@ $.fn.extend({
   }
 });
 /**
- * ChocolateChip-UI param method.
- */
-$.extend({
-  /** 
-   * Serialize an object for posting to server:
-   */
-  param: function param(obj, traditional) {
-    /** 
-     * Private function used by $.param:
-     */
-    function serialize(params, obj, traditional, scope) {
-      var type = undefined;
-      var array = $.type(obj) === 'array';
-      var hash = $.isEmptyObject(obj);
-      /** 
-       * If it's an array of objects: 
-       */
-      if ($.type(obj) === 'array') {
-        $.each(obj, function(key, value) {
-          type = $.type(value);
-          if (scope) {
-            key = traditional ? scope : scope + '[' + (hash || type == 'object' || type == 'array' ? key : '') + ']';
-          }
-          if (!scope && array) {
-            params.add(value.name, value.value);
-          } else if (type == "array" || !traditional && type == "object") {
-            serialize(params, value, traditional, key);
-          } else {
-            params.add(key, value);
-          }
-        });
-        /**
-         * Else its an object (use key/value loop): 
-         */
-      } else if ($.type(obj) === 'object') {
-        for (var key in obj) {
-          type = $.type(obj[key]);
-          if (scope) {
-            key = traditional ? scope : scope + '[' + (hash || type == 'object' || type == 'array' ? key : '') + ']';
-          }
-          if (!scope && array) {
-            params.add(obj[key].name, obj[key].obj[key]);
-          } else if (type == "array" || !traditional && type == "object") {
-            serialize(params, obj[key], traditional, key);
-          } else {
-            params.add(key, obj[key]);
-          }
-        }
-      }
-    }
-    var params = [];
-    params.add = function(key, value) {
-      if ($.type(value) === 'function') value = value();
-      if (value === null) value = "";
-      this.push(encodeURIComponent(key) + '=' + encodeURIComponent(value));
-    };
-    serialize(params, obj, traditional);
-    return params.join('&').replace(/%20/g, '+');
-  }
-});
-/**
  * ChocolateChip-UI - Form Validation & JSON.
  */
 $.extend({
@@ -3099,8 +3138,8 @@ $.extend({
         if (cv) {
           var result = $.validateWithRegex(item.element, cv[0].regex);
           if (result) {
-            var _el = $(item.element);
-            convertToObject(_el[0].name, _el[0].value);
+            var _el2 = $(item.element);
+            convertToObject(_el2[0].name, _el2[0].value);
           } else {
             __errors.push({
               element: item.element,
@@ -4681,18 +4720,21 @@ if (!Array.prototype.intersection) {
   $.extend(Array.prototype, {
     intersection: function intersection(array) {
       var self = this;
-      var arr1 = self.difference(array);
-      var arr2 = array.difference(this);
-      var totalDiff = arr1.concat(arr2);
-      var total = self.concat(array);
-      return total.difference(totalDiff).unique();
+      var diff = self.difference(array);
+      return this.difference(diff);
     }
   });
 }
 if (!Array.prototype.mixin) {
   $.extend(Array.prototype, {
     mixin: function mixin(array) {
-      return this.unique(this.concate(array));
+      var self = this;
+      var ret = this.concat(array);
+      ret.unique();
+      self.splice(0);
+      ret.forEach(function(item) {
+        self.push(item);
+      });
     }
   });
 }
@@ -5431,12 +5473,13 @@ $.extend($, {
   isAndroid: /android/img.test(navigator.userAgent) && !/trident/img.test(navigator.userAgent),
   isTouchEnabled: !/trident/img.test(navigator.userAgent) && !/edge/img.test(navigator.userAgent) && 'createTouch' in document,
   isOnline: navigator.onLine,
-  isStandalone: navigator.standalone,
+  isStandalone: navigator.standalone || false,
   isWebkit: !/trident/img.test(navigator.userAgent) && !/edge/img.test(navigator.userAgent) && /webkit/img.test(navigator.userAgent),
   isDesktop: !/mobile/img.test(navigator.userAgent),
+  isMobile: /mobile/img.test(navigator.userAgent),
   isSafari: !/edge/img.test(navigator.userAgent) && !/Chrome/img.test(navigator.userAgent) && /Safari/img.test(navigator.userAgent) && !/android/img.test(navigator.userAgent),
   isChrome: !/trident/img.test(navigator.userAgent) && !/edge/img.test(navigator.userAgent) && /Chrome/img.test(navigator.userAgent) && !((/samsung/img.test(navigator.userAgent) || /Galaxy Nexus/img.test(navigator.userAgent) || /HTC/img.test(navigator.userAgent) || /LG/img.test(navigator.userAgent)) && !/trident/img.test(navigator.userAgent) && !/edge/img.test(navigator.userAgent) && /android/i.test(navigator.userAgent) && /webkit/i.test(navigator.userAgent)),
-  isNativeAndroid: (/samsung/img.test(navigator.userAgent) || /Galaxy Nexus/img.test(navigator.userAgent) || /HTC/img.test(navigator.userAgent) || /LG/img.test(navigator.userAgent)) && !/trident/img.test(navigator.userAgent) && !/edge/img.test(navigator.userAgent) && /android/i.test(navigator.userAgent) && /webkit/i.test(navigator.userAgent)
+  isNativeAndroid: (/samsung/img.test(navigator.userAgent) || /Galaxy Nexus/img.test(navigator.userAgent) || /HTC/img.test(navigator.userAgent) || /\sLG/img.test(navigator.userAgent)) && !/trident/img.test(navigator.userAgent) && !/edge/img.test(navigator.userAgent) && /android/i.test(navigator.userAgent) && /webkit/i.test(navigator.userAgent) && (/Android 3/i.test(userAgentHTC) || /Android 4/i.test(navigator.userAgent))
 });
 /**
  * ChocolateChip-UI Widget - Setup.
@@ -6204,7 +6247,7 @@ $(function() {
     }
   });
   setTimeout(function() {
-    if ($.globalNav === true && !$('#globalNav')[0]) {
+    if (!$('#globalNav')[0]) {
       $('body').prepend('<nav id="globalNav"></nav>');
     }
     $('screen').forEach(function(screen) {

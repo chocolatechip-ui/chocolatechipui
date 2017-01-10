@@ -182,3 +182,17 @@ When you make a project for ES6, you'll work in the `dev` folder inside your pro
 
 
 For more details about working with ES6 projects, read the [chocolatechip-ui.github.io/v4/docs/tutorials/es6.html](documentation).
+
+##Tests
+
+Tests use Mocha, Chai and PhantomJS.
+
+To run the tests, first you will need to run `npm i` on this repository. Once all dependences are installed, simply run:
+
+    npm test
+
+This will run all the tests in the terminal window. This does take a while. Alternatively, you can open the folder `test-browser` and double click any HTML file to run that set of tests in the browser.
+
+You can also run individual test like this:
+
+    npm run testName

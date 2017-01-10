@@ -3,9 +3,10 @@
    * ChocolateChip-UI DOM methods.
    */
   $.fn.extend({
+
     find(selector, context) {
       let ret = new DOMStack();
-      if (!this.size())
+      if (!this.array.length)
         return ret;
       if (context) {
         $(context).forEach(() => {
@@ -27,8 +28,8 @@
 
     is(arg) {
       let ret = false;
-      if (!this.size() || !arg) return;
-      if (!this.size()) return;
+      if (!this.array.length || !arg) return;
+      if (!this.array.length) return;
       const that = this;
       const __is = (node, arg) => {
         if (typeof arg === 'string') {
@@ -47,7 +48,7 @@
           if (arg.call(that)) {
             ret = true;
           }
-        } else if (arg.objectType && arg.objectType === 'domstack') {
+        } else if (arg && arg.objectType && arg.objectType === 'domstack') {
           if (node === arg[0]) {
             ret = true;
           }
@@ -72,86 +73,103 @@
       return ret;
     },
 
-    not(selector) {
-      if (!this.size() || !selector) return new DOMStack();
+    not(arg) {
       let ret = new DOMStack();
-      let temp = [];
-      let elems = undefined;
-      if (typeof selector === 'string') {
-        elems = Array.prototype.slice.apply(this.array[0].parentNode.querySelectorAll(selector));
-        this.forEach(element => {
-          if (!elems[0]) {
-            ret.push(element);
-          } else {
-            elems.forEach(item => {
-              if (element !== item) {
-                ret.push(element);
-              }
-            });
+      if (!this.array.length || !arg) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
+      const that = this
+      const __nots = (node, arg) => {
+        let result = [];
+        if (typeof arg === 'string') {
+          let nodes = undefined;
+          if (node.parentNode) nodes = node.parentNode.querySelectorAll(arg);
+          let elements = undefined;
+          if (nodes && nodes.length) {
+            elements = Array.prototype.slice.apply(node.parentNode.querySelectorAll(arg));
           }
-        });
-        return ret;
-      } else if (selector && selector.objectType && selector.objectType === 'domstack') {
-        this.forEach(element => {
-          selector.forEach(node => {
-            if (node !== element) {
-              temp.push(element);
+          if (elements && elements.length) {
+            if (elements.indexOf(node) == -1) {
+              result.push(node);
             }
-          });
-        });
-        if (temp.length) {
-          ret.concat(temp);
-        }
-        return ret;
-      } else if (selector && selector.nodeType === 1) {
-        this.forEach(element => {
-          if (element !== selector) {
-            temp.push(element);
+          } else {
+            result.push(node);
           }
-        });
-        if (temp.length) {
-          ret.concat(temp);
+        } else if (arg.nodeType === 1) {
+          if (node === arg) {
+            result.push(node);
+          }
+        } else if (Array.isArray(arg) && arg.length) {
+          if (Array.prototype.slice.apply(arg).indexOf(node) !== -1) {
+            result.push(node);
+          }
+        } else if (arg.objectType && arg.objectType === 'domstack') {
+          if (node === arg[0]) {
+            result.push(node);
+          }
+        } else if (typeof arg === 'function') {
+          if (arg.call(that)) {
+            result.push(node);
+          }
+        } else {
+          return new DOMStack();
         }
-        return ret;
-      }
+        return result;
+      };
+      var temp = [];
+      this.forEach(item => {
+        temp.push(__nots(item, arg));
+      });
+
+      temp = $.flatten(temp);
+      ret.concat(temp)
+      return ret;
     },
 
     has(arg) {
-      if (!this.size()) return new DOMStack();
-      let items = new DOMStack();
+      if (!this.array.length) return new DOMStack();
+      let ret = new DOMStack();
+      const self = this;
+      const children = this.children();
 
       const __has = (node, arg) => {
         if (typeof arg === 'string') {
           if (node.querySelector(arg)) {
             return true;
           }
-        } else if (arg.nodeType === 1) {
-          if (Array.prototype.slice(this.children).data.indexOf(arg)) {
+        } else if (arg && arg.nodeType === 1) {
+          if (Array.prototype.slice.apply(self.children).indexOf(arg)) {
+            return true;
+          } 
+        } else if (arg && arg.objectType === 'domstack') {
+          const children = this.children()
+          if (children.array.indexOf(arg[0]) != -1) {
             return true;
           }
-        } else {
-          return false;
         }
+        return false;
       };
 
       this.forEach(element => {
         if (__has(element, arg)) {
-          items.push(element);
+          ret.push(element);
         }
       });
-      return items;
+      return ret;
     },
 
-    prev(selector) {
-      if (!this.size()) return new DOMStack();
+    prev(selector) {    
+      if (!this.array.length) return new DOMStack();
       let ret = new DOMStack();
       let children = undefined;
-      const prevElement = this[0].previousElementSibling;
+      let previousElement = this[0].previousElementSibling;
       if (selector && typeof selector === 'string') {
         children = this.siblings(selector);
-        children.forEach(element => {
-          if (prevElement === element) ret.push(element);
-        });
+        var selectorCheck = this.parent().children(selector);
+        selectorCheck.forEach(function(element) {
+          if (element === previousElement) {
+            ret.push(element);
+          }
+        })
       } else {
         ret.push(this[0].previousElementSibling);
       }
@@ -159,38 +177,39 @@
     },
 
     prevAll(selector) {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       let ret = new DOMStack();
       let __siblings = undefined;
+      let __parent = undefined;
       const __self = this[0];
       let __sibs = Array.prototype.slice.apply(this[0].parentNode.children);
       let pos = __sibs.indexOf(__self);
-      __sibs.splice(pos, __sibs.length - 1);
       if (selector && typeof selector === 'string') {
-        __siblings = this.siblings(selector).array;
-        __sibs.forEach(element => {
-          if (__siblings.indexOf(element) > -1) {
-            ret.push(element);
+        __parent = this.array[0].parentNode;
+        __siblings = $(__parent).find(selector);
+        __siblings.forEach(function(el) {
+          if(__sibs.indexOf(el) < pos) {
+            ret.push(el)
           }
-        });
+        })
       } else {
-        __siblings = Array.prototype.slice.apply(this[0].parentNode.children);
-        pos = __siblings.indexOf(__self);
-        __siblings.splice(pos, __siblings.length - 1);
-        ret.concat(__siblings);
+        __sibs.splice(pos);
+        ret.concat(__sibs);
       }
       return ret;
     },
 
     next(selector) {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       let ret = new DOMStack();
       let children = undefined;
       let nextElement = this[0].nextElementSibling;
       if (selector && typeof selector === 'string') {
         children = this.siblings(selector);
         children.forEach(element => {
-          if (nextElement === element) ret.push(element);
+          if (nextElement === element) {
+            ret.push(element);
+          }
         });
       } else {
         ret.push(this[0].nextElementSibling);
@@ -199,7 +218,7 @@
     },
 
     nextAll(selector) {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       let ret = new DOMStack();
       let __siblings = undefined;
       let __parent = undefined;
@@ -226,20 +245,26 @@
     },
 
     first() {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       return this.eq(0);
 
     },
 
     last() {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       return this.eq(-1);
     },
 
     index(element) {
-      if (!this.size()) return undefined;
+      if (!this.array.length) return undefined;
       if (!element) {
-        return Array.prototype.slice.apply(this[0].parentNode.children).indexOf(this[0]);
+        if (this.length >= 0) {
+          return 1;
+        } else if (this.length == 0) {
+          return -1;
+        } else {
+          return -1;
+        }
       } else {
         if (element && element.objectType && element.objectType === 'domstack') {
           return this.indexOf(element.getData()[0]);
@@ -252,7 +277,7 @@
     },
 
     children(selector) {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       let ret = new DOMStack();
       if (!selector) {
         this.forEach(node => {
@@ -273,44 +298,61 @@
     },
 
     siblings(selector) {
-      if (!this.size())
+      if (!this.array.length)
         return new DOMStack();
       let __siblings = undefined;
       let ret = new DOMStack();
       const $this = this;
       let parent = undefined;
-      let children = Array.prototype.slice.apply(this.array[0].parentNode.children);
+      let children = Array.prototype.slice.apply($this[0].parentNode.children);
 
       /**
        * Remove this from siblings:
        */
-      const pos = children.indexOf($this[0]);
-      children.splice(pos, 1);
-
-      children.splice(children.indexOf(this.array[0]), 0);
       if (selector && typeof selector === 'string') {
         parent = this.array[0].parentNode;
         __siblings = $(parent).find(selector);
-        __siblings.array.splice(__siblings.array.indexOf(this.array[0]), 0);
-        ret.concat(__siblings.array);
+        const newPos = __siblings.array.indexOf($this[0]);
+        __siblings.array.splice(newPos, 1);
+        ret.concat(__siblings);
       } else {
+        const pos = children.indexOf($this[0]);
+        children.splice(pos, 1);
         ret.concat(children);
       }
       return ret;
     },
 
-    parent() {
-      if (!this.size()) return new DOMStack();
+    parent(selector) {
+      if (!this.array.length) return new DOMStack();
       let ret = new DOMStack();
-      this.forEach(ctx => {
-        return ret.push(ctx.parentNode);
-      });
+      var parents = undefined;
+      var self = this[0];
+      var result = [];
+      if (selector) {
+        parents = Array.prototype.slice.apply(self.parentNode.parentNode.querySelectorAll(selector));
+        parents.forEach(function(el) {
+          if (el === self.parentNode) {
+            result.push(el);
+          }
+        })
+        result.unique();
+        ret.concat(result);
+      } else {
+        this.forEach(ctx => {
+          return ret.push(ctx.parentNode);
+        });
+      }
       ret.unique();
-      return ret;
+      if (ret == undefined) {
+        return new DOMStack();
+      } else {
+        return ret;
+      }
     },
 
     closest(selector) {
-      if (!this.size())
+      if (!this.array.length)
         return new DOMStack();
       let ret = new DOMStack();
       if (typeof selector === 'undefined') {
@@ -326,31 +368,20 @@
       }
       if (typeof selector === 'string') {
         selector.trim();
-      }
-      if (typeof selector === 'number') {
-        position = selector || 1;
-        for (let i = 1; i < position; i++) {
-          if (p && p.nodeName === 'HTML') {
-            return p;
-          } else {
-            if (p !== null) {
-              p = p.parentNode;
-            }
-          }
-        }
-        ret.push(p);
-      } else if (typeof selector === 'string') {
         if (p && $(p).is(selector)) {
           ret.push(p);
         } else {
           ret.push($(p).closest(selector).array[0]);
         }
       }
+      if (ret[0] === undefined) {
+        ret.splice(0);
+      }
       return ret;
     },
 
     css(property, value) {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       const pixelRE = /top|bottom|left|right|margin|padding/img;
       let postFix = '';
       let ret = new DOMStack();
@@ -371,7 +402,7 @@
           ret.push(node);
         });
       } else if (!value && typeof property === 'string') {
-        if (!this.size())
+        if (!this.array.length)
           return;
         return document.defaultView.getComputedStyle(this.eq(0).array[0], null).getPropertyValue(property.toLowerCase());
       } else if (!!value) {
@@ -385,7 +416,7 @@
     },
 
     width(amount) {
-      if (!this.size()) return;
+      if (!this.array.length) return;
       if (amount) {
         if(/px]+|[pt]+|[em]+|[en]+|[%]+|[ex]+|[in]+|[cm]+|[mm]+|[ch]+|[in]+|[rem]+|[vw]+|[vh]+$/.test(amount)) {
           this.forEach(function(element) {
@@ -397,12 +428,13 @@
           });
         }
       } else {
-        return this.eq(0).array[0].clientWidth;
+        const styles = window.getComputedStyle(this[0]);
+        return parseInt(styles.width, 10);
       }
     },
 
     height(amount) {
-      if (!this.size()) return;
+      if (!this.array.length) return;
       if (amount) {
         if(/px]+|[pt]+|[em]+|[en]+|[%]+|[ex]+|[in]+|[cm]+|[mm]+|[ch]+|[in]+|[rem]+|[vw]+|[vh]+$/.test(amount)) {
           this.forEach(function(element) {
@@ -414,12 +446,13 @@
           });
         }
       } else {
-        return this.eq(0).array[0].clientHeight;
+        const styles = window.getComputedStyle(this[0]);
+        return parseInt(styles.height, 10);
       }
     },
 
     before(content) {
-      if (!this.size()) {
+      if (!this.array.length) {
         return new DOMStack();
       }
       const __before = (node, content) => {
@@ -444,8 +477,8 @@
       return this;
     },
 
-    after(args) {
-      if (!this.size()) return new DOMStack();
+    after(content) {
+      if (!this.array.length) return new DOMStack();
       const __after = (node, content) => {
         let parent = node.parentNode;
         if (typeof content === 'string' || typeof content === 'number') {
@@ -468,13 +501,13 @@
         return this;
       };
       this.forEach(node => {
-        return __after(node, args);
+        return __after(node, content);
       });
       return this;
     },
 
     prepend(content) {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
 
       if (typeof content === 'string' || typeof content === 'number') {
         this.forEach(element => {
@@ -488,14 +521,14 @@
         });
       } else if (content && content.nodeType === 1) {
         this.forEach(element => {
-          element.insertBefore(node, element.firstChild);
+          element.insertBefore(content, element.firstChild);
         });
       }
       return this;
     },
 
     append(content) {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
 
       if (typeof content === 'string' || typeof content === 'number') {
         this.forEach(element => {
@@ -510,14 +543,14 @@
 
       } else if (content && content.nodeType === 1) {
         this.forEach(element => {
-          element.insertBefore(node, null);
+          element.insertBefore(content, null);
         });
       }
       return this;
     },
 
     prependTo(selector) {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       this.reverse();
       this.forEach(item => {
         return $(selector).prepend(item);
@@ -526,7 +559,7 @@
     },
 
     appendTo(selector) {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       this.forEach(item => {
         return $(selector).append(item);
       });
@@ -534,7 +567,7 @@
     },
 
     clone(value) {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       let ret = new DOMStack();
       this.forEach(ctx => {
         if (value === true || !value) {
@@ -547,7 +580,7 @@
     },
 
     wrap(string) {
-      if (!this.size() || !string) return new DOMStack();
+      if (!this.array.length || !string) return new DOMStack();
       let tempNode = undefined;
       let empNode = undefined;
       let whichClone = undefined;
@@ -562,7 +595,7 @@
     },
 
     unwrap() {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       let parentNode = null;
       this.forEach(node => {
         if (node.parentNode === parentNode) {
@@ -577,9 +610,9 @@
     },
 
     offset() {
-      if (!this.size())
+      if (!this.array.length)
         return;
-      const offset = this.eq(0).array[0].getBoundingClientRect();
+      const offset = this[0].getBoundingClientRect();
       return {
         top: Math.round(offset.top),
         left: Math.round(offset.left),
@@ -589,24 +622,18 @@
     },
 
     position() {
+      const parent = this[0].parentNode;
+      const pos = this[0].getBoundingClientRect();
+      const parentPos = parent.getBoundingClientRect();
       let obj = {
-        top: 0,
-        left: 0
+        top: pos.top - parentPos.top,
+        left: pos.left - parentPos.left
       };
-      const pos = this.array[0].getBoundingClientRect();
-      const borderTop = parseInt(this.parent().css('border-top-width'), 10) || 0;
-      const borderLeft = parseInt(this.parent().css('border-left-width'), 10) || 0;
-      const parentPos = this.array[0].parentNode.getBoundingClientRect();
-      const compareOffsets1 = function(val1, val2) {
-        return Math.round(val1 - val2);
-      };
-      obj.top = compareOffsets1(pos.top, (parentPos.top + borderTop));
-      obj.left = compareOffsets1(pos.left, (parentPos.left + borderLeft));
       return obj;
     },
 
     empty() {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       let ret = new DOMStack();
       this.forEach(ctx => {
         $(ctx).children().off();
@@ -617,7 +644,7 @@
     },
 
     html(content) {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       if (content === '') {
         this.forEach(node => {
           node.innerHTML = '';
@@ -635,7 +662,7 @@
 
     text(string) {
       let ret = '';
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       if (!!string || string === 0) {
         this.forEach(element => {
           element.innerText = string;
@@ -667,7 +694,7 @@
     },
 
     remove() {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       this.forEach(node => {
         $(node).off();
         if (node.parentNode) node.parentNode.removeChild(node);
@@ -675,7 +702,7 @@
     },
 
     addClass(className) {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       if (typeof className !== "string")
         return;
       let ret = new DOMStack();
@@ -695,7 +722,7 @@
     },
 
     hasClass(className) {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       let temp = false;
       this.forEach(element => {
         if (element.classList.contains(className)) {
@@ -706,7 +733,7 @@
     },
 
     removeClass(className) {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       let ret = new DOMStack();
       let classes = undefined;
       this.forEach(node => {
@@ -729,7 +756,7 @@
     },
 
     toggleClass(className) {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       let ret = new DOMStack();
       this.forEach(node => {
         node.classList.toggle(className);
@@ -738,23 +765,25 @@
       return ret;
     },
 
-    attr(property, value) {
-      if (!this.size()) return new DOMStack();
+    attr(attribute, value) {
+      if (!this.array.length) return new DOMStack();
       let ret = new DOMStack();
-      const __attr = (node, property, value) => {
+      const __attr = (node, attribute, value) => {
         if (value === undefined) {
-          return node.getAttribute(property);
+          return node.getAttribute(attribute);
         } else {
-          return node.setAttribute(property, value);
+          return node.setAttribute(attribute, value);
         }
       };
       if (value === undefined) {
-        if (this[0].hasAttribute(property)) {
-          return this[0].getAttribute(property);
+        if (this[0].hasAttribute(attribute)) {
+          return this[0].getAttribute(attribute);
+        } else {
+          return '';
         }
       } else {
         this.forEach(node => {
-          __attr(node, property, value);
+          __attr(node, attribute, value);
           ret.push(node);
         });
       }
@@ -764,7 +793,7 @@
     },
 
     removeAttr(attribute) {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       let ret = new DOMStack();
       this.forEach(node => {
         if (!!node.hasAttribute(attribute)) {
@@ -776,7 +805,7 @@
     },
 
     prop(property, value) {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       if (value === false || !!value) {
         this.forEach(element => {
           element[property] = value;
@@ -788,13 +817,13 @@
     },
 
     removeProp(property) {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       this[0][property] = false;
       return [this[0]];
     },
 
     disable() {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       this.forEach(node => {
         node.classList.add('disabled');
         node.disabled = true;
@@ -804,7 +833,7 @@
     },
 
     enable() {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       this.forEach(node => {
         node.classList.remove('disabled');
         node.removeAttribute('disabled');
@@ -814,7 +843,7 @@
     },
 
     val(value) {
-      if (!this.size()) return new DOMStack();
+      if (!this.array.length) return new DOMStack();
       if (value) {
         this.array[0].value = value;
         return this;
@@ -833,9 +862,29 @@
 
     show() {
       let display = this.data('display_attr');
-      if (display === 'none' || !display) {
+      if (!display) return this;
+      if (display === 'none') {
         display = 'block';
       }
       this.css('display', display);
+    },
+
+    unique() {
+      var ret = [];
+      var sort = this.array.sort();
+      sort.forEach(function(ctx, idx) {
+        if (ret.indexOf(ctx) === -1) {
+          ret.push(ctx);
+        }
+      });
+      ret.sort(function(a, b) {
+        return a - b;
+      });
+      this.array.splice(0);
+      var self = this.array;
+      ret.forEach(function(node) {
+        self.push(node)
+      });
+      this.length = this.array.length;
     }
   });

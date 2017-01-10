@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Testing data.js</title>
+    <link rel="stylesheet" href="../node_modules/mocha/mocha.css" />
+    <script src="../dist/chui.min.js"></script>
+  </head>
+  <body id='bodyTag'>
+    <div id="mocha"></div>
+    <div id="HTML-tests" style='display: none'>
+      <h5>The Title</h5>
+      <div id="someStuff">Stuff</div>
+      <div class="whatever">This is whatever</div>
+      <input type="text" hidden id='hidden-input' value='hidden input'>
+      <ul id='myList' role='list'>
+        <li class="listItem">One</li>
+        <li class="something">Two</li>
+        <li class="listItem" data-my-stuff='stuff'>Three</li>
+        <li id='special-item' class="something">Four</li>
+        <li class="listItem">Five</li>
+      </ul>
+    </div>
+    <script src="../node_modules/mocha/mocha.js"></script>
+    <script src="../node_modules/chai/chai.js"></script>
+    <script>
+      mocha.ui('bdd'); 
+      mocha.reporter('html');
+      var expect = chai.expect;
+    </script>
+    <script src="../tests/11-data.js"></script>
+    <script>
+      if (window.mochaPhantomJS) { 
+        mochaPhantomJS.run(); 
+      } else { 
+        mocha.run(); 
+      }
+    </script>
+  </body>
+</html>

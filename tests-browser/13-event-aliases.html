@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Testing event-aliases.js</title>
+    <link rel="stylesheet" href="../node_modules/mocha/mocha.css" />
+    <script src="../dist/chui.min.js"></script>
+  </head>
+  <body id='bodyTag'>
+    <div id="mocha"></div>
+    <div id="HTML-tests" style='display: none'></div>
+    <script src="../node_modules/mocha/mocha.js"></script>
+    <script src="../node_modules/chai/chai.js"></script>
+    <script>
+      mocha.ui('bdd'); 
+      mocha.reporter('html');
+      var expect = chai.expect;
+    </script>
+    <script src="../tests/13-event-aliases.js"></script>
+    <script>
+      if (window.mochaPhantomJS) { 
+        mochaPhantomJS.run(); 
+      } else { 
+        mocha.run(); 
+      }
+    </script>
+  </body>
+</html>

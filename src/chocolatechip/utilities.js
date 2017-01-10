@@ -222,16 +222,27 @@
 
       const replaceTag = (tag) => tagsToReplace[tag] || tag;
 
-      const safe_tags_replace = (str) => str.replace(/[&<>]/g, replaceTag);
+      const safe_tags_replace = (str) => str.replace(/[&<>\(\)]/g, replaceTag);
 
       str = safe_tags_replace(str);
       return JSON.parse(str);
     },
 
     /** 
-     * Concat arrays:
+     * Concat arguments into a string:
      */
-    concat: args => (args instanceof Array) ? args.join('') : [].slice.apply(arguments).join(''),
+    concat: (...args) => {
+      if (Array.isArray(args)) {
+        if (Array.isArray(args[0])) {
+          return args[0].join('');
+        } else {
+          return args.join('');
+        }
+      } else {
+        return Array.prototype.slice(args).join('');
+      }
+      Array.isArray(args) ? args[0].split('') : Array.prototype.slice(args).join('')
+    },
 
     /**
      * Mixin one object into another:
@@ -246,7 +257,9 @@
       return targetObj;
     },
 
-
+    /**
+     * Compare one value with another, one object with another, one array with another, etc.
+     */
     compare: (value1, value2) => {
 
       function compareNativeSubtypes(value1, value2) {
@@ -313,37 +326,34 @@
     },
 
     /** 
-     * Chunk an array into pieces based on itemsPerPage.
+     * Chunk an array into pieces based on itemsPerChunk.
      * You can use this to paginate an array of data.
      */
-    paginate: (data, itemsPerPage) => {
+    paginate: (data, itemsPerChunk) => {
       let ret = [];
-      let pages = Math.floor(data.length / itemsPerPage);
+      let pages = Math.floor(data.length / itemsPerChunk);
       if (data.length % pages) pages++;
       let temp = 0;
       for (let i = 0; i < pages; i++) {
         if (temp === data.length) break;
-        const thing = data.slice(temp, itemsPerPage + temp);
+        const thing = data.slice(temp, itemsPerChunk + temp);
         ret.push(thing);
-        temp += itemsPerPage;
+        temp += itemsPerChunk;
       }
       return ret;
     },
 
     /**
-     * Recursively flatten an array.
+     * Recursively flatten an array with nested arrays.
      */
-    flatten: (array) => {
-      if (!array || !array.length) return;
-      const ret = [];
-      let len = array.length;
-      let x;
-      for (let i = 0; i < len; i++) {
-        x = array[i];
-        if (Array.isArray(x)) flatten(x, ret);
-        else ret.push(x);
+    flatten: array => {
+      const flat = Array.prototype.concat(array);
+      for (let i = 0; i < flat.length; i++) {  
+        if (Array.isArray(flat[i])) {
+          flat.splice(i, 1, ...flat[i--]);  
+        }
       }
-      return ret;
+      return flat;
     },
 
     /**
@@ -428,7 +438,9 @@
       let memo;
       return function() {
         if (--times > 0) {
-          memo = func.apply(this, arguments);
+          if ($.type(func) === 'function') {
+            memo = func.apply(this, arguments);
+          }
         }
         if (times <= 1) func = null;
         return memo;
@@ -444,7 +456,9 @@
       let memo;
       return function() {
         if (--times > 0) {
-          memo = func.apply(this, arguments);
+          if ($.type(func) === 'function') {
+            memo = func.apply(this, arguments);
+          }
         }
         if (times <= 1) func = null;
         return memo;
@@ -453,10 +467,10 @@
 
     /**
      * Execute a function only after x times.
-     * This takes two arguments: the times to wait before execution and the callback to execute.
+     * This takes two arguments: the times or attempts before execution and a callback to execute.
      */
 
-     after: (times, func) => {
+    after: (times, func) => {
       return function() {
         if (--times < 1) {
           return func.apply(this, arguments);

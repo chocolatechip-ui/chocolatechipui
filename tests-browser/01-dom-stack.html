@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Testing domstack.js</title>
+    <link rel="stylesheet" href="../node_modules/mocha/mocha.css" />
+    <script src="../dist/chui.js"></script>
+  </head>
+  <body>
+    <!-- This div needs to load before the Mocha tests so that these are the first elements in the DOM. Needed for checking the results of DOMStack. -->
+    <div id="HTML-tests" style='display: none'>
+      <h5>The Title</h5>
+      <div id="someStuff">Stuff</div>
+      <div class="whatever">This is whatever</div>
+      <input type="text" hidden id='hidden-input' value='hidden input'>
+      <ul>
+        <li class="listItem">One</li>
+        <li class="listItem">Two</li>
+        <li class="listItem">Three</li>
+      </ul>
+      <p class='blah'>p 1</p>
+      <p class='filterTest'>p 2</p>
+      <p class='mapTest'>p 3</p>
+    </div>
+    <div id="mocha"></div>
+    <script src="../node_modules/chai/chai.js"></script>
+    <script src="../node_modules/mocha/mocha.js"></script>
+    <script>
+      mocha.ui('bdd'); 
+      mocha.reporter('html');
+      var expect = chai.expect;
+    </script>
+    <script src="../tests/01-dom-stack.js"></script>
+    <script>
+      if (window.mochaPhantomJS) { 
+        mochaPhantomJS.run(); 
+      } else { 
+        mocha.run(); 
+      }
+    </script>
+  </body>
+</html>

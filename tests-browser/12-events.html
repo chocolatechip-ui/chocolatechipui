@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Testing events.js</title>
+    <link rel="stylesheet" href="../node_modules/mocha/mocha.css" />
+    <script src="../dist/chui.min.js"></script>
+  </head>
+  <body id='bodyTag'>
+    <div id="mocha"></div>
+    <div id="HTML-tests" style='display: none'>
+      <h5>The Title</h5>
+      <div id="someStuff">Stuff</div>
+      <div class="whatever">This is whatever</div>
+      <input type="text" hidden id='hidden-input' value='hidden input'>
+      <button id="testBtn1">Test Button 1</button>
+      <button id="testBtn2">Test Button 2</button>
+      <button id="testBtn3">Test Button 3</button>
+      <button id="testBtn4">Test Button 4</button>
+      <button id="testBtn5">Test Button 4</button>
+      <button id="testBtn6">Test Button 4</button>
+      <button id="testBtn7">Test Button 4</button>
+      <button id="testBtn8">Test Button 4</button>
+      <ul id='myList' role='list'>
+        <li class="listItem">One</li>
+        <li class="something">Two</li>
+        <li class="listItem" data-my-stuff='stuff'>Three</li>
+        <li id='special-item' class="something">Four</li>
+        <li class="listItem">Five</li>
+      </ul>
+    </div>
+    <script src="../node_modules/mocha/mocha.js"></script>
+    <script src="../node_modules/chai/chai.js"></script>
+    <script>
+      mocha.ui('bdd'); 
+      mocha.reporter('html');
+      var expect = chai.expect;
+    </script>
+    <script src="../tests/12-events.js"></script>
+    <script>
+      if (window.mochaPhantomJS) { 
+        mochaPhantomJS.run(); 
+      } else { 
+        mocha.run(); 
+      }
+    </script>
+  </body>
+</html>

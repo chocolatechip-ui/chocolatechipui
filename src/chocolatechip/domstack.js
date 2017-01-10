@@ -19,6 +19,7 @@ class DOMStack {
       if (args === document) {
         this.array[0] = document;
         this[0] = document;
+        this.length = 1;
       } else {
         const array = Array.prototype.slice.apply(arguments);
         array.forEach(function(ctx, idx) {
@@ -36,6 +37,7 @@ class DOMStack {
       temp = this.array[this.array.length + index];
       ret.push(temp);
     } else {
+      if (index >= this.array.length) return new DOMStack();
       temp = this.array[index];
       ret.push(temp);
     }
@@ -45,25 +47,35 @@ class DOMStack {
   }
 
   push(data) {
-    this.array.push(data);
+    if (data && data.objectType === 'domstack') {
+      this.array = this.array.concat(data.array)
+    } else {
+      this.array.push(data);
+    }
     this.length = this.array.length;
     this[0] = this.array[0];
   }
 
   pop() {
     this.length = this.array.length - 1;
-    return this.array.pop();
+    let ret = this.array.pop();
+    return $(ret);
   }
 
   unshift(data) {
-    this.array.unshift(data);
+    if (data && data.objectType === 'domstack') {
+      this.array.unshift(data.array[0]);
+    } else {
+      this.array.unshift(data);
+    }
     this[0] = this.array[0];
     this.length = this.array.length;
   }
 
   shift() {
     this.length = this.array.length - 1;
-    return this.array.shift();
+    let ret = this.array.shift();
+    return $(ret);
   }
 
   size() {
@@ -97,14 +109,15 @@ class DOMStack {
   slice(...args) {
     let ret = new DOMStack();
     ret.concat(this.array.slice.apply(this.array, args));
-    ret.length = ret.array.length;
-    return ret;
+    return $(ret);
   }
 
   splice(...args) {
-    this.array.splice.apply(this.array, args);
+    var ret = new DOMStack();
+    ret.concat(this.array.splice.apply(this.array, args));
     this[0] = this.array[0];
-    return this;
+    this.length = this.array.length;
+    return $(ret);
   }
 
   filter(...args) {
@@ -120,6 +133,21 @@ class DOMStack {
     ret.concat(this.array.map.apply(this.array, args));
     ret[0] = ret.array[0];
     return ret;
+  }
+
+  indexOf(node) {
+    // return this.array.indexOf.apply(this.array, args);
+    if (!node) return -1;
+    if (node.nodeType && node.nodeType === 1) {
+      return this.array.indexOf(node);
+    } else if (node && node.objectType === 'domstack') {
+      return this.array.indexOf(node[0]);
+    } else if (node && Array.isArray(node)) {
+      return this.array.indexOf(node[0]);
+    } else if (node && $.type(node) === 'string') {
+      const el = this[0].parentNode.querySelector(node);
+      return this.array.indexOf(el);
+    }
   }
 
   concat(collection) {
@@ -144,10 +172,6 @@ class DOMStack {
   reverse(...args) {
     this.array.reverse.apply(this.array, args);
     this[0] = this.array[0];
-  }
-
-  indexOf(...args) {
-    return this.array.indexOf.apply(this.array, args);
   }
 
   every(...args) {

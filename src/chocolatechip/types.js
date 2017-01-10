@@ -23,7 +23,23 @@ $.extend({
         } else if (Object.prototype.toString.call(type) === '[object RegExp]') {
           return 'regexp';
         } else if (Object.prototype.toString.call(type) === '[object Object]') {
-          return 'object';
+            if (type.objectType && type.objectType === 'domstack') {
+              return 'domstack';
+              /* If Promise polyfill, then should support `then`. */
+            } else if (type.then) {
+              return 'promise';
+              /* Otherwise we got a normal object here. */
+            } else {
+              return 'object';
+            }
+        } else if (Object.prototype.toString.call(type) === '[object Number]') {
+          return 'number';
+        } else if (Object.prototype.toString.call(type) === '[object String]') {
+          return 'string';
+        } else if (Object.prototype.toString.call(type) === '[object Promise]') {
+          return 'promise';
+        } else if (Object.prototype.toString.call(type) === '[object Boolean]') {
+          return 'boolean';
         }
     }
   }
