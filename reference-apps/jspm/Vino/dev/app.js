@@ -21,11 +21,6 @@ $(function() {
   app.filteredWinesView.mount();
   app.wineryView.mount();
 
-  /**
-   * Mount imported router:
-   */
-  wineRoute.mount();
-
   app.specialRedsView.render(bestWines[0].data);
   app.specialWhitesView.render(bestWines[1].data);
 

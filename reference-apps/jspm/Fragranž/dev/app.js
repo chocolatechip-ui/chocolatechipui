@@ -38,11 +38,6 @@ $(() => {
   app.fragranceGenresView.render(['ladies','men','kids']);
 
   /**
-   * Mount imported routes:
-   */
-  fragranzRoutes.mount();
-
-  /**
    * Initialize imported controllers:
    */
   addToCart();

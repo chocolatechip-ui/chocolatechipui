@@ -24,11 +24,6 @@ $(() => {
 	shopsView.render();
 
   /**
-   * Mount imported route:
-   */
-  selectedCoffeeRoute.mount();
-
-  /**
    * Mount controllers:
    */
   getCoffeShops();
