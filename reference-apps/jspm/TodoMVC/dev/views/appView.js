@@ -14,12 +14,12 @@ export const appView = $.View({
           const todo = $('#add-todo').val();
           $('#add-todo')[0].value = '';
           if (todo) {
-            todosData.unshift({state: 'active', value: todo});
+            todosData.unshift({state: 'active', value: todo, id: $.uuid()});
             renderActiveTodos(todosData);
             todoView.render(todosData);
             toggleButtonState('#show-all');
           }
-          $.Box.set('chui-todos', todosData, function(err, value) {});
+          $.Box.set('chui-todos', todosData, (err, value) => {});
         }
       }
     },
@@ -33,13 +33,13 @@ export const appView = $.View({
         const todo = $('#add-todo').val();
         $('#add-todo')[0].value = '';
         if (todo) {
-          todosData.unshift({state: 'active', value: todo});
+          todosData.unshift({state: 'active', value: todo, id: $.uuid()});
           renderActiveTodos(todosData);
           todoView.render(todosData);
           toggleButtonState('#show-all');
         }
-        console.dir(todosData)
-        $.Box.set('chui-todos', todosData, function(err, value) {});
+        console.log(todosData);
+        $.Box.set('chui-todos', todosData, (err, value) => {});
       }
     },
     /**
@@ -55,7 +55,7 @@ export const appView = $.View({
         let state = parent.hasClass('active') ? 'active' : 'completed';
         todosData[index].state = state;
         renderActiveTodos(todosData);
-        $.Box.set('chui-todos', todosData, function(err, value) {});
+        $.Box.set('chui-todos', todosData, (err, value) => {});
       }
     },
     /**
@@ -65,14 +65,15 @@ export const appView = $.View({
       event: 'tap',
       element: '.delete-item',
       callback: function() {
-        const index = $(this).closest('li').index();
+        const id = this.dataset.id;
+        const index = todosData.findIndex((todo) => todo.id === id);
         /**
          * Remove item from list:
          */
         todosData.splice(index, 1);
         todoView.render(todosData);
         renderActiveTodos(todosData);
-        $.Box.set('chui-todos', todosData, function(err, value) {});
+        $.Box.set('chui-todos', todosData, (err, value) => {});
       }
     },
     /**
