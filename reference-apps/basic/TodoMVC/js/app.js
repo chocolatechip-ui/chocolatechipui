@@ -149,7 +149,6 @@ $(function() {
         event: 'tap',
         element: '.delete-item',
         callback: function() {
-        callback: function() {
           var id = this.dataset.id;
           var index = todosData.findIndex(function(todo) {
             return todo.id == id;
