@@ -8,7 +8,6 @@
   $.fn.extend({
     data(key, value) {
       if (!this.size()) return new DOMStack();
-      let val = undefined;
       let id = undefined;
       const ctx = this.array[0];
       if (!ctx.id) {
@@ -22,7 +21,6 @@
         return;
       }
       if (value || value === 0) {
-        val = value;
         let obj = {};
         obj[key] = value;
 

@@ -41,7 +41,8 @@
     // Define Numbers View:
     var NumbersView = $.View({
       element: '#numbers',
-      variable: 'number'
+      variable: 'number',
+      safeHTML: true
     });
 
     NumbersView.render(numberData);
@@ -64,7 +65,8 @@
      */
     var SumView = $.View({
       element: '#sum',
-      variable: 'sum'
+      variable: 'sum',
+      safeHTML: true
     });
 
     SumView.render(sumData);
@@ -86,7 +88,8 @@
 
     $.CurrencyView = $.View({
       element: '#currency',
-      variable: 'currency'
+      variable: 'currency',
+      safeHTML: true
     });
     $.CurrencyView.render(currencyData);
 
@@ -102,7 +105,8 @@
     // Date:
     var DateView = $.View({
       element: '#date',
-      variable: 'date'
+      variable: 'date',
+      safeHTML: true
     });
 
     DateView.render(dateData);
@@ -112,7 +116,8 @@
      */
     var TimeView = $.View({
       element: '#time',
-      variable: 'time'
+      variable: 'time',
+      safeHTML: true
     });
     var timeData = [
       {description: 'date.toLocaleTimeString()', date: date.toLocaleTimeString()},

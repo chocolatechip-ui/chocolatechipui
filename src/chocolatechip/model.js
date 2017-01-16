@@ -664,8 +664,7 @@
      */
     unique() {
       if ($.type(this[dataStore]) === 'array') {
-        let temp = this[dataStore].unique();
-        this[dataStore] = temp;
+        this[dataStore].unique();
         this.updateBoundViews();
       }
     }

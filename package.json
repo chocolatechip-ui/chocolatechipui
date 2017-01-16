@@ -2,7 +2,7 @@
   "name": "chocolatechipui",
   "title": "ChocolateChipJS",
   "description": "JavaScript library for mobile Web apps",
-  "version": "4.8.3",
+  "version": "4.8.4",
   "homepage": "http://chocolatechip-ui.github.io",
   "author": "Robert Biggs and contributors",
   "repository": {
@@ -41,8 +41,14 @@
       "phantomjs ./node_modules/mocha-phantomjs-core/mocha-phantomjs-core.js './tests-browser/14-gestures.html'",
     "dom-test": 
       "phantomjs ./node_modules/mocha-phantomjs-core/mocha-phantomjs-core.js './tests-browser/15-dom.html'",
+    "validators-test": 
+      "phantomjs ./node_modules/mocha-phantomjs-core/mocha-phantomjs-core.js './tests-browser/16-validators.html'",
+    "form-test": 
+      "phantomjs ./node_modules/mocha-phantomjs-core/mocha-phantomjs-core.js './tests-browser/17-form.html'",
+    "formatters-test": 
+      "phantomjs ./node_modules/mocha-phantomjs-core/mocha-phantomjs-core.js './tests-browser/18-formatters.html'",
 
-    "test": "npm run dom-stack-test && npm run query-test && npm run extend-test && npm run utilities-test && npm run strings-test && npm run types-test && npm run array-extras-test && npm run browsers-test && npm run serialize-test && npm run collection-utilities-test && npm run data-test && npm run events-test && npm run event-aliases-test && npm run gestures-test && npm run dom-test"
+    "test": "npm run dom-stack-test && npm run query-test && npm run extend-test && npm run utilities-test && npm run strings-test && npm run types-test && npm run array-extras-test && npm run browsers-test && npm run serialize-test && npm run collection-utilities-test && npm run data-test && npm run events-test && npm run event-aliases-test && npm run gestures-test && npm run dom-test && npm run validators-test && npm run form-test && npm run formatters-test"
   },
   "jspm": {
     "devDependencies": {

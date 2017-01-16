@@ -49,6 +49,7 @@ $.extend({
       data.forEach(item => {
         const value = item.value;
         if (value !== '') {
+          if (!item.name) return;
           let name = item.name;
           let nameParts = name.split(delimiter);
           let currResult = result;
@@ -103,64 +104,62 @@ $.extend({
      */
     options.forEach(item => {
       if (!$(item.element)[0]) return;
+      let inputs;
       if (!item.type) {
         convertToObject($(item.element).attr('name'), $(item.element).val());
         return;
       }
       switch (item.type) {
         case 'notempty':
-          __passed = validateElement(item.element, item.type);
-          __errors.push({
-            element: item.element,
-            type: item.type
-          });
-          return;
+          __passed = $(item.element).isNotEmpty();
+          validateElement(item);
+          break;
         case 'number':
           __passed = $(item.element).validateNumber();
           validateElement(item);
-          return;
+          break;
         case 'text':
           __passed = $(item.element).validateText();
           validateElement(item);
-          return;
+          break;
         case 'alphanumeric':
           __passed = $(item.element).validateAlphaNumeric();
           validateElement(item);
-          return;
+          break;
         case 'username':
           __passed = $(item.element).validateUserName(item.min);
           validateElement(item);
-          return;
+          break;
         case 'email':
           __passed = $(item.element).validateEmail();
           validateElement(item);
-          return;
+          break;
         case 'phone':
           __passed = $(item.element).validatePhoneNumber();
           validateElement(item);
-          return;
+          break;
         case 'url':
           __passed = $(item.element).validateUrl();
           validateElement(item);
-          return;
+          break;
         case 'age':
           __passed = $(item.element).validateAge(item.min);
           validateElement(item);
-          return;
+          break;
         case 'checkbox':
           __passed = $(item.element).validateCheckbox();
           if (__passed) {
             validateElement(item);
           }
-          return;
+          break;
         case 'radio':
           __passed = $(item.element).validateRadioButtons();
           validateElement(item);
-          return;
+          break;
         case 'selectbox':
           __passed = $(item.element).validateSelectBox();
           validateElement(item);
-          return;
+          break;
         case 'password':
           __passed = $.validatePassword(item.element, item.element2, item.min);
           __errors.push({
@@ -168,21 +167,31 @@ $.extend({
             element2: item.element2,
             type: item.type
           });
-          return;
+          if (__passed) {
+            validateElement(item);
+          }
+          break;
         case 'switch':
           __passed = $(item.element).validateSwitch();
           if (__passed) {
             validateElement(item);
           }
-          return;
+          break;
         case 'selectlist':
           __passed = $(item.element).validateSelectList();
           if (__passed) {
-            validateElement(item);
+            inputs = undefined;
+            inputs = $(item.element).find('input').forEach(function(item) {
+              if (item.checked) {
+                convertToObject(item.name, item.value)
+              }
+            })
+            
           }
+          break;
         case 'multiselectlist':
           __passed = $(item.element).validateMultiSelectList();
-          let inputs = undefined;
+          inputs = undefined;
           if (__passed) {
             inputs = $(item.element).find('input[type=checkbox]');
             inputs.forEach(item => {
@@ -191,6 +200,7 @@ $.extend({
               }
             });
           }
+          break;
       }
       if (item.type.match(/custom/)) { 
         const cv = $.customValidators.filter(validator => {

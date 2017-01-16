@@ -1,4 +1,7 @@
 # ChocolateChip-UI
+[![npm version](https://badge.fury.io/js/chocolatechipui.svg)](https://badge.fury.io/js/chocolatechipui)
+
+[![NPM](https://nodei.co/npm/chocolatechipui.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/chocolatechipui/)
 
 - Make mobile web apps
 - Get hard work done fast

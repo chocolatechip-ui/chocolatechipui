@@ -192,13 +192,6 @@
       return style;
     }
 
-    const style = document.createElement("div").style;
-    function supports(prop, value) {
-      style[prop] = "";
-      style[prop] = value;
-      return !!style[prop];
-    }
-
     function isPlainObject(obj) {
       return obj === Object(obj) && Object.prototype.toString === obj.toString;
     }
@@ -256,7 +249,6 @@
       let __template = options.template;
       let __data = options.data;
       let __model = options.model;
-      let __index = options.index || 1;
       let __rendered = false;
       let __variable = options.variable || 'data';
       let __events = options.events || [];
@@ -368,8 +360,6 @@
        * Return closure to encapsulate methods & data:
        */
       const view = {};
-      let data = undefined;
-
 
       const bindToModel = (model, view) => {
         if (model) {
@@ -411,27 +401,6 @@
           }
 
           /**
-           * Private functions for the render method.
-           * These need access to the returned instance.
-           */
-
-          /**
-           * Uncloaks, checks index and loops data:
-           */
-          const renderIterableData = data => {
-            const Data = data ? data : __data;
-            __element.removeClass('cloak');
-            if (__element.data('index')) {
-              __index = Number(__element.data('index'));
-              $.view.index = Number(__element.data('index'));
-            } else {
-              __index = 1;
-              $.view.index = 1;
-            }
-            interateModelToTemplate(Data);
-          };
-
-          /**
            * Check extracted template:
            */
           if (__template && $.type(__template) === 'string') {
@@ -457,7 +426,6 @@
               }
               __element.append(parsedTemplate(item)); // jshint ignore:line
               $.view.index += 1;
-              __index += 1;
             });
             __rendered = true;
             $.view.index = 0;
@@ -500,7 +468,6 @@
             console.error(errors.noElementForView)
             return;
           }
-          __index = 0;
           __element.data('index', 0);
           $.view.index = 0;
         },

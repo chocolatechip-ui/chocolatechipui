@@ -31,7 +31,7 @@
             touch.el.trigger('longtap');
             touch = {};
           }
-        } catch (err) {};
+        } catch (err) {}
       }
     }
 

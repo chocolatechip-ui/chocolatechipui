@@ -87,7 +87,7 @@
         if (context) {
           temp = slice($(context).find(selector));
           temp[0] = temp.array[0];
-          temp.length = temp.array / length;
+          temp.length = temp.array.length;
           return temp;
 
         } else {

@@ -75,10 +75,36 @@
         <li>
           <label for="text">Lord of the Rings: </label><input type="checkbox" name='user_favorite_movie[]' value='Lord of the Rings' id='fav6'>
         </li>
-        <li>
-          <button class='raised' id='validateForm'>Validate</button>
+      </ul>
+      <h2>Choose One</h2>
+      <ul id="selectList" class='list'>
+        <li data-select='nap'>
+          <h3>Take a nap</h3>
+        </li>
+        <li data-select='game'>
+          <h3>Play a game</h3>
+        </li>
+        <li data-select='snack'>
+          <h3>Eat a snack</h3>
         </li>
       </ul>
+      <h2>Choose a Fruit</h2>
+      <ul id="multiSelectList" class='list'>
+        <li data-select='apples'>
+          <h3>Apples</h3>
+        </li>
+        <li data-select='oranges'>
+          <h3>Oranges</h3>
+        </li>
+        <li data-select='bananas'>
+          <h3>Bananas</h3>
+        </li>
+      </ul>
+        <br>
+        <p>
+          <button class='action centered' id='validateForm'>Validate</button>
+        </p>
+        <br>
 
       <h2>Results</h2>
       <ul class="list">
@@ -88,6 +114,18 @@
   </screen>
   <script>
     $(function() {
+
+      var mySelectList = $.SelectList({
+        element: '#selectList',
+        selected: 0,
+        name: 'user_choice_todo'
+      });
+
+      var multiSelectList = $.MultiSelectList({
+        element: '#multiSelectList',
+        selected: [0,2],
+        name: 'user_choice_fruits[]'
+      })
 
       var ResultsView = $.View({
         element: '#results',
@@ -138,6 +176,14 @@
           {
             element: '#fav6',
             type: 'checkbox'
+          },
+          {
+            element: '#selectList',
+            type: 'selectlist'
+          },
+          {
+            element: '#multiSelectList',
+            type: 'multiselectlist'
           }
         ]);
         if(!$.myForm.errors()) {

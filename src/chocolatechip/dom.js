@@ -129,7 +129,6 @@
       if (!this.array.length) return new DOMStack();
       let ret = new DOMStack();
       const self = this;
-      const children = this.children();
 
       const __has = (node, arg) => {
         if (typeof arg === 'string') {
@@ -358,7 +357,6 @@
       if (typeof selector === 'undefined') {
         return new DOMStack();
       }
-      let position = null;
       let p = undefined;
       if (this[0]) {
         p = this[0].parentNode;
@@ -582,11 +580,9 @@
     wrap(string) {
       if (!this.array.length || !string) return new DOMStack();
       let tempNode = undefined;
-      let empNode = undefined;
       let whichClone = undefined;
       this.forEach(ctx => {
         tempNode = $.html(string);
-        empNode = tempNode.array[0];
         whichClone = $(ctx).clone(true);
         tempNode.append(whichClone);
         $(ctx).before(tempNode);

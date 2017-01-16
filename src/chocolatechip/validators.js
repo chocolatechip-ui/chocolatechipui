@@ -31,9 +31,10 @@ const checkValidity = (element, expression) => {
 };
 
 $.fn.extend({
-  isNotEmpty: function(ctx) {
+  isNotEmpty: function() {
     if (this[0].nodeName !== 'INPUT') return;
-    return checkValidity(this, this[0].nodeName === 'INPUT' && this[0].value);
+    const value = this[0].nodeName === 'INPUT' && this[0].value;
+    return checkValidity(this, value);
   },
 
   validateAlphabetic: function() {
@@ -264,7 +265,7 @@ $.fn.extend({
     if (this[0].nodeName === 'SELECT') {
       return checkValidity(this, this[0].selectedIndex);
     } else {
-      return;
+      return false;
     }
   },
 
@@ -279,7 +280,7 @@ $.fn.extend({
 
   validateSelectList: function() {
     const radio = this.find('input[type=radio]');
-    if (radio.iz('[checked]')[0]) {
+    if (radio.is('[checked]')) {
       return true;
     } else {
       return false;
@@ -303,21 +304,29 @@ $.fn.extend({
 
 $.extend({
   validatePassword: function(input1, input2, minimum) {
-    if (minimum && $(input1).val().length < minimum || $(input2).val().length < minimum) {
-      $(input1).addClass('invalid').removeClass('valid');
-      $(input2).addClass('invalid').removeClass('valid');
+    const psswd1 = $(input1)[0];
+    const psswd2 = $(input2)[0];
+    if (minimum && psswd1.value < minimum || psswd2.value < minimum) {
+      psswd1.classList.add('invalid');
+      psswd1.classList.remove('valid');
+      psswd2.classList.add('invalid');
+      psswd2.classList.remove('valid');
       return false;
     } else {
       const letters = /^(?=.*[a-zA-Z])(?=.*[0-9]).+$/;
-      if (!letters.test($(input1).val()) && !letters.test($(input2).val())) return false;
-      if ($(input1).val() === $(input2).val()) {
-        $(input1).removeClass('invalid').addClass('valid');
-        $(input2).removeClass('invalid').addClass('valid');
+      if (!letters.test(psswd1.value) && !letters.test(psswd2.value)) return false;
+      if (psswd1.value === psswd2.value) {
+        psswd1.classList.remove('invalid');
+        psswd1.classList.add('valid');
+        psswd2.classList.remove('invalid');
+        psswd2.classList.add('valid');
       } else {
-        $(input1).addClass('invalid').removeClass('valid');
-        $(input2).addClass('invalid').removeClass('valid');
+        psswd1.classList.add('invalid');
+        psswd1.classList.remove('valid');
+        psswd2.classList.add('invalid');
+        psswd2.classList.remove('valid');
       }
-      return $(input1).val() === $(input2).val();
+      return psswd1.value === psswd2.value;
     }
   },
 

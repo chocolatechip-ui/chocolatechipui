@@ -43,10 +43,13 @@ $.extend({
     const __switch = `<em></em><input type="checkbox" name="${ settings.name }" ${ checkState } value="${ settings.value }">`;
 
     __element.append(__switch);
+    __element.prop('value', settings.value);
+    __element.attr('name', settings.name)
 
     if (__checked) {
       __element.addClass('checked');
       __element.attr('role', 'checkbox');
+      __element.prop('checked', true);
     }
 
     __element.on('tap', function() {
@@ -57,6 +60,7 @@ $.extend({
         checkbox.removeAttribute('checked');
         __selection.checked = false;
         __checked = false;
+        __element.prop('checked', false);
         if (options.offCallback) {
           settings.offCallback.call(this);
         } else {
@@ -65,6 +69,7 @@ $.extend({
       } else {
         this.classList.add('checked');
         checkbox.setAttribute('checked', 'checked');
+        __element.prop('checked', true);
         this.setAttribute('aria-checked', true);
         __selection.checked = true;
         __checked = true;
@@ -81,6 +86,7 @@ $.extend({
       if (this.classList.contains('checked')) {
         this.classList.remove('checked');
         this.setAttribute('aria-checked', false);
+        __element.prop('checked', false);
         checkbox.removeAttribute('checked');
         __selection.checked = true;
         __checked = true;
@@ -97,6 +103,7 @@ $.extend({
         this.classList.add('checked');
         checkbox.setAttribute('checked', 'checked');
         this.setAttribute('aria-checked', true);
+        __element.prop('checked', true);
         __selection.checked = false;
         __checked = false;
         if (options.offCallback) {

@@ -151,18 +151,13 @@ class DOMStack {
   }
 
   concat(collection) {
-    let i = -1;
-    let len = undefined;
     let temp = undefined;
     if (Array.isArray(collection)) {
       temp = collection;
-      len = temp.length;
     } else if (collection && collection.objectType && collection.objectType === 'domstack') {
       temp = collection.getData();
-      len = temp.length;
     } else if (collection.constructor.toString().match(/HTMLBodyElementConstructor/)) {
       temp = [collection];
-      len = 1;
     }
     this.array.push.apply(this.array, temp);
     this[0] = this.array[0];

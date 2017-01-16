@@ -228,18 +228,13 @@ var DOMStack = function() {
   }, {
     key: 'concat',
     value: function concat(collection) {
-      var i = -1;
-      var len = undefined;
       var temp = undefined;
       if (Array.isArray(collection)) {
         temp = collection;
-        len = temp.length;
       } else if (collection && collection.objectType && collection.objectType === 'domstack') {
         temp = collection.getData();
-        len = temp.length;
       } else if (collection.constructor.toString().match(/HTMLBodyElementConstructor/)) {
         temp = [collection];
-        len = 1;
       }
       this.array.push.apply(this.array, temp);
       this[0] = this.array[0];
@@ -393,7 +388,7 @@ var DOMStack = function() {
         if (context) {
           temp = slice($(context).find(selector));
           temp[0] = temp.array[0];
-          temp.length = temp.array / length;
+          temp.length = temp.array.length;
           return temp;
         } else {
           temp = slice(document.querySelectorAll(selector));
@@ -532,7 +527,7 @@ var DOMStack = function() {
    */
   $.extend({
     lib: "ChocolateChipJS",
-    version: '4.8.0',
+    version: '4.8.4',
     noop: function noop() {},
     uuid: function uuid() {
       var d = Date.now();
@@ -757,7 +752,6 @@ var DOMStack = function() {
       } else {
         return Array.prototype.slice(args).join('');
       }
-      Array.isArray(args) ? args[0].split('') : Array.prototype.slice(args).join('');
     },
     /**
      * Mixin one object into another:
@@ -1175,7 +1169,6 @@ var DOMStack = function() {
       if (!this.array.length) return new DOMStack();
       var ret = new DOMStack();
       var self = this;
-      var children = this.children();
       var __has = function __has(node, arg) {
         if (typeof arg === 'string') {
           if (node.querySelector(arg)) {
@@ -1186,8 +1179,8 @@ var DOMStack = function() {
             return true;
           }
         } else if (arg && arg.objectType === 'domstack') {
-          var _children = _this3.children();
-          if (_children.array.indexOf(arg[0]) != -1) {
+          var children = _this3.children();
+          if (children.array.indexOf(arg[0]) != -1) {
             return true;
           }
         }
@@ -1389,7 +1382,6 @@ var DOMStack = function() {
       if (typeof selector === 'undefined') {
         return new DOMStack();
       }
-      var position = null;
       var p = undefined;
       if (this[0]) {
         p = this[0].parentNode;
@@ -1600,11 +1592,9 @@ var DOMStack = function() {
     wrap: function wrap(string) {
       if (!this.array.length || !string) return new DOMStack();
       var tempNode = undefined;
-      var empNode = undefined;
       var whichClone = undefined;
       this.forEach(function(ctx) {
         tempNode = $.html(string);
-        empNode = tempNode.array[0];
         whichClone = $(ctx).clone(true);
         tempNode.append(whichClone);
         $(ctx).before(tempNode);
@@ -2208,7 +2198,7 @@ $(function() {
           touch.el.trigger('longtap');
           touch = {};
         }
-      } catch (err) {};
+      } catch (err) {}
     }
   }
 
@@ -2364,7 +2354,6 @@ var CCDataCache = {
 $.fn.extend({
   data: function data(key, value) {
     if (!this.size()) return new DOMStack();
-    var val = undefined;
     var id = undefined;
     var ctx = this.array[0];
     if (!ctx.id) {
@@ -2378,7 +2367,6 @@ $.fn.extend({
       return;
     }
     if (value || value === 0) {
-      val = value;
       var obj = {};
       obj[key] = value;
       CCDataCache.elements[id][key] = value;
@@ -2615,9 +2603,10 @@ var checkValidity = function checkValidity(element, expression) {
   return expression;
 };
 $.fn.extend({
-  isNotEmpty: function isNotEmpty(ctx) {
+  isNotEmpty: function isNotEmpty() {
     if (this[0].nodeName !== 'INPUT') return;
-    return checkValidity(this, this[0].nodeName === 'INPUT' && this[0].value);
+    var value = this[0].nodeName === 'INPUT' && this[0].value;
+    return checkValidity(this, value);
   },
   validateAlphabetic: function validateAlphabetic() {
     if (this[0].nodeName !== 'INPUT') return;
@@ -2834,7 +2823,7 @@ $.fn.extend({
     if (this[0].nodeName === 'SELECT') {
       return checkValidity(this, this[0].selectedIndex);
     } else {
-      return;
+      return false;
     }
   },
   validateSwitch: function validateSwitch() {
@@ -2847,7 +2836,7 @@ $.fn.extend({
   },
   validateSelectList: function validateSelectList() {
     var radio = this.find('input[type=radio]');
-    if (radio.iz('[checked]')[0]) {
+    if (radio.is('[checked]')) {
       return true;
     } else {
       return false;
@@ -2870,21 +2859,29 @@ $.fn.extend({
 });
 $.extend({
   validatePassword: function validatePassword(input1, input2, minimum) {
-    if (minimum && $(input1).val().length < minimum || $(input2).val().length < minimum) {
-      $(input1).addClass('invalid').removeClass('valid');
-      $(input2).addClass('invalid').removeClass('valid');
+    var psswd1 = $(input1)[0];
+    var psswd2 = $(input2)[0];
+    if (minimum && psswd1.value < minimum || psswd2.value < minimum) {
+      psswd1.classList.add('invalid');
+      psswd1.classList.remove('valid');
+      psswd2.classList.add('invalid');
+      psswd2.classList.remove('valid');
       return false;
     } else {
       var letters = /^(?=.*[a-zA-Z])(?=.*[0-9]).+$/;
-      if (!letters.test($(input1).val()) && !letters.test($(input2).val())) return false;
-      if ($(input1).val() === $(input2).val()) {
-        $(input1).removeClass('invalid').addClass('valid');
-        $(input2).removeClass('invalid').addClass('valid');
+      if (!letters.test(psswd1.value) && !letters.test(psswd2.value)) return false;
+      if (psswd1.value === psswd2.value) {
+        psswd1.classList.remove('invalid');
+        psswd1.classList.add('valid');
+        psswd2.classList.remove('invalid');
+        psswd2.classList.add('valid');
       } else {
-        $(input1).addClass('invalid').removeClass('valid');
-        $(input2).addClass('invalid').removeClass('valid');
+        psswd1.classList.add('invalid');
+        psswd1.classList.remove('valid');
+        psswd2.classList.add('invalid');
+        psswd2.classList.remove('valid');
       }
-      return $(input1).val() === $(input2).val();
+      return psswd1.value === psswd2.value;
     }
   },
   validateWithRegex: function validateWithRegex(input, regex) {
@@ -2990,6 +2987,7 @@ $.extend({
       data.forEach(function(item) {
         var value = item.value;
         if (value !== '') {
+          if (!item.name) return;
           var name = item.name;
           var nameParts = name.split(delimiter);
           var currResult = result;
@@ -3042,64 +3040,62 @@ $.extend({
      */
     options.forEach(function(item) {
       if (!$(item.element)[0]) return;
+      var inputs = void 0;
       if (!item.type) {
         convertToObject($(item.element).attr('name'), $(item.element).val());
         return;
       }
       switch (item.type) {
         case 'notempty':
-          __passed = validateElement(item.element, item.type);
-          __errors.push({
-            element: item.element,
-            type: item.type
-          });
-          return;
+          __passed = $(item.element).isNotEmpty();
+          validateElement(item);
+          break;
         case 'number':
           __passed = $(item.element).validateNumber();
           validateElement(item);
-          return;
+          break;
         case 'text':
           __passed = $(item.element).validateText();
           validateElement(item);
-          return;
+          break;
         case 'alphanumeric':
           __passed = $(item.element).validateAlphaNumeric();
           validateElement(item);
-          return;
+          break;
         case 'username':
           __passed = $(item.element).validateUserName(item.min);
           validateElement(item);
-          return;
+          break;
         case 'email':
           __passed = $(item.element).validateEmail();
           validateElement(item);
-          return;
+          break;
         case 'phone':
           __passed = $(item.element).validatePhoneNumber();
           validateElement(item);
-          return;
+          break;
         case 'url':
           __passed = $(item.element).validateUrl();
           validateElement(item);
-          return;
+          break;
         case 'age':
           __passed = $(item.element).validateAge(item.min);
           validateElement(item);
-          return;
+          break;
         case 'checkbox':
           __passed = $(item.element).validateCheckbox();
           if (__passed) {
             validateElement(item);
           }
-          return;
+          break;
         case 'radio':
           __passed = $(item.element).validateRadioButtons();
           validateElement(item);
-          return;
+          break;
         case 'selectbox':
           __passed = $(item.element).validateSelectBox();
           validateElement(item);
-          return;
+          break;
         case 'password':
           __passed = $.validatePassword(item.element, item.element2, item.min);
           __errors.push({
@@ -3107,21 +3103,30 @@ $.extend({
             element2: item.element2,
             type: item.type
           });
-          return;
+          if (__passed) {
+            validateElement(item);
+          }
+          break;
         case 'switch':
           __passed = $(item.element).validateSwitch();
           if (__passed) {
             validateElement(item);
           }
-          return;
+          break;
         case 'selectlist':
           __passed = $(item.element).validateSelectList();
           if (__passed) {
-            validateElement(item);
+            inputs = undefined;
+            inputs = $(item.element).find('input').forEach(function(item) {
+              if (item.checked) {
+                convertToObject(item.name, item.value);
+              }
+            });
           }
+          break;
         case 'multiselectlist':
           __passed = $(item.element).validateMultiSelectList();
-          var inputs = undefined;
+          inputs = undefined;
           if (__passed) {
             inputs = $(item.element).find('input[type=checkbox]');
             inputs.forEach(function(item) {
@@ -3130,6 +3135,7 @@ $.extend({
               }
             });
           }
+          break;
       }
       if (item.type.match(/custom/)) {
         var cv = $.customValidators.filter(function(validator) {
@@ -3443,13 +3449,6 @@ $.extend({
       }
       return style;
     }
-    var style = document.createElement("div").style;
-
-    function supports(prop, value) {
-      style[prop] = "";
-      style[prop] = value;
-      return !!style[prop];
-    }
 
     function isPlainObject(obj) {
       return obj === Object(obj) && Object.prototype.toString === obj.toString;
@@ -3500,7 +3499,6 @@ $.extend({
       var __template = options.template;
       var __data = options.data;
       var __model = options.model;
-      var __index = options.index || 1;
       var __rendered = false;
       var __variable = options.variable || 'data';
       var __events = options.events || [];
@@ -3596,7 +3594,6 @@ $.extend({
        * Return closure to encapsulate methods & data:
        */
       var view = {};
-      var data = undefined;
       var bindToModel = function bindToModel(model, view) {
         if (model) {
           model.boundViews.push(view);
@@ -3633,25 +3630,6 @@ $.extend({
             data = __model.get();
           }
           /**
-           * Private functions for the render method.
-           * These need access to the returned instance.
-           */
-          /**
-           * Uncloaks, checks index and loops data:
-           */
-          var renderIterableData = function renderIterableData(data) {
-            var Data = data ? data : __data;
-            __element.removeClass('cloak');
-            if (__element.data('index')) {
-              __index = Number(__element.data('index'));
-              $.view.index = Number(__element.data('index'));
-            } else {
-              __index = 1;
-              $.view.index = 1;
-            }
-            interateModelToTemplate(Data);
-          };
-          /**
            * Check extracted template:
            */
           if (__template && $.type(__template) === 'string') {
@@ -3676,7 +3654,6 @@ $.extend({
               }
               __element.append(parsedTemplate(item)); // jshint ignore:line
               $.view.index += 1;
-              __index += 1;
             });
             __rendered = true;
             $.view.index = 0;
@@ -3716,7 +3693,6 @@ $.extend({
             console.error(errors.noElementForView);
             return;
           }
-          __index = 0;
           __element.data('index', 0);
           $.view.index = 0;
         },
@@ -5427,8 +5403,7 @@ if (!Array.prototype.unique) {
       key: 'unique',
       value: function unique() {
           if ($.type(this[dataStore]) === 'array') {
-            var temp = this[dataStore].unique();
-            this[dataStore] = temp;
+            this[dataStore].unique();
             this.updateBoundViews();
           }
         }
@@ -7261,9 +7236,12 @@ $.extend({
     var checkState = settings.checked ? ' checked' : '';
     var __switch = '<em></em><input type="checkbox" name="' + settings.name + '" ' + checkState + ' value="' + settings.value + '">';
     __element.append(__switch);
+    __element.prop('value', settings.value);
+    __element.attr('name', settings.name);
     if (__checked) {
       __element.addClass('checked');
       __element.attr('role', 'checkbox');
+      __element.prop('checked', true);
     }
     __element.on('tap', function() {
       var checkbox = this.querySelector('input');
@@ -7273,6 +7251,7 @@ $.extend({
         checkbox.removeAttribute('checked');
         __selection.checked = false;
         __checked = false;
+        __element.prop('checked', false);
         if (options.offCallback) {
           settings.offCallback.call(this);
         } else {
@@ -7281,6 +7260,7 @@ $.extend({
       } else {
         this.classList.add('checked');
         checkbox.setAttribute('checked', 'checked');
+        __element.prop('checked', true);
         this.setAttribute('aria-checked', true);
         __selection.checked = true;
         __checked = true;
@@ -7296,6 +7276,7 @@ $.extend({
       if (this.classList.contains('checked')) {
         this.classList.remove('checked');
         this.setAttribute('aria-checked', false);
+        __element.prop('checked', false);
         checkbox.removeAttribute('checked');
         __selection.checked = true;
         __checked = true;
@@ -7312,6 +7293,7 @@ $.extend({
         this.classList.add('checked');
         checkbox.setAttribute('checked', 'checked');
         this.setAttribute('aria-checked', true);
+        __element.prop('checked', true);
         __selection.checked = false;
         __checked = false;
         if (options.offCallback) {

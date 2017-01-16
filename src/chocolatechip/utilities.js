@@ -241,7 +241,6 @@
       } else {
         return Array.prototype.slice(args).join('');
       }
-      Array.isArray(args) ? args[0].split('') : Array.prototype.slice(args).join('')
     },
 
     /**
