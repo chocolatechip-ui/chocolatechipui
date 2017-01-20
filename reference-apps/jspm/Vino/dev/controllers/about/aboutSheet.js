@@ -1,3 +1,4 @@
+import '../../src/sheets';
 export function aboutSheet() {
   /**
    * Setup up About info sheet:

@@ -19,6 +19,7 @@ var replace = require('replace-in-file');
 var replaceWith = require('gulp-replace');
 var cssnano = require('gulp-cssnano');
 var sourcemaps = require('gulp-sourcemaps');
+var wrap = require('gulp-wrapper');
 
 //Add Trailing slash to projectPath if not exists.
 if (pkg.projectPath !== "")
@@ -103,7 +104,71 @@ var cssFiles = [
   'stepper',
   'switches',
   'tabbar'
-]
+];
+
+var minimalChuiFiles = [
+  'domstack',
+  'chui-open',
+  'dom-query',
+  'extend',
+  'utilities',
+  'dom',
+  'events',
+  'chui-close',
+  'event-aliases',
+  'gestures',
+  'data',
+  'types',
+  'strings',
+  'collection-utilities',
+  'array-extras',
+  'view',
+  'component',
+  'model',
+  'browsers'
+].map(function (file) {
+  return ['./src/chocolatechip/', file, '.js'].join('')
+});
+
+var minimalWidgets = [
+  'setup',
+  'block',
+  'buttons',
+  'navbar',
+  'navigation',
+  'router',
+  'screens'
+].map(function (file) {
+  return './src/widgets/' + file + '.js'
+});
+
+var customWidgetImports = [
+  'editable',
+  'multi-select-list',
+  'paging',
+  'popover',
+  'popup',
+  'range',
+  'segmented',
+  'select-list',
+  'sheets',
+  'slideout',
+  'stepper',
+  'switches',
+  'tabbar',
+  'color-contrast'
+].map(function (file) {
+  return './src/widgets/' + file + '.js'
+});
+
+var customChuiImports = [
+  'validators',
+  'serialize',
+  'formatters',
+  'promises'
+].map(function (file) {
+  return ['./src/chocolatechip/', file, '.js'].join('')
+});
 
 gulp.task('chocolatechip', function() {
   gulp.src(chocolateChipFiles)
@@ -122,7 +187,7 @@ gulp.task('chocolatechip', function() {
 });
 
 gulp.task('concatWidgets', function() {
-  gulp.src('./src/box.js')
+  gulp.src('./src/chocolatechip/box.js')
     .pipe(gulp.dest('./dist'))
   gulp.src(chuiWidgets)
     .pipe(concat('chui.js'))
@@ -134,7 +199,7 @@ gulp.task('concatWidgets', function() {
     .pipe(uglify())
     .pipe(rename('chui.min.js'))
     .pipe(gulp.dest('./dist'))
-})
+});
 
 gulp.task('chui', function() {
   gulp.src(chocolateChipFiles.concat(chuiWidgets))
@@ -150,10 +215,10 @@ gulp.task('chui', function() {
     .pipe(rename('chui.min.js'))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('./dist'));
-})
+});
 
 gulp.task('chui-box', function() {
-  chuiWidgets.push('./src/box.js');
+  chuiWidgets.push('./src/chocolatechip/box.js');
   gulp.src(chocolateChipFiles.concat(chuiWidgets))
     .pipe(concat('chui-box.js'))
     .pipe(sourcemaps.init())
@@ -167,7 +232,7 @@ gulp.task('chui-box', function() {
     .pipe(rename('chui-box.min.js'))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('./dist'));
-})
+});
 
 gulp.task('minify-android-css', function() {
   var css = cssFiles.map(function(file) {
@@ -180,6 +245,7 @@ gulp.task('minify-android-css', function() {
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('dist/css'));
 });
+
 gulp.task('minify-ios-css', function() {  
   var css = [];
    cssFiles.forEach(function(file) {
@@ -193,9 +259,81 @@ gulp.task('minify-ios-css', function() {
     .pipe(gulp.dest('dist/css'));
 });
 
-gulp.task('minify-css', ['minify-android-css','minify-ios-css'])
+gulp.task('minimal-chui', function() {
+  var files = minimalChuiFiles.concat(minimalWidgets);
+  return gulp.src(files)
+    .pipe(concat('chui.js'))
+    .pipe(sourcemaps.init())
+    .pipe(babel({
+      presets: ['es2015']
+    }))
+    .pipe(replaceWith('VERSION_NUMBER', pkg.version))
+    .pipe(beautify({indentSize: 2}))
+    .pipe(gulp.dest('./cli-resources/jspm/dist'))
+    .pipe(uglify())
+    .pipe(rename('chui.min.js'))
+    .pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest('./cli-resources/jspm/dist'));
+});
+
+gulp.task('importable-modules', function() {
+  var files = customChuiImports
+  files = files.concat(customWidgetImports);
+  return gulp.src(files)
+    .pipe(wrap({
+      header: `export default (function() {
+`,
+      footer: `
+})();`
+    }))
+    .pipe(gulp.dest('./cli-resources/jspm/src'));
+});
+
+gulp.task('box-and-fetch', function() {
+  return gulp.src(['./src/chocolatechip/box.js', './src/chocolatechip/fetch.js'])
+    .pipe(wrap({
+      header: `import './promises';
+export default (function() {
+`,
+      footer: `
+})();`
+    }))
+    .pipe(gulp.dest('./cli-resources/jspm/src'));
+
+});
+
+gulp.task('form', function() {
+  return gulp.src('./src/chocolatechip/form.js')
+    .pipe(wrap({
+      header: `import './validators';
+export default (function() {
+`,
+      footer: `
+})();`
+    }))
+    .pipe(gulp.dest('./cli-resources/jspm/src'));
+});
+
+gulp.task('android-ripple', function() {
+  setTimeout(function() {
+  return gulp.src('./src/widgets/android-ripple.js')
+    .pipe(wrap({
+      header: `import './color-contrast';
+export default (function() {
+`,
+      footer: `
+})();`
+    }))
+    .pipe(gulp.dest('./cli-resources/jspm/src'));
+  }, 10000);
+});
+
+gulp.task('import-dependencies', ['android-ripple', 'form', 'box-and-fetch', 'importable-modules'])
+
+
+gulp.task('minify-css', ['minify-android-css','minify-ios-css']);
 
 gulp.task('build', ['chocolatechipjs', 'concatWidgets']);
 gulp.task('default', ['chui', 'minify-css']);
-gulp.task('all', ['chocolatechip', 'chui', 'chui-box', 'minify-css'])
+gulp.task('all', ['chocolatechip', 'chui', 'chui-box', 'minimal-chui', 'import-dependencies', 'minify-css']);
 

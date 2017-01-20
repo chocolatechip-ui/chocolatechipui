@@ -1,3 +1,4 @@
+import {cartModel} from '../data/cartModel';
 import * as app from '../views/views';
 
 export function leaveOrderPage() {

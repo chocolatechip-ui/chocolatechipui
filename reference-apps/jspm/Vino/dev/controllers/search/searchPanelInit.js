@@ -1,3 +1,4 @@
+import '../../src/sheets';
 export function searchPanelInit() {
 
   //==========================

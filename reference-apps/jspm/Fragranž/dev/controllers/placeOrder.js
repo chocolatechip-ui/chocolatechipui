@@ -3,7 +3,7 @@ import * as app from '../views/views';
 export function placeOrder() {
   $('#placeOrder').on('tap', () => {
     $.GoToScreen('confirmation');
-    app.totalPurchasedItemsViews.render();
+    app.totalPurchasedItemsView.render();
     function confirmationNumber() {
       let d = Date.now();
       const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');

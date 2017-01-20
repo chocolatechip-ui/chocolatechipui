@@ -3,6 +3,7 @@ import {favorites} from './data/favorites';
 import {music} from './data/music';
 import {recipes} from './data/recipes';
 import * as app from './views/views';
+import './src/tabbar';
 
 $(() => {
 

@@ -1,3 +1,5 @@
+import '../../src/sheets';
+import {handlePurchaseProgressBar} from './handlePurchaseProgressBar';
 export function handlePurchase() {
   /**
    * Get purchase sheet template:
@@ -26,8 +28,11 @@ export function handlePurchase() {
   $('#selectedWine').on('tap', '.price', function(e) {
     const wine = $('#selectedWineVarietal').text().trim();
     const price = $(this).text().trim();
+    handlePurchaseProgressBar()
     $('#purchasePopup').find('.panel p').text('Do you want to purchase ' + wine + ' for ' + price + '?');
-    $('#purchasePopup').ShowPopup();
+    $.delay(200).then(function() {
+      $('#purchasePopup').ShowPopup();
+    });
   });
 
   /**

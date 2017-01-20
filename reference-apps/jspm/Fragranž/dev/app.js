@@ -7,7 +7,6 @@ import {goToCart} from './controllers/goToCart';
 import {cancelOrder} from './controllers/cancelOrder';
 import {placeOrder} from './controllers/placeOrder';
 import {leaveOrderPage} from './controllers/leaveOrderPage';
-import {emptyCartWarning} from './controllers/emptyCartWarning';
 
 
 $(() => {
@@ -45,6 +44,5 @@ $(() => {
   cancelOrder();
   placeOrder();
   leaveOrderPage();
-  emptyCartWarning();
 
 });

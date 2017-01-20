@@ -527,7 +527,7 @@ var DOMStack = function() {
    */
   $.extend({
     lib: "ChocolateChipJS",
-    version: '4.8.4',
+    version: '4.9.0',
     noop: function noop() {},
     uuid: function uuid() {
       var d = Date.now();
@@ -6593,7 +6593,6 @@ $.extend({
     } else {
       popup = '<div class="popup" id="' + id + '"><div class="dialog" role="alertdialog"><div class="panel">' + title + message + '</div><footer>' + cancelButton + continueButton + '</footer></div></div>';
     }
-    $('#' + id).remove();
     $('body').append(popup);
     if (settings.empty) {
       var _$$css;
@@ -6617,6 +6616,9 @@ $.extend({
           $('#' + id).ClosePopup();
           callback.call(callback);
         }
+        $.delay(1000).then(function() {
+          $('#' + id).remove();
+        });
       });
       $('#' + id).find('.cancel').on('tap', function() {
         var $this = $(this);
@@ -6629,6 +6631,9 @@ $.extend({
         } else {
           $('#' + id).ClosePopup();
         }
+        $.delay(1000).then(function() {
+          $('#' + id).remove();
+        });
       });
     }
     $('.popup').on('tap', function(e) {

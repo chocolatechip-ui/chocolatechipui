@@ -1,3 +1,4 @@
+export default (function() {
 
 /**
  * ChocolateChip-UI Widget - Popup.
@@ -117,3 +118,4 @@ $.fn.extend({
     self.find('.popup').removeClass('opened')
   }
 });
+})();

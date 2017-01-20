@@ -1,3 +1,4 @@
+import '../../src/sheets';
 import * as app from '../../views/views';
 import {wines} from '../../../data/californiaWines';
 import {searchParameters} from './searchParameters';
@@ -16,7 +17,6 @@ export function handleWineSearch() {
     var filteredWines = wines.filter(function(wine) {
       return wine.type === searchParameters.type && wine.body === searchParameters.body && parseInt(wine.price.split('$')[1],10) <= searchParameters.price;
     });
-    console.dir(filteredWines);
 
     /**
      * Close the search sheet:

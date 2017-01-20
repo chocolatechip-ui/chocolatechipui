@@ -2574,703 +2574,135 @@ $.fn.extend({
     }
   }
 });
-/**
- * ChocolateChip-UI - Validators.
+/** 
+ * Array extras for managing collections of objects.
+ * Provides the following methods: find, findIndex,
+ * pluck, difference, intersection, merge, unique.
  */
-/**
- * Set validity state of form elements: 
- */
-var setValidityStatus = function setValidityStatus(element, valid) {
-  if (valid) {
-    $(element).prop('valid', true);
-    $(element).prop('invalid', false);
-    $(element).addClass('valid').removeClass('invalid');
-  } else {
-    $(element).prop('valid', false);
-    $(element).prop('invalid', true);
-    $(element).addClass('invalid').removeClass('valid');
-  }
-};
-/**
- * Used to check input validity: 
- */
-var checkValidity = function checkValidity(element, expression) {
-  if (expression) {
-    setValidityStatus(element, true);
-  } else {
-    setValidityStatus(element, false);
-  }
-  return expression;
-};
-$.fn.extend({
-  isNotEmpty: function isNotEmpty() {
-    if (this[0].nodeName !== 'INPUT') return;
-    var value = this[0].nodeName === 'INPUT' && this[0].value;
-    return checkValidity(this, value);
-  },
-  validateAlphabetic: function validateAlphabetic() {
-    if (this[0].nodeName !== 'INPUT') return;
-    var letters = /^[A-Za-z]+$/;
-    var value = this[0].nodeName === 'INPUT' && this[0].value;
-    checkValidity(this, value.match(letters));
-    if (value) {
-      return checkValidity(this, value.match(letters));
-    }
-  },
-  validateText: function validateText() {
-    if (this[0].nodeName !== 'INPUT') return;
-    var letters = /^[A-Za-z\W]+$/;
-    var value = this[0].nodeName === 'INPUT' && this[0].value;
-    checkValidity(this, value.match(letters));
-    if (value) {
-      return checkValidity(this, value.match(letters));
-    }
-  },
-  validateNumber: function validateNumber() {
-    if (this[0].nodeName !== 'INPUT') return;
-    var numbers = /^[+-]?\d+(\.\d+)?$/;
-    var value = this[0].nodeName === 'INPUT' && this[0].value;
-    checkValidity(this, value.match(numbers));
-    if (value) {
-      return checkValidity(this, value.match(numbers));
-    }
-  },
-  validateAlphaNumeric: function validateAlphaNumeric() {
-    if (this[0].nodeName !== 'INPUT') return;
-    var letters = /^[0-9a-zA-Z]+$/;
-    var value = this[0].nodeName === 'INPUT' && this[0].value;
-    checkValidity(this, value.match(letters));
-    if (value) {
-      return checkValidity(this, value.match(letters));
-    }
-  },
-  validateUserName: function validateUserName(minimum) {
-    if (this[0].nodeName !== 'INPUT') return;
-    var letters = /^[a-zA-Z0-9]+$/;
-    var username = this[0].value;
-    if (!username) return checkValidity(this, username);
-    if (minimum && username.match(letters)) {
-      if (username.length >= minimum) {
-        return checkValidity(this, username);
-      } else {
-        return checkValidity(this, false);
+if (!Array.prototype.find) {
+  $.extend(Array.prototype, {
+    find: function find(predicate) {
+      if (this == null) {
+        throw new TypeError('Array.prototype.find called on null or undefined');
       }
-    } else {
-      return checkValidity(this, checkValidity(this, username.match(letters)));
-    }
-  },
-  validateEmail: function validateEmail() {
-    if (this[0].nodeName !== 'INPUT') return;
-    var value = this[0].value;
-    var email = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    if (value) {
-      return checkValidity(this, value.match(email));
-    } else {
-      return checkValidity(this, false);
-    }
-  },
-  validatePhoneNumber: function validatePhoneNumber(int) {
-    if (this[0].nodeName !== 'INPUT') return;
-    var phone = undefined;
-    var phoneNumber = undefined;
-    var convertLettersToNumbers = function convertLettersToNumbers(value) {
-      var phonenumber = "";
-      value = value.toLowerCase();
-      var len = value.length;
-      for (var i = 0; i < len; i++) {
-        var character = value.charAt(i);
-        switch (character) {
-          case '0':
-            phonenumber += "0";
-            break;
-          case '1':
-            phonenumber += "1";
-            break;
-          case '2':
-            phonenumber += "2";
-            break;
-          case '3':
-            phonenumber += "3";
-            break;
-          case '4':
-            phonenumber += "4";
-            break;
-          case '5':
-            phonenumber += "5";
-            break;
-          case '6':
-            phonenumber += "6";
-            break;
-          case '7':
-            phonenumber += "7";
-            break;
-          case '8':
-            phonenumber += "8";
-            break;
-          case '9':
-            phonenumber += "9";
-            break;
-          case '-':
-            phonenumber += "-";
-            break;
-          case 'a':
-          case 'b':
-          case 'c':
-            phonenumber += "2";
-            break;
-          case 'd':
-          case 'e':
-          case 'f':
-            phonenumber += "3";
-            break;
-          case 'g':
-          case 'h':
-          case 'i':
-            phonenumber += "4";
-            break;
-          case 'j':
-          case 'k':
-          case 'l':
-            phonenumber += "5";
-            break;
-          case 'm':
-          case 'n':
-          case 'o':
-            phonenumber += "6";
-            break;
-          case 'p':
-          case 'q':
-          case 'r':
-          case 's':
-            phonenumber += "7";
-            break;
-          case 't':
-          case 'u':
-          case 'v':
-            phonenumber += "8";
-            break;
-          case 'w':
-          case 'x':
-          case 'y':
-          case 'z':
-            phonenumber += "9";
-            break;
+      if (typeof predicate !== 'function') {
+        throw new TypeError('predicate must be a function');
+      }
+      var list = Object(this);
+      var length = list.length >>> 0;
+      var thisArg = arguments[1];
+      var value = undefined;
+      for (var i = 0; i < length; i++) {
+        value = list[i];
+        if (predicate.call(thisArg, value, i, list)) {
+          return value;
         }
       }
-      return phonenumber;
-    };
-    if (this[0].value) {
-      /**
-       * International Numbers:
-       */
-      if (int) {
-        phoneNumber = this[0].value.replace(/[\(\)\.\-\ ]/g, '');
-        return checkValidity(this, this.isNotEmpty() && !isNaN(phoneNumber));
-        /**
-         * North America (US and Canada):
-         */
-      } else {
-        phoneNumber = this[0].value.replace(/[\(\)\.\-\ ]/g, '');
-        phoneNumber = convertLettersToNumbers(phoneNumber);
-        phone = /((\(\d{3}\)?)|(\d{3}))([\s-./]?)(\d{3})([\s-./]?)(\d{4})/;
-        return checkValidity(this, phoneNumber.match(phone));
+      return undefined;
+    }
+  });
+}
+if (!Array.prototype.findIndex) {
+  $.extend(Array.prototype, {
+    findIndex: function findIndex(predicate) {
+      if (this === null) {
+        throw new TypeError('Array.prototype.findIndex called on null or undefined');
       }
-    } else {
-      return checkValidity(this, false);
+      if (typeof predicate !== 'function') {
+        throw new TypeError('predicate must be a function');
+      }
+      var list = Object(this);
+      var length = list.length >>> 0;
+      var thisArg = arguments[1];
+      var value = undefined;
+      for (var i = 0; i < length; i++) {
+        value = list[i];
+        if (predicate.call(thisArg, value, i, list)) {
+          return i;
+        }
+      }
+      return -1;
     }
-  },
-  validateUrl: function validateUrl() {
-    if (this[0].nodeName !== 'INPUT') return;
-    if (this[0].value) {
-      var url = /^(ftp|http|https):\/\/([w]{3}\.)?(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?$/;
-      return checkValidity(this, this[0].value.match(url));
-    } else {
-      return checkValidity(this, false);
-    }
-  },
-  validateAge: function validateAge(minimum) {
-    if (this[0].nodeName !== 'INPUT') return;
-    var age = this[0].value;
-    if (!age) {
-      return checkValidity(this, false);
-    } else if (age && minimum) {
-      return checkValidity(this, age >= minimum);
-    } else if (age) {
-      return checkValidity(this, true);
-    } else {
-      return checkValidity(this, false);
-    }
-  },
-  validateCheckbox: function validateCheckbox() {
-    if (this[0].nodeName !== 'INPUT') return;
-    if (this[0].nodeName === 'INPUT' && this[0].type === 'checkbox') {
-      return checkValidity(this, this[0].checked === true);
-    }
-  },
-  validateRadioButtons: function validateRadioButtons() {
-    if (this[0].nodeName !== 'INPUT') return;
-    var choice = false;
-    if (this[0].nodeName === 'INPUT' && this[0].type === 'radio') {
-      $.each(this, function(idx, button) {
-        if (button.checked === true) {
-          choice = true;
+  });
+}
+if (!Array.prototype.pluck) {
+  $.extend(Array.prototype, {
+    pluck: function pluck(prop) {
+      var ret = [];
+      this.forEach(function(item) {
+        if (item[prop]) {
+          ret.push(item[prop]);
         }
       });
-      return checkValidity(this, choice);
+      return ret;
     }
-  },
-  validateSelectBox: function validateSelectBox() {
-    if (this[0].nodeName === 'SELECT') {
-      return checkValidity(this, this[0].selectedIndex);
-    } else {
-      return false;
-    }
-  },
-  validateSwitch: function validateSwitch() {
-    var checkbox = this.find('input[type=checkbox]')[0];
-    if (checkbox.checked) {
-      return true;
-    } else {
-      return false;
-    }
-  },
-  validateSelectList: function validateSelectList() {
-    var radio = this.find('input[type=radio]');
-    if (radio.is('[checked]')) {
-      return true;
-    } else {
-      return false;
-    }
-  },
-  validateMultiSelectList: function validateMultiSelectList() {
-    var checkboxes = this.find('input[type=checkbox]');
-    var checked = false;
-    checkboxes.forEach(function(item) {
-      if ($(item).prop('checked')) {
-        checked = true;
-      }
-    });
-    if (checked) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-});
-$.extend({
-  validatePassword: function validatePassword(input1, input2, minimum) {
-    var psswd1 = $(input1)[0];
-    var psswd2 = $(input2)[0];
-    if (minimum && psswd1.value < minimum || psswd2.value < minimum) {
-      psswd1.classList.add('invalid');
-      psswd1.classList.remove('valid');
-      psswd2.classList.add('invalid');
-      psswd2.classList.remove('valid');
-      return false;
-    } else {
-      var letters = /^(?=.*[a-zA-Z])(?=.*[0-9]).+$/;
-      if (!letters.test(psswd1.value) && !letters.test(psswd2.value)) return false;
-      if (psswd1.value === psswd2.value) {
-        psswd1.classList.remove('invalid');
-        psswd1.classList.add('valid');
-        psswd2.classList.remove('invalid');
-        psswd2.classList.add('valid');
-      } else {
-        psswd1.classList.add('invalid');
-        psswd1.classList.remove('valid');
-        psswd2.classList.add('invalid');
-        psswd2.classList.remove('valid');
-      }
-      return psswd1.value === psswd2.value;
-    }
-  },
-  validateWithRegex: function validateWithRegex(input, regex) {
-    if (!input || !regex) {
-      console.error('This method requires a regular expression.');
-      return;
-    }
-    var value = $(input).val();
-    if (value) {
-      return checkValidity(input, value.match(regex));
-    }
-  },
-  customValidators: [],
-  registerCustomValidator: function registerCustomValidator(name, regex) {
-    this.customValidators.push({
-      name: name,
-      regex: regex
-    });
-  }
-});
-/**
- * ChocolateChip-UI serialize methods.
- */
-$.fn.extend({
-  serializeArray: function serializeArray() {
-    var name = undefined;
-    var type = undefined;
-    var ret = [];
-    var add = function add(value) {
-      if ($.type(value) === 'array') {
-        return value.forEach(add);
-      }
-      ret.push({
-        name: name,
-        value: value
-      });
-    };
-    if (this[0]) {
-      $.each([].slice.apply(this[0].elements), function(idx, field) {
-        type = field.type;
-        name = field.name;
-        if (name && field.nodeName.toLowerCase() != 'fieldset' && !field.disabled && type != 'submit' && type != 'reset' && type != 'button' && type != 'file' && (type != 'radio' && type != 'checkbox' || field.checked)) {
-          add($(field).val());
-        }
-      });
-    }
-    return ret;
-  },
-  /**
-   * Serialize the values of a form: 
-   */
-  serialize: function serialize() {
-    var ret = [];
-    this.serializeArray().forEach(function(element) {
-      ret.push(encodeURIComponent(element.name) + '=' + encodeURIComponent(element.value));
-    });
-    return ret.join('&');
-  }
-});
-/**
- * ChocolateChip-UI - Form Validation & JSON.
- */
-$.extend({
-  /**
-   * Setup Form object to convert data to JSON, and to validate form values:
-   */
-  Form: function Form(options) {
-    if (!options || $.type(options) !== 'array') return;
-    var __passed = false;
-    var __errors = [];
-    var __result = [];
-    /** 
-     * Helper to validate form elements: 
-     */
-    function validateElement(item) {
-      if (!item) return;
-      if (!__passed) {
-        __errors.push({
-          element: item.element,
-          type: item.type
-        });
-        if (item.callback) item.callback();
-      } else {
-        convertToObject($(item.element).attr('name'), $(item.element).val());
-      }
-    }
-    /** 
-     * Helper to convert form element names to JSON: 
-     */
-    function convertToObject(name, value) {
-      __result.push({
-        name: name,
-        value: value
-      });
-    }
-    /** 
-     * Convert form names and values to JSON: 
-     */
-    function convertObjectToJSON(data) {
-      var delimiter = '_';
-      var result = {};
-      var arrays = {};
-      data.forEach(function(item) {
-        var value = item.value;
-        if (value !== '') {
-          if (!item.name) return;
-          var name = item.name;
-          var nameParts = name.split(delimiter);
-          var currResult = result;
-          for (var j = 0; j < nameParts.length; j++) {
-            var namePart = nameParts[j];
-            var arrName = undefined;
-            if (namePart.indexOf('[]') > -1 && j === nameParts.length - 1) {
-              arrName = namePart.substr(0, namePart.indexOf('['));
-              if (!currResult[arrName]) {
-                currResult[arrName] = [];
-              }
-              currResult[arrName].push(value);
-            } else {
-              if (namePart.indexOf('[') > -1) {
-                arrName = namePart.substr(0, namePart.indexOf('['));
-                var arrIdx = namePart.replace(/^[a-z]+\[|\]$/gi, '');
-                if (!arrays[arrName]) {
-                  arrays[arrName] = {};
-                }
-                if (!currResult[arrName]) {
-                  currResult[arrName] = [];
-                }
-                if (j === nameParts.length - 1) {
-                  currResult[arrName].push(value);
-                } else {
-                  if (!arrays[arrName][arrIdx]) {
-                    currResult[arrName].push({});
-                    arrays[arrName][arrIdx] = currResult[arrName][currResult[arrName].length - 1];
-                  }
-                }
-                currResult = arrays[arrName][arrIdx];
-              } else {
-                if (j < nameParts.length - 1) {
-                  if (!currResult[namePart]) {
-                    currResult[namePart] = {};
-                  }
-                  currResult = currResult[namePart];
-                } else {
-                  currResult[namePart] = value;
-                }
+  });
+}
+if (!Array.prototype.difference) {
+  $.extend(Array.prototype, {
+    difference: function difference(a) {
+      return this.filter(function(after) {
+        return !a.reduce(function(found, before) {
+          if (!found) {
+            found = true;
+            for (var key in before) {
+              if (before.hasOwnProperty(key)) {
+                found = found && before[key] === after[key];
               }
             }
           }
-        }
+          return found;
+        }, false);
       });
-      return result;
     }
-    /** 
-     * Validate form elements: 
-     */
-    options.forEach(function(item) {
-      if (!$(item.element)[0]) return;
-      var inputs = void 0;
-      if (!item.type) {
-        convertToObject($(item.element).attr('name'), $(item.element).val());
-        return;
-      }
-      switch (item.type) {
-        case 'notempty':
-          __passed = $(item.element).isNotEmpty();
-          validateElement(item);
-          break;
-        case 'number':
-          __passed = $(item.element).validateNumber();
-          validateElement(item);
-          break;
-        case 'text':
-          __passed = $(item.element).validateText();
-          validateElement(item);
-          break;
-        case 'alphanumeric':
-          __passed = $(item.element).validateAlphaNumeric();
-          validateElement(item);
-          break;
-        case 'username':
-          __passed = $(item.element).validateUserName(item.min);
-          validateElement(item);
-          break;
-        case 'email':
-          __passed = $(item.element).validateEmail();
-          validateElement(item);
-          break;
-        case 'phone':
-          __passed = $(item.element).validatePhoneNumber();
-          validateElement(item);
-          break;
-        case 'url':
-          __passed = $(item.element).validateUrl();
-          validateElement(item);
-          break;
-        case 'age':
-          __passed = $(item.element).validateAge(item.min);
-          validateElement(item);
-          break;
-        case 'checkbox':
-          __passed = $(item.element).validateCheckbox();
-          if (__passed) {
-            validateElement(item);
-          }
-          break;
-        case 'radio':
-          __passed = $(item.element).validateRadioButtons();
-          validateElement(item);
-          break;
-        case 'selectbox':
-          __passed = $(item.element).validateSelectBox();
-          validateElement(item);
-          break;
-        case 'password':
-          __passed = $.validatePassword(item.element, item.element2, item.min);
-          __errors.push({
-            element: item.element,
-            element2: item.element2,
-            type: item.type
-          });
-          if (__passed) {
-            validateElement(item);
-          }
-          break;
-        case 'switch':
-          __passed = $(item.element).validateSwitch();
-          if (__passed) {
-            validateElement(item);
-          }
-          break;
-        case 'selectlist':
-          __passed = $(item.element).validateSelectList();
-          if (__passed) {
-            inputs = undefined;
-            inputs = $(item.element).find('input').forEach(function(item) {
-              if (item.checked) {
-                convertToObject(item.name, item.value);
-              }
-            });
-          }
-          break;
-        case 'multiselectlist':
-          __passed = $(item.element).validateMultiSelectList();
-          inputs = undefined;
-          if (__passed) {
-            inputs = $(item.element).find('input[type=checkbox]');
-            inputs.forEach(function(item) {
-              if (item.checked) {
-                convertToObject(item.name, item.value);
-              }
-            });
-          }
-          break;
-      }
-      if (item.type.match(/custom/)) {
-        var cv = $.customValidators.filter(function(validator) {
-          return validator.name === item.type;
-        });
-        if (cv) {
-          var result = $.validateWithRegex(item.element, cv[0].regex);
-          if (result) {
-            var _el2 = $(item.element);
-            convertToObject(_el2[0].name, _el2[0].value);
-          } else {
-            __errors.push({
-              element: item.element,
-              type: item.type
-            });
-            if (item.callback) item.callback();
-          }
+  });
+}
+if (!Array.prototype.intersection) {
+  $.extend(Array.prototype, {
+    intersection: function intersection(array) {
+      var self = this;
+      var diff = self.difference(array);
+      return this.difference(diff);
+    }
+  });
+}
+if (!Array.prototype.mixin) {
+  $.extend(Array.prototype, {
+    mixin: function mixin(array) {
+      var self = this;
+      var ret = this.concat(array);
+      ret.unique();
+      self.splice(0);
+      ret.forEach(function(item) {
+        self.push(item);
+      });
+    }
+  });
+}
+if (!Array.prototype.unique) {
+  $.extend(Array.prototype, {
+    unique: function unique() {
+      var len = this.length;
+      var obj = {};
+      var ret = [];
+      for (var i = 0; i < len; i++) {
+        var arrayItem = JSON.stringify(this[i]);
+        var arrayItemValue = this[i];
+        if (obj[arrayItem] === undefined) {
+          ret.push(arrayItemValue);
+          obj[arrayItem] = 1;
+        } else {
+          obj[arrayItem]++;
         }
       }
-    });
-    return {
-      getErrors: function getErrors() {
-        if (__errors.length) {
-          return __errors;
-        }
-      },
-      errors: function errors() {
-        if (__errors.length) {
-          return true;
-        }
-      },
-      get: function get() {
-        return convertObjectToJSON(__result);
-      }
-    };
-  }
-});
-/**
- * ChocolateChip-UI  - Data Formatters.
- */
-$.extend({
-  /**
-   * Format Numbers for Thousands:
-   */
-  formatNumber: function formatNumber(amount, separator, decimal) {
-    var sep = separator || ",";
-    /** 
-     * Allow the user to round a float to a whole number: 
-     */
-    if (decimal === 0) {
-      var num = Math.round(amount);
-      return Number(num).toString().replace(/(?=(?:\d{3})+$)(?!^)/g, sep);
+      this.length = 0;
+      var self = this;
+      ret.forEach(function(item) {
+        self.push(item);
+      });
     }
-    if (decimal === undefined) {
-      /** 
-       * Check if amount is a float: 
-       */
-      if (typeof amount === 'number' && amount % 1 !== 0) {
-        return Number(amount).toString().replace(/\d(?=(\d{3})+\.)/g, '$&' + sep);
-        /** 
-         * Otherwise treat it as an integer: 
-         */
-      } else {
-        return Number(amount).toString().replace(/(?=(?:\d{3})+$)(?!^)/g, sep);
-      }
-      /** 
-       * If a decimal value was provided, format it to that amount: 
-       */
-    } else {
-      return Number(amount).toFixed(decimal).replace(/\d(?=(\d{3})+\.)/g, '$&' + sep);
-    }
-  },
-  /**
-   * Return sum of numbers:
-   */
-  sum: function sum(arr) {
-    var ret = undefined;
-    if (Array.isArray(arr) && arr.length) {
-      ret = arr;
-    } else {
-      ret = [].slice.apply(arguments);
-    }
-    return ret.reduce(function(a, b) {
-      return a + b;
-    });
-  },
-  /**
-   * Format currency:
-   */
-  currency: function currency(amount, symbol, separator, decimal) {
-    var sym = symbol || "$";
-    var sep = separator || ",";
-    var dec = decimal || 2;
-    var zero = false;
-    if (decimal === 0) {
-      zero = true;
-    } /* Private function to format amounts: */
-    var formatNumber = function formatNumber(amount, sep) {
-      /**
-       * A decimal value of '0' means we need to round the amount off before adding in thousands separators:
-       */
-      if (zero) {
-        var num = Math.round(amount);
-        return Number(num).toString().replace(/^0+/, '').replace(/(?=(?:\d{3})+$)(?!^)/g, sep);
-      } else {
-        /**
-         * Otherwise, we can just add the thousands separators with the decimal placement provided by the user or the default:
-         */
-        return Number(amount).toFixed(dec).replace(/^0+/, '').replace(/\d(?=(\d{3})+\.)/g, '$&' + sep);
-      }
-    };
-    return sym + formatNumber(amount, sep);
-  },
-  /**
-   * Format Time:
-   */
-  formatTime: function formatTime(time) {
-    var temp = time.split(':');
-    var temp2 = temp[0] + ':' + temp[1];
-    var ampm = time.split(' ')[1];
-    return temp2 + ' ' + ampm;
-  },
-  sortDate: function sortDate(date1, date2) {
-    return new Date(date1) - new Date(date2);
-  },
-  /**
-   * Sort Numbers:
-   */
-  sortNumbers: function sortNumbers(a, b) {
-    return a - b;
-  },
-  sortNumbersDescending: function sortNumbersDescending(a, b) {
-    return b - a;
-  }
-});
+  });
+}
 /**
  * ChocolateChip-UI - View Factory.
  */
@@ -3873,871 +3305,6 @@ $.extend({
     };
   }
 });
-/**
- * Promise Polyfill.
- */
-(function() {
-  /**
-   * Define polyfill for ES6 Promises: 
-   */
-  var extend = undefined;
-  var cycle = undefined;
-  var queue = undefined;
-  extend = function extend(obj, name, val, config) {
-    return Object.defineProperty(obj, name, {
-      value: val,
-      writable: true,
-      configurable: config !== false
-    });
-  };
-  queue = function() {
-    var first = undefined;
-    var last = undefined;
-    var item = undefined;
-
-    function Item(func, self) {
-      this.func = func;
-      this.self = self;
-      this.next = undefined;
-    }
-    return {
-      add: function add(func, self) {
-        item = new Item(func, self);
-        if (last) {
-          last.next = item;
-        } else {
-          first = item;
-        }
-        last = item;
-        item = undefined;
-      },
-      unshift: function unshift() {
-        var f = first;
-        first = last = cycle = undefined;
-        while (f) {
-          f.func.call(f.self);
-          f = f.next;
-        }
-      }
-    };
-  }();
-
-  function schedule(func, self) {
-    queue.add(func, self);
-    if (!cycle) {
-      cycle = setTimeout(queue.unshift);
-    }
-  }
-  /**
-   * Check that Promise is thenable: 
-   */
-  function isThenable(obj) {
-    var _then = undefined;
-    var obj_type = typeof obj === 'undefined' ? 'undefined' : _typeof(obj);
-    if (obj !== null && (obj_type === "object" || obj_type === "function")) {
-      _then = obj.then;
-    }
-    return typeof _then === "function" ? _then : false;
-  }
-
-  function notify() {
-    for (var i = 0; i < this.chain.length; i++) {
-      notifyIsolated(this, this.state === 1 ? this.chain[i].success : this.chain[i].failure, this.chain[i]);
-    }
-    this.chain.length = 0;
-  }
-
-  function notifyIsolated(self, callback, chain) {
-    var ret = undefined;
-    var _then = undefined;
-    try {
-      if (callback === false) {
-        chain.reject(self.msg);
-      } else {
-        if (callback === true) {
-          ret = self.msg;
-        } else {
-          ret = callback.call(undefined, self.msg);
-        }
-        if (ret === chain.promise) {
-          chain.reject(new TypeError("Promise-chain cycle"));
-        } else if (_then = isThenable(ret)) { // jshint ignore:line
-          _then.call(ret, chain.resolve, chain.reject);
-        } else {
-          chain.resolve(ret);
-        }
-      }
-    } catch (err) {
-      chain.reject(err);
-    }
-  }
-
-  function resolve(msg) {
-    var _then = undefined;
-    var deferred = undefined;
-    var self = this;
-    if (self.triggered) {
-      return;
-    }
-    self.triggered = true;
-    if (self.deferred) {
-      self = self.deferred;
-    }
-    try {
-      if (_then = isThenable(msg)) { // jshint ignore:line
-        schedule(function() {
-          var deferred_wrapper = new MakeDeferred(self);
-          try {
-            _then.call(msg, function() {
-              resolve.apply(deferred_wrapper, arguments);
-            }, function() {
-              reject.apply(deferred_wrapper, arguments);
-            });
-          } catch (err) {
-            reject.call(deferred_wrapper, err);
-          }
-        });
-      } else {
-        self.msg = msg;
-        self.state = 1;
-        if (self.chain.length > 0) {
-          schedule(notify, self);
-        }
-      }
-    } catch (err) {
-      reject.call(new MakeDeferred(self), err);
-    }
-  }
-
-  function reject(msg) {
-    var self = this;
-    if (self.triggered) {
-      return;
-    }
-    self.triggered = true;
-    if (self.deferred) {
-      self = self.deferred;
-    }
-    self.msg = msg;
-    self.state = 2;
-    if (self.chain.length > 0) {
-      schedule(notify, self);
-    }
-  }
-
-  function iteratePromises(Constructor, arr, resolver, rejecter) {
-    for (var idx = 0; idx < arr.length; idx++) {
-      (function IIFE(idx) {
-        Constructor.resolve(arr[idx]).then(function(msg) {
-          resolver(idx, msg);
-        }, rejecter);
-      })(idx);
-    }
-  }
-
-  function MakeDeferred(self) {
-    this.deferred = self;
-    this.triggered = false;
-  }
-
-  function Deferred(self) {
-    this.promise = self;
-    this.state = 0;
-    this.triggered = false;
-    this.chain = [];
-    this.msg = undefined;
-  }
-
-  function Promise(executor) {
-    if (typeof executor !== "function") {
-      throw new TypeError("Not a function");
-    }
-    if (this.isValidPromise !== 0) {
-      throw new TypeError("Not a promise");
-    }
-    /**
-     * Indicate the Promise is initialized:
-     */
-    this.isValidPromise = 1;
-    var deferred = new Deferred(this);
-    this.then = function(success, failure) {
-      var obj = {
-        success: typeof success === "function" ? success : true,
-        failure: typeof failure === "function" ? failure : false
-      };
-      /**
-       * `.then()` can be used against a different promise constructor for making a chained promise. 
-       */
-      obj.promise = new this.constructor(function extractChain(resolve, reject) {
-        if (typeof resolve !== "function" || typeof reject !== "function") {
-          throw new TypeError("Not a function");
-        }
-        obj.resolve = resolve;
-        obj.reject = reject;
-      });
-      deferred.chain.push(obj);
-      if (deferred.state !== 0) {
-        schedule(notify, deferred);
-      }
-      return obj.promise;
-    };
-    this.catch = function(failure) {
-      return this.then(undefined, failure);
-    };
-    try {
-      executor.call(undefined, function(msg) {
-        resolve.call(deferred, msg);
-      }, function(msg) {
-        reject.call(deferred, msg);
-      });
-    } catch (err) {
-      reject.call(deferred, err);
-    }
-  }
-  var PromisePrototype = extend({}, "constructor", Promise, false);
-  extend(Promise, "prototype", PromisePrototype, false);
-  /**
-   * Check if Promise is initialized: 
-   */
-  extend(PromisePrototype, "isValidPromise", 0, false);
-  extend(Promise, "resolve", function(msg) {
-    var Constructor = this;
-    /**
-     * Make sure it is a valide Promise: 
-     */
-    if (msg && (typeof msg === 'undefined' ? 'undefined' : _typeof(msg)) === "object" && msg.isValidPromise === 1) {
-      return msg;
-    }
-    return new Constructor(function executor(resolve, reject) {
-      if (typeof resolve !== "function" || typeof reject !== "function") {
-        throw new TypeError("Not a function");
-      }
-      resolve(msg);
-    });
-  });
-  extend(Promise, "reject", function(msg) {
-    return new this(function executor(resolve, reject) {
-      if (typeof resolve !== "function" || typeof reject !== "function") {
-        throw new TypeError("Not a function");
-      }
-      reject(msg);
-    });
-  });
-  extend(Promise, "all", function(arr) {
-    var Constructor = this;
-    /**
-     * Make sure argument is an array: 
-     */
-    if (Object.prototype.toString.call(arr) !== "[object Array]") {
-      return Constructor.reject(new TypeError("Not an array"));
-    }
-    if (arr.length === 0) {
-      return Constructor.resolve([]);
-    }
-    return new Constructor(function executor(resolve, reject) {
-      if (typeof resolve !== "function" || typeof reject !== "function") {
-        throw new TypeError("Not a function");
-      }
-      var len = arr.length;
-      var msgs = new Array(len);
-      var count = 0;
-      iteratePromises(Constructor, arr, function resolver(idx, msg) {
-        msgs[idx] = msg;
-        if (++count === len) {
-          resolve(msgs);
-        }
-      }, reject);
-    });
-  });
-  extend(Promise, "race", function(arr) {
-    var Constructor = this;
-    /**
-     * Make sure argument is an array: 
-     */
-    if (Object.prototype.toString.call(arr) !== "[object Array]") {
-      return Constructor.reject(new TypeError("Not an array"));
-    }
-    return new Constructor(function executor(resolve, reject) {
-      if (typeof resolve !== "function" || typeof reject !== "function") {
-        throw new TypeError("Not a function");
-      }
-      iteratePromises(Constructor, arr, function resolver(idx, msg) {
-        resolve(msg);
-      }, reject);
-    });
-  });
-  /**
-   * If native Promise exists in window, do not use this. 
-   */
-  if ("Promise" in window && "resolve" in window.Promise && "reject" in window.Promise && "all" in window.Promise && "race" in window.Promise) {
-    return;
-  } else {
-    /**
-     * Otherwise do use this: 
-     */
-    return window.Promise = Promise;
-  }
-})();
-/**
- * Fetch polyfill
- */
-(function() {
-  /**
-   *
-   * JSONP with API like fetch.
-   */
-  $.extend({ /* Container for jsonp methods: */
-    JSONPCallbacks: [],
-    /* JSONP method: */ jsonp: function jsonp(url, opts) {
-      var settings = {
-        timeout: 2000,
-        callbackName: 'callback',
-        clear: true
-      };
-      if (opts) {
-        $.extend(settings, opts);
-      }
-      /** 
-       * Method to create callback: 
-       */
-      function generateCallbackName() {
-        var callbackName = settings.callbackName + '_' + ($.JSONPCallbacks.length + 1);
-        $.JSONPCallbacks.push(callbackName);
-        return callbackName;
-      }
-      var callbackName = generateCallbackName();
-      /** 
-       * Create and return Promise with result from request: 
-       */
-      return new Promise(function(resolve, reject) {
-        var timeout = undefined;
-        window.jsonp = window.jsonp || {};
-        window.jsonp[callbackName] = function(response) {
-          resolve({
-            ok: true,
-            json: function json() {
-              return Promise.resolve(response);
-            }
-          });
-          if (timeout) {
-            clearTimeout(timeout);
-          }
-        };
-        /** 
-         * Create script tag: 
-         */
-        var script = document.createElement('script');
-        script.async = true;
-        script.defer = true;
-        script.src = url + (url.indexOf('?') > -1 ? '&' : '?') + 'callback=jsonp.' + callbackName;
-        document.body.appendChild(script);
-        /** 
-         * Delete script tag: 
-         */
-        setTimeout(function() {
-          script.parentNode.removeChild(script);
-        });
-        /** 
-         * Clear JSONP methods from window: 
-         */
-        if (settings.clear) {
-          var pos = $.JSONPCallbacks.indexOf(callbackName);
-          $.JSONPCallbacks.splice(pos, 1);
-        }
-        /** 
-         * Handle timeout: 
-         */
-        timeout = setTimeout(function() {
-          reject(new Error('JSONP request to ' + url + ' timed out'));
-        }, settings.timeout);
-      });
-    },
-    /**
-     * Helper function for fetch Promises.
-     * Returns the respons as parsed JSON.
-     * Usage: .then($.json)
-     */
-    json: function json(response) {
-      return response.json();
-    }
-  });
-  if (window && window.fetch) {
-    return;
-  }
-  var self = window;
-
-  function normalizeName(name) {
-    if (typeof name !== 'string') {
-      name = String(name);
-    }
-    if (/[^a-z0-9\-#$%&'*+.\^_`|~]/i.test(name)) {
-      throw new TypeError('Invalid character in header field name');
-    }
-    return name.toLowerCase();
-  }
-
-  function normalizeValue(value) {
-    if (typeof value !== 'string') {
-      value = String(value);
-    }
-    return value;
-  }
-
-  function Headers(headers) {
-    this.map = {};
-    if (headers instanceof Headers) {
-      headers.forEach(function(value, name) {
-        this.append(name, value);
-      }, this);
-    } else if (headers) {
-      Object.getOwnPropertyNames(headers).forEach(function(name) {
-        this.append(name, headers[name]);
-      }, this);
-    }
-  }
-  Headers.prototype.append = function(name, value) {
-    name = normalizeName(name);
-    value = normalizeValue(value);
-    var list = this.map[name];
-    if (!list) {
-      list = [];
-      this.map[name] = list;
-    }
-    list.push(value);
-  };
-  Headers.prototype['delete'] = function(name) {
-    delete this.map[normalizeName(name)];
-  };
-  Headers.prototype.get = function(name) {
-    var values = this.map[normalizeName(name)];
-    return values ? values[0] : null;
-  };
-  Headers.prototype.getAll = function(name) {
-    return this.map[normalizeName(name)] || [];
-  };
-  Headers.prototype.has = function(name) {
-    return this.map.hasOwnProperty(normalizeName(name));
-  };
-  Headers.prototype.set = function(name, value) {
-    this.map[normalizeName(name)] = [normalizeValue(value)];
-  };
-  Headers.prototype.forEach = function(callback, thisArg) {
-    Object.getOwnPropertyNames(this.map).forEach(function(name) {
-      this.map[name].forEach(function(value) {
-        callback.call(thisArg, value, name, this);
-      }, this);
-    }, this);
-  };
-
-  function consumed(body) {
-    if (body.bodyUsed) {
-      return Promise.reject(new TypeError('Already read'));
-    }
-    body.bodyUsed = true;
-  }
-
-  function fileReaderReady(reader) {
-    return new Promise(function(resolve, reject) {
-      reader.onload = function() {
-        resolve(reader.result);
-      };
-      reader.onerror = function() {
-        reject(reader.error);
-      };
-    });
-  }
-
-  function readBlobAsArrayBuffer(blob) {
-    var reader = new FileReader();
-    reader.readAsArrayBuffer(blob);
-    return fileReaderReady(reader);
-  }
-
-  function readBlobAsText(blob) {
-    var reader = new FileReader();
-    reader.readAsText(blob);
-    return fileReaderReady(reader);
-  }
-  var support = {
-    blob: 'FileReader' in self && 'Blob' in self && function() {
-      try {
-        new Blob();
-        return true;
-      } catch (e) {
-        return false;
-      }
-    }(),
-    formData: 'FormData' in self,
-    arrayBuffer: 'ArrayBuffer' in self
-  };
-
-  function Body() {
-    this.bodyUsed = false;
-    this._initBody = function(body) {
-      this._bodyInit = body;
-      if (typeof body === 'string') {
-        this._bodyText = body;
-      } else if (support.blob && Blob.prototype.isPrototypeOf(body)) {
-        this._bodyBlob = body;
-      } else if (support.formData && FormData.prototype.isPrototypeOf(body)) {
-        this._bodyFormData = body;
-      } else if (!body) {
-        this._bodyText = '';
-      } else if (support.arrayBuffer && ArrayBuffer.prototype.isPrototypeOf(body)) {
-        /** 
-         * Only support ArrayBuffers for POST method.
-         * Receiving ArrayBuffers happens via Blobs, instead.
-         */
-      } else {
-        throw new Error('unsupported BodyInit type');
-      }
-      if (!this.headers.get('content-type')) {
-        if (typeof body === 'string') {
-          this.headers.set('content-type', 'text/plain;charset=UTF-8');
-        } else if (this._bodyBlob && this._bodyBlob.type) {
-          this.headers.set('content-type', this._bodyBlob.type);
-        }
-      }
-    };
-    if (support.blob) {
-      this.blob = function() {
-        var rejected = consumed(this);
-        if (rejected) {
-          return rejected;
-        }
-        if (this._bodyBlob) {
-          return Promise.resolve(this._bodyBlob);
-        } else if (this._bodyFormData) {
-          throw new Error('could not read FormData body as blob');
-        } else {
-          return Promise.resolve(new Blob([this._bodyText]));
-        }
-      };
-      this.arrayBuffer = function() {
-        return this.blob().then(readBlobAsArrayBuffer);
-      };
-      this.text = function() {
-        var rejected = consumed(this);
-        if (rejected) {
-          return rejected;
-        }
-        if (this._bodyBlob) {
-          return readBlobAsText(this._bodyBlob);
-        } else if (this._bodyFormData) {
-          throw new Error('could not read FormData body as text');
-        } else {
-          return Promise.resolve(this._bodyText);
-        }
-      };
-    } else {
-      this.text = function() {
-        var rejected = consumed(this);
-        return rejected ? rejected : Promise.resolve(this._bodyText);
-      };
-    }
-    if (support.formData) {
-      this.formData = function() {
-        return this.text().then(decode);
-      };
-    }
-    this.json = function() {
-      return this.text().then(JSON.parse);
-    };
-    return this;
-  }
-  /** 
-   * HTTP methods whose capitalization should be normalized. 
-   */
-  var methods = ['DELETE', 'GET', 'HEAD', 'OPTIONS', 'POST', 'PUT'];
-
-  function normalizeMethod(method) {
-    var upcased = method.toUpperCase();
-    return methods.indexOf(upcased) > -1 ? upcased : method;
-  }
-
-  function Request(input, options) {
-    options = options || {};
-    var body = options.body;
-    if (Request.prototype.isPrototypeOf(input)) {
-      if (input.bodyUsed) {
-        throw new TypeError('Already read');
-      }
-      this.url = input.url;
-      this.credentials = input.credentials;
-      if (!options.headers) {
-        this.headers = new Headers(input.headers);
-      }
-      this.method = input.method;
-      this.mode = input.mode;
-      if (!body) {
-        body = input._bodyInit;
-        input.bodyUsed = true;
-      }
-    } else {
-      this.url = input;
-    }
-    this.credentials = options.credentials || this.credentials || 'omit';
-    if (options.headers || !this.headers) {
-      this.headers = new Headers(options.headers);
-    }
-    this.method = normalizeMethod(options.method || this.method || 'GET');
-    this.mode = options.mode || this.mode || null;
-    this.referrer = null;
-    if ((this.method === 'GET' || this.method === 'HEAD') && body) {
-      throw new TypeError('Body not allowed for GET or HEAD requests');
-    }
-    this._initBody(body);
-  }
-  Request.prototype.clone = function() {
-    return new Request(this);
-  };
-
-  function decode(body) {
-    var form = new FormData();
-    body.trim().split('&').forEach(function(bytes) {
-      if (bytes) {
-        var split = bytes.split('=');
-        var name = split.shift().replace(/\+/g, ' ');
-        var value = split.join('=').replace(/\+/g, ' ');
-        form.append(decodeURIComponent(name), decodeURIComponent(value));
-      }
-    });
-    return form;
-  }
-
-  function headers(xhr) {
-    var head = new Headers();
-    var pairs = xhr.getAllResponseHeaders().trim().split('\n');
-    pairs.forEach(function(header) {
-      var split = header.trim().split(':');
-      var key = split.shift().trim();
-      var value = split.join(':').trim();
-      head.append(key, value);
-    });
-    return head;
-  }
-  Body.call(Request.prototype);
-
-  function Response(bodyInit, options) {
-    if (!options) {
-      options = {};
-    }
-    this.type = 'default';
-    this.status = options.status;
-    this.ok = this.status >= 200 && this.status < 300;
-    this.statusText = options.statusText;
-    this.headers = options.headers instanceof Headers ? options.headers : new Headers(options.headers);
-    this.url = options.url || '';
-    this._initBody(bodyInit);
-  }
-  Body.call(Response.prototype);
-  Response.prototype.clone = function() {
-    return new Response(this._bodyInit, {
-      status: this.status,
-      statusText: this.statusText,
-      headers: new Headers(this.headers),
-      url: this.url
-    });
-  };
-  Response.error = function() {
-    var response = new Response(null, {
-      status: 0,
-      statusText: ''
-    });
-    response.type = 'error';
-    return response;
-  };
-  var redirectStatuses = [301, 302, 303, 307, 308];
-  Response.redirect = function(url, status) {
-    if (redirectStatuses.indexOf(status) === -1) {
-      throw new RangeError('Invalid status code');
-    }
-    return new Response(null, {
-      status: status,
-      headers: {
-        location: url
-      }
-    });
-  };
-  self.Headers = Headers;
-  self.Request = Request;
-  self.Response = Response;
-  self.fetch = function(input, init) {
-    return new Promise(function(resolve, reject) {
-      var request = undefined;
-      if (Request.prototype.isPrototypeOf(input) && !init) {
-        request = input;
-      } else {
-        request = new Request(input, init);
-      }
-      var xhr = new XMLHttpRequest();
-
-      function responseURL() {
-        if ('responseURL' in xhr) {
-          return xhr.responseURL;
-        } /* Avoid security warnings on getResponseHeader when not allowed by CORS */
-        if (/^X-Request-URL:/m.test(xhr.getAllResponseHeaders())) {
-          return xhr.getResponseHeader('X-Request-URL');
-        }
-        return;
-      }
-      xhr.onload = function() {
-        var options = {
-          status: xhr.status,
-          statusText: xhr.statusText,
-          headers: headers(xhr),
-          url: responseURL()
-        };
-        var body = 'response' in xhr ? xhr.response : xhr.responseText;
-        resolve(new Response(body, options));
-      };
-      xhr.onerror = function() {
-        reject(new TypeError('Network request failed'));
-      };
-      xhr.open(request.method, request.url, true);
-      if (request.credentials === 'include') {
-        xhr.withCredentials = true;
-      }
-      if ('responseType' in xhr && support.blob) {
-        xhr.responseType = 'blob';
-      }
-      request.headers.forEach(function(value, name) {
-        xhr.setRequestHeader(name, value);
-      });
-      xhr.send(typeof request._bodyInit === 'undefined' ? null : request._bodyInit);
-    });
-  };
-  self.fetch.polyfill = true;
-})();
-/** 
- * Array extras for managing collections of objects.
- * Provides the following methods: find, findIndex,
- * pluck, difference, intersection, merge, unique.
- */
-if (!Array.prototype.find) {
-  $.extend(Array.prototype, {
-    find: function find(predicate) {
-      if (this == null) {
-        throw new TypeError('Array.prototype.find called on null or undefined');
-      }
-      if (typeof predicate !== 'function') {
-        throw new TypeError('predicate must be a function');
-      }
-      var list = Object(this);
-      var length = list.length >>> 0;
-      var thisArg = arguments[1];
-      var value = undefined;
-      for (var i = 0; i < length; i++) {
-        value = list[i];
-        if (predicate.call(thisArg, value, i, list)) {
-          return value;
-        }
-      }
-      return undefined;
-    }
-  });
-}
-if (!Array.prototype.findIndex) {
-  $.extend(Array.prototype, {
-    findIndex: function findIndex(predicate) {
-      if (this === null) {
-        throw new TypeError('Array.prototype.findIndex called on null or undefined');
-      }
-      if (typeof predicate !== 'function') {
-        throw new TypeError('predicate must be a function');
-      }
-      var list = Object(this);
-      var length = list.length >>> 0;
-      var thisArg = arguments[1];
-      var value = undefined;
-      for (var i = 0; i < length; i++) {
-        value = list[i];
-        if (predicate.call(thisArg, value, i, list)) {
-          return i;
-        }
-      }
-      return -1;
-    }
-  });
-}
-if (!Array.prototype.pluck) {
-  $.extend(Array.prototype, {
-    pluck: function pluck(prop) {
-      var ret = [];
-      this.forEach(function(item) {
-        if (item[prop]) {
-          ret.push(item[prop]);
-        }
-      });
-      return ret;
-    }
-  });
-}
-if (!Array.prototype.difference) {
-  $.extend(Array.prototype, {
-    difference: function difference(a) {
-      return this.filter(function(after) {
-        return !a.reduce(function(found, before) {
-          if (!found) {
-            found = true;
-            for (var key in before) {
-              if (before.hasOwnProperty(key)) {
-                found = found && before[key] === after[key];
-              }
-            }
-          }
-          return found;
-        }, false);
-      });
-    }
-  });
-}
-if (!Array.prototype.intersection) {
-  $.extend(Array.prototype, {
-    intersection: function intersection(array) {
-      var self = this;
-      var diff = self.difference(array);
-      return this.difference(diff);
-    }
-  });
-}
-if (!Array.prototype.mixin) {
-  $.extend(Array.prototype, {
-    mixin: function mixin(array) {
-      var self = this;
-      var ret = this.concat(array);
-      ret.unique();
-      self.splice(0);
-      ret.forEach(function(item) {
-        self.push(item);
-      });
-    }
-  });
-}
-if (!Array.prototype.unique) {
-  $.extend(Array.prototype, {
-    unique: function unique() {
-      var len = this.length;
-      var obj = {};
-      var ret = [];
-      for (var i = 0; i < len; i++) {
-        var arrayItem = JSON.stringify(this[i]);
-        var arrayItemValue = this[i];
-        if (obj[arrayItem] === undefined) {
-          ret.push(arrayItemValue);
-          obj[arrayItem] = 1;
-        } else {
-          obj[arrayItem]++;
-        }
-      }
-      this.length = 0;
-      var self = this;
-      ret.forEach(function(item) {
-        self.push(item);
-      });
-    }
-  });
-}
 /**
  * ChocolateChip-UI Model Factory.
  */
@@ -5456,5 +4023,432 @@ $.extend($, {
   isChrome: !/trident/img.test(navigator.userAgent) && !/edge/img.test(navigator.userAgent) && /Chrome/img.test(navigator.userAgent) && !((/samsung/img.test(navigator.userAgent) || /Galaxy Nexus/img.test(navigator.userAgent) || /HTC/img.test(navigator.userAgent) || /LG/img.test(navigator.userAgent)) && !/trident/img.test(navigator.userAgent) && !/edge/img.test(navigator.userAgent) && /android/i.test(navigator.userAgent) && /webkit/i.test(navigator.userAgent)),
   isNativeAndroid: (/samsung/img.test(navigator.userAgent) || /Galaxy Nexus/img.test(navigator.userAgent) || /HTC/img.test(navigator.userAgent) || /\sLG/img.test(navigator.userAgent)) && !/trident/img.test(navigator.userAgent) && !/edge/img.test(navigator.userAgent) && /android/i.test(navigator.userAgent) && /webkit/i.test(navigator.userAgent) && (/Android 3/i.test(userAgentHTC) || /Android 4/i.test(navigator.userAgent))
 });
+/**
+ * ChocolateChip-UI Widget - Setup.
+ */
+$(function() {
+  if (!/(mobile)|(ios)|(android)/img.test(navigator.userAgent)) {
+    $('body').addClass('isDesktop');
+  }
+  if ($('link[href*=ios]')[0]) {
+    $('body').addClass('themeIsiOS');
+    $.theme = 'ios';
+  } else if ($('link[href*=android]')[0]) {
+    $('body').addClass('themeIsAndroid');
+    $.theme = 'android';
+  }
+  $.dir = 'ltr';
+  if ($('html').attr('dir') === 'rtl') {
+    $.dir = 'rtl';
+  }
+});
+/**
+ * ChocolateChip-UI Widget - Screen Blocker.
+ */
+$.extend({
+  /**
+   * Cover screen:
+   */
+  Block: function Block(opacity) {
+    opacity = opacity ? ' style=\'opacity:' + opacity + ';\'' : ' style=\'opacity: .5;\'';
+    if ($('.mask')[0]) return;
+    $('body').append('<div class=\'mask\'' + opacity + '></div>');
+    $('screen.current').attr('aria-hidden', true);
+  },
+  /**
+   * Uncover screen:
+   */
+  Unblock: function Unblock() {
+    $('.mask').remove();
+    $('screen.current').removeAttr('aria-hidden');
+  }
+});
+/**
+ * ChocolateChip-UI Widget - Button functions.
+ */
+var chuiBackButtonSVG = '<svg id="chui-back-button-svg" width="100px" height="100px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">\n  <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">\n    <g id="chui-back-arrow" stroke="#979797">\n      <path d="M50.7822487,4.05872022 L5.60302012,49.1913445 L50.4625593,94.6779982" id="back-arrow-bracket"></path>\n      <path d="M6,49.368351 L95.8300018,49.368351" id="back-arrow-shaft"></path>\n    </g>\n  </g>\n</svg>';
+$.fn.extend({
+  decorateBackButton: function decorateBackButton() {
+    if ($(this).hasClass('back') || $(this).hasClass('backTo')) {
+      this.forEach(function(button) {
+        var buttonText = $(button).text();
+        $(button).html('<span>' + buttonText + '</span>');
+        $(button).prepend(chuiBackButtonSVG);
+      });
+    }
+  }
+});
+$(function() {
+  $('.back').decorateBackButton();
+  $('.backTo').decorateBackButton();
+});
+/**
+ * ChocolateChip-UI Widget - Adjust Navbar for iOS.
+ */
+$(function() {
+  /**
+   * Method to center H1 in Navbar.
+   * Check on widths of siblings:
+   */
+  $.extend({
+    /**
+     * Track whether to add a global nav for styling navbars.
+     */
+    globalNav: false,
+    AdjustNavbarLayout: function AdjustNavbarLayout(screen) {
+      if (!$('link[href*=ios]')[0]) return;
+      if (document.body && document.body.hasAttribute('nocenterheader')) {
+        return;
+      }
+      screen = $(screen);
+      if (!screen[0]);
+      var h1 = screen.find('h1');
+      if (h1.hasClass('do-not-adjust')) return;
+      var siblings = h1.siblings();
+      var whichSide = undefined;
+      var oppositeSide = undefined;
+      var rtl = $('html').attr('dir') === 'rtl';
+      var amount = 0;
+      var hidden = false;
+      var visibleSibling = undefined;
+      var calculateLongest = function calculateLongest(a, b) {
+        var widthA = a[0].clientWidth;
+        var widthB = b[0].clientWidth;
+        if (!widthA) {
+          widthA = 0;
+          whichSide = 'margin-right';
+          oppositeSide = 'margin-left';
+          if (rtl) {
+            whichSide = 'margin-left';
+            oppositeSide = 'margin-right';
+          }
+        }
+        if (!widthB) {
+          widthB = 0;
+          whichSide = 'margin-left';
+          oppositeSide = 'margin-right';
+          if (rtl) {
+            whichSide = 'margin-right';
+            oppositeSide = 'margin-left';
+          }
+        }
+        if (widthB > widthA) {
+          whichSide = 'margin-left';
+          oppositeSide = 'margin-right';
+          if (rtl) {
+            whichSide = 'margin-right';
+            oppositeSide = 'margin-left';
+          }
+          amount = widthB - widthA;
+        } else if (widthA > widthB) {
+          whichSide = 'margin-right';
+          oppositeSide = 'margin-left';
+          if (rtl) {
+            whichSide = 'margin-left';
+            oppositeSide = 'margin-right';
+          }
+          amount = widthA - widthB;
+        } else {
+          amount = 0;
+        }
+      };
 
-//# sourceMappingURL=chocolatechip.js.map
+      function handleOneSibling(sib) {
+        var sibling = sib || h1.siblings();
+        amount = sibling[0].clientWidth;
+        if (sibling.is(':first-child')) {
+          whichSide = 'margin-right';
+          oppositeSide = 'margin-left';
+          if (rtl) {
+            whichSide = 'margin-left';
+            oppositeSide = 'margin-right';
+          }
+        } else if (sibling.is(':last-child')) {
+          whichSide = 'margin-left';
+          oppositeSide = 'margin-right';
+          if (rtl) {
+            whichSide = 'margin-right';
+            oppositeSide = 'margin-left';
+          }
+        }
+      }
+      /**
+       * If one sibling:
+       */
+      if (siblings.length === 1) {
+        handleOneSibling();
+        /**
+         * If two siblings:
+         */
+      } else if (siblings.length === 2) {
+        siblings.forEach(function(item) {
+          if ($(item).css('display') === 'none') {
+            hidden = true;
+          } else {
+            visibleSibling = $(item);
+          }
+        });
+        if (hidden) {
+          handleOneSibling(visibleSibling);
+        } else {
+          calculateLongest(siblings.eq(0), siblings.eq(1));
+        }
+        /**
+         * H1 is alone:
+         */
+      } else {
+        whichSide = 'margin-left';
+        oppositeSide = 'margin-right';
+        amount = 0;
+      }
+      var props = {};
+      props[whichSide] = amount;
+      props[oppositeSide] = 0;
+      var sibwidth = 0;
+      if (siblings.size()) {
+        siblings.forEach(function(item) {
+          sibwidth += $(item)[0].clientWidth;
+        });
+      }
+      var headerWidth = screen.find('nav').width() / 2;
+      if (sibwidth + 20 > headerWidth) {
+        h1.css({
+          'margin-left': 0,
+          'margin-right': 0
+        });
+      } else {
+        h1.css(props);
+      }
+    }
+  });
+  setTimeout(function() {
+    if (!$('#globalNav')[0]) {
+      $('body').prepend('<nav id="globalNav"></nav>');
+    }
+    $('screen').forEach(function(screen) {
+      $.AdjustNavbarLayout(screen);
+    });
+  });
+});
+/**
+ * ChocolateChip-UI Widget - Navigation Module.
+ */
+$(function() {
+  /**
+   * Private variable to track navigation state:
+   */
+  var isNavigating = false;
+  /**
+   * get screen by id:
+   */
+  var getScreen = function getScreen(screen) {
+    return $('#' + screen);
+  };
+  /**
+   * Handle state of screens:
+   */
+  var makeScreenCurrent = function makeScreenCurrent(screen) {
+    screen = $(screen);
+    screen.addClass('current');
+    screen.removeClass('previous');
+    screen.removeClass('next');
+  };
+  var makeScreenPrevious = function makeScreenPrevious(screen) {
+    screen = $(screen);
+    screen.removeClass('current');
+    screen.removeClass('next');
+    screen.addClass('previous');
+  };
+  var makeScreenNext = function makeScreenNext(screen) {
+    screen = $(screen);
+    screen.removeClass('current');
+    screen.removeClass('previous');
+    screen.addClass('next');
+  };
+  $.extend({
+    /**
+     * Navigate to Specific Article
+     */
+    GoToScreen: function GoToScreen(destination) {
+      if ($.isNavigating) return;
+      $.isNavigating = true;
+      setTimeout(function() {
+        $.isNavigating = false;
+      }, 500);
+      $.ChuiRoutes.push(destination);
+      var currentScreen = $.screens.getCurrent();
+      var destinationScreen = function() {
+        var temp = undefined;
+        var regex = /:/img;
+        temp = regex.test(destination) ? destination.split(':')[0] : destination;
+        return getScreen(temp);
+      }();
+      if (currentScreen[0]) currentScreen[0].scrollTop = 0;
+      if (destinationScreen[0]) destinationScreen[0].scrollTop = 0;
+      makeScreenPrevious(currentScreen);
+      makeScreenCurrent(destinationScreen);
+      $.Router.dispatch(destination);
+    },
+    /**
+     * Navigate Back to Previous Article
+     */
+    GoBack: function GoBack() {
+      if ($.isNavigating) return;
+      $.isNavigating = true;
+      var currentScreen = $.screens.getCurrent();
+      $.ChuiRoutes.pop();
+      var destination = $.ChuiRoutes[$.ChuiRoutes.length - 1];
+      var destinationScreen = function() {
+        var temp = undefined;
+        var regex = /:/img;
+        temp = regex.test(destination) ? destination.split(':')[0] : destination;
+        return getScreen(temp);
+      }();
+      if (currentScreen[0]) currentScreen[0].scrollTop = 0;
+      if (destinationScreen[0]) destinationScreen[0].scrollTop = 0;
+      makeScreenNext(currentScreen);
+      makeScreenCurrent(destinationScreen);
+      $.Router.dispatch(destination);
+      setTimeout(function() {
+        $.isNavigating = false;
+      }, 500);
+    },
+    isNavigating: false,
+    /**
+     * Navigate Back to Non-linear Article
+     */
+    GoBackToScreen: function GoBackToScreen(destination) {
+      var position = $.ChuiRoutes.findIndex(function(dest) {
+        return dest = destination;
+      });
+      var destinationScreen = getScreen(destination);
+      while ($.ChuiRoutes.length > position + 1) {
+        var route = $.ChuiRoutes.pop();
+        route = route.split(':')[0];
+        var screen = getScreen(route);
+        makeScreenNext(screen);
+      }
+      makeScreenCurrent(destinationScreen);
+      $.Router.dispatch(destination);
+    }
+  });
+  /**
+   * Initialize Back Buttons:
+   */
+  $('body').on('tap', '.back', function() {
+    if (this.hasAttribute('disabled')) return;
+    $.GoBack();
+  });
+  /**
+   * Handle navigation events:
+   */
+  var handleNavigationEvent = function handleNavigationEvent(element) {
+    element = $(element);
+    if ($.isNavigating) return;
+    if (!element.hazAttr('data-goto')[0]) return;
+    if (element.closest('ul').is('.deletable')) return;
+    var destination = element.attr('data-goto');
+    if (!destination) return;
+    element.addClass('selected');
+    setTimeout(function() {
+      return element.removeClass('selected');
+    }, 1000);
+    /**
+     * Handle navigation:
+     */
+    $.GoToScreen(destination);
+  };
+  $('body').on('tap', 'li', function() {
+    handleNavigationEvent($(this));
+  });
+  $('body').on('doubletap', 'li', function() {
+    if (!$.isNavigating) {
+      handleNavigationEvent($(this));
+    }
+  });
+});
+/**
+ * ChocolateChip-UI Widget - Router.
+ */
+$.extend({
+  /**
+   * Define Router:
+   */
+  ChuiRoutes: [],
+  Router: function Router() {
+    return {
+      addRoute: function addRoute(options) {
+        if ($.type(options) === 'array') {
+          options.forEach(function(item) {
+            return $.on(item.route, item.callback);
+          });
+        }
+      },
+      getFullRoute: function getFullRoute() {
+        return $.ChuiRoutes.join('/');
+      },
+      getCurrentLoc: function getCurrentLoc() {
+        var temp = undefined.getFullRoute().split('/');
+        return temp[temp.length - 1];
+      },
+      dispatch: function dispatch(route) {
+        var temp = undefined;
+        var id = undefined;
+        if (route.match(/\:/)) {
+          temp = route.split(':');
+          id = temp[1];
+          route = temp[0];
+        }
+        $.send(route);
+      }
+    };
+  }
+});
+$.extend($.Router, {
+  dispatch: function dispatch(route) {
+    if (!route) return;
+    var temp = undefined;
+    var id = undefined;
+    if (route.match(/\:/)) {
+      temp = route.split(':');
+      id = temp[1];
+      route = temp[0];
+    }
+    $.send(route, id);
+  }
+});
+$.extend($.ChuiRoutes, {
+  getFullRoute: function getFullRoute() {
+    return this.join('/');
+  }
+});
+$(function() {
+  /**
+   * Set up initial route:
+   */
+  if ($('screen').size() && !$.ChuiRoutes.length) {
+    $.ChuiRoutes.push($('screen')[0].id);
+  }
+});
+/**
+ * ChocolateChip-UI Widget - Screens.
+ */
+$(function() {
+  /**
+   * Interface for the app's screens:
+   */
+  $.extend({
+    screens: $('screen')
+  });
+  $.extend($.screens, {
+    getCurrent: function getCurrent() {
+      return this.hazClass('current');
+    },
+    getNext: function getNext() {
+      return this.hazClass('next');
+    },
+    getPrevious: function getPrevious() {
+      return this.hazClass('previous');
+    }
+  });
+});

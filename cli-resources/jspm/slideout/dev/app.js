@@ -3,6 +3,7 @@ import {favorites} from './data/favorites';
 import {music} from './data/music';
 import {recipes} from './data/recipes';
 import {templates} from './templates/templates';
+import './src/slideout';
 
 $(() => {
 

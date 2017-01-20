@@ -6,6 +6,7 @@ import {todoStateTemplate} from './views/todoStateTemplate';
 import {renderActiveTodos} from './controllers/renderActiveTodos';
 import {toggleButtonState} from './controllers/toggleButtonState';
 import {boxSetupAndLoad} from './controllers/boxSetupAndLoad';
+import './src/box';
 
 $(function() {
   $('nav h1').removeAttr('style');

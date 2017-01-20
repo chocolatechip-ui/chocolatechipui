@@ -20,7 +20,7 @@ $(function() {
     element: '#todo-items',
     variable: 'todo',
     template: 
-    '<li class="{= todo.state }">\
+    '<li class="{= todo.state }" data-id="{= todo.id }">\
       <button class="set-state"><svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="selection-indicator"><path d="M2,13 L9.9294326,16.8406135 L17.1937075,1.90173332" id="checkmark" stroke="#007AFF" stroke-width="2"></path></g></g></svg></button>\
       <h3>{= todo.value }</h3>\
       <button class="delete-item" data-id={= todo.id }>\
@@ -134,9 +134,12 @@ $(function() {
         element: '.set-state',
         callback: function() {
           var parent = $(this).closest('li');
-          var index = parent.index();
+          var id = parent[0].dataset.id;
           parent.toggleClass('active');
           var state = parent.hasClass('active') ? 'active' : 'completed';
+          var index = todosData.findIndex(function(todo) {
+            return todo.id == id;
+          });
           todosData[index].state = state;
           renderActiveTodos(todosData);
           $.Box.set('chui-todos', todosData, function(err, value) {});

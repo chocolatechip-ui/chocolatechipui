@@ -1,6 +1,8 @@
 import {todosData} from '../data/todosData';
 import {todoView} from '../views/todoView';
 import {renderActiveTodos} from '../controllers/renderActiveTodos';
+import '../src/promises';
+import '../src/box';
 
 export function boxSetupAndLoad() {
 

@@ -1,3 +1,4 @@
+import '../../src/popup';
 export function handlePurchaseProgressBar() {
   // Define method for purchase process.
   // This will animate the progress bar:

@@ -179,6 +179,44 @@ gulp
 ```
 This will build and open the project in your browser.
 
+##Custom Build
+
+You can create a minimal build of ChocolateChip-UI for your project. This supports just navigation lists. All the other modules are put in a `src` folder in your project's `dev` folder. To create a custom build, just include the `-c` flag:
+
+
+```
+# For Android:
+chui -n myProject -o android -t basic -j -c
+chui -n myProject -o android -t navigation -j -c
+chui -n myProject -o android -t slideout -j -c
+chui -n myProject -o android -t tabbar -j -c
+# Default (basic):
+chui -n myProject -o android -j -c
+```
+
+```
+# For iOS:
+chui -n myProject -o ios -t basic -j -c
+chui -n myProject -o ios -t navigation -j -c
+chui -n myProject -o ios -t slideout -j -c
+chui -n myProject -o ios -t tabbar -j -c
+# Default (basic):
+chui -n myProject -j -c
+```
+
+###Importing Modules into Custom Project
+
+After creating a custom build project, you can import the extra modules you need like so:
+
+```
+import './src/switches';
+import './src/range';
+import './src/popup';
+```
+
+Please note that the path needs to be appropriate for where you are importing the module. To see how to do this in a complex project, check out the JSPM versions of the Reference Apps: `chui -r`
+
+
 ###ES6 Project Structure
 
 When you make a project for ES6, you'll work in the `dev` folder inside your project's `js` folder. The project setup automatically watches files in the `dev` folder. When you make and save changes, it rebuilds your project and reloads it in the browser.

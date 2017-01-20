@@ -1,3 +1,4 @@
+import '../src/formatters';
 export const fragranceGenresView = $.View({
   element: '#fragranceGenres',
   template: 

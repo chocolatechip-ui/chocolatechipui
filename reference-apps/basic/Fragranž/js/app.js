@@ -93,21 +93,22 @@ $(function() {
   });
 
   /**
-   * Popup for empty cart:
-   */
-  $.Popup({
-    id: "emptyCart",
-    title: 'Warning!', 
-    message: 'There is nothing in the cart. Please add some items first.', 
-    continueButton: 'OK'
-  });
-
-  /**
    * Go to cart:
    */
   $('#shoppingCart').on('tap', function() {
     if (!CartModel.size() > 0) {
-      $('#emptyCart').ShowPopup();
+			/**
+			 * Popup for empty cart:
+			 */
+			$.Popup({
+				id: "emptyCart",
+				title: 'Warning!',
+				message: 'There is nothing in the cart. Please add some items first.',
+				continueButton: 'OK'
+			});
+      $.delay(200).then(function() {
+      	$('#emptyCart').ShowPopup();
+      });
     } else {
       $.GoToScreen('cart');
     }

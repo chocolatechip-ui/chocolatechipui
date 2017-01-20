@@ -12,24 +12,26 @@
   <script type="application/json" src="../dist/chui.min.js.map"></script>
   <script>
     $(function() {
-      $.Popup({
-        id: "warning",
-        title: 'Attention Viewers!', 
-        message: 'The performance of "Merchant of Venice", Act 4 scene 1, will begin shortly. Thank you for your patience.', 
-        cancelButton: 'Skip', 
-        continueButton: 'Stay', 
-        callback: function() {
-          var popupMessageTarget = document.querySelector('#popupMessageTarget');
-          popupMessageTarget.textContent = 'Thanks for staying with us a bit longer.';
-          popupMessageTarget.classList.remove("animatePopupMessage");
-          popupMessageTarget.classList.add("animatePopupMessage");
-          setTimeout(function() {
-            $('#popupMessageTarget').empty()
-          }, 2000);
-        }
-      });
       $("#showPopup").on("tap", function() {
-        $('#warning').ShowPopup();
+        $.Popup({
+          id: "warning",
+          title: 'Attention Viewers!', 
+          message: 'The performance of "Merchant of Venice", Act 4 scene 1, will begin shortly. Thank you for your patience.', 
+          cancelButton: 'Skip', 
+          continueButton: 'Stay', 
+          callback: function() {
+            var popupMessageTarget = document.querySelector('#popupMessageTarget');
+            popupMessageTarget.textContent = 'Thanks for staying with us a bit longer.';
+            popupMessageTarget.classList.remove("animatePopupMessage");
+            popupMessageTarget.classList.add("animatePopupMessage");
+            setTimeout(function() {
+              $('#popupMessageTarget').empty()
+            }, 2000);
+          }
+        });
+        $.delay(200).then(function() {
+          $('#warning').ShowPopup();
+        });
       });
     });
   </script>

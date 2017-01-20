@@ -1,3 +1,5 @@
+import '../../src/sheets';
+import '../../src/segmented';
 import {searchParameters} from './searchParameters';
 
 export function searchPanelControlsSetup() {

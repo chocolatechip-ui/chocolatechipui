@@ -288,21 +288,6 @@
       }
     };
 
-    $.Popup({
-      id: "purchasePopup",
-      message: 'Do you want to purchase wine?', 
-      cancelButton: 'Cancel',
-      continueButton: 'Purchase',
-      callback: function() {
-        $('#confirmationPanel').hide();
-        setTimeout(function() {
-          $('#progressPanel').show();
-          $.ShowSheet('#purchaseSheet');
-          progressInterval = setInterval(processProgress, 0);
-        });
-      }
-    });
-
     /**
      * Initialize purchase sheet:
      */
@@ -315,8 +300,24 @@
     $('#selectedWine').on('tap', '.price', function(e) {
       var wine = $('#selectedWineVarietal').text().trim();
       var price = $(this).text().trim();
-      $('#purchasePopup').find('.panel p').text('Do you want to purchase ' + wine + ' for ' + price + '?');
-      $('#purchasePopup').ShowPopup();
+      $.Popup({
+        id: "purchasePopup",
+        message: 'Do you want to purchase wine?', 
+        cancelButton: 'Cancel',
+        continueButton: 'Purchase',
+        callback: function() {
+          $('#confirmationPanel').hide();
+          setTimeout(function() {
+            $('#progressPanel').show();
+            $.ShowSheet('#purchaseSheet');
+            progressInterval = setInterval(processProgress, 0);
+          });
+        }
+      });
+      $.delay(200).then(function() {
+        $('#purchasePopup').find('.panel p').text('Do you want to purchase ' + wine + ' for ' + price + '?');
+        $('#purchasePopup').ShowPopup();
+      });
     });
 
     /**

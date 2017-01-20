@@ -50,9 +50,10 @@ export const appView = $.View({
       element: '.set-state',
       callback: function() {
         const parent = $(this).closest('li');
-        const index = parent.index();
+        const id = parent[0].dataset.id;
         parent.toggleClass('active');
-        let state = parent.hasClass('active') ? 'active' : 'completed';
+        const state = parent.hasClass('active') ? 'active' : 'completed';
+        const index = todosData.findIndex(todo => todo.id == id);
         todosData[index].state = state;
         renderActiveTodos(todosData);
         $.Box.set('chui-todos', todosData, (err, value) => {});
@@ -66,7 +67,7 @@ export const appView = $.View({
       element: '.delete-item',
       callback: function() {
         const id = this.dataset.id;
-        const index = todosData.findIndex((todo) => todo.id === id);
+        const index = todosData.findIndex(todo => todo.id === id);
         /**
          * Remove item from list:
          */
