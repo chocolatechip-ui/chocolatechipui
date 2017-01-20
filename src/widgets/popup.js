@@ -71,23 +71,23 @@ $.extend({
           $('#' + id).remove();
         })
       });
-      $('#' + id).find('.cancel').on('tap', function () {
-        const $this = $(this);
-        if ($.isAndroid || $.isChrome) {
-          $this.addClass('selected');
-          setTimeout(function () {
-            $this.removeClass('selected');
-            $('#' + id).ClosePopup();
-          }, 300);
-        } else {
-          $('#' + id).ClosePopup();
-        }
-        $.delay(1000)
-        .then(function() {
-          $('#' + id).remove();
-        });
-      });
     }
+    $('#' + id).find('.cancel').on('tap', function () {
+      const $this = $(this);
+      if ($.isAndroid || $.isChrome) {
+        $this.addClass('selected');
+        setTimeout(function () {
+          $this.removeClass('selected');
+          $('#' + id).ClosePopup();
+        }, 300);
+      } else {
+        $('#' + id).ClosePopup();
+      }
+      $.delay(1000)
+      .then(function() {
+        $('#' + id).remove();
+      });
+    });
 
     $('.popup').on('tap', function (e) {
       $(this).removeClass('opened')

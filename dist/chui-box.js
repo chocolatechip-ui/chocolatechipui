@@ -527,7 +527,7 @@ var DOMStack = function() {
    */
   $.extend({
     lib: "ChocolateChipJS",
-    version: '4.9.0',
+    version: '4.9.1',
     noop: function noop() {},
     uuid: function uuid() {
       var d = Date.now();
@@ -6620,22 +6620,22 @@ $.extend({
           $('#' + id).remove();
         });
       });
-      $('#' + id).find('.cancel').on('tap', function() {
-        var $this = $(this);
-        if ($.isAndroid || $.isChrome) {
-          $this.addClass('selected');
-          setTimeout(function() {
-            $this.removeClass('selected');
-            $('#' + id).ClosePopup();
-          }, 300);
-        } else {
-          $('#' + id).ClosePopup();
-        }
-        $.delay(1000).then(function() {
-          $('#' + id).remove();
-        });
-      });
     }
+    $('#' + id).find('.cancel').on('tap', function() {
+      var $this = $(this);
+      if ($.isAndroid || $.isChrome) {
+        $this.addClass('selected');
+        setTimeout(function() {
+          $this.removeClass('selected');
+          $('#' + id).ClosePopup();
+        }, 300);
+      } else {
+        $('#' + id).ClosePopup();
+      }
+      $.delay(1000).then(function() {
+        $('#' + id).remove();
+      });
+    });
     $('.popup').on('tap', function(e) {
       $(this).removeClass('opened');
     });
