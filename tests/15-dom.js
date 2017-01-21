@@ -1538,7 +1538,7 @@ describe("DOM Tests", function () {
     expect(test4).to.equal('block');
   });
 
-  it('$(el).unique() should .', function () {
+  it('$(el).unique() should remove duplicate nodes from DOMStack.', function () {
     /* Get elements to test */
     var listItems = $('#myList').find('li');
     var listItems2 = $('#myList').find('li');
