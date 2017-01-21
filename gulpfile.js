@@ -170,37 +170,6 @@ var customChuiImports = [
   return ['./src/chocolatechip/', file, '.js'].join('')
 });
 
-gulp.task('chocolatechip', function() {
-  gulp.src(chocolateChipFiles)
-    .pipe(concat('chocolatechip.js'))
-    .pipe(sourcemaps.init())
-    .pipe(babel({
-      presets: ['es2015']
-    }))
-    .pipe(replaceWith('VERSION_NUMBER', pkg.version))
-    .pipe(beautify({indentSize: 2}))
-    .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('./dist'))
-    .pipe(uglify())
-    .pipe(rename('chocolatechip.min.js'))
-    .pipe(gulp.dest('./dist'))
-});
-
-gulp.task('concatWidgets', function() {
-  gulp.src('./src/chocolatechip/box.js')
-    .pipe(gulp.dest('./dist'))
-  gulp.src(chuiWidgets)
-    .pipe(concat('chui.js'))
-    .pipe(babel({
-      presets: ['es2015']
-    }))
-    .pipe(beautify({indentSize: 2}))
-    .pipe(gulp.dest('./dist'))
-    .pipe(uglify())
-    .pipe(rename('chui.min.js'))
-    .pipe(gulp.dest('./dist'))
-});
-
 gulp.task('chui', function() {
   gulp.src(chocolateChipFiles.concat(chuiWidgets))
     .pipe(concat('chui.js'))
@@ -333,7 +302,7 @@ gulp.task('import-dependencies', ['android-ripple', 'form', 'box-and-fetch', 'im
 
 gulp.task('minify-css', ['minify-android-css','minify-ios-css']);
 
-gulp.task('build', ['chocolatechipjs', 'concatWidgets']);
+// gulp.task('build', ['chocolatechipjs', 'concatWidgets']);
 gulp.task('default', ['chui', 'minify-css']);
-gulp.task('all', ['chocolatechip', 'chui', 'chui-box', 'minimal-chui', 'import-dependencies', 'minify-css']);
+gulp.task('all', ['chui', 'chui-box', 'minimal-chui', 'import-dependencies', 'minify-css']);
 
