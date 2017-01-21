@@ -527,7 +527,7 @@ var DOMStack = function() {
    */
   $.extend({
     lib: "ChocolateChipJS",
-    version: '4.9.1',
+    version: '4.9.4',
     noop: function noop() {},
     uuid: function uuid() {
       var d = Date.now();
