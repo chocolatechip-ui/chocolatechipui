@@ -1,6 +1,6 @@
 /* Color navbar and toolbar */
 nav, #globalNav, screen > footer, screen > toolbar {
-  background-color: skyblue;
+  background-color: #78c5e4 !important;
 }
 /* Color title and buttons in nav and toolbars */
 nav h1, nav button, toolbar button, footer button, nav .back, #chui-back-arrow  {
@@ -9,36 +9,36 @@ nav h1, nav button, toolbar button, footer button, nav .back, #chui-back-arrow  
 }
 /* Color disclosure indicators */
 disclosure {
-  border-color: skyblue;
+  border-color: #78c5e4;
 }
 /* Color segmented control marker */
 span.androidSelectionBorder,
 tabbar > span.androidSelectionBorder {
-  border-bottom: solid 3px skyblue !important;
+  border-bottom: solid 3px #78c5e4 !important;
 }
 /* Callout text */
 .attentionGrabber {
-  /*color: skyblue;*/
+  /*color: #78c5e4;*/
 }
 /* Editable Lists */
 #move-indicator,
 .list li > .deletion-indicator #checkmark,
 .multi-select-list > li #multi-select-icon,
 .select-list > li.selected #outer-circle {
-  /*stroke: skyblue !important;*/
+  /*stroke: #78c5e4 !important;*/
 }
 .list li > .deletion-indicator {
-  /*border: solid 1px skyblue;*/
+  /*border: solid 1px #78c5e4;*/
 }
 .list.editable > li.selected > .deletion-indicator,
 .list.deletable > li.selected > .deletion-indicator {
-  box-shadow: 0 0 2px 1px skyblue;
+  box-shadow: 0 0 2px 1px #78c5e4;
 }
 .multi-select-list > li > span.multi-selection-indicator {
-  border: solid 1px skyblue;
+  border: solid 1px #78c5e4;
 }
 .multi-select-list > li.selected > span.multi-selection-indicator {
-  box-shadow: 0 0 2px 1px skyblue;
+  box-shadow: 0 0 2px 1px #78c5e4;
 }
 #pagination-icons path#page-previous,
 #pagination-icons path#page-next {
@@ -49,21 +49,21 @@ tabbar > span.androidSelectionBorder {
   stroke: #333 !important;
 }
 input[type="range"] {
-  background-image: -webkit-linear-gradient(top, skyblue, skyblue), -webkit-linear-gradient(top, #cccccc, #cccccc);
+  background-image: -webkit-linear-gradient(top, #78c5e4, #78c5e4), -webkit-linear-gradient(top, #cccccc, #cccccc);
 }
 input[type="range"]::-webkit-slider-thumb {
-  background-color: skyblue;
+  background-color: #78c5e4;
 }
 input[type="range"]:active::-webkit-slider-thumb,
 .isDesktop input[type="range"]::-webkit-slider-thumb:hover,
 .isDesktop input[type="range"]:hover::-webkit-slider-thumb {
-  box-shadow: 0 0 0 1px skyblue, 0 0 0 8px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 0 0 1px #78c5e4, 0 0 0 8px rgba(0, 0, 0, 0.08);
 }
 .isDesktop input[type="range"]::-webkit-slider-thumb:hover::before {
-  background-color: skyblue;
+  background-color: #78c5e4;
 }
 .isNativeAndroidBrowser input[type="range"] {
-  background-image: -webkit-linear-gradient(top, skyblue, skyblue);
+  background-image: -webkit-linear-gradient(top, #78c5e4, #78c5e4);
 }
 textarea,
 input[type=text],
@@ -73,17 +73,17 @@ input[type=email],
 input[type=url],
 input[type=text] {
   background-image: 
-     -webkit-linear-gradient(left, skyblue, skyblue),
+     -webkit-linear-gradient(left, #78c5e4, #78c5e4),
      -webkit-linear-gradient(left, #ccc, #ccc);
   background-image: 
-     linear-gradient(to right, skyblue, skyblue),
+     linear-gradient(to right, #78c5e4, #78c5e4),
      linear-gradient(to right, #ccc, #ccc);
 }
 .segmented > span.androidSelectionBorder {
-  border-bottom: solid 3px skyblue;
+  border-bottom: solid 3px #78c5e4;
 }
 .select-list > li.selected #inner-circle {
-  fill: skyblue !important;
+  fill: #78c5e4 !important;
 }
 button.slide-out-button {
   background-image: -webkit-linear-gradient(left, #333, #333) !important;
@@ -94,22 +94,21 @@ button.slide-out-button::after {
   background-color: #333;
 }
 switch {
-  background-image: -webkit-linear-gradient(left, skyblue, skyblue), -webkit-linear-gradient(left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
-  background-image: linear-gradient(to left, skyblue, skyblue), linear-gradient(to left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+  background-image: -webkit-linear-gradient(left, #78c5e4, #78c5e4), -webkit-linear-gradient(left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+  background-image: linear-gradient(to left, #78c5e4, #78c5e4), linear-gradient(to left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
 }
 switch.checked > em {
-  background-color: skyblue;
+  background-color: #78c5e4;
 }
 switch.traditional.checked > em {
-  background-color: skyblue;
-  border: solid 1px skyblue;
+  background-color: #78c5e4;
+  border: solid 1px #78c5e4;
 }
-.isDesktop tabbar>button:hover, tabbar>button.selected {
-  color: skyblue !important;
+.isDesktop tabbar>button:hover, 
+tabbar>button.selected {
+  background-color: #78c5e4 !important;
 }
 tabbar ~ screen > nav {
-  background-color: #f0f0f0 !important;
-}
-tabbar ~ screen > nav > h1 {
-  color: #000 !important;
+  background-color: #78c5e4 !important;
+  border-bottom: 1px solid #78c5e4 !important;
 }

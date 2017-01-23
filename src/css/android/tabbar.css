@@ -13,13 +13,13 @@ tabbar {
   align-items: center;
   position: absolute;
   z-index: 11111111;
-  top: 0;
+  top: 50px;
   left: 0;
   right: 0;
   height: 30px;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  border-top: solid 1px #929292;
+  border-bottom: solid 1px #ccc;
   background-color: #f7f7f7; 
 }
 tabbar > span.androidSelectionBorder {
@@ -33,9 +33,6 @@ tabbar > span.androidSelectionBorder {
 }
 tabbar.showIcons {
   height: 50px;
-}
-tabbar ~ screen {
-  top: 30px !important;
 }
 tabbar.showIcons ~ screen {
   top: 50px !important;
@@ -119,7 +116,8 @@ tabbar > button.more > .icon {
   justify-content: center;
 }
 tabbar ~ screen > nav {
-  border-top: solid 1px #ccc !important;
+  border-bottom: solid 1px #929292 !important;
+  margin-bottom: 29px;
 }
 html[dir=rtl] tabbar > button.more > label {
   display: none;

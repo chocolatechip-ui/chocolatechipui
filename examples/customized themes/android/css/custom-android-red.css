@@ -1,6 +1,7 @@
 /* Color navbar and toolbar */
 nav, #globalNav, screen > footer, screen > toolbar {
   background-color: red;
+  border-color: red;
 }
 /* Color title and buttons in nav and toolbars */
 nav h1, nav button, toolbar button, footer button, nav .back, #chui-back-arrow  {
@@ -83,7 +84,7 @@ input[type=text] {
   border-bottom: solid 3px red;
 }
 .select-list > li.selected #inner-circle {
-	fill: red !important;
+  fill: red !important;
 }
 button.slide-out-button {
   background-image: -webkit-linear-gradient(left, #fafafa, #fafafa) !important;
@@ -104,12 +105,12 @@ switch.traditional.checked > em {
   background-color: red;
   border: solid 1px red;
 }
-.isDesktop tabbar>button:hover, tabbar>button.selected {
-	color: red !important;
+.isDesktop tabbar>button:hover, 
+tabbar>button.selected {
+  color: #fff !important;
+  background-color: red !important;
 }
 tabbar ~ screen > nav {
-	background-color: #f0f0f0 !important;
-}
-tabbar ~ screen > nav > h1 {
-	color: #000 !important;
+  background-color: red !important;
+  border-bottom: 1px solid red !important;
 }
