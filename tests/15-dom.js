@@ -672,9 +672,9 @@ describe("DOM Tests", function () {
     var inputIndex = li.index();
     var noIndex = emptyStack.index();
     /* Check for results */
-    expect(liIndex).to.equal(1);
-    expect(inputIndex).to.equal(1);
-    // expect(noIndex).to.equal(-1);
+    expect(liIndex).to.equal(0);
+    expect(inputIndex).to.equal(0);
+    expect(noIndex).to.equal(-1);
   });
 
   it('$(el).index(selector) should return selector in collection.', function () {
@@ -699,7 +699,7 @@ describe("DOM Tests", function () {
     expect(input3Index).to.equal(-1);
   });
 
-  it('$(el).index(element) should return .', function () {
+  it('$(el).index(element) should return index of element.', function () {
     /* Get elements to test */
     var li = $('#myList').find('li');
     var li1 = $('#myList').find('li').eq(0);

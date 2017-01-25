@@ -575,7 +575,7 @@ var DOMStack = function() {
     $.extend({
         lib: "ChocolateChipJS",
 
-        version: '4.9.7',
+        version: '4.9.8',
 
         noop: function noop() {},
 
@@ -1396,24 +1396,31 @@ var DOMStack = function() {
             if (!this.array.length) return new DOMStack();
             return this.eq(-1);
         },
-        index: function index(element) {
-            if (!this.array.length) return undefined;
-            if (!element) {
-                if (this.length >= 0) {
-                    return 1;
-                } else if (this.length == 0) {
-                    return -1;
-                } else {
-                    return -1;
-                }
+        index: function index(selector) {
+            var self = this.array;
+            /**
+             * No element, so no index:
+             */
+            if (!this.length) return -1;
+
+            var getIndex = function getIndex(element) {
+                return self.findIndex(function(el) {
+                    return $(el).is(selector);
+                });
+            };
+
+            if (selector && typeof selector === 'string') {
+                return getIndex(selector);
+            } else if (selector && selector.objectType && selector.objectType === 'domstack') {
+                return getIndex(selector[0]);
+            } else if (selector && selector.nodeType && selector.nodeType === 1) {
+                return getIndex(selector);
             } else {
-                if (element && element.objectType && element.objectType === 'domstack') {
-                    return this.indexOf(element.getData()[0]);
-                } else if (element.nodeType === 1) {
-                    return this.indexOf(element);
-                } else {
-                    return this.indexOf(element);
-                }
+                if (self.length > 1) return 0;
+                var siblings = this.parent().children().array;
+                return siblings.findIndex(function(el) {
+                    return el === self[0];
+                });
             }
         },
         children: function children(selector) {

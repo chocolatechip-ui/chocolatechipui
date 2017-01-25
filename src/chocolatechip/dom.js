@@ -254,24 +254,28 @@
       return this.eq(-1);
     },
 
-    index(element) {
-      if (!this.array.length) return undefined;
-      if (!element) {
-        if (this.length >= 0) {
-          return 1;
-        } else if (this.length == 0) {
-          return -1;
-        } else {
-          return -1;
-        }
+    index(selector) {
+      let self = this.array;
+      /**
+       * No element, so no index:
+       */
+      if (!this.length) return -1;
+      
+      const getIndex = element => self.findIndex(el => $(el).is(selector));
+
+      if (selector && typeof selector === 'string') {
+        return getIndex(selector);
+
+      } else if (selector && selector.objectType && selector.objectType === 'domstack') {
+        return getIndex(selector[0]);
+
+      } else if (selector && selector.nodeType && selector.nodeType === 1) {
+        return getIndex(selector);
+
       } else {
-        if (element && element.objectType && element.objectType === 'domstack') {
-          return this.indexOf(element.getData()[0]);
-        } else if (element.nodeType === 1) {
-          return this.indexOf(element);
-        } else {
-          return this.indexOf(element);
-        }
+        if (self.length > 1) return 0;
+        const siblings = this.parent().children().array;
+        return siblings.findIndex(el =>  el === self[0]);
       }
     },
 
