@@ -29,8 +29,8 @@
         }
 
         let result = [];
-        let prop = undefined;
-        let i = undefined;
+        let prop;
+        let i;
 
         for (prop in obj) {
           if (hasOwnProperty.call(obj, prop)) {

@@ -34,7 +34,7 @@
        * Create and return Promise with result from request: 
        */
       return new Promise(function(resolve, reject) {
-        let timeout = undefined;
+        let timeout;
         window.jsonp = window.jsonp || {};
         window.jsonp[callbackName] = function(response) {
           resolve({
@@ -414,7 +414,7 @@
 
   self.fetch = function(input, init) {
     return new Promise(function(resolve, reject) {
-      let request = undefined;
+      let request;
       if (Request.prototype.isPrototypeOf(input) && !init) {
         request = input;
       } else {

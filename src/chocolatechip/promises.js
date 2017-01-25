@@ -7,9 +7,9 @@
    * Define polyfill for ES6 Promises: 
    */
 
-  let extend = undefined;
-  let cycle = undefined;
-  let queue = undefined;
+  let extend;
+  let cycle;
+  let queue;
   extend = function(obj, name, val, config) {
     return Object.defineProperty(obj, name, {
       value: val,
@@ -18,13 +18,13 @@
     });
   };
   queue = (function() {
-    let first = undefined;
-    let last = undefined;
-    let item = undefined;
+    let first;
+    let last;
+    let item;
     function Item(func, self) {
       this.func = func;
       this.self = self;
-      this.next = undefined;
+      this.next;
     }
     return {
       add(func, self) {
@@ -57,7 +57,7 @@
    * Check that Promise is thenable: 
    */
   function isThenable(obj) {
-    let _then = undefined;
+    let _then;
     let obj_type = typeof obj;
     if (obj !== null &&
       (obj_type === "object" || obj_type === "function")) {
@@ -72,8 +72,8 @@
     this.chain.length = 0;
   }
   function notifyIsolated(self, callback, chain) {
-    let ret = undefined;
-    let _then = undefined;
+    let ret;
+    let _then;
     try {
       if (callback === false) {
         chain.reject(self.msg);
@@ -96,8 +96,8 @@
     }
   }
   function resolve(msg) {
-    let _then = undefined;
-    let deferred = undefined;
+    let _then;
+    let deferred;
     let self = this;
     if (self.triggered) {
       return;
@@ -161,7 +161,7 @@
     this.state = 0;
     this.triggered = false;
     this.chain = [];
-    this.msg = undefined;
+    this.msg;
   }
   function Promise(executor) {
     if (typeof executor !== "function") {

@@ -8,7 +8,7 @@
   $.fn.extend({
     data(key, value) {
       if (!this.size()) return new DOMStack();
-      let id = undefined;
+      let id;
       const ctx = this.array[0];
       if (!ctx.id) {
         ctx.id = $.uuid();

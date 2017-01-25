@@ -49,7 +49,7 @@ $(() => {
       $.ChuiRoutes.push(destination);
       const currentScreen = $.screens.getCurrent();
       const destinationScreen = function () {
-        let temp = undefined;
+        let temp;
         const regex = /:/img;
         temp = regex.test(destination) ? destination.split(':')[0] : destination;
         return getScreen(temp);
@@ -71,7 +71,7 @@ $(() => {
       $.ChuiRoutes.pop();
       const destination = $.ChuiRoutes[$.ChuiRoutes.length - 1];
       const destinationScreen = function () {
-        let temp = undefined;
+        let temp;
         const regex = /:/img;
         temp = regex.test(destination) ? destination.split(':')[0] : destination;
         return getScreen(temp);

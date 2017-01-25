@@ -1011,7 +1011,7 @@ $.extend({
         const self = this;
         const promise = self.ready().then(function () {
           const dbInfo = self.__dbInfo;
-          let result = undefined;
+          let result;
           try {
             result = localStorage.key(n);
           } catch (error) {
@@ -1192,7 +1192,7 @@ $.extend({
         }
 
         if (value && (value.toString() === '[object ArrayBuffer]' || value.buffer && value.buffer.toString() === '[object ArrayBuffer]')) {
-          let buffer = undefined;
+          let buffer;
           let marker = SERIALIZED_MARKER;
 
           if (value instanceof ArrayBuffer) {
@@ -1251,7 +1251,7 @@ $.extend({
         }
         let serializedString = value.substring(TYPE_SERIALIZED_MARKER_LENGTH);
         const type = value.substring(SERIALIZED_MARKER_LENGTH, TYPE_SERIALIZED_MARKER_LENGTH);
-        let blobType = undefined;
+        let blobType;
         if (type === TYPE_BLOB && BLOB_TYPE_PREFIX_REGEX.test(serializedString)) {
           const matcher = serializedString.match(BLOB_TYPE_PREFIX_REGEX);
           blobType = matcher[1];
@@ -1292,12 +1292,12 @@ $.extend({
       function stringToBuffer(serializedString) {
         let bufferLength = serializedString.length * 0.75;
         const len = serializedString.length;
-        let i = undefined;
+        let i;
         let p = 0;
-        var encoded1 = undefined,
-            encoded2 = undefined,
-            encoded3 = undefined,
-            encoded4 = undefined;
+        var encoded1,
+            encoded2,
+            encoded3,
+            encoded4;
         if (serializedString[serializedString.length - 1] === '=') {
           bufferLength--;
           if (serializedString[serializedString.length - 2] === '=') {
@@ -1324,7 +1324,7 @@ $.extend({
       function bufferToString(buffer) {
         const bytes = new Uint8Array(buffer);
         let base64String = '';
-        let i = undefined;
+        let i;
 
         for (i = 0; i < bytes.length; i += 3) {
           /*jslint bitwise: true */

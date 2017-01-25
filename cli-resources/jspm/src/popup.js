@@ -36,7 +36,7 @@ $.extend({
     const cancelButton = options.cancelButton ? `<button class="cancel" role="button">${settings.cancelButton}</button>` : '';
     const continueButton = settings.continueButton ? `<button class="continue" role="button">${settings.continueButton}</button>` : '';
     const callback = settings.callback || $.noop;
-    let popup = undefined;
+    let popup;
     if (settings.empty) {
       popup = `<div id="${id}" class="popup"><div ${width} class="dialog" role="alertdialog"></div></div>`;
     } else {

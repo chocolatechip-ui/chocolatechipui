@@ -25,8 +25,8 @@ $.extend({
       },
 
       dispatch: route => {
-        let temp = undefined;
-        let id = undefined;
+        let temp;
+        let id;
         if (route.match(/\:/)) {
           temp = route.split(':');
           id = temp[1];
@@ -41,8 +41,8 @@ $.extend({
 $.extend($.Router, {
   dispatch: route => {
     if (!route) return;
-    let temp = undefined;
-    let id = undefined;
+    let temp;
+    let id;
     if (route.match(/\:/)) {
       temp = route.split(':');
       id = temp[1];

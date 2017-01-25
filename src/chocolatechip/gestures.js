@@ -5,14 +5,14 @@
   (function() {
     "use strict";
     let touch = {};
-    let touchTimeout = undefined;
-    let swipeTimeout = undefined;
-    let tapTimeout = undefined;
+    let touchTimeout;
+    let swipeTimeout;
+    let tapTimeout;
     const longTapDelay = 750;
     let singleTapDelay = 150;
     $.gestureLength = 50;
     if ($.isAndroid) singleTapDelay = 200;
-    let longTapTimeout = undefined;
+    let longTapTimeout;
 
     function parentIfText(node) {
       return 'tagName' in node ? node : node.parentNode;
@@ -53,8 +53,8 @@
      * Execute this after DOM loads: 
      */
     $(() => {
-      let now = undefined;
-      let delta = undefined;
+      let now;
+      let delta;
       const body = $('body');
       let twoTouches = false;
 

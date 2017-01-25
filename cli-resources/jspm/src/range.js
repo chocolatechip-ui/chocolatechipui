@@ -10,7 +10,7 @@ $.fn.extend({
   Range: function() {
     if (this[0].nodeName !== 'INPUT') return;
     let input = $(this);
-    let newPlace = undefined;
+    let newPlace;
     const width = input.width();
     const newPoint = (input.val() - input.attr("min")) / (input.attr("max") - input.attr("min"));
     let offset = -1.3;

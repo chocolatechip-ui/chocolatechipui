@@ -91,7 +91,7 @@ var DOMStack = function() {
         value: function eq(index) {
             var ret = new DOMStack();
             if (!this.array.length) return ret;
-            var temp = undefined;
+            var temp = void 0;
             if (index < 0) {
                 temp = this.array[this.array.length + index];
                 ret.push(temp);
@@ -148,7 +148,7 @@ var DOMStack = function() {
     }, {
         key: 'forEach',
         value: function forEach(callback) {
-            var value = undefined;
+            var value = void 0;
             var i = 0;
             var len = this.array.length;
             for (; i < len; i++) {
@@ -161,7 +161,7 @@ var DOMStack = function() {
     }, {
         key: 'each',
         value: function each(callback) {
-            var value = undefined;
+            var value = void 0;
             var i = 0;
             var len = this.array.length;
             for (; i < len; i++) {
@@ -242,7 +242,7 @@ var DOMStack = function() {
     }, {
         key: 'concat',
         value: function concat(collection) {
-            var temp = undefined;
+            var temp = void 0;
             if (Array.isArray(collection)) {
                 temp = collection;
             } else if (collection && collection.objectType && collection.objectType === 'domstack') {
@@ -344,7 +344,7 @@ var DOMStack = function() {
         var classRE = /^\.([\w-])$/;
         var tagRE = /^[\w-]+$/;
         var readyRE = /complete|loaded|interactive/;
-        var temp = undefined;
+        var temp = void 0;
 
         var slice = function slice(elements) {
             temp = new DOMStack([].slice.apply(elements));
@@ -522,8 +522,8 @@ var DOMStack = function() {
                 }
 
                 var result = [];
-                var prop = undefined;
-                var i = undefined;
+                var prop = void 0;
+                var i = void 0;
 
                 for (prop in obj) {
                     if (hasOwnProperty.call(obj, prop)) {
@@ -593,7 +593,7 @@ var DOMStack = function() {
 
         html: function html(HTMLString) {
             var ret = new DOMStack();
-            var temp = undefined;
+            var temp = void 0;
 
             var wrapperMap = {
                 option: [1, "<select multiple='multiple'>", "</select>"],
@@ -651,8 +651,8 @@ var DOMStack = function() {
             };
             var script = document.createElement("script");
             var done = false;
-            var err = undefined;
-            var loadScript = undefined;
+            var err = void 0;
+            var loadScript = void 0;
             var handleError = function handleError() {
                 err = new Error(src || "EMPTY");
                 loadScript();
@@ -692,10 +692,10 @@ var DOMStack = function() {
         },
 
         each: function each(obj, callback) {
-            var value = undefined;
-            var key = undefined;
+            var value = void 0;
+            var key = void 0;
             var i = 0;
-            var length = undefined;
+            var length = void 0;
 
             if (Array.isArray(obj)) {
                 length = obj.length;
@@ -744,8 +744,8 @@ var DOMStack = function() {
          */
         replace: function replace(newElement, targetElement) {
             if (!newElement || !targetElement) return;
-            var newEl = undefined;
-            var targEl = undefined;
+            var newEl = void 0;
+            var targEl = void 0;
             if (typeof newElement === 'string') {
                 newEl = $(newElement)[0];
             } else if (newElement.objectType && newElement.objectType === 'domstack') {
@@ -1183,9 +1183,9 @@ var DOMStack = function() {
             var that = this;
             var __is = function __is(node, arg) {
                 if (typeof arg === 'string') {
-                    var nodes = undefined;
+                    var nodes = void 0;
                     if (node.parentNode) nodes = node.parentNode.querySelectorAll(arg);
-                    var elements = undefined;
+                    var elements = void 0;
                     if (nodes && nodes.length) {
                         elements = Array.prototype.slice.apply(node.parentNode.querySelectorAll(arg));
                     }
@@ -1230,9 +1230,9 @@ var DOMStack = function() {
             var __nots = function __nots(node, arg) {
                 var result = [];
                 if (typeof arg === 'string') {
-                    var nodes = undefined;
+                    var nodes = void 0;
                     if (node.parentNode) nodes = node.parentNode.querySelectorAll(arg);
-                    var elements = undefined;
+                    var elements = void 0;
                     if (nodes && nodes.length) {
                         elements = Array.prototype.slice.apply(node.parentNode.querySelectorAll(arg));
                     }
@@ -1308,7 +1308,7 @@ var DOMStack = function() {
         prev: function prev(selector) {
             if (!this.array.length) return new DOMStack();
             var ret = new DOMStack();
-            var children = undefined;
+            var children = void 0;
             var previousElement = this[0].previousElementSibling;
             if (selector && typeof selector === 'string') {
                 children = this.siblings(selector);
@@ -1326,8 +1326,8 @@ var DOMStack = function() {
         prevAll: function prevAll(selector) {
             if (!this.array.length) return new DOMStack();
             var ret = new DOMStack();
-            var __siblings = undefined;
-            var __parent = undefined;
+            var __siblings = void 0;
+            var __parent = void 0;
             var __self = this[0];
             var __sibs = Array.prototype.slice.apply(this[0].parentNode.children);
             var pos = __sibs.indexOf(__self);
@@ -1348,7 +1348,7 @@ var DOMStack = function() {
         next: function next(selector) {
             if (!this.array.length) return new DOMStack();
             var ret = new DOMStack();
-            var children = undefined;
+            var children = void 0;
             var nextElement = this[0].nextElementSibling;
             if (selector && typeof selector === 'string') {
                 children = this.siblings(selector);
@@ -1365,8 +1365,8 @@ var DOMStack = function() {
         nextAll: function nextAll(selector) {
             if (!this.array.length) return new DOMStack();
             var ret = new DOMStack();
-            var __siblings = undefined;
-            var __parent = undefined;
+            var __siblings = void 0;
+            var __parent = void 0;
             var __self = this[0];
             var __sibs = Array.prototype.slice.apply(this[0].parentNode.children);
             var pos = __sibs.indexOf(__self);
@@ -1440,10 +1440,10 @@ var DOMStack = function() {
         },
         siblings: function siblings(selector) {
             if (!this.array.length) return new DOMStack();
-            var __siblings = undefined;
+            var __siblings = void 0;
             var ret = new DOMStack();
             var $this = this;
-            var parent = undefined;
+            var parent = void 0;
             var children = Array.prototype.slice.apply($this[0].parentNode.children);
 
             /**
@@ -1465,7 +1465,7 @@ var DOMStack = function() {
         parent: function parent(selector) {
             if (!this.array.length) return new DOMStack();
             var ret = new DOMStack();
-            var parents = undefined;
+            var parents;
             var self = this[0];
             var result = [];
             if (selector) {
@@ -1495,7 +1495,7 @@ var DOMStack = function() {
             if (typeof selector === 'undefined') {
                 return new DOMStack();
             }
-            var p = undefined;
+            var p = void 0;
             if (this[0]) {
                 p = this[0].parentNode;
             }
@@ -1708,8 +1708,8 @@ var DOMStack = function() {
         },
         wrap: function wrap(string) {
             if (!this.array.length || !string) return new DOMStack();
-            var tempNode = undefined;
-            var whichClone = undefined;
+            var tempNode = void 0;
+            var whichClone = void 0;
             this.forEach(function(ctx) {
                 tempNode = $.html(string);
                 whichClone = $(ctx).clone(true);
@@ -1820,7 +1820,7 @@ var DOMStack = function() {
             if (!this.array.length) return new DOMStack();
             if (typeof className !== "string") return;
             var ret = new DOMStack();
-            var classes = undefined;
+            var classes = void 0;
             this.forEach(function(node) {
                 if (/\s/.test(className)) {
                     classes = className.split(' ');
@@ -1847,7 +1847,7 @@ var DOMStack = function() {
         removeClass: function removeClass(className) {
             if (!this.array.length) return new DOMStack();
             var ret = new DOMStack();
-            var classes = undefined;
+            var classes = void 0;
             this.forEach(function(node) {
                 if (!node) return;
                 if (/\s/.test(className)) {
@@ -2007,7 +2007,7 @@ var DOMStack = function() {
             }
         };
 
-        var errors = undefined;
+        var errors = void 0;
         if ($('html').attr('lang') == 'en') errors = EventErrorMessages.en;
         if ($('html').attr('lang') == 'es') errors = EventErrorMessages.es;
 
@@ -2051,7 +2051,7 @@ var DOMStack = function() {
                 },
 
                 forEach: function forEach(callback) {
-                    var value = undefined;
+                    var value = void 0;
                     var i = -1;
                     var len = __array.length;
                     while (++i < len) {
@@ -2217,7 +2217,7 @@ var DOMStack = function() {
                     });
                 }
                 var ret = [];
-                var events = undefined;
+                var events = void 0;
                 if (typeof event === 'string') {
                     event = event.trim();
                     if (/\s/.test(event)) {
@@ -2327,14 +2327,14 @@ $(function() {
     "use strict";
 
     var touch = {};
-    var touchTimeout = undefined;
-    var swipeTimeout = undefined;
-    var tapTimeout = undefined;
+    var touchTimeout = void 0;
+    var swipeTimeout = void 0;
+    var tapTimeout = void 0;
     var longTapDelay = 750;
     var singleTapDelay = 150;
     $.gestureLength = 50;
     if ($.isAndroid) singleTapDelay = 200;
-    var longTapTimeout = undefined;
+    var longTapTimeout = void 0;
 
     function parentIfText(node) {
         return 'tagName' in node ? node : node.parentNode;
@@ -2374,8 +2374,8 @@ $(function() {
      * Execute this after DOM loads: 
      */
     $(function() {
-        var now = undefined;
-        var delta = undefined;
+        var now = void 0;
+        var delta = void 0;
         var body = $('body');
         var twoTouches = false;
 
@@ -2519,7 +2519,7 @@ var CCDataCache = {
 $.fn.extend({
     data: function data(key, value) {
         if (!this.size()) return new DOMStack();
-        var id = undefined;
+        var id = void 0;
         var ctx = this.array[0];
         if (!ctx.id) {
             ctx.id = $.uuid();
@@ -2768,7 +2768,7 @@ if (!Array.prototype.find) {
             var list = Object(this);
             var length = list.length >>> 0;
             var thisArg = arguments[1];
-            var value = undefined;
+            var value = void 0;
 
             for (var i = 0; i < length; i++) {
                 value = list[i];
@@ -2792,7 +2792,7 @@ if (!Array.prototype.findIndex) {
             var list = Object(this);
             var length = list.length >>> 0;
             var thisArg = arguments[1];
-            var value = undefined;
+            var value = void 0;
 
             for (var i = 0; i < length; i++) {
                 value = list[i];
@@ -2926,7 +2926,7 @@ if (!Array.prototype.unique) {
         }
     };
 
-    var errors = undefined;
+    var errors = void 0;
     if ($('html').attr('lang') == 'en') errors = ViewErrorMessages.en;
     if ($('html').attr('lang') == 'es') errors = ViewErrorMessages.es;
 
@@ -3128,8 +3128,8 @@ if (!Array.prototype.unique) {
             /**
              * Private Properties:
              */
-            var __element = undefined;
-            var __origElement = undefined;
+            var __element = void 0;
+            var __origElement = void 0;
             if (!options) options = {};
             if (options && options.element) {
                 __origElement = options.element;
@@ -3154,7 +3154,7 @@ if (!Array.prototype.unique) {
              * Private Functions:
              */
 
-            var parsedTemplate = undefined;
+            var parsedTemplate = void 0;
 
             var parseView = function parseView(template, variable) {
                 if (!template) {
@@ -3585,7 +3585,7 @@ $.extend({
         }, _defineProperty(_es, 'noPropForPropEquals', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna propiedad ni valor. Sin ellos no podemos encontrar un objeto de iqual valor en la colección del modelo. Por favor proporcione los dos."), _defineProperty(_es, 'noDataToPushToModel', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionaron ningunos datos para añadir al fin de la colección del modelo."), _defineProperty(_es, 'noDataForShiftToModel', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninungos datos para agregar al inicio de la colección del modelo."), _defineProperty(_es, 'noEndForModelSlice', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ningún valor final para extraer de la colección del modelo. Por favor proporcione un valor numérico."), _defineProperty(_es, 'noStartModelForSlice', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ningún valor inicial para extraer datos de la colección del modelo. Por favor proporcione un valor numérico inicial así como un final para que podamos extraer los datos de la colección del modelo."), _defineProperty(_es, 'noEndForModelSplice', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna posición final para realizar una acción de «splice» en la colección del modelo. Por favor proporcione una."), _defineProperty(_es, 'noStartForModelSplice', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna posición inicial para realizar una acción de «splice» en la colección del modelo. Por favor proporcione una."), _defineProperty(_es, 'noDataToInsertInModel', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionaron ningunos datos para insertar en la colección del modelo. Se esperaba un objeto, pero no se encontró nada. Por favor proporcione un objeto de datos. El primer argumento debe de ser una position, seguido por los datos."), _defineProperty(_es, 'noPosToInserInModel', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna posición para saber en dónde insertar los datos en la colección del modelo. Por favor proporcione una posición de valor numérico y unos datos para insertar en la colección del modelo. El primer argumento debe de ser un valor numérico para la posición, y entonces unos datos que insertar."), _defineProperty(_es, 'noPropForPlucking', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna propiedad para extraerla de la colección del modelo. Por favor proporcione una propiedad."), _defineProperty(_es, 'noCallbackForModelFind', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna función callback como parámetro a fin de realizar una búsqueda en la colección del modelo. Por favor proporcione una."), _defineProperty(_es, 'noElementForIndexOf', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ningun element a fin de averiguar el índice de un objeto en la colección del modelo. Por favor proporcione una."), _defineProperty(_es, 'noDataToConcat', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionaron ningunos datos para concatenar en este modelo. ¿Se le olvidó proporcionar los datos?"), _defineProperty(_es, 'noPropsForSortBy', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna propiedad. Sin una no se puede ordenar los datos del modelo."), _defineProperty(_es, 'noEventForEventDeletion', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ningún evento a fin de eliminar la función callback de este modelo. Por favor proporcione tanto un evento como una posición en la colección para la callback que se quiere eliminar. Es posible que un evento tenga más de una callback registrada a él."), _defineProperty(_es, 'noCallbackForForEach', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna función callback para el método «forEach». Ésta se requiere."), _defineProperty(_es, 'noDataToReplaceInModel', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionaron ningunos datos para reemplazar los del modelo. Si es lo que usted quiere hacer, por favor proporicone unos datos para realizar esta operación. En otro caso, si el propósito de esta operación es el de vaciar el modelo, use `purge()`."), _defineProperty(_es, 'modelHasNoDataToReturn', "Hubo Error de Modelo ChocolateChip-UI: Este modelo no tiene datos suyos. Quizás se le olvidó asignarselos cuando lo creó."), _defineProperty(_es, 'positionGreaterThanModelLength', "Hubo Error de Modelo ChocolateChip-UI: The position you provided is to set a property is greater than the number of items in this model. La positición que se proporicionó es más grande que el número de objetos en este modelo."), _es)
     };
 
-    var errors = undefined;
+    var errors = void 0;
     if ($('html').attr('lang') == 'en') errors = ModelErrorMessages.en;
     if ($('html').attr('lang') == 'es') errors = ModelErrorMessages.es;
 
@@ -3597,7 +3597,7 @@ $.extend({
         function Model(data) {
             _classCallCheck(this, Model);
 
-            var d = undefined;
+            var d = void 0;
             if ($.type(data) == 'array') {
                 d = data.slice();
             } else if ($.type(data) == 'object') {
@@ -3715,7 +3715,7 @@ $.extend({
                 } else if ($.type(this[dataStore]) === 'array') {
                     this[dataStore] = [];
                 } else {
-                    this[dataStore] = undefined;
+                    this[dataStore];
                 }
             }
 
@@ -3783,7 +3783,7 @@ $.extend({
             key: 'replace',
             value: function replace(data) {
                 if (data) {
-                    var d = undefined;
+                    var d = void 0;
                     if ($.type(data) == 'array') {
                         d = data.slice();
                     } else if ($.type(data) == 'object') {
@@ -4110,7 +4110,7 @@ $.extend({
                     return;
                 }
                 if (this[dataStore] && this[dataStore].length) {
-                    var value = undefined;
+                    var value = void 0;
                     var i = -1;
                     var len = this[dataStore].length;
                     while (++i < len) {
@@ -4409,12 +4409,12 @@ $(function() {
             var h1 = screen.find('h1');
             if (h1.hasClass('do-not-adjust')) return;
             var siblings = h1.siblings();
-            var whichSide = undefined;
-            var oppositeSide = undefined;
+            var whichSide = void 0;
+            var oppositeSide = void 0;
             var rtl = $('html').attr('dir') === 'rtl';
             var amount = 0;
             var hidden = false;
-            var visibleSibling = undefined;
+            var visibleSibling = void 0;
 
             var calculateLongest = function calculateLongest(a, b) {
                 var widthA = a[0].clientWidth;
@@ -4591,7 +4591,7 @@ $(function() {
             $.ChuiRoutes.push(destination);
             var currentScreen = $.screens.getCurrent();
             var destinationScreen = function() {
-                var temp = undefined;
+                var temp = void 0;
                 var regex = /:/img;
                 temp = regex.test(destination) ? destination.split(':')[0] : destination;
                 return getScreen(temp);
@@ -4613,7 +4613,7 @@ $(function() {
             $.ChuiRoutes.pop();
             var destination = $.ChuiRoutes[$.ChuiRoutes.length - 1];
             var destinationScreen = function() {
-                var temp = undefined;
+                var temp = void 0;
                 var regex = /:/img;
                 temp = regex.test(destination) ? destination.split(':')[0] : destination;
                 return getScreen(temp);
@@ -4718,8 +4718,8 @@ $.extend({
             },
 
             dispatch: function dispatch(route) {
-                var temp = undefined;
-                var id = undefined;
+                var temp = void 0;
+                var id = void 0;
                 if (route.match(/\:/)) {
                     temp = route.split(':');
                     id = temp[1];
@@ -4734,8 +4734,8 @@ $.extend({
 $.extend($.Router, {
     dispatch: function dispatch(route) {
         if (!route) return;
-        var temp = undefined;
-        var id = undefined;
+        var temp = void 0;
+        var id = void 0;
         if (route.match(/\:/)) {
             temp = route.split(':');
             id = temp[1];

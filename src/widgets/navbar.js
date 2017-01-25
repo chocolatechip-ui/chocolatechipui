@@ -25,12 +25,12 @@ $(() => {
       const h1 = screen.find('h1');
       if (h1.hasClass('do-not-adjust')) return;
       const siblings = h1.siblings();
-      let whichSide = undefined;
-      let oppositeSide = undefined;
+      let whichSide;
+      let oppositeSide;
       const rtl = $('html').attr('dir') === 'rtl';
       let amount = 0;
       let hidden = false;
-      let visibleSibling = undefined;
+      let visibleSibling;
 
       const calculateLongest = function calculateLongest(a, b) {
         let widthA = a[0].clientWidth;

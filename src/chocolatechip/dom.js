@@ -33,9 +33,9 @@
       const that = this;
       const __is = (node, arg) => {
         if (typeof arg === 'string') {
-          let nodes = undefined;
+          let nodes;
           if (node.parentNode) nodes = node.parentNode.querySelectorAll(arg);
-          let elements = undefined;
+          let elements;
           if (nodes && nodes.length) {
             elements = Array.prototype.slice.apply(node.parentNode.querySelectorAll(arg));
           }
@@ -81,9 +81,9 @@
       const __nots = (node, arg) => {
         let result = [];
         if (typeof arg === 'string') {
-          let nodes = undefined;
+          let nodes;
           if (node.parentNode) nodes = node.parentNode.querySelectorAll(arg);
-          let elements = undefined;
+          let elements;
           if (nodes && nodes.length) {
             elements = Array.prototype.slice.apply(node.parentNode.querySelectorAll(arg));
           }
@@ -159,7 +159,7 @@
     prev(selector) {    
       if (!this.array.length) return new DOMStack();
       let ret = new DOMStack();
-      let children = undefined;
+      let children;
       let previousElement = this[0].previousElementSibling;
       if (selector && typeof selector === 'string') {
         children = this.siblings(selector);
@@ -178,8 +178,8 @@
     prevAll(selector) {
       if (!this.array.length) return new DOMStack();
       let ret = new DOMStack();
-      let __siblings = undefined;
-      let __parent = undefined;
+      let __siblings;
+      let __parent;
       const __self = this[0];
       let __sibs = Array.prototype.slice.apply(this[0].parentNode.children);
       let pos = __sibs.indexOf(__self);
@@ -201,7 +201,7 @@
     next(selector) {
       if (!this.array.length) return new DOMStack();
       let ret = new DOMStack();
-      let children = undefined;
+      let children;
       let nextElement = this[0].nextElementSibling;
       if (selector && typeof selector === 'string') {
         children = this.siblings(selector);
@@ -219,8 +219,8 @@
     nextAll(selector) {
       if (!this.array.length) return new DOMStack();
       let ret = new DOMStack();
-      let __siblings = undefined;
-      let __parent = undefined;
+      let __siblings;
+      let __parent;
       const __self = this[0];
       let __sibs = Array.prototype.slice.apply(this[0].parentNode.children);
       let pos = __sibs.indexOf(__self);
@@ -299,10 +299,10 @@
     siblings(selector) {
       if (!this.array.length)
         return new DOMStack();
-      let __siblings = undefined;
+      let __siblings;
       let ret = new DOMStack();
       const $this = this;
-      let parent = undefined;
+      let parent;
       let children = Array.prototype.slice.apply($this[0].parentNode.children);
 
       /**
@@ -325,7 +325,7 @@
     parent(selector) {
       if (!this.array.length) return new DOMStack();
       let ret = new DOMStack();
-      var parents = undefined;
+      var parents;
       var self = this[0];
       var result = [];
       if (selector) {
@@ -357,7 +357,7 @@
       if (typeof selector === 'undefined') {
         return new DOMStack();
       }
-      let p = undefined;
+      let p;
       if (this[0]) {
         p = this[0].parentNode;
       }
@@ -579,8 +579,8 @@
 
     wrap(string) {
       if (!this.array.length || !string) return new DOMStack();
-      let tempNode = undefined;
-      let whichClone = undefined;
+      let tempNode;
+      let whichClone;
       this.forEach(ctx => {
         tempNode = $.html(string);
         whichClone = $(ctx).clone(true);
@@ -702,7 +702,7 @@
       if (typeof className !== "string")
         return;
       let ret = new DOMStack();
-      let classes = undefined;
+      let classes;
       this.forEach(node => {
         if (/\s/.test(className)) {
           classes = className.split(' ');
@@ -731,7 +731,7 @@
     removeClass(className) {
       if (!this.array.length) return new DOMStack();
       let ret = new DOMStack();
-      let classes = undefined;
+      let classes;
       this.forEach(node => {
         if (!node)
           return;

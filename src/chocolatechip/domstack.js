@@ -32,7 +32,7 @@ class DOMStack {
   eq(index) {
     let ret = new DOMStack();
     if (!this.array.length) return ret;
-    let temp = undefined;
+    let temp;
     if (index < 0) {
       temp = this.array[this.array.length + index];
       ret.push(temp);
@@ -83,7 +83,7 @@ class DOMStack {
   }
 
   forEach(callback) {
-    let value = undefined;
+    let value;
     let i = 0;
     const len = this.array.length;
     for (; i < len; i++) {
@@ -95,7 +95,7 @@ class DOMStack {
   }
 
   each(callback) {
-    let value = undefined;
+    let value;
     let i = 0;
     const len = this.array.length;
     for (; i < len; i++) {
@@ -151,7 +151,7 @@ class DOMStack {
   }
 
   concat(collection) {
-    let temp = undefined;
+    let temp;
     if (Array.isArray(collection)) {
       temp = collection;
     } else if (collection && collection.objectType && collection.objectType === 'domstack') {

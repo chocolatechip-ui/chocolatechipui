@@ -84,7 +84,7 @@
     }
   };
 
-  let errors = undefined;
+  let errors;
   if ($('html').attr('lang') == 'en') errors = ModelErrorMessages.en;
   if ($('html').attr('lang') == 'es') errors = ModelErrorMessages.es;
 
@@ -94,7 +94,7 @@
 
   class Model {
     constructor (data) {
-      let d = undefined;
+      let d;
       if ($.type(data) == 'array') {
         d = data.slice();
       } else if ($.type(data) == 'object') {
@@ -190,7 +190,7 @@
       } else if ($.type(this[dataStore]) === 'array') {
         this[dataStore] = [];
       } else {
-        this[dataStore] = undefined;
+        this[dataStore];
       }
     }
 
@@ -249,7 +249,7 @@
      */
     replace(data) {
       if (data) {      
-      let d = undefined;
+      let d;
       if ($.type(data) == 'array') {
         d = data.slice();
       } else if ($.type(data) == 'object') {
@@ -542,7 +542,7 @@
         return;
       }
       if (this[dataStore] && this[dataStore].length) {
-        let value = undefined;
+        let value;
         let i = -1;
         const len = this[dataStore].length;
         while (++i < len) {

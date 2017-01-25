@@ -34,8 +34,8 @@ $(function() {
       const x = $.isAndroid ? e.touches[0].pageX - offset.left : e.pageX - offset.left;
       const y = $.isAndroid ? e.touches[0].pageY - offset.top :  e.pageY - offset.top;
 
-      let navBkColor = undefined;
-      let backgroundColor = undefined;
+      let navBkColor;
+      let backgroundColor;
 
       /**
        * Create ripple sheath and append to target:

@@ -55,7 +55,7 @@ $.extend({
         __tabbarScreens.push(screens.eq(idx));
       });
     }
-    let selectedScreen = undefined;
+    let selectedScreen;
     let androidSelectionIndicator = '';
     if ($.theme === 'android') {
       androidSelectionIndicator = '<span class="androidSelectionBorder"></span>';

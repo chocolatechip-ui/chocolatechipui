@@ -4,8 +4,8 @@
  */
 $.fn.extend({
   serializeArray() {
-    let name = undefined;
-    let type = undefined;
+    let name;
+    let type;
     let ret = [];
     const add = value => {
       if ($.type(value) === 'array') {

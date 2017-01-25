@@ -106,8 +106,8 @@ $.fn.extend({
 
   validatePhoneNumber: function(int) {
     if (this[0].nodeName !== 'INPUT') return;
-    let phone = undefined;
-    let phoneNumber = undefined;
+    let phone;
+    let phoneNumber;
     const convertLettersToNumbers = value => {
       let phonenumber = "";
       value = value.toLowerCase();

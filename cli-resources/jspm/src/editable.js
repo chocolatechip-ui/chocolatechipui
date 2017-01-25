@@ -50,16 +50,16 @@ $.extend({
 
     if (options) $.extend(settings, options);
 
-    let deleteButton = undefined;
-    let editButton = undefined;
-    let deletionIndicator = undefined;
-    let button = undefined;
+    let deleteButton;
+    let editButton;
+    let deletionIndicator;
+    let button;
     let dispelDeletable = 'swiperight';
     let enableDeletable = 'swipeleft';
-    let moveUpIndicator = undefined;
-    let moveDownIndicator = undefined;
+    let moveUpIndicator;
+    let moveDownIndicator;
     let element = settings.element;
-    let deleteLabel = undefined;
+    let deleteLabel;
 
     let dir = $('html').attr('dir');
     dir = dir ? dir.toLowerCase() : '';

@@ -24,9 +24,9 @@ $(() => {
       };
       $.extend(settings, options);
 
-      let segmented = undefined;
+      let segmented;
       const labels = (settings.labels) ? settings.labels : [];
-      let __selection = undefined;
+      let __selection;
       let __element = settings.element;
 
       function createSegmentedButton() {
@@ -57,7 +57,7 @@ $(() => {
       /**
        * For Android Material Design:
        */
-      let androidSelectionBorder = undefined;
+      let androidSelectionBorder;
       if ($.theme === 'android') {
         androidSelectionBorder = $(__element).find('.androidSelectionBorder');
         let selectedButton = $(__element).find('button').eq(settings.selected);

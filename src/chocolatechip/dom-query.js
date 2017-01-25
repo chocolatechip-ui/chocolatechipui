@@ -8,7 +8,7 @@
     const classRE = /^\.([\w-])$/;
     const tagRE = /^[\w-]+$/;
     const readyRE = /complete|loaded|interactive/;
-    let temp = undefined;
+    let temp;
 
     const slice = elements => {
       temp = new DOMStack([].slice.apply(elements));

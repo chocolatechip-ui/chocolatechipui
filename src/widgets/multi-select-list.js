@@ -73,7 +73,7 @@ $.extend({
           index: item.index(),
           value: item.attr('data-select')
         }
-        let pos = undefined;
+        let pos;
         __selection.forEach(function(item, idx) {
           if (item.index === dataObj.index && item.value === dataObj.value) {
             pos = idx;

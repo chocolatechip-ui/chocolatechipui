@@ -23,7 +23,7 @@
 
     html: HTMLString => {
       let ret = new DOMStack();
-      let temp = undefined;
+      let temp;
 
       const wrapperMap = {
         option: [1, "<select multiple='multiple'>", "</select>"],
@@ -82,8 +82,8 @@
       };
       let script = document.createElement("script");
       let done = false;
-      let err = undefined;
-      let loadScript = undefined;
+      let err;
+      let loadScript;
       const handleError = function() {
         err = new Error(src || "EMPTY");
         loadScript();
@@ -123,10 +123,10 @@
     },
 
     each: (obj, callback) => {
-      let value = undefined;
-      let key = undefined;
+      let value;
+      let key;
       let i = 0;
-      let length = undefined;
+      let length;
 
       if (Array.isArray(obj)) {
         length = obj.length;
@@ -173,8 +173,8 @@
      */
     replace: (newElement, targetElement) => {
       if (!newElement || !targetElement) return;
-      let newEl = undefined;
-      let targEl = undefined;
+      let newEl;
+      let targEl;
       if (typeof newElement === 'string') {
         newEl = $(newElement)[0];
       } else if (newElement.objectType && newElement.objectType === 'domstack') {

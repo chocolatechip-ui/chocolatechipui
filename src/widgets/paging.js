@@ -35,7 +35,7 @@ $.extend({
       if (articles() < 2) return;
       pagerButton.prev().removeClass('selected');
       pagerButton.addClass('selected');
-      let currentArticle = undefined;
+      let currentArticle;
       if (pagerButton[0] && pagerButton[0].classList.contains('disabled')) return;
       currentArticle = currentSection.find('article.current');
       if (currentArticle.index() === articles() - 1) {
@@ -58,7 +58,7 @@ $.extend({
       if (articles() === 1) return;
       pagerButton.next().removeClass('selected');
       pagerButton.addClass('selected');
-      let currentArticle = undefined;
+      let currentArticle;
       currentArticle = currentSection.find('article.current');
 
       if (currentArticle.index() === 0) {

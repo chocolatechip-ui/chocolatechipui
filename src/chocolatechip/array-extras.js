@@ -17,7 +17,7 @@ if (!Array.prototype.find) {
       let list = Object(this);
       let length = list.length >>> 0;
       let thisArg = arguments[1];
-      let value = undefined;
+      let value;
 
       for (let i = 0; i < length; i++) {
         value = list[i];
@@ -41,7 +41,7 @@ if (!Array.prototype.findIndex) {
       let list = Object(this);
       let length = list.length >>> 0;
       let thisArg = arguments[1];
-      let value = undefined;
+      let value;
 
       for (let i = 0; i < length; i++) {
         value = list[i];

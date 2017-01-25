@@ -91,7 +91,7 @@ var DOMStack = function() {
         value: function eq(index) {
             var ret = new DOMStack();
             if (!this.array.length) return ret;
-            var temp = undefined;
+            var temp = void 0;
             if (index < 0) {
                 temp = this.array[this.array.length + index];
                 ret.push(temp);
@@ -148,7 +148,7 @@ var DOMStack = function() {
     }, {
         key: 'forEach',
         value: function forEach(callback) {
-            var value = undefined;
+            var value = void 0;
             var i = 0;
             var len = this.array.length;
             for (; i < len; i++) {
@@ -161,7 +161,7 @@ var DOMStack = function() {
     }, {
         key: 'each',
         value: function each(callback) {
-            var value = undefined;
+            var value = void 0;
             var i = 0;
             var len = this.array.length;
             for (; i < len; i++) {
@@ -242,7 +242,7 @@ var DOMStack = function() {
     }, {
         key: 'concat',
         value: function concat(collection) {
-            var temp = undefined;
+            var temp = void 0;
             if (Array.isArray(collection)) {
                 temp = collection;
             } else if (collection && collection.objectType && collection.objectType === 'domstack') {
@@ -344,7 +344,7 @@ var DOMStack = function() {
         var classRE = /^\.([\w-])$/;
         var tagRE = /^[\w-]+$/;
         var readyRE = /complete|loaded|interactive/;
-        var temp = undefined;
+        var temp = void 0;
 
         var slice = function slice(elements) {
             temp = new DOMStack([].slice.apply(elements));
@@ -522,8 +522,8 @@ var DOMStack = function() {
                 }
 
                 var result = [];
-                var prop = undefined;
-                var i = undefined;
+                var prop = void 0;
+                var i = void 0;
 
                 for (prop in obj) {
                     if (hasOwnProperty.call(obj, prop)) {
@@ -593,7 +593,7 @@ var DOMStack = function() {
 
         html: function html(HTMLString) {
             var ret = new DOMStack();
-            var temp = undefined;
+            var temp = void 0;
 
             var wrapperMap = {
                 option: [1, "<select multiple='multiple'>", "</select>"],
@@ -651,8 +651,8 @@ var DOMStack = function() {
             };
             var script = document.createElement("script");
             var done = false;
-            var err = undefined;
-            var loadScript = undefined;
+            var err = void 0;
+            var loadScript = void 0;
             var handleError = function handleError() {
                 err = new Error(src || "EMPTY");
                 loadScript();
@@ -692,10 +692,10 @@ var DOMStack = function() {
         },
 
         each: function each(obj, callback) {
-            var value = undefined;
-            var key = undefined;
+            var value = void 0;
+            var key = void 0;
             var i = 0;
-            var length = undefined;
+            var length = void 0;
 
             if (Array.isArray(obj)) {
                 length = obj.length;
@@ -744,8 +744,8 @@ var DOMStack = function() {
          */
         replace: function replace(newElement, targetElement) {
             if (!newElement || !targetElement) return;
-            var newEl = undefined;
-            var targEl = undefined;
+            var newEl = void 0;
+            var targEl = void 0;
             if (typeof newElement === 'string') {
                 newEl = $(newElement)[0];
             } else if (newElement.objectType && newElement.objectType === 'domstack') {
@@ -1183,9 +1183,9 @@ var DOMStack = function() {
             var that = this;
             var __is = function __is(node, arg) {
                 if (typeof arg === 'string') {
-                    var nodes = undefined;
+                    var nodes = void 0;
                     if (node.parentNode) nodes = node.parentNode.querySelectorAll(arg);
-                    var elements = undefined;
+                    var elements = void 0;
                     if (nodes && nodes.length) {
                         elements = Array.prototype.slice.apply(node.parentNode.querySelectorAll(arg));
                     }
@@ -1230,9 +1230,9 @@ var DOMStack = function() {
             var __nots = function __nots(node, arg) {
                 var result = [];
                 if (typeof arg === 'string') {
-                    var nodes = undefined;
+                    var nodes = void 0;
                     if (node.parentNode) nodes = node.parentNode.querySelectorAll(arg);
-                    var elements = undefined;
+                    var elements = void 0;
                     if (nodes && nodes.length) {
                         elements = Array.prototype.slice.apply(node.parentNode.querySelectorAll(arg));
                     }
@@ -1308,7 +1308,7 @@ var DOMStack = function() {
         prev: function prev(selector) {
             if (!this.array.length) return new DOMStack();
             var ret = new DOMStack();
-            var children = undefined;
+            var children = void 0;
             var previousElement = this[0].previousElementSibling;
             if (selector && typeof selector === 'string') {
                 children = this.siblings(selector);
@@ -1326,8 +1326,8 @@ var DOMStack = function() {
         prevAll: function prevAll(selector) {
             if (!this.array.length) return new DOMStack();
             var ret = new DOMStack();
-            var __siblings = undefined;
-            var __parent = undefined;
+            var __siblings = void 0;
+            var __parent = void 0;
             var __self = this[0];
             var __sibs = Array.prototype.slice.apply(this[0].parentNode.children);
             var pos = __sibs.indexOf(__self);
@@ -1348,7 +1348,7 @@ var DOMStack = function() {
         next: function next(selector) {
             if (!this.array.length) return new DOMStack();
             var ret = new DOMStack();
-            var children = undefined;
+            var children = void 0;
             var nextElement = this[0].nextElementSibling;
             if (selector && typeof selector === 'string') {
                 children = this.siblings(selector);
@@ -1365,8 +1365,8 @@ var DOMStack = function() {
         nextAll: function nextAll(selector) {
             if (!this.array.length) return new DOMStack();
             var ret = new DOMStack();
-            var __siblings = undefined;
-            var __parent = undefined;
+            var __siblings = void 0;
+            var __parent = void 0;
             var __self = this[0];
             var __sibs = Array.prototype.slice.apply(this[0].parentNode.children);
             var pos = __sibs.indexOf(__self);
@@ -1440,10 +1440,10 @@ var DOMStack = function() {
         },
         siblings: function siblings(selector) {
             if (!this.array.length) return new DOMStack();
-            var __siblings = undefined;
+            var __siblings = void 0;
             var ret = new DOMStack();
             var $this = this;
-            var parent = undefined;
+            var parent = void 0;
             var children = Array.prototype.slice.apply($this[0].parentNode.children);
 
             /**
@@ -1465,7 +1465,7 @@ var DOMStack = function() {
         parent: function parent(selector) {
             if (!this.array.length) return new DOMStack();
             var ret = new DOMStack();
-            var parents = undefined;
+            var parents;
             var self = this[0];
             var result = [];
             if (selector) {
@@ -1495,7 +1495,7 @@ var DOMStack = function() {
             if (typeof selector === 'undefined') {
                 return new DOMStack();
             }
-            var p = undefined;
+            var p = void 0;
             if (this[0]) {
                 p = this[0].parentNode;
             }
@@ -1708,8 +1708,8 @@ var DOMStack = function() {
         },
         wrap: function wrap(string) {
             if (!this.array.length || !string) return new DOMStack();
-            var tempNode = undefined;
-            var whichClone = undefined;
+            var tempNode = void 0;
+            var whichClone = void 0;
             this.forEach(function(ctx) {
                 tempNode = $.html(string);
                 whichClone = $(ctx).clone(true);
@@ -1820,7 +1820,7 @@ var DOMStack = function() {
             if (!this.array.length) return new DOMStack();
             if (typeof className !== "string") return;
             var ret = new DOMStack();
-            var classes = undefined;
+            var classes = void 0;
             this.forEach(function(node) {
                 if (/\s/.test(className)) {
                     classes = className.split(' ');
@@ -1847,7 +1847,7 @@ var DOMStack = function() {
         removeClass: function removeClass(className) {
             if (!this.array.length) return new DOMStack();
             var ret = new DOMStack();
-            var classes = undefined;
+            var classes = void 0;
             this.forEach(function(node) {
                 if (!node) return;
                 if (/\s/.test(className)) {
@@ -2007,7 +2007,7 @@ var DOMStack = function() {
             }
         };
 
-        var errors = undefined;
+        var errors = void 0;
         if ($('html').attr('lang') == 'en') errors = EventErrorMessages.en;
         if ($('html').attr('lang') == 'es') errors = EventErrorMessages.es;
 
@@ -2051,7 +2051,7 @@ var DOMStack = function() {
                 },
 
                 forEach: function forEach(callback) {
-                    var value = undefined;
+                    var value = void 0;
                     var i = -1;
                     var len = __array.length;
                     while (++i < len) {
@@ -2217,7 +2217,7 @@ var DOMStack = function() {
                     });
                 }
                 var ret = [];
-                var events = undefined;
+                var events = void 0;
                 if (typeof event === 'string') {
                     event = event.trim();
                     if (/\s/.test(event)) {
@@ -2327,14 +2327,14 @@ $(function() {
     "use strict";
 
     var touch = {};
-    var touchTimeout = undefined;
-    var swipeTimeout = undefined;
-    var tapTimeout = undefined;
+    var touchTimeout = void 0;
+    var swipeTimeout = void 0;
+    var tapTimeout = void 0;
     var longTapDelay = 750;
     var singleTapDelay = 150;
     $.gestureLength = 50;
     if ($.isAndroid) singleTapDelay = 200;
-    var longTapTimeout = undefined;
+    var longTapTimeout = void 0;
 
     function parentIfText(node) {
         return 'tagName' in node ? node : node.parentNode;
@@ -2374,8 +2374,8 @@ $(function() {
      * Execute this after DOM loads: 
      */
     $(function() {
-        var now = undefined;
-        var delta = undefined;
+        var now = void 0;
+        var delta = void 0;
         var body = $('body');
         var twoTouches = false;
 
@@ -2519,7 +2519,7 @@ var CCDataCache = {
 $.fn.extend({
     data: function data(key, value) {
         if (!this.size()) return new DOMStack();
-        var id = undefined;
+        var id = void 0;
         var ctx = this.array[0];
         if (!ctx.id) {
             ctx.id = $.uuid();
@@ -2857,8 +2857,8 @@ $.fn.extend({
 
     validatePhoneNumber: function validatePhoneNumber(int) {
         if (this[0].nodeName !== 'INPUT') return;
-        var phone = undefined;
-        var phoneNumber = undefined;
+        var phone = void 0;
+        var phoneNumber = void 0;
         var convertLettersToNumbers = function convertLettersToNumbers(value) {
             var phonenumber = "";
             value = value.toLowerCase();
@@ -3107,8 +3107,8 @@ $.extend({
  */
 $.fn.extend({
     serializeArray: function serializeArray() {
-        var name = undefined;
-        var type = undefined;
+        var name = void 0;
+        var type = void 0;
         var ret = [];
         var add = function add(value) {
             if ($.type(value) === 'array') {
@@ -3200,7 +3200,7 @@ $.extend({
                     var currResult = result;
                     for (var j = 0; j < nameParts.length; j++) {
                         var namePart = nameParts[j];
-                        var arrName = undefined;
+                        var arrName = void 0;
                         if (namePart.indexOf('[]') > -1 && j === nameParts.length - 1) {
 
                             arrName = namePart.substr(0, namePart.indexOf('['));
@@ -3325,7 +3325,7 @@ $.extend({
                 case 'selectlist':
                     __passed = $(item.element).validateSelectList();
                     if (__passed) {
-                        inputs = undefined;
+                        inputs;
                         inputs = $(item.element).find('input').forEach(function(item) {
                             if (item.checked) {
                                 convertToObject(item.name, item.value);
@@ -3335,7 +3335,7 @@ $.extend({
                     break;
                 case 'multiselectlist':
                     __passed = $(item.element).validateMultiSelectList();
-                    inputs = undefined;
+                    inputs;
                     if (__passed) {
                         inputs = $(item.element).find('input[type=checkbox]');
                         inputs.forEach(function(item) {
@@ -3426,7 +3426,7 @@ $.extend({
      * Return sum of numbers:
      */
     sum: function sum(arr) {
-        var ret = undefined;
+        var ret = void 0;
         if (Array.isArray(arr) && arr.length) {
             ret = arr;
         } else {
@@ -3531,7 +3531,7 @@ $.extend({
         }
     };
 
-    var errors = undefined;
+    var errors = void 0;
     if ($('html').attr('lang') == 'en') errors = ViewErrorMessages.en;
     if ($('html').attr('lang') == 'es') errors = ViewErrorMessages.es;
 
@@ -3733,8 +3733,8 @@ $.extend({
             /**
              * Private Properties:
              */
-            var __element = undefined;
-            var __origElement = undefined;
+            var __element = void 0;
+            var __origElement = void 0;
             if (!options) options = {};
             if (options && options.element) {
                 __origElement = options.element;
@@ -3759,7 +3759,7 @@ $.extend({
              * Private Functions:
              */
 
-            var parsedTemplate = undefined;
+            var parsedTemplate = void 0;
 
             var parseView = function parseView(template, variable) {
                 if (!template) {
@@ -4149,9 +4149,9 @@ $.extend({
      * Define polyfill for ES6 Promises: 
      */
 
-    var extend = undefined;
-    var cycle = undefined;
-    var queue = undefined;
+    var extend = void 0;
+    var cycle = void 0;
+    var queue = void 0;
     extend = function extend(obj, name, val, config) {
         return Object.defineProperty(obj, name, {
             value: val,
@@ -4160,14 +4160,14 @@ $.extend({
         });
     };
     queue = function() {
-        var first = undefined;
-        var last = undefined;
-        var item = undefined;
+        var first = void 0;
+        var last = void 0;
+        var item = void 0;
 
         function Item(func, self) {
             this.func = func;
             this.self = self;
-            this.next = undefined;
+            this.next;
         }
         return {
             add: function add(func, self) {
@@ -4201,7 +4201,7 @@ $.extend({
      * Check that Promise is thenable: 
      */
     function isThenable(obj) {
-        var _then = undefined;
+        var _then = void 0;
         var obj_type = typeof obj === 'undefined' ? 'undefined' : _typeof(obj);
         if (obj !== null && (obj_type === "object" || obj_type === "function")) {
             _then = obj.then;
@@ -4217,8 +4217,8 @@ $.extend({
     }
 
     function notifyIsolated(self, callback, chain) {
-        var ret = undefined;
-        var _then = undefined;
+        var ret = void 0;
+        var _then = void 0;
         try {
             if (callback === false) {
                 chain.reject(self.msg);
@@ -4243,8 +4243,8 @@ $.extend({
     }
 
     function resolve(msg) {
-        var _then = undefined;
-        var deferred = undefined;
+        var _then = void 0;
+        var deferred = void 0;
         var self = this;
         if (self.triggered) {
             return;
@@ -4316,7 +4316,7 @@ $.extend({
         this.state = 0;
         this.triggered = false;
         this.chain = [];
-        this.msg = undefined;
+        this.msg;
     }
 
     function Promise(executor) {
@@ -4491,7 +4491,7 @@ $.extend({
              * Create and return Promise with result from request: 
              */
             return new Promise(function(resolve, reject) {
-                var timeout = undefined;
+                var timeout = void 0;
                 window.jsonp = window.jsonp || {};
                 window.jsonp[callbackName] = function(response) {
                     resolve({
@@ -4877,7 +4877,7 @@ $.extend({
 
     self.fetch = function(input, init) {
         return new Promise(function(resolve, reject) {
-            var request = undefined;
+            var request = void 0;
             if (Request.prototype.isPrototypeOf(input) && !init) {
                 request = input;
             } else {
@@ -4952,7 +4952,7 @@ if (!Array.prototype.find) {
             var list = Object(this);
             var length = list.length >>> 0;
             var thisArg = arguments[1];
-            var value = undefined;
+            var value = void 0;
 
             for (var i = 0; i < length; i++) {
                 value = list[i];
@@ -4976,7 +4976,7 @@ if (!Array.prototype.findIndex) {
             var list = Object(this);
             var length = list.length >>> 0;
             var thisArg = arguments[1];
-            var value = undefined;
+            var value = void 0;
 
             for (var i = 0; i < length; i++) {
                 value = list[i];
@@ -5121,7 +5121,7 @@ if (!Array.prototype.unique) {
         }, _defineProperty(_es, 'noPropForPropEquals', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna propiedad ni valor. Sin ellos no podemos encontrar un objeto de iqual valor en la colección del modelo. Por favor proporcione los dos."), _defineProperty(_es, 'noDataToPushToModel', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionaron ningunos datos para añadir al fin de la colección del modelo."), _defineProperty(_es, 'noDataForShiftToModel', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninungos datos para agregar al inicio de la colección del modelo."), _defineProperty(_es, 'noEndForModelSlice', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ningún valor final para extraer de la colección del modelo. Por favor proporcione un valor numérico."), _defineProperty(_es, 'noStartModelForSlice', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ningún valor inicial para extraer datos de la colección del modelo. Por favor proporcione un valor numérico inicial así como un final para que podamos extraer los datos de la colección del modelo."), _defineProperty(_es, 'noEndForModelSplice', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna posición final para realizar una acción de «splice» en la colección del modelo. Por favor proporcione una."), _defineProperty(_es, 'noStartForModelSplice', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna posición inicial para realizar una acción de «splice» en la colección del modelo. Por favor proporcione una."), _defineProperty(_es, 'noDataToInsertInModel', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionaron ningunos datos para insertar en la colección del modelo. Se esperaba un objeto, pero no se encontró nada. Por favor proporcione un objeto de datos. El primer argumento debe de ser una position, seguido por los datos."), _defineProperty(_es, 'noPosToInserInModel', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna posición para saber en dónde insertar los datos en la colección del modelo. Por favor proporcione una posición de valor numérico y unos datos para insertar en la colección del modelo. El primer argumento debe de ser un valor numérico para la posición, y entonces unos datos que insertar."), _defineProperty(_es, 'noPropForPlucking', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna propiedad para extraerla de la colección del modelo. Por favor proporcione una propiedad."), _defineProperty(_es, 'noCallbackForModelFind', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna función callback como parámetro a fin de realizar una búsqueda en la colección del modelo. Por favor proporcione una."), _defineProperty(_es, 'noElementForIndexOf', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ningun element a fin de averiguar el índice de un objeto en la colección del modelo. Por favor proporcione una."), _defineProperty(_es, 'noDataToConcat', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionaron ningunos datos para concatenar en este modelo. ¿Se le olvidó proporcionar los datos?"), _defineProperty(_es, 'noPropsForSortBy', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna propiedad. Sin una no se puede ordenar los datos del modelo."), _defineProperty(_es, 'noEventForEventDeletion', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ningún evento a fin de eliminar la función callback de este modelo. Por favor proporcione tanto un evento como una posición en la colección para la callback que se quiere eliminar. Es posible que un evento tenga más de una callback registrada a él."), _defineProperty(_es, 'noCallbackForForEach', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionó ninguna función callback para el método «forEach». Ésta se requiere."), _defineProperty(_es, 'noDataToReplaceInModel', "Hubo Error de Modelo ChocolateChip-UI: No se proporcionaron ningunos datos para reemplazar los del modelo. Si es lo que usted quiere hacer, por favor proporicone unos datos para realizar esta operación. En otro caso, si el propósito de esta operación es el de vaciar el modelo, use `purge()`."), _defineProperty(_es, 'modelHasNoDataToReturn', "Hubo Error de Modelo ChocolateChip-UI: Este modelo no tiene datos suyos. Quizás se le olvidó asignarselos cuando lo creó."), _defineProperty(_es, 'positionGreaterThanModelLength', "Hubo Error de Modelo ChocolateChip-UI: The position you provided is to set a property is greater than the number of items in this model. La positición que se proporicionó es más grande que el número de objetos en este modelo."), _es)
     };
 
-    var errors = undefined;
+    var errors = void 0;
     if ($('html').attr('lang') == 'en') errors = ModelErrorMessages.en;
     if ($('html').attr('lang') == 'es') errors = ModelErrorMessages.es;
 
@@ -5133,7 +5133,7 @@ if (!Array.prototype.unique) {
         function Model(data) {
             _classCallCheck(this, Model);
 
-            var d = undefined;
+            var d = void 0;
             if ($.type(data) == 'array') {
                 d = data.slice();
             } else if ($.type(data) == 'object') {
@@ -5251,7 +5251,7 @@ if (!Array.prototype.unique) {
                 } else if ($.type(this[dataStore]) === 'array') {
                     this[dataStore] = [];
                 } else {
-                    this[dataStore] = undefined;
+                    this[dataStore];
                 }
             }
 
@@ -5319,7 +5319,7 @@ if (!Array.prototype.unique) {
             key: 'replace',
             value: function replace(data) {
                 if (data) {
-                    var d = undefined;
+                    var d = void 0;
                     if ($.type(data) == 'array') {
                         d = data.slice();
                     } else if ($.type(data) == 'object') {
@@ -5646,7 +5646,7 @@ if (!Array.prototype.unique) {
                     return;
                 }
                 if (this[dataStore] && this[dataStore].length) {
-                    var value = undefined;
+                    var value = void 0;
                     var i = -1;
                     var len = this[dataStore].length;
                     while (++i < len) {
@@ -5889,12 +5889,12 @@ $.fn.extend({
         $.extend(settings, options);
 
         var $this = this;
-        var spinner = undefined;
+        var spinner = void 0;
         /**
          * For iOS:
          */
         var iOSBusy = function iOSBusy() {
-            var small = undefined;
+            var small = void 0;
             /**
              * Smaller busy indicator (less tines):
              */
@@ -6009,10 +6009,10 @@ $.fn.extend({
         } else {
             position = 'relative';
         }
-        var height = undefined;
-        var width = undefined;
-        var parentHeight = undefined;
-        var parentWidth = undefined;
+        var height = void 0;
+        var width = void 0;
+        var parentHeight = void 0;
+        var parentWidth = void 0;
         if (position === 'absolute') {
             height = $this[0].clientHeight;
             width = $this[0].clientWidth;
@@ -6028,8 +6028,8 @@ $.fn.extend({
                 'margin-right': 'auto'
             });
         }
-        var tmpTop = undefined;
-        var tmpLeft = undefined;
+        var tmpTop = void 0;
+        var tmpLeft = void 0;
         if (parent[0].nodeName === 'body') {
             tmpTop = window.innerHeight / 2 + window.pageYOffset - height / 2 + 'px';
             tmpLeft = window.innerWidth / 2 - width / 2 + 'px';
@@ -6096,16 +6096,16 @@ $.extend({
 
         if (options) $.extend(settings, options);
 
-        var deleteButton = undefined;
-        var editButton = undefined;
-        var deletionIndicator = undefined;
-        var button = undefined;
+        var deleteButton = void 0;
+        var editButton = void 0;
+        var deletionIndicator = void 0;
+        var button = void 0;
         var dispelDeletable = 'swiperight';
         var enableDeletable = 'swipeleft';
-        var moveUpIndicator = undefined;
-        var moveDownIndicator = undefined;
+        var moveUpIndicator = void 0;
+        var moveDownIndicator = void 0;
         var element = settings.element;
-        var deleteLabel = undefined;
+        var deleteLabel = void 0;
 
         var dir = $('html').attr('dir');
         dir = dir ? dir.toLowerCase() : '';
@@ -6494,7 +6494,7 @@ $.extend({
                         index: item.index(),
                         value: item.attr('data-select')
                     };
-                    var pos = undefined;
+                    var pos = void 0;
                     __selection.forEach(function(item, idx) {
                         if (item.index === dataObj.index && item.value === dataObj.value) {
                             pos = idx;
@@ -6555,12 +6555,12 @@ $(function() {
             var h1 = screen.find('h1');
             if (h1.hasClass('do-not-adjust')) return;
             var siblings = h1.siblings();
-            var whichSide = undefined;
-            var oppositeSide = undefined;
+            var whichSide = void 0;
+            var oppositeSide = void 0;
             var rtl = $('html').attr('dir') === 'rtl';
             var amount = 0;
             var hidden = false;
-            var visibleSibling = undefined;
+            var visibleSibling = void 0;
 
             var calculateLongest = function calculateLongest(a, b) {
                 var widthA = a[0].clientWidth;
@@ -6737,7 +6737,7 @@ $(function() {
             $.ChuiRoutes.push(destination);
             var currentScreen = $.screens.getCurrent();
             var destinationScreen = function() {
-                var temp = undefined;
+                var temp = void 0;
                 var regex = /:/img;
                 temp = regex.test(destination) ? destination.split(':')[0] : destination;
                 return getScreen(temp);
@@ -6759,7 +6759,7 @@ $(function() {
             $.ChuiRoutes.pop();
             var destination = $.ChuiRoutes[$.ChuiRoutes.length - 1];
             var destinationScreen = function() {
-                var temp = undefined;
+                var temp = void 0;
                 var regex = /:/img;
                 temp = regex.test(destination) ? destination.split(':')[0] : destination;
                 return getScreen(temp);
@@ -6869,7 +6869,7 @@ $.extend({
             if (articles() < 2) return;
             pagerButton.prev().removeClass('selected');
             pagerButton.addClass('selected');
-            var currentArticle = undefined;
+            var currentArticle = void 0;
             if (pagerButton[0] && pagerButton[0].classList.contains('disabled')) return;
             currentArticle = currentSection.find('article.current');
             if (currentArticle.index() === articles() - 1) {
@@ -6892,7 +6892,7 @@ $.extend({
             if (articles() === 1) return;
             pagerButton.next().removeClass('selected');
             pagerButton.addClass('selected');
-            var currentArticle = undefined;
+            var currentArticle = void 0;
             currentArticle = currentSection.find('article.current');
 
             if (currentArticle.index() === 0) {
@@ -6952,8 +6952,8 @@ $.extend({
         var __calcPopPos = function __calcPopPos(element) {
             var offset = $(element).offset();
             var left = offset.left;
-            var calcLeft = undefined;
-            var calcTop = undefined;
+            var calcLeft = void 0;
+            var calcTop = void 0;
             var popover = $(popoverID);
             var popoverOffset = popover.offset();
             calcLeft = popoverOffset.left;
@@ -7072,7 +7072,7 @@ $.extend({
         var cancelButton = options.cancelButton ? '<button class="cancel" role="button">' + settings.cancelButton + '</button>' : '';
         var continueButton = settings.continueButton ? '<button class="continue" role="button">' + settings.continueButton + '</button>' : '';
         var callback = settings.callback || $.noop;
-        var popup = undefined;
+        var popup = void 0;
         if (settings.empty) {
             popup = '<div id="' + id + '" class="popup"><div ' + width + ' class="dialog" role="alertdialog"></div></div>';
         } else {
@@ -7162,7 +7162,7 @@ $.fn.extend({
     Range: function Range() {
         if (this[0].nodeName !== 'INPUT') return;
         var input = $(this);
-        var newPlace = undefined;
+        var newPlace = void 0;
         var width = input.width();
         var newPoint = (input.val() - input.attr("min")) / (input.attr("max") - input.attr("min"));
         var offset = -1.3;
@@ -7224,8 +7224,8 @@ $.extend({
             },
 
             dispatch: function dispatch(route) {
-                var temp = undefined;
-                var id = undefined;
+                var temp = void 0;
+                var id = void 0;
                 if (route.match(/\:/)) {
                     temp = route.split(':');
                     id = temp[1];
@@ -7240,8 +7240,8 @@ $.extend({
 $.extend($.Router, {
     dispatch: function dispatch(route) {
         if (!route) return;
-        var temp = undefined;
-        var id = undefined;
+        var temp = void 0;
+        var id = void 0;
         if (route.match(/\:/)) {
             temp = route.split(':');
             id = temp[1];
@@ -7315,9 +7315,9 @@ $(function() {
             };
             $.extend(settings, options);
 
-            var segmented = undefined;
+            var segmented = void 0;
             var labels = settings.labels ? settings.labels : [];
-            var __selection = undefined;
+            var __selection = void 0;
             var __element = settings.element;
 
             function createSegmentedButton() {
@@ -7346,7 +7346,7 @@ $(function() {
             /**
              * For Android Material Design:
              */
-            var androidSelectionBorder = undefined;
+            var androidSelectionBorder = void 0;
             if ($.theme === 'android') {
                 androidSelectionBorder = $(__element).find('.androidSelectionBorder');
                 var selectedButton = $(__element).find('button').eq(settings.selected);
@@ -7695,7 +7695,7 @@ $.extend({
             var currentValue = stepper.find('input').val();
             var value = stepper.data('data-value');
             var max = value.max;
-            var newValue = undefined;
+            var newValue = void 0;
             newValue = parseInt(currentValue, 10) + 1;
             stepper.find('button:first-of-type').removeAttr('disabled');
             stepper.find('label').text(newValue);
@@ -7708,7 +7708,7 @@ $.extend({
         var decreaseStepperValue = function decreaseStepperValue() {
             var currentValue = stepper.find('input').val();
             var value = stepper.data('data-value');
-            var newValue = undefined;
+            var newValue = void 0;
             newValue = parseInt(currentValue, 10) - 1;
             stepper.find('button:last-of-type').removeAttr('disabled');
             stepper.find('label').text(newValue);
@@ -7918,7 +7918,7 @@ $.extend({
                 __tabbarScreens.push(screens.eq(idx));
             });
         }
-        var selectedScreen = undefined;
+        var selectedScreen = void 0;
         var androidSelectionIndicator = '';
         if ($.theme === 'android') {
             androidSelectionIndicator = '<span class="androidSelectionBorder"></span>';
@@ -8303,8 +8303,8 @@ $(function() {
             var x = $.isAndroid ? e.touches[0].pageX - offset.left : e.pageX - offset.left;
             var y = $.isAndroid ? e.touches[0].pageY - offset.top : e.pageY - offset.top;
 
-            var navBkColor = undefined;
-            var backgroundColor = undefined;
+            var navBkColor = void 0;
+            var backgroundColor = void 0;
 
             /**
              * Create ripple sheath and append to target:
@@ -9371,7 +9371,7 @@ $.extend({
                 var self = this;
                 var promise = self.ready().then(function() {
                     var dbInfo = self.__dbInfo;
-                    var result = undefined;
+                    var result = void 0;
                     try {
                         result = localStorage.key(n);
                     } catch (error) {
@@ -9552,7 +9552,7 @@ $.extend({
                 }
 
                 if (value && (value.toString() === '[object ArrayBuffer]' || value.buffer && value.buffer.toString() === '[object ArrayBuffer]')) {
-                    var buffer = undefined;
+                    var buffer = void 0;
                     var marker = SERIALIZED_MARKER;
 
                     if (value instanceof ArrayBuffer) {
@@ -9611,7 +9611,7 @@ $.extend({
                 }
                 var serializedString = value.substring(TYPE_SERIALIZED_MARKER_LENGTH);
                 var type = value.substring(SERIALIZED_MARKER_LENGTH, TYPE_SERIALIZED_MARKER_LENGTH);
-                var blobType = undefined;
+                var blobType = void 0;
                 if (type === TYPE_BLOB && BLOB_TYPE_PREFIX_REGEX.test(serializedString)) {
                     var matcher = serializedString.match(BLOB_TYPE_PREFIX_REGEX);
                     blobType = matcher[1];
@@ -9652,12 +9652,9 @@ $.extend({
             function stringToBuffer(serializedString) {
                 var bufferLength = serializedString.length * 0.75;
                 var len = serializedString.length;
-                var i = undefined;
+                var i = void 0;
                 var p = 0;
-                var encoded1 = undefined,
-                    encoded2 = undefined,
-                    encoded3 = undefined,
-                    encoded4 = undefined;
+                var encoded1, encoded2, encoded3, encoded4;
                 if (serializedString[serializedString.length - 1] === '=') {
                     bufferLength--;
                     if (serializedString[serializedString.length - 2] === '=') {
@@ -9684,7 +9681,7 @@ $.extend({
             function bufferToString(buffer) {
                 var bytes = new Uint8Array(buffer);
                 var base64String = '';
-                var i = undefined;
+                var i = void 0;
 
                 for (i = 0; i < bytes.length; i += 3) {
                     /*jslint bitwise: true */

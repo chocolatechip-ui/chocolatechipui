@@ -39,7 +39,7 @@ $.extend({
       const currentValue = stepper.find('input').val();
       const value = stepper.data('data-value');
       const max = value.max;
-      let newValue = undefined;
+      let newValue;
       newValue = parseInt(currentValue, 10) + 1;
       stepper.find('button:first-of-type').removeAttr('disabled');
       stepper.find('label').text(newValue);
@@ -52,7 +52,7 @@ $.extend({
     const decreaseStepperValue = function() {
       const currentValue = stepper.find('input').val();
       const value = stepper.data('data-value');
-      let newValue = undefined;
+      let newValue;
       newValue = parseInt(currentValue, 10) - 1;
       stepper.find('button:last-of-type').removeAttr('disabled');
       stepper.find('label').text(newValue);

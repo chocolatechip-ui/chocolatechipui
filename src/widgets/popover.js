@@ -34,8 +34,8 @@ $.extend({
     const __calcPopPos = element => {
       const offset = $(element).offset();
       let left = offset.left;
-      let calcLeft = undefined;
-      let calcTop = undefined;
+      let calcLeft;
+      let calcTop;
       let popover = $(popoverID);
       const popoverOffset = popover.offset();
       calcLeft = popoverOffset.left;

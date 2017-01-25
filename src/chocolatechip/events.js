@@ -17,7 +17,7 @@
       }
     }
 
-    let errors = undefined;
+    let errors;
     if ($('html').attr('lang') == 'en') errors = EventErrorMessages.en;
     if ($('html').attr('lang') == 'es') errors = EventErrorMessages.es;
         
@@ -55,7 +55,7 @@
         },
 
         forEach: (callback) => {
-          let value = undefined;
+          let value;
           let i = -1;
           const len = __array.length;
           while (++i < len) {
@@ -214,7 +214,7 @@
           });
         }
         let ret = [];
-        let events = undefined;
+        let events;
         if (typeof event === 'string') {
           event = event.trim();
           if (/\s/.test(event)) {

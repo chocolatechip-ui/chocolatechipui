@@ -14,12 +14,12 @@ $.fn.extend({
     $.extend(settings, options);
 
     const $this = this;
-    let spinner = undefined;
+    let spinner;
     /**
      * For iOS:
      */
     const iOSBusy = () => {
-      let small = undefined;
+      let small;
       /**
        * Smaller busy indicator (less tines):
        */

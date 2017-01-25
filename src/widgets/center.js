@@ -17,10 +17,10 @@ $.fn.extend({
     } else {
       position = 'relative';
     }
-    let height = undefined;
-    let width = undefined;
-    let parentHeight = undefined;
-    let parentWidth = undefined;
+    let height;
+    let width;
+    let parentHeight;
+    let parentWidth;
     if (position === 'absolute') {
       height = $this[0].clientHeight;
       width = $this[0].clientWidth;
@@ -36,8 +36,8 @@ $.fn.extend({
         'margin-right': 'auto'
       });
     }
-    let tmpTop = undefined;
-    let tmpLeft = undefined;
+    let tmpTop;
+    let tmpLeft;
     if (parent[0].nodeName === 'body') {
       tmpTop = ((window.innerHeight / 2) + window.pageYOffset) - height / 2 + 'px';
       tmpLeft = ((window.innerWidth / 2) - (width / 2) + 'px');

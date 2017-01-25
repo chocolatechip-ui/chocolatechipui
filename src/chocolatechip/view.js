@@ -37,7 +37,7 @@
     }
   }
 
-  let errors = undefined;
+  let errors;
   if ($('html').attr('lang') == 'en') errors = ViewErrorMessages.en;
   if ($('html').attr('lang') == 'es') errors = ViewErrorMessages.es;
 
@@ -239,8 +239,8 @@
       /**
        * Private Properties:
        */
-      let __element = undefined;
-      let __origElement = undefined;
+      let __element;
+      let __origElement;
       if (!options) options = {};
       if (options && options.element) {
         __origElement = options.element;
@@ -265,7 +265,7 @@
        * Private Functions:
        */
 
-      let parsedTemplate = undefined;
+      let parsedTemplate;
 
       const parseView = (template, variable) => {
         if (!template) {

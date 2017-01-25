@@ -40,7 +40,7 @@ $.extend({
    * Return sum of numbers:
    */
   sum(arr) {
-    let ret = undefined;
+    let ret;
     if (Array.isArray(arr) && arr.length) {
       ret = arr;
     } else {

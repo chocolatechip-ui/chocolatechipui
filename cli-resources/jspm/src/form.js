@@ -57,7 +57,7 @@ $.extend({
           let currResult = result;
           for (let j = 0; j < nameParts.length; j++) {
             const namePart = nameParts[j];
-            let arrName = undefined;
+            let arrName;
             if (namePart.indexOf('[]') > -1 && j === nameParts.length - 1) {
 
               arrName = namePart.substr(0, namePart.indexOf('['));
@@ -182,7 +182,7 @@ $.extend({
         case 'selectlist':
           __passed = $(item.element).validateSelectList();
           if (__passed) {
-            inputs = undefined;
+            inputs;
             inputs = $(item.element).find('input').forEach(function(item) {
               if (item.checked) {
                 convertToObject(item.name, item.value)
@@ -193,7 +193,7 @@ $.extend({
           break;
         case 'multiselectlist':
           __passed = $(item.element).validateMultiSelectList();
-          inputs = undefined;
+          inputs;
           if (__passed) {
             inputs = $(item.element).find('input[type=checkbox]');
             inputs.forEach(item => {
