@@ -575,7 +575,7 @@ var DOMStack = function() {
     $.extend({
         lib: "ChocolateChipJS",
 
-        version: '4.9.6',
+        version: '4.9.7',
 
         noop: function noop() {},
 

@@ -575,7 +575,7 @@ var DOMStack = function() {
     $.extend({
         lib: "ChocolateChipJS",
 
-        version: '4.9.6',
+        version: '4.9.7',
 
         noop: function noop() {},
 
@@ -6869,10 +6869,10 @@ $.extend({
             if (articles() < 2) return;
             pagerButton.prev().removeClass('selected');
             pagerButton.addClass('selected');
-            var currentArticle = void 0;
+            var currentArticle = undefined;
             if (pagerButton[0] && pagerButton[0].classList.contains('disabled')) return;
             currentArticle = currentSection.find('article.current');
-            if (currentArticle.index() === articles() - 1) {
+            if ($(screen).find('section').find('article').eq(-1).is(currentArticle)) {
                 /**
                  * Start again!
                  */
@@ -6892,10 +6892,10 @@ $.extend({
             if (articles() === 1) return;
             pagerButton.next().removeClass('selected');
             pagerButton.addClass('selected');
-            var currentArticle = void 0;
+            var currentArticle = undefined;
             currentArticle = currentSection.find('article.current');
 
-            if (currentArticle.index() === 0) {
+            if ($(screen).find('section').find('article').eq(0).is(currentArticle)) {
                 currentArticle.removeClass('current');
                 currentArticle.siblings().eq(-1).addClass('current').removeClass('next');
                 currentArticle.siblings().eq(-1).siblings().removeClass('next').addClass('previous');

@@ -36,10 +36,10 @@ $.extend({
       if (articles() < 2) return;
       pagerButton.prev().removeClass('selected');
       pagerButton.addClass('selected');
-      let currentArticle;
+      let currentArticle = undefined;
       if (pagerButton[0] && pagerButton[0].classList.contains('disabled')) return;
       currentArticle = currentSection.find('article.current');
-      if (currentArticle.index() === articles() - 1) {
+      if ($(screen).find('section').find('article').eq(-1).is(currentArticle)) {
         /**
          * Start again!
          */
@@ -59,10 +59,10 @@ $.extend({
       if (articles() === 1) return;
       pagerButton.next().removeClass('selected');
       pagerButton.addClass('selected');
-      let currentArticle;
+      let currentArticle = undefined;
       currentArticle = currentSection.find('article.current');
 
-      if (currentArticle.index() === 0) {
+      if ($(screen).find('section').find('article').eq(0).is(currentArticle)) {
         currentArticle.removeClass('current');
         currentArticle.siblings().eq(-1).addClass('current').removeClass('next');
         currentArticle.siblings().eq(-1).siblings().removeClass('next').addClass('previous');
