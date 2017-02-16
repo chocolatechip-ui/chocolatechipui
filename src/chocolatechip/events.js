@@ -20,65 +20,6 @@
     let errors;
     if ($('html').attr('lang') == 'en') errors = EventErrorMessages.en;
     if ($('html').attr('lang') == 'es') errors = EventErrorMessages.es;
-        
-    /**
-     * Define interface for handling events:
-     */
-    let EventStack = (array) => {
-      let __array = [];
-      if (array && Array.isArray(array)) {
-        let i = -1;
-        const len = array.length;
-        while (++i < len) {
-          __array[i] = array[i];
-        }
-      } else if (array) {
-        const arr = Array.prototype.slice.apply(arguments);
-        arr.forEach((ctx, idx) => {
-          __array[idx] = ctx;
-        });
-      }
-      return {
-
-        size: () => __array.length,
-
-        push: (data) => __array.push(data),
-
-        pop: () => __array.pop(),
-
-        eq: (index) => {
-          if (index < 0) {
-            return __array[__array.length + index];
-          } else {
-            return __array[index];
-          }
-        },
-
-        forEach: (callback) => {
-          let value;
-          let i = -1;
-          const len = __array.length;
-          while (++i < len) {
-            value = callback.call(__array[i], __array[i], i);
-            if (value === false) {
-              break;
-            }
-          }
-        },
-
-        shift: () => __array.shift.apply(__array, arguments),
-
-        unshift: () => __array.unshift.apply(__array, arguments),
-
-        splice: () => __array.splice.apply(__array, arguments),
-
-        indexOf: () => __array.indexOf.apply(__array, arguments),
-
-        getData: () => __array,
-
-        purge: () => __array = []
-      };
-    };
 
     let ChuiEventCache = {
       elements: {}
@@ -93,7 +34,7 @@
     const bind = function(element, event, callback, capturePhase) {
       if (!element.id) element.id = chocolatechipjs.uuid();
       if (!ChuiEventCache.elements[element.id]) {
-        ChuiEventCache.elements[element.id] = EventStack(); // jshint ignore:line
+        ChuiEventCache.elements[element.id] = []; // jshint ignore:line
       }
       ChuiEventCache.elements[element.id].push({
         event: event,

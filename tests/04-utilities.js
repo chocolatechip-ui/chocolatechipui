@@ -1,7 +1,7 @@
 describe("Utilities Tests", function () {
-  it("Should be version 4.9.8.", function () {
+  it("Should be version 4.9.9.", function () {
     /* Check the version */
-    expect($.version).to.equal('4.9.8');
+    expect($.version).to.equal('4.9.9');
   });
 
   it("Should be a library named ChocolateChipJS.", function() {

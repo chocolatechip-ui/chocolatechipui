@@ -16,7 +16,7 @@ You can learn how to use ChocolateChip-UI at the website: [chocolatechip-ui.gith
 
 To get started, install our NPM module - [https://www.npmjs.com/package/chui](chui):
 
-```
+```js
 npm i -g chui
 ```
 
@@ -24,7 +24,7 @@ npm i -g chui
 
 If you're new to ChocolateChip-UI and want to see samples, just run the following command:
 
-```
+```js
 chui -e
 ```
 
@@ -48,7 +48,7 @@ The four apps are: Fragranž, TodoMVC, SFCoffee an Vino. Frangranž shows how to
 
 To get these demos, run:
 
-```
+```js
 chui -r
 ```
 
@@ -56,7 +56,7 @@ This will output the reference apps to your desktop in a folder named `Chui Refe
 
 For the `jspm` demos you need to install their dependencies. To run a demo, do the following:
 
-```
+```js
 npm i
 
 # When done, run:
@@ -76,13 +76,13 @@ When you're creating projects with the `chui` command line tool, you can choose 
 
 To create projects, you use flags with the `chui` command. The most important flag is `-n` for your project's name:
 
-```
+```js
 chui -n myProject
 ```
 
 If you fail to provide a name, `chui` will not create a project, simple as that.  Next you can indicate what platform you want to target: Android or iOS. To do this you use the `-o` flag with `android` or `ios`:
 
-```
+```js
 # For Android:
 chui -n myProject -o android
 
@@ -92,7 +92,7 @@ chui -n myProject -o ios
 
 If no `-o` flag is provided, it will default to iOS:
 
-```
+```js
 # Create an iOS project (default):
 chui -n myProject
 ```
@@ -117,7 +117,7 @@ Tabbar gives you a app that uses a tabbar for navigation. You can add a navigati
 
 If no `-t` flag is provided, it will create a basic app automatically.
 
-```
+```js
 # For Android:
 chui -n myProject -o android -t basic
 chui -n myProject -o android -t navigation
@@ -127,7 +127,7 @@ chui -n myProject -o android -t tabbar
 chui -n myProject -o android
 ```
 
-```
+```js
 # For iOS:
 chui -n myProject -o ios -t basic
 chui -n myProject -o ios -t navigation
@@ -145,7 +145,7 @@ ES6 (ECMAScript 2016) is the future of JavaScript development. If you are not us
 To make your project work with ES6 we use Babel, Browsersync and JSPM. This means that you need a build step and a server instance. These are set up for you automatically when you create a project for ES6. To do so, use the `-j` flag. Just add it to 
 
 
-```
+```js
 # For Android:
 chui -n myProject -o android -t basic -j
 chui -n myProject -o android -t navigation -j
@@ -155,7 +155,7 @@ chui -n myProject -o android -t tabbar -j
 chui -n myProject -o android -j
 ```
 
-```
+```js
 # For iOS:
 chui -n myProject -o ios -t basic -j
 chui -n myProject -o ios -t navigation -j
@@ -168,7 +168,7 @@ chui -n myProject -j
 After creating a project for ES6, you need to install its dependencies. Open the terminal, `cd` to your new project and run:
 
 
-```
+```js
 npm i
 
 # When done, run:
@@ -184,7 +184,7 @@ This will build and open the project in your browser.
 You can create a minimal build of ChocolateChip-UI for your project. This supports just navigation lists. All the other modules are put in a `src` folder in your project's `dev` folder. To create a custom build, just include the `-c` flag:
 
 
-```
+```js
 # For Android:
 chui -n myProject -o android -t basic -j -c
 chui -n myProject -o android -t navigation -j -c
@@ -194,7 +194,7 @@ chui -n myProject -o android -t tabbar -j -c
 chui -n myProject -o android -j -c
 ```
 
-```
+```js
 # For iOS:
 chui -n myProject -o ios -t basic -j -c
 chui -n myProject -o ios -t navigation -j -c
@@ -208,7 +208,7 @@ chui -n myProject -j -c
 
 After creating a custom build project, you can import the extra modules you need like so:
 
-```
+```js
 import './src/switches';
 import './src/range';
 import './src/popup';
@@ -230,10 +230,14 @@ Tests use Mocha, Chai and PhantomJS.
 
 To run the tests, first you will need to run `npm i` on this repository. Once all dependences are installed, simply run:
 
-    npm test
+```js
+  npm test
+```
 
 This will run all the tests in the terminal window. This does take a while. Alternatively, you can open the folder `test-browser` and double click any HTML file to run that set of tests in the browser.
 
 You can also run individual test like this:
 
-    npm run testName
+```js
+  npm run testName
+```

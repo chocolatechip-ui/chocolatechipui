@@ -332,8 +332,6 @@ var DOMStack = function() {
 
 
 (function() {
-    var _arguments = arguments;
-
 
     /**
      * ChocolateChipJS singleton. This function can query the DOM with the provided parameters, or execute a callback when the DOM is ready. This is also the base for ChocolateChipJS methods for DOM manipulation.
@@ -575,7 +573,7 @@ var DOMStack = function() {
     $.extend({
         lib: "ChocolateChipJS",
 
-        version: '4.9.8',
+        version: '4.9.9',
 
         noop: function noop() {},
 
@@ -2018,83 +2016,6 @@ var DOMStack = function() {
         if ($('html').attr('lang') == 'en') errors = EventErrorMessages.en;
         if ($('html').attr('lang') == 'es') errors = EventErrorMessages.es;
 
-        /**
-         * Define interface for handling events:
-         */
-        var EventStack = function EventStack(array) {
-            var __array = [];
-            if (array && Array.isArray(array)) {
-                var i = -1;
-                var len = array.length;
-                while (++i < len) {
-                    __array[i] = array[i];
-                }
-            } else if (array) {
-                var arr = Array.prototype.slice.apply(_arguments);
-                arr.forEach(function(ctx, idx) {
-                    __array[idx] = ctx;
-                });
-            }
-            return {
-
-                size: function size() {
-                    return __array.length;
-                },
-
-                push: function push(data) {
-                    return __array.push(data);
-                },
-
-                pop: function pop() {
-                    return __array.pop();
-                },
-
-                eq: function eq(index) {
-                    if (index < 0) {
-                        return __array[__array.length + index];
-                    } else {
-                        return __array[index];
-                    }
-                },
-
-                forEach: function forEach(callback) {
-                    var value = void 0;
-                    var i = -1;
-                    var len = __array.length;
-                    while (++i < len) {
-                        value = callback.call(__array[i], __array[i], i);
-                        if (value === false) {
-                            break;
-                        }
-                    }
-                },
-
-                shift: function shift() {
-                    return __array.shift.apply(__array, _arguments);
-                },
-
-                unshift: function unshift() {
-                    return __array.unshift.apply(__array, _arguments);
-                },
-
-                splice: function splice() {
-                    return __array.splice.apply(__array, _arguments);
-                },
-
-                indexOf: function indexOf() {
-                    return __array.indexOf.apply(__array, _arguments);
-                },
-
-                getData: function getData() {
-                    return __array;
-                },
-
-                purge: function purge() {
-                    return __array = [];
-                }
-            };
-        };
-
         var ChuiEventCache = {
             elements: {}
         };
@@ -2108,7 +2029,7 @@ var DOMStack = function() {
         var bind = function bind(element, event, callback, capturePhase) {
             if (!element.id) element.id = chocolatechipjs.uuid();
             if (!ChuiEventCache.elements[element.id]) {
-                ChuiEventCache.elements[element.id] = EventStack(); // jshint ignore:line
+                ChuiEventCache.elements[element.id] = []; // jshint ignore:line
             }
             ChuiEventCache.elements[element.id].push({
                 event: event,
