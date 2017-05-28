@@ -7,12 +7,12 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="msapplication-tap-highlight" content="no">
   <title>ChocolateChip-UI Editable List - Arabic</title>
-  <link rel="stylesheet" href="../dist/css/chui-ios.min.css">
-  <script src="../dist/chui.js"></script>
-  <script type="application/json" src="../dist/chui.min.js.map"></script>
+  <link rel="stylesheet" href="./dist/css/chui-ios.css">
+  <script src="./dist/chui.min.js"></script>
+  <script src="./dist/widgets.min.js"></script>
 </head>
 <body>
-  <screen id='main' class='current'>
+  <ui-screen id='main' class='current'>
     <nav>
       <h1>قائمة للتحرير</h1>
     </nav>
@@ -20,7 +20,7 @@
       <h2>أعضاء</h2>
       <ul class='list' id="editList"></ul>
     </section>
-</screen>
+</ui-screen>
 
 <script>
 
@@ -131,41 +131,29 @@
           "last": "هداية"
         }
       }
-    ];
+    ]
 
     /**
      * Define  model:
      */
-    var PeopleModel = $.Model(people, 'people-model');
+    var PeopleState = new State(people, 'people-model')
 
-    var editListView = $.View({
+    var editListComponent = new UIEditList({
       element: '#editList',
-      model: PeopleModel,
-      variable: 'person',
-      template:
-      "<li data-id='{= person.uuid }'>\
-        <h3>{= person.name.first } {= person.name.last }</h3>\
-      </li>"
-    });
-    editListView.render();
-
-    var myEditList = $.EditList({
+      state: PeopleState,
+      stateProp: 'uuid',
+      render: (person) => html`
+        <li data-id='${ person.uuid }''>
+          <h3>${ person.name.first } ${ person.name.last }</h3>
+        </li>`,
       deletable: true,
-      movable: true,
-      model: PeopleModel,
-      modelProp: 'uuid',
+      reorderable: true,
       editLabel: 'تحرير',
       doneLabel: 'منجز',
       deleteLabel: 'حذف',
       cancelLabel: 'إلغاء',
-      element: '#editList',
-      view: editListView
-    });
-
-
-    window.editListView = editListView;
-    window.PeopleModel = PeopleModel;
-    window.myEditList = myEditList;
-  });
-</script>  
+    })
+    editListComponent.render()
+  })
+</script>
 </body>

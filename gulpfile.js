@@ -1,90 +1,53 @@
-// Import modules:
-
-var gulp = require('gulp');
-var pkg = require('./package.json');
-var jspm = require('gulp-jspm');
-var concat = require('gulp-concat');
-var gutils = require('gulp-util');
-var path = require("path");
-var uglify = require('gulp-uglify');
-var jshint = require('gulp-jshint');
-var beautify = require('gulp-jsbeautifier');
-var babel = require('gulp-babel');
-var rename = require('gulp-rename');
-var beautify = require('gulp-jsbeautifier');
-var ncp = require('ncp').ncp;
-var noop = function() {};
-var osTypes = ['truck-android','truck-ios','truck-windows'];
-var replace = require('replace-in-file');
-var replaceWith = require('gulp-replace');
+const gulp = require('gulp');
+const pkg = require('./package.json');
+const concat = require('gulp-concat');
+const p = require("path");
+const uglify = require('gulp-uglify');
+const beautify = require('gulp-jsbeautifier');
+const babel = require('gulp-babel');
+const rename = require('gulp-rename');
+const replaceWith = require('gulp-replace');
+const sourcemaps = require('gulp-sourcemaps');
+const wrap = require('gulp-wrapper');
+const noop = function() {};
+const cat = require('concat');
+const min = require('min.css')
+const mkdir = require('mkdirp')
 var cssnano = require('gulp-cssnano');
-var sourcemaps = require('gulp-sourcemaps');
-var wrap = require('gulp-wrapper');
 
-//Add Trailing slash to projectPath if not exists.
-if (pkg.projectPath !== "")
-  pkg.projectPath = pkg.projectPath.replace(/\/?$/, '/');
+gulp.task('mkdir', function() {
+  mkdir(p.join(__dirname, 'dist'))
+  mkdir(p.join(__dirname, 'dist', 'css'))
+  mkdir(p.join(__dirname, 'examples', 'dist', 'css'))
+})
 
-var chocolateChipFiles = [
-  'domstack',
-  'chui-open',
-  'dom-query',
-  'extend',
-  'utilities',
-  'dom',
-  'events',
-  'chui-close',
-  'event-aliases',
-  'gestures',
-  'data',
-  'types',
-  'strings',
-  'collection-utilities',
-  'validators',
-  'serialize',
-  'form',
-  'formatters',
-  'view',
-  'component',
-  'promises',
-  'fetch',
-  'array-extras',
-  'model',
-  'browsers'
-].map(function (file) {
-  return ['./src/chocolatechip/', file, '.js'].join('')
-});
+const coreChui = [
+  './src/core/dom.js',
+  './src/core/core.js',
+  './src/core/html.js',
+  './src/core/events.js',
+  './src/core/gestures.js',
+  './src/core/component.js',
+  './src/core/state.js',
+  './src/core/browsers.js'
+]
+gulp.task('build', function() {
+  gulp.src(coreChui)
+    .pipe(concat('chui.js'))
+    .pipe(sourcemaps.init())
+    .pipe(babel({
+      presets: ['es2015']
+    }))
+    .pipe(replaceWith('VERSION_NUMBER', pkg.version))
+    .pipe(beautify({indentSize: 2}))
+    .pipe(uglify())
+    .pipe(rename('chui.min.js'))
+    .pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest('./dist'))
+    .pipe(gulp.dest('./examples/dist'))
+})
 
-var chuiWidgets = [
-  'setup',
-  'activity-indicator',
-  'block',
-  'buttons',
-  'center',
-  'editable',
-  'multi-select-list',
-  'navbar',
-  'navigation',
-  'paging',
-  'popover',
-  'popup',
-  'range',
-  'router',
-  'screens',
-  'segmented',
-  'select-list',
-  'sheets',
-  'slideout',
-  'stepper',
-  'switches',
-  'tabbar',
-  'color-contrast',
-  'android-ripple'
-].map(function (file) {
-  return './src/widgets/' + file + '.js'
-});
-
-var cssFiles = [
+const cssFiles = [
   'base',
   'busy',
   'cards',
@@ -102,207 +65,322 @@ var cssFiles = [
   'sheet',
   'slideout',
   'stepper',
-  'switches',
+  'switch',
   'tabbar'
-];
+]
 
-var minimalChuiFiles = [
-  'domstack',
-  'chui-open',
-  'dom-query',
-  'extend',
-  'utilities',
-  'dom',
-  'events',
-  'chui-close',
-  'event-aliases',
-  'gestures',
-  'data',
-  'types',
-  'strings',
-  'collection-utilities',
-  'array-extras',
-  'view',
-  'component',
-  'model',
-  'browsers'
-].map(function (file) {
-  return ['./src/chocolatechip/', file, '.js'].join('')
-});
-
-var minimalWidgets = [
-  'setup',
-  'block',
-  'buttons',
-  'navbar',
-  'navigation',
-  'router',
-  'screens'
-].map(function (file) {
-  return './src/widgets/' + file + '.js'
-});
-
-var customWidgetImports = [
-  'editable',
-  'multi-select-list',
-  'paging',
-  'popover',
-  'popup',
-  'range',
-  'segmented',
-  'select-list',
-  'sheets',
-  'slideout',
-  'stepper',
-  'switches',
-  'tabbar',
-  'color-contrast'
-].map(function (file) {
-  return './src/widgets/' + file + '.js'
-});
-
-var customChuiImports = [
-  'validators',
-  'serialize',
-  'formatters',
-  'promises'
-].map(function (file) {
-  return ['./src/chocolatechip/', file, '.js'].join('')
-});
-
-gulp.task('chui', function() {
-  gulp.src(chocolateChipFiles.concat(chuiWidgets))
-    .pipe(concat('chui.js'))
-    .pipe(sourcemaps.init())
-    .pipe(babel({
-      presets: ['es2015']
-    }))
-    .pipe(replaceWith('VERSION_NUMBER', pkg.version))
-    .pipe(beautify({indentSize: 2}))
-    .pipe(gulp.dest('./dist'))
-    .pipe(uglify())
-    .pipe(rename('chui.min.js'))
-    .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('./dist'));
-});
-
-gulp.task('chui-box', function() {
-  chuiWidgets.push('./src/chocolatechip/box.js');
-  gulp.src(chocolateChipFiles.concat(chuiWidgets))
-    .pipe(concat('chui-box.js'))
-    .pipe(sourcemaps.init())
-    .pipe(babel({
-      presets: ['es2015']
-    }))
-    .pipe(replaceWith('VERSION_NUMBER', pkg.version))
-    .pipe(beautify({indentSize: 2}))
-    .pipe(gulp.dest('./dist'))
-    .pipe(uglify())
-    .pipe(rename('chui-box.min.js'))
-    .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('./dist'));
-});
-
-gulp.task('minify-android-css', function() {
-  var css = cssFiles.map(function(file) {
-    return './src/css/android/' + file + '.css'
+gulp.task('process-css', function() {
+  var android = cssFiles.map(function(file) {
+    return './src/css/android/ui-' + file + '.css'
   })
-  return gulp.src(css)
+  var ios = cssFiles.map(function(file) {
+    return './src/css/ios/ui-' + file + '.css'
+  })
+
+  gulp.src(android)
     .pipe(sourcemaps.init())
-    .pipe(concat('chui-android.min.css'))
+    .pipe(concat('chui-android.css'))
     .pipe(cssnano({advanced: true, aggressiveMerging: true}))
     .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('dist/css'));
-});
-
-gulp.task('minify-ios-css', function() {  
-  var css = [];
-   cssFiles.forEach(function(file) {
-    css.push('./src/css/ios/' + file + '.css')
-  })
-  return gulp.src(css)
+    .pipe(gulp.dest('./dist/css'))
+    .pipe(gulp.dest('./examples/dist/css'))
+  gulp.src(ios)
     .pipe(sourcemaps.init())
-    .pipe(concat('chui-ios.min.css'))
+    .pipe(concat('chui-ios.css'))
     .pipe(cssnano({advanced: true, aggressiveMerging: true}))
     .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('dist/css'));
+    .pipe(gulp.dest('./dist/css'))
+    .pipe(gulp.dest('./examples/dist/css'))
 });
 
-gulp.task('minimal-chui', function() {
-  var files = minimalChuiFiles.concat(minimalWidgets);
-  return gulp.src(files)
-    .pipe(concat('chui.js'))
+const exampleWidgets = [
+  'color-contrast',
+  'android-ripple',
+  'ui-block',
+  'ui-busy',
+  'ui-editable',
+  'ui-multi-select-list',
+  'ui-navigation',
+  'ui-paging',
+  'ui-popover',
+  'ui-popup',
+  'ui-range',
+  'ui-router',
+  'ui-segmented',
+  'ui-select-list',
+  'ui-sheet',
+  'ui-slideout',
+  'ui-stepper',
+  'ui-switch',
+  'ui-tabbar'
+].map(function (file) {
+  return './src/widgets/' + file + '.js'
+})
+
+gulp.task('example-widgets', function() {
+  gulp.src(exampleWidgets)
+    .pipe(concat('widgets.min.js'))
     .pipe(sourcemaps.init())
     .pipe(babel({
       presets: ['es2015']
     }))
-    .pipe(replaceWith('VERSION_NUMBER', pkg.version))
-    .pipe(beautify({indentSize: 2}))
-    .pipe(gulp.dest('./cli-resources/jspm/dist'))
     .pipe(uglify())
-    .pipe(rename('chui.min.js'))
     .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('./cli-resources/jspm/dist'));
-});
+    .pipe(gulp.dest('./examples/dist'));
+  gulp.src('./src/utils/*')
+    .pipe(gulp.dest('./examples/dist/utils'));
+})
 
-gulp.task('importable-modules', function() {
-  var files = customChuiImports
-  files = files.concat(customWidgetImports);
-  return gulp.src(files)
+// const widgets = [
+//   'ui-block'
+// ].map(function (file) {
+//   return './src/widgets/' + file + '.js'
+// })
+
+gulp.task('widgets', function() {
+  return gulp.src('./src/widgets/ui-block.js')
     .pipe(wrap({
       header: `export default (function() {
 `,
       footer: `
-})();`
+})()
+`
     }))
-    .pipe(gulp.dest('./cli-resources/jspm/src'));
-});
-
-gulp.task('box-and-fetch', function() {
-  return gulp.src(['./src/chocolatechip/box.js', './src/chocolatechip/fetch.js'])
-    .pipe(wrap({
-      header: `import './promises';
-export default (function() {
-`,
-      footer: `
-})();`
-    }))
-    .pipe(gulp.dest('./cli-resources/jspm/src'));
-
-});
-
-gulp.task('form', function() {
-  return gulp.src('./src/chocolatechip/form.js')
-    .pipe(wrap({
-      header: `import './validators';
-export default (function() {
-`,
-      footer: `
-})();`
-    }))
-    .pipe(gulp.dest('./cli-resources/jspm/src'));
+    .pipe(gulp.dest('./dist/widgets'));
 });
 
 gulp.task('android-ripple', function() {
   setTimeout(function() {
   return gulp.src('./src/widgets/android-ripple.js')
     .pipe(wrap({
-      header: `import './color-contrast';
+      header: `import './color-contrast'
+import {UIColor}  from './color-contrast'
 export default (function() {
 `,
       footer: `
-})();`
+})()
+`
     }))
-    .pipe(gulp.dest('./cli-resources/jspm/src'));
+    .pipe(gulp.dest('./dist/widgets'));
   }, 10000);
 });
 
-gulp.task('import-dependencies', ['android-ripple', 'form', 'box-and-fetch', 'importable-modules'])
+gulp.task('ui-color', function() {
+  gulp.src('./src/widgets/color-contrast.js')
+    .pipe(replaceWith('const UIColor', `export const UIColor`))
+    .pipe(gulp.dest('./dist/widgets'))
+})
+gulp.task('ui-navigation', function() {
+  gulp.src('./src/widgets/ui-navigation.js')
+    .pipe(replaceWith('$(() => {', `import {Router} from './ui-router'
+export const UINavigation = $(() => {
+`))
+    .pipe(gulp.dest('./dist/widgets'))
+})
 
+gulp.task('ui-switch', function() {
+  gulp.src('./src/widgets/ui-switch.js')
+    .pipe(replaceWith('class UISwitch', `export class UISwitch`))
+    .pipe(gulp.dest('./dist/widgets'))
+})
 
-gulp.task('minify-css', ['minify-android-css','minify-ios-css']);
+gulp.task('ui-stepper', function() {
+  gulp.src('./src/widgets/ui-stepper.js')
+    .pipe(replaceWith('class UIStepper', `export class UIStepper`))
+    .pipe(gulp.dest('./dist/widgets'))
+})
 
-// gulp.task('build', ['chocolatechipjs', 'concatWidgets']);
-gulp.task('default', ['chui', 'minify-css']);
-gulp.task('all', ['chui', 'chui-box', 'minimal-chui', 'import-dependencies', 'minify-css']);
+gulp.task('ui-sheet', function() {
+  gulp.src('./src/widgets/ui-sheet.js')
+    .pipe(replaceWith('class UISheet', `export class UISheet`))
+    .pipe(gulp.dest('./dist/widgets'))
+})
 
+gulp.task('ui-editable', function() {
+  gulp.src('./src/widgets/ui-editable.js')
+    .pipe(replaceWith('class UIEditList', `export class UIEditList`))
+    .pipe(gulp.dest('./dist/widgets'))
+})
+
+gulp.task('ui-segmented', function() {
+  gulp.src('./src/widgets/ui-segmented.js')
+    .pipe(replaceWith('class UISegmented', `export class UISegmented`))
+    .pipe(gulp.dest('./dist/widgets'))
+})
+
+gulp.task('ui-select-list', function() {
+  gulp.src('./src/widgets/ui-select-list.js')
+    .pipe(replaceWith('class UISelectList', `export class UISelectList`))
+    .pipe(gulp.dest('./dist/widgets'))
+})
+
+gulp.task('ui-multi-select-list', function() {
+  gulp.src('./src/widgets/ui-multi-select-list.js')
+    .pipe(replaceWith('class UIMultiSelectList', `export class UIMultiSelectList`))
+    .pipe(gulp.dest('./dist/widgets'))
+})
+
+gulp.task('ui-paging', function() {
+  gulp.src('./src/widgets/ui-paging.js')
+    .pipe(replaceWith('class UIPaging', `import {Router} from './ui-router'
+import {UINavigation} from './ui-navigation'
+import '../utils/chunk'
+export class UIPaging`))
+    .pipe(gulp.dest('./dist/widgets'))
+})
+
+gulp.task('ui-popover', function() {
+  gulp.src('./src/widgets/ui-popover.js')
+    .pipe(replaceWith('class UIPopover', `import './ui-block'
+export class UIPopover`))
+    .pipe(gulp.dest('./dist/widgets'))
+})
+
+gulp.task('ui-popup', function() {
+  gulp.src('./src/widgets/ui-popup.js')
+    .pipe(replaceWith('class UIPopup', `import './ui-block'
+export class UIPopup`))
+    .pipe(gulp.dest('./dist/widgets'))
+})
+
+gulp.task('ui-slideout', function() {
+  gulp.src('./src/widgets/ui-slideout.js')
+    .pipe(replaceWith('class UISlideOut', `import './ui-block'
+import {Router} from './ui-router'
+export class UISlideOut`))
+    .pipe(gulp.dest('./dist/widgets'))
+})
+
+gulp.task('ui-busy', function() {
+  gulp.src('./src/widgets/ui-busy.js')
+    .pipe(replaceWith('class UIBusy', `import './ui-block'
+export class UIBusy`))
+    .pipe(gulp.dest('./dist/widgets'))
+})
+
+gulp.task('ui-tabbar', function() {
+  gulp.src('./src/widgets/ui-tabbar.js')
+    .pipe(replaceWith('class UITabbar', `import {Router} from './ui-router'
+export class UITabbar`))
+    .pipe(gulp.dest('./dist/widgets'))
+})
+
+gulp.task('ui-range', function() {
+  return gulp.src('./src/widgets/ui-range.js')
+    .pipe(replaceWith('class UIRange', 'export class UIRange'))
+    .pipe(gulp.dest('./dist/widgets'))
+})
+
+gulp.task('ui-router', function() {
+  return gulp.src('./src/widgets/ui-router.js')
+    .pipe(replaceWith('class Router', 'export class Router'))
+    .pipe(gulp.dest('./dist/widgets'))
+})
+
+const utils = [
+  'after',
+  'array_difference',
+  'array_flatten',
+  'array_mixin',
+  'array_pluck',
+  'array_unique',
+  'before',
+  'capitalize',
+  'chunk',
+  'compare',
+  'debounce',
+  'formatters',
+  'mixin',
+  'once',
+  'serialize',
+  'throttle',
+  'validators'
+].map(function (file) {
+  return './src/utils/' + file + '.js'
+})
+
+gulp.task('utils', function() {
+  return gulp.src(utils)
+    .pipe(wrap({
+      header: `export default (function() {
+`,
+      footer: `
+})()
+`
+    }))
+    .pipe(gulp.dest('./dist/utils'));
+});
+
+gulp.task('form', function() {
+  setTimeout(function() {
+  return gulp.src('./src/utils/form.js')
+    .pipe(wrap({
+      header: `import './validators'
+export default (function() {
+`,
+      footer: `
+})()
+`
+    }))
+    .pipe(gulp.dest('./dist/utils'));
+  }, 10000);
+});
+
+gulp.task('reference-apps', function() {
+  gulp.src('./dist/chui.min.js')
+    .pipe(gulp.dest('./reference-apps/Fragranž/js'))
+    .pipe(gulp.dest('./reference-apps/SFCoffee/js'))
+    .pipe(gulp.dest('./reference-apps/TodoMVC/js'))
+    .pipe(gulp.dest('./reference-apps/Vino/js'))
+
+  gulp.src('./dist/chui.min.js.map')
+    .pipe(gulp.dest('./reference-apps/Fragranž/js'))
+    .pipe(gulp.dest('./reference-apps/SFCoffee/js'))
+    .pipe(gulp.dest('./reference-apps/TodoMVC/js'))
+    .pipe(gulp.dest('./reference-apps/Vino/js'))
+
+  gulp.src('./dist/widgets/*.js')
+    .pipe(gulp.dest('./reference-apps/Fragranž/dev/src/widgets'))
+    .pipe(gulp.dest('./reference-apps/SFCoffee/dev/src/widgets'))
+    .pipe(gulp.dest('./reference-apps/TodoMVC/dev/src/widgets'))
+    .pipe(gulp.dest('./reference-apps/Vino/dev/src/widgets'))
+
+  gulp.src('./dist/utils/*.js')
+    .pipe(gulp.dest('./reference-apps/Fragranž/dev/src/utils'))
+    .pipe(gulp.dest('./reference-apps/SFCoffee/dev/src/utils'))
+    .pipe(gulp.dest('./reference-apps/TodoMVC/dev/src/utils'))
+    .pipe(gulp.dest('./reference-apps/Vino/dev/src/utils'))
+
+  gulp.src('./dist/css/chui*')
+    .pipe(gulp.dest('./reference-apps/Fragranž/css'))
+    .pipe(gulp.dest('./reference-apps/SFCoffee/css'))
+    .pipe(gulp.dest('./reference-apps/TodoMVC/css'))
+    .pipe(gulp.dest('./reference-apps/Vino/css'))
+})
+
+// Main build function
+gulp.task('dev-build', [
+'widgets',
+'android-ripple',
+'ui-color',
+'ui-busy',
+'ui-navigation',
+'ui-switch',
+'ui-stepper',
+'ui-sheet',
+'ui-editable',
+'ui-multi-select-list',
+'ui-segmented',
+'ui-select-list',
+'ui-multi-select-list',
+'ui-paging',
+'ui-popover',
+'ui-popup',
+'ui-range',
+'ui-router',
+'ui-slideout',
+'ui-tabbar',
+'utils',
+'form']);
+
+gulp.task('default', ['mkdir', 'build', 'process-css', 'dev-build', 'example-widgets','reference-apps'])

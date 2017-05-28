@@ -1,0 +1,164 @@
+/*============*/
+/* App Styles */
+/*============*/
+#main {
+  background-image: url(../images/SF-Coffee-Bkgnd.jpg);
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+  background-position: center center !important;
+}
+#SFCoffeeLogo {
+  background-image: url(../images/SF-Coffee-Logo.png);
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+  background-position: center center !important;
+  height: 120px;
+  margin: 150px auto 0;
+}
+li > div > div.horizontal-panel {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+li > div > div.horizontal-panel > div {
+  flex: 1;
+}
+ui-screen {
+  background-image: url('../images/coffee-beans-1.jpg');
+  background-size: 100% auto;
+}
+ui-screen, nav {
+  background-color: transparent !important;
+  background-color: #2e2e2e !important;
+}
+ui-screen > section {
+  padding-top: 0;
+}
+nav > h1 {
+   color: #fff !important;
+   left: 60px !important;
+   right: 60px !important;
+}
+button.explore {
+   border: solid 1px #bebebe;
+   border-radius: 30px;
+   font-size: 18pt;
+   font-family: HelveticaNeue, Consolas, sans-serif;
+   width: 240px !important;
+   color: #fff;
+   margin: 0 auto 0 -120px;
+   position: absolute;
+   left: 50%;
+   bottom: 160px;
+   z-index: 1000;
+   background-color: rgba(0,0,0,.5);
+}
+#main section {
+   height: 360px;
+}
+menu {
+   width: 210px;
+   margin: 0 auto;
+}
+menu > a {
+   margin-right: 20px;
+   font-size: 12pt;
+   text-decoration: none;
+   color: #fff;
+}
+menu > a:last-of-type {
+   margin-right: 0;
+}
+nav > button,
+button.back,
+button.backTo {
+   color: #fff !important;
+   -webkit-font-smoothing: antialiased;
+}
+#chui-back-arrow {
+  stroke: #fff;
+}
+li > h3 {
+  position: relative;
+}
+a.offsiteLink {
+  float: right;
+  margin: 2px;
+  display: block;
+  height: 24px;
+  width: 24px;
+  border: solid 2px #adadad;
+  background: transparent url(../images/Link-icon.png) no-repeat center center;
+  background-size: 75% 75%;
+}
+a.offsiteLink:hover {
+  background-color: #eee;
+}
+.list > li > h3 {
+  font-size: 14pt;
+}
+#detail {
+  color: #fff;
+}
+#aboutThisAppSheet {
+  top: 0 !important;
+}
+#aboutThisAppSheet > section {
+  top: 0;
+}
+/*#aboutThisAppSheet > section > img {
+  width: 100%;
+}*/
+#aboutThisAppSheet > section > div {
+  padding: 20px;
+}
+#aboutThisAppSheet > section > p {
+  padding: 20px !important;
+  color: #fafafa;
+}
+#aboutThisAppSheet button.action {
+  border-color: #fff;
+  color: #fff;
+}
+#shopDetail > li > div > div > img,
+#shop-list > li > img {
+  width: 100px;
+  height: 80px;
+}
+#shopDetail > li > div > div > img {
+  margin-right: 10px
+}
+#brewing-image {
+  display: block;
+  margin: 0 auto;
+}
+@media only screen and (orientation: landscape) {
+  body {
+    background-position: center center;
+  }
+  #exploreButton {
+    position: absolute;
+    bottom: 50px;
+  }
+  #SFCoffeeLogo {
+    margin-top: 50px !important;
+  }
+}
+@media only screen and (device-width: 320px) {
+  body {
+    background-position: center -60px !important;
+  }
+}
+@media only screen and (device-width: 320px) and (orientation: landscape) {
+  body {
+    background-position: center -200px !important;
+  }
+  button.explore {
+    bottom: auto;
+    top: 100px;
+  }
+}
+
+@media only screen and (min-width: 414px) {
+  
+}

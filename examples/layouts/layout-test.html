@@ -8,9 +8,8 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="msapplication-tap-highlight" content="no">
   <title>ChocolateChip-UI Layout</title>
-  <link rel="stylesheet" href="../../dist/css/chui-ios.min.css">
-  <script src="../../dist/chui.min.js"></script>
-  <script type="application/json" src="../../dist/chui.min.js.map"></script>
+  <link rel="stylesheet" href="../../dist/css/chui-ios.css">
+  <script src="../../dist/chui.js"></script>
   <style>
     #bingo {
       height: 10px;
@@ -39,7 +38,7 @@
 </head>
 <body>
 
-<screen id='main' class='current'>
+<ui-screen id='main' class='current'>
   <nav>
     <button>button long</button>
     <h1>This is long</h1>
@@ -53,7 +52,7 @@
     <h2>Subtitle</h2>
     <ul class="list" id='navList'>
       <li data-goto='nextThing'>
-        <img src="../images/Wobba.jpg" alt="">
+        <img src="../../images/Wobba.jpg" alt="">
         <div class='separator auto-width'>
           <h3>Item One</h3>
           <h4>Dingo babies</h4>
@@ -114,9 +113,9 @@
   <footer>
     <button>Button 1</button>
   </footer>
-</screen>
+</ui-screen>
 
-<screen class="next" id="nextThing">
+<ui-screen class="next" id="nextThing">
   <nav>
     <button class='back' id='back'>Back to Home</button>
     <h1>Next Page</h1>
@@ -157,7 +156,7 @@
   <footer>
     <button>Button 2</button>
   </footer>
-</screen>
+</ui-screen>
   
 </body>
 </html>

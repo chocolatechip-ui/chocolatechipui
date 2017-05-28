@@ -7,22 +7,23 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="msapplication-tap-highlight" content="no">
   <title>ChocolateChip-UI Stepper</title>
-  <link rel="stylesheet" href="../dist/css/chui-ios.min.css">
-  <script src="../dist/chui.min.js"></script>
-  <script type="application/json" src="../dist/chui.min.js.map"></script>
+  <link rel="stylesheet" href="./dist/css/chui-ios.css">
+  <script src="./dist/chui.min.js"></script>
+  <script src="./dist/widgets.min.js"></script>
   <script type="text/javascript">
     $(function() {
-      var myStepper = $.Stepper({  
+      var myStepper = new UIStepper({
         element: '#digits',
         min: 1,
         max: 8,
         defaultValue: 3
-      });
-    });
+      })
+      window.myStepper = myStepper
+    })
   </script>
 </head>
 <body>
-  <screen id="main" class="current">
+  <ui-screen id="main" class="current">
     <nav>
       <h1>Stepper</h1>
     </nav>
@@ -32,11 +33,11 @@
           <div>
             <h4>Minimum Value 1, Maximum Value 8</h4>
             <h4>Choose a value:</h4>
-            <stepper class='' id="digits"></stepper>
+            <ui-stepper class='' id="digits"></ui-stepper>
           </div>
         </li>
       </ul>
-    </screen>
-  </article>
+    </section>
+  </ui-screen>
 </body>
 </html>

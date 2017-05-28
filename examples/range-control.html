@@ -7,9 +7,9 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="msapplication-tap-highlight" content="no">
   <title>ChocolateChip-UI Range Input</title>
-  <link rel="stylesheet" href="../dist/css/chui-ios.min.css">
-  <script src="../dist/chui.min.js"></script>
-  <script type="application/json" src="../dist/chui.min.js.map"></script>
+  <link rel="stylesheet" href="./dist/css/chui-ios.css">
+  <script src="./dist/chui.min.js"></script>
+  <script src="./dist/widgets.min.js"></script>
   <style>
     div {
       width: 300px;
@@ -26,20 +26,24 @@
   </style>
   <script>
     $(function() {
-      $('#rangeValue1').text($('#rangeControl1').val());
+
+      // Initialize all range inputs:
+      const setupRanges = new UIRange()
+
+      $('#rangeValue1').text($('#rangeControl1').val())
       $('#rangeControl1').on('input', function() {
-        $('#rangeValue1').text($(this).val());
+        $('#rangeValue1').text(this.value)
       });
-      
+
       $('#rangeValue2').text($('#rangeControl2').val());
       $('#rangeControl2').on('input', function() {
-        $('#rangeValue2').text($(this).val());
+        $('#rangeValue2').text(this.value)
       });
     });
   </script>
 </head>
 <body>
-  <screen id="main" class="current">
+  <ui-screen id="main" class="current">
     <nav>
       <h1>Range Input</h1>
     </nav>
@@ -53,6 +57,9 @@
             <input type="range" id="rangeControl1" value="10" min="0" max="40">
           </div>
         </li>
+        <li>
+          <div id='newInputDiv'></div>
+        </li>
       </ul>
       <ul class='list' ui-li-order="stacked" ui-kind='grouped'>
         <li>
@@ -64,6 +71,6 @@
         </li>
       </ul>
     </section>
-  </screen>
+  </ui-screen>
 </body>
 </html>

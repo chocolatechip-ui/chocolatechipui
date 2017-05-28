@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="msapplication-tap-highlight" content="no">
+  <title>ChocolateChip-UI Pubsub-Mediator</title>
+  <link rel="stylesheet" href="./dist/css/chui-ios.css">
+  <script src="./dist/chui.min.js"></script>
+  <script src="./dist/widgets.min.js"></script>
+</head>
+<body>
+  <ui-screen id='main' class='current'>
+    <nav>
+      <h1>Pubsub</h1>
+    </nav>
+    <section>
+      <h2 class='wrap'>Open console to see results</h2>
+      <h2 class='wrap normal-case'>You can use the following methods:</h2>
+      <ul class='list'>
+        <li>
+          <h3>const fooMtor = $.subscribe('foo-topic', function(data) {
+  console.log(data)
+})</h3>
+        </li>
+        <li>
+          <h3>fooMtor.run('Same here')</h3>
+        </li>
+        <li>
+          <h3>$.publish('foo-topic', 'A message is being sent.')</h3>
+        </li>
+        <li>
+          <h3>fooMtor.off()</h3>
+        </li>
+      </ul>
+    </section>
+  </ui-screen>
+  <script>
+
+    /**
+     * Define some mediators:
+     */
+    var  fooMtor = $.subscribe('foo-topic', function(data) {
+      console.log('1. Foo here.')
+      console.log(data)
+      console.log('')
+    })
+    var  barMtor = $.subscribe('foo-topic', function(data) {
+      console.log('2. Bar here.')
+      console.log(data)
+      console.log('')
+    })
+
+    /**
+     * Run the mediator:
+     */
+    fooMtor.run('This is Godzilla!')
+
+    /**
+     * Dispatch to both mediators:
+     */
+    $.publish('foo-topic', 'This is for everyone.')
+
+    /**
+     * Turn off mediator:
+     */
+    fooMtor.off()
+
+    console.log('fooMtor is turned off.')
+    fooMtor.run('This will not publish.')
+
+  </script>
+</body>
+</html>

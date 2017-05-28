@@ -7,9 +7,9 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="msapplication-tap-highlight" content="no">
   <title>ChocolateChip-UI Tab Bar</title>
-  <link rel="stylesheet" href="../dist/css/chui-ios.min.css">
-  <script src="../dist/chui.min.js"></script>
-  <script type="application/json" src="../dist/chui.min.js.map"></script>
+  <link rel="stylesheet" href="./dist/css/chui-ios.css">
+  <script src="./dist/chui.min.js"></script>
+  <script src="./dist/widgets.min.js"></script>
   <script src="data/data.js"></script>
   <script src="data/fruits.js"></script>
   <script src='data/setup-2.js'></script>
@@ -20,37 +20,37 @@
       we can style the tab bar icons just for Safari
       without affecting the look of Android and Windows Phone 8.
     */
-    tabbar > button {
+    ui-tabbar > button {
       background-color: #fafafa;
     }
-    tabbar > button:hover,
-    tabbar > button.selected {
+    ui-tabbar > button:hover,
+    ui-tabbar > button.selected {
       color: #007aff !important;
       background-color: #f0f0f0;
       opacity: 1 !important;
     }
-    tabbar > button > .icon {
+    ui-tabbar > button > .icon {
       background-position: center center;
       background-size: 100%;
       background-repeat: no-repeat;
     }
-    tabbar > button.music > .icon  {
+    ui-tabbar > button.music > .icon  {
       background-image: url('images/icons/Head_phones.svg');
     }
-    tabbar > button.pictures > .icon  {
+    ui-tabbar > button.pictures > .icon  {
       background-image: url('images/icons/Camera.svg');
     }
-    tabbar > button.docs > .icon {
+    ui-tabbar > button.docs > .icon {
       background-image: url('images/icons/Documents.svg');
     }
-    tabbar > button.recipes > .icon  {
+    ui-tabbar > button.recipes > .icon  {
       background-image: url('images/icons/Download.svg');
     }
-    tabbar > button.top_rated > .icon {
+    ui-tabbar > button.top_rated > .icon {
       background-image: url('images/icons/Favorite.svg');
     }
     /**
-     * Styles for Image Grid 
+     * Styles for Image Grid
      */
     .grid {
       -webkit-flex-wrap: wrap;
@@ -66,7 +66,7 @@
       max-width: 300px;
       margin-top: 5px;
     }
-    @media only screen and (max-width: 481px) {
+    @media only ui-screen and (max-width: 481px) {
       .grid > .col {
         height: 120px;
         width: 120px;
@@ -86,106 +86,56 @@
 </head>
 <body>
 
-  <screen id="music" class="current">
+  <ui-screen role='article' id="music" class="next">
     <nav>
       <h1>Music</h1>
     </nav>
     <section>
-      <ul class='list' id='musicList'>
-        <li>
-          <img  data-src="{= music.image }" height="80px">
-          <div>
-            <h3>{= music.title }</h3>
-            <h4>{= music.album }</h4>
-            <p>{= music.description }</p>
-          </div>
-        </li>
-      </ul>  
+      <ul class='list' id='musicList'></ul>
     </section>
-  </screen>
+  </ui-screen>
 
-  <screen id='pictures' class='next'>
+  <ui-screen role='article' id='pictures' class='current'>
     <nav>
       <h1>Pictures</h1>
     </nav>
     <section id='imageGrid'>
-      <div class="grid" id='gridOfImages'>
-        <img class="col" data-src="{= image }">
-      </div>
+      <div class="grid" id='gridOfImages'></div>
     </section>
-  </screen>
+  </ui-screen>
 
-  <screen id='documents' class='next'>
+  <ui-screen role='article' id='documents' class='next'>
     <nav>
       <h1>Documents</h1>
     </nav>
     <section>
-      <ul class='list' id='docsList'>
-        <script type='text/x-template'>
-          <li class='center-vertical'>
-            <h3>{= doc.title }</h3>
-            <h4>{= doc.subtitle }</h4>
-            <aside>
-              <span class='counter'>{= doc.amount }</span>
-            </aside>
-          </li>
-        </script>
-      </ul>          
+      <ul class='list' id='docsList'></ul>
     </section>
-  </screen>
+  </ui-screen>
 
-  <screen id='recipes' class='next'>
+  <ui-screen role='article' id='recipes' class='next'>
     <nav>
       <h1>Recipes</h1>
     </nav>
     <section>
       <h2>Special Dishes</h2>
-      <ul class='list' id='recipesList'>
-        <script type='text/x-template'>
-          <li>
-            <div>
-              <h3>{= recipe.name }</h3>
-              <h4>Ingredients</h4>
-              <ul>
-                {{ recipe.ingredients.forEach(function(ingredient) { }}
-                  <li>{= ingredient }</li>
-                {{ }); }}
-              </ul>
-              <h4>Directions</h4>
-              <ol>
-                {{ recipe.directions.forEach(function(direction) { }}
-                  <li>{= direction }</li>
-                {{ }); }}
-              </ol>
-            </div>
-          </li>
-        </script>
-      </ul>
+      <ul class='list' id='recipesList'></ul>
     </section>
-  </screen>
+  </ui-screen>
 
-  <screen role='article' id='fruits' class='next'>
+  <ui-screen role='article' id='fruits' class='next'>
     <nav>
       <h1>Fruits</h1>
     </nav>
     <section>
       <h2>Fruits</h2>
       <ul class='list' id='fruitsList'>
-        <script type='text/x-template'>
-          <li class='center-vertical' data-goto='chosenFruit:{= fruit.type }'>
-            <div>
-              <h3>{= fruit.name }</h3>
-            </div>
-            <aside>
-              <disclosure></disclosure>
-            </aside>
-          </li>
-        </script>
+
        </ul>
     </section>
-  </screen>
+  </ui-screen>
 
-  <screen role='article' id='chosenFruit' class='next'>
+  <ui-screen role='article' id='chosenFruit' class='next'>
     <nav>
       <button class='back' id='back'><span>Back</span></button>
       <h1>Fruit Uses</h1>
@@ -193,66 +143,63 @@
     <section>
       <h2 id='chosenFruitTitle'>fruit</h2>
       <ul class="list" id='chosenFruitList'>
-        <li>
-          <h3>{= fruit }</h3>
-        </li>
+
       </ul>
     </section>
-  </screen>
+  </ui-screen>
 
   <script>
     $(function() {
-      // Create global nav:
-      $.globalNav = true;
-      
+
       /**
-       * Chosen Fruit View:
+       * Chosen Fruit Component:
        */
-      var chosenFruitView = $.View({
+      var chosenFruitComponent = new Component({
         element: '#chosenFruitList',
-        variable: 'fruit'
-      });
+        render: (fruit) => html`
+          <li>
+            <h3>${ fruit }</h3>
+          </li>`
+      })
 
       /**
        * Routes for fruits:
        */
-      $.AppRoutes = $.Router();
-      $.AppRoutes.addRoute([
-        {
-          route: 'chosenFruit',
-          callback: function(param) {
-            /**
-             * Render chosen fruit:
-             */
-            var renderChosenFruit = function(whichOne) {
-              chosenFruitView.render(fruits[whichOne].uses);
-              $('#chosenFruitTitle').text(fruits[whichOne].name);
-            };
+      appRoutes = new Router()
+      appRoutes.addRoute({
+        route: 'chosenFruit',
+        callback: function(param) {
+          /**
+           * Render chosen fruit:
+           */
+          var renderChosenFruit = function(whichOne) {
+            chosenFruitComponent.render(fruits[whichOne].uses)
+            $('#chosenFruitTitle').text(fruits[whichOne].name)
+          }
 
-            switch (param) {
-              case 'apples':
-                renderChosenFruit(0);
-                break;
-              case 'oranges':
-                renderChosenFruit(1);
-                break;
-              case 'bananas':
-                renderChosenFruit(2);
-                break;
-              case 'peaches':
-                renderChosenFruit(3);
-                break;
-              case 'strawberries':
-                renderChosenFruit(4);
-                break;
-              case 'cherries':
-                renderChosenFruit(5);
-                break;
-            }
+          switch (param) {
+            case 'apples':
+              renderChosenFruit(0)
+              break
+            case 'oranges':
+              renderChosenFruit(1)
+              break
+            case 'bananas':
+              renderChosenFruit(2)
+              break
+            case 'peaches':
+              renderChosenFruit(3)
+              break
+            case 'strawberries':
+              renderChosenFruit(4)
+              break
+            case 'cherries':
+              renderChosenFruit(5)
+              break
           }
         }
-      ]);
-    });
+      })
+    })
   </script>
 </body>
 </html>

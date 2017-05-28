@@ -7,9 +7,9 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="msapplication-tap-highlight" content="no">
   <title>ChocolateChip-UI Activity Indicator</title>
-  <link rel="stylesheet" href="../dist/css/chui-ios.min.css">
-  <script src="../dist/chui.min.js"></script>
-  <script type="application/json" src="../dist/chui.min.js.map"></script>
+  <link rel="stylesheet" href="./dist/css/chui-ios.css">
+  <script src="./dist/chui.min.js"></script>
+  <script src="./dist/widgets.min.js"></script>
   <style type="text/css">
     body {
       padding: 60px 10px 20px 20px;
@@ -22,47 +22,80 @@
       background-color: #fff;
       position: relative;
     }
-  </style>    
+    h3 {
+      padding: 20px;
+    }
+  </style>
   <script>
     $(function() {
-      var navBusy = $('#navBusy')
-      navBusy.Busy({color:'#007AFF', size: 28});
-      
-      var busy1 = $('#busy1')
-      busy1.Busy({'color':'rgba(200,0,0,0.75)', 'size': 50});
-      busy1.find('.chui-busy').center();
-      
-      var busy2 = $('#busy2')
-      busy2.Busy({'color': 'gold', 'size': 100});
-      busy2.find('.chui-busy').center();
-      
-      var busy3 = $('#busy3')
-      busy3.Busy({'color': '#fff'})
-      busy3.find('.chui-busy').css({position: 'relative', 'top': '50px'}).center();
-      
-      var busy4 = $('#busy4')
-      busy4.Busy({'color': 'blue', 'size': 36});
-      busy4.find('.chui-busy').center();
-      
-      var busy5 = $('#busy5');
-      busy5.Busy({'color': '#ddd', 'size': 150});
-      busy5.find('.chui-busy').center();
-      
-    });
+
+      const navBusy = new UIBusy({
+        element: '#navBusy',
+        color: '#007AFF',
+        size: 28
+      })
+
+      const busy1 = new UIBusy({
+        element: '#busy1',
+        color: 'rgba(200,0,0,0.75)',
+        size: 50
+      })
+      busy1.center('absolute')
+
+      const busy2 = new UIBusy({
+        element: '#busy2',
+        color: 'gold',
+        size: 100
+      })
+      busy2.center('absolute')
+
+      const busy3 = new UIBusy({
+        element: '#busy3',
+        color: '#fff',
+        size: 50
+      })
+      busy3.center('absolute')
+
+      const busy4 = new UIBusy({
+        element: '#busy4',
+        color: 'blue',
+        size: 36
+      })
+      busy4.center('absolute')
+
+      const busy5 = new UIBusy({
+        element: '#busy5',
+        color: '#ddd',
+        size: 150
+      })
+      busy5.center('absolute')
+
+    })
   </script>
 </head>
 <body>
-  <screen id="main" class="current">
+  <ui-screen id="main" class="current">
     <nav id='navBusy'>
       <h1>Activity Indicator</h1>
     </nav>
     <section>
-      <div id="busy1" class="square"></div>
-      <div id="busy2" class="square" style="background:#7d88d3"></div>
-      <div id="busy3" class="square" style="background:#0059a6"></div>
-      <div id="busy4" class="square"></div>
-      <div id="busy5" class="square" style="background:#afafaf"></div>
+      <h2 class='normal-case'>Change the stylesheet from iOS to Android to see the Android version</h2>
+      <div id="busy1" class="square">
+        <h3>busy1</h3>
+      </div>
+      <div id="busy2" class="square" style="background:#7d88d3">
+        <h3>busy2</h3>
+      </div>
+      <div id="busy3" class="square" style="background:#0059a6">
+        <h3>busy3</h3>
+      </div>
+      <div id="busy4" class="square">
+        <h3>busy4</h3>
+      </div>
+      <div id="busy5" class="square" style="background:#afafaf">
+        <h3>busy5</h3>
+      </div>
     </section>
-  </screen>
+  </ui-screen>
 </body>
 </html>

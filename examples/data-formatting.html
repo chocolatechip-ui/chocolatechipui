@@ -7,45 +7,73 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="msapplication-tap-highlight" content="no">
   <title>ChocolateChip-UI Data Formatter</title>
-  <link rel="stylesheet" href="../dist/css/chui-ios.min.css">
-  <script src="../dist/chui.min.js"></script>
-  <script type="application/json" src="../dist/chui.min.js.map"></script>
+  <link rel="stylesheet" href="./dist/css/chui-ios.css">
+  <script src="./dist/chui.min.js"></script>
+  <script src="./dist/widgets.min.js"></script>
+  <script src="./dist/utils/formatters.js"></script>
 <script>
  $(function() {
     var numberData = {
-      n1: { 
+      n1: {
         description: 'Without decimals',
         formula: '$.formatNumber(9123456789)',
         value: 9123456789
       },
-      
-      n2: { 
+
+      n2: {
         description: 'With decimals',
         formula: '$.formatNumber(9123456789.2382)',
         value: 9123456789.2382
       },
-      
-      n3: { 
+
+      n3: {
         description: 'Rounded to Two Deicmals',
         formula: '$.formatNumber(9123456789.2382, ",", 2)',
         value: 9123456789.2382
       },
-      
-      n4: { 
+
+      n4: {
         description: 'Round to Whole Number',
         formula: '$.formatNumber(9123456789.99, ",", 0)',
         value: 9123456789.99
       }
-    };
+    }
 
-    // Define Numbers View:
-    var NumbersView = $.View({
+    // Define Numbers Component:
+    var NumbersView = new Component({
       element: '#numbers',
-      variable: 'number',
-      safeHTML: true
-    });
+      render: (number) => `
+        <li>
+          <div>
+            <h3>${ number.n1.description }</h3>
+            <h4>${ number.n1.formula }</h4>
+            <p>${ $.formatNumber(number.n1.value) }</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>${ number.n2.description }</h3>
+            <h4>${ number.n2.formula }</h4>
+            <p>${ $.formatNumber(number.n2.value) }</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>${ number.n3.description }</h3>
+            <h4>${ number.n3.formula }</h4>
+            <p>${ $.formatNumber(number.n3.value, ",", 2) }</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>${ number.n4.description }</h3>
+            <h4>${ number.n4.formula }</h4>
+            <p>${ $.formatNumber(number.n4.value, ",", 0) }</p>
+          </div>
+        </li>`
+    })
 
-    NumbersView.render(numberData);
+    NumbersView.render(numberData)
 
     var sumData = {
       n1: {
@@ -58,18 +86,31 @@
         formula: '$.sum(1,2,3,4,5,6,7,8,9,10,11,12.4)',
         value: "1,2,3,4,5,6,7,8,9,10,11,12.4"
       }
-    };
+    }
 
     /**
-     * Define Sum View:
+     * Define Sum Component:
      */
-    var SumView = $.View({
+    var SumView = new Component({
       element: '#sum',
-      variable: 'sum',
-      safeHTML: true
-    });
+      render: (sum) => `
+        <li>
+          <div>
+            <h3>${ sum.n1.description }</h3>
+            <h4>${ sum.n1.formula }</h4>
+            <p>${ $.sum(sum.n1.value) }</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>${ sum.n2.description }</h3>
+            <h4>${ sum.n2.formula }</h4>
+            <p>${ $.sum(1,2,3,4,5,6,7,8,9,10,11,12.4) }</p>
+          </div>
+        </li>`
+    })
 
-    SumView.render(sumData);
+    SumView.render(sumData)
 
     var currencyData = {
       n1: {
@@ -84,148 +125,110 @@
         description: '$.currency(9123456789.92612, "¥", ",", "2")',
         value: 9123456789.92612
       }
-    };
+    }
 
-    $.CurrencyView = $.View({
+    $.CurrencyView = new Component({
       element: '#currency',
-      variable: 'currency',
-      safeHTML: true
-    });
-    $.CurrencyView.render(currencyData);
+      render: (currency) => `
+        <li>
+          <div>
+            <p>Dollars (default):</p>
+            <h3>${ currency.n1.description }</h3>
+            <h4>${ $.currency(currency.n1.value, 0) }</h4>
+          </div>
+        </li>
+        <li>
+          <div>
+            <p>Euros:</p>
+            <h3>${ currency.n2.description }</h3>
+            <h4>${ $.currency(currency.n2.value, "€") }</h4>
+          </div>
+        </li>
+        <li>
+          <div>
+            <p>Yuan (RMB):</p>
+            <h3>${ currency.n3.description }</h3>
+            <h4>${ $.currency(currency.n3.value, "¥", ",", 2) }</h4>
+          </div>
+        </li>`
+    })
+    $.CurrencyView.render(currencyData)
 
     /**
      * Create Data and Time objects:
      */
-    var date = new Date();
+    var date = new Date()
 
     var dateData = [
       {description: 'var date = new Date()', date: date},
       {description: 'date.toLocaleDateString()', date: date.toLocaleDateString()},
-    ];
-    // Date:
-    var DateView = $.View({
-      element: '#date',
-      variable: 'date',
-      safeHTML: true
-    });
+    ]
 
-    DateView.render(dateData);
+    // Date:
+    var DateView = new Component({
+      element: '#date',
+      render: (date) => `
+        <li>
+          <div>
+            <h3>${ date.description }</h3>
+            <h4>${ date.date }</h4>
+          </div>
+        </li>`
+    })
+
+    DateView.render(dateData)
 
     /**
      * Time:
      */
-    var TimeView = $.View({
+    var TimeView = new Component({
       element: '#time',
-      variable: 'time',
-      safeHTML: true
-    });
+      render: (time) => `
+        <li>
+          <div>
+            <h3>${ time.description }</h3>
+            <h4>${ time.date }</h4>
+          </div>
+        </li>`
+    })
+
     var timeData = [
       {description: 'date.toLocaleTimeString()', date: date.toLocaleTimeString()},
       {description: '$.formatTime(date.toLocaleTimeString())', date: $.formatTime(date.toLocaleTimeString())},
-    ];
-    TimeView.render(timeData);
+    ]
+    TimeView.render(timeData)
 
-});
+})
   </script>
 </head>
 <body>
-<screen id="main" class="current">
+<ui-screen id="main" class="current">
   <nav>
       <h1>Data Formatting</h1>
   </nav>
   <section>
     <h2>Numbers</h2>
     <ul id='numbers' class="list">
-      <li>
-        <div>
-          <h3>{= number.n1.description }</h3>
-          <h4>{= number.n1.formula }</h4>
-          <p>{= $.formatNumber(number.n1.value) }</p>
-        </div>
-      </li>
-      <li>
-        <div>
-          <h3>{= number.n2.description }</h3>
-          <h4>{= number.n2.formula }</h4>
-          <p>{= $.formatNumber(number.n2.value) }</p>
-        </div>
-      </li>
-      <li>
-        <div>
-          <h3>{= number.n3.description }</h3>
-          <h4>{= number.n3.formula }</h4>
-          <p>{= $.formatNumber(number.n3.value, ",", 2) }</p>
-        </div>
-      </li>
-      <li>
-        <div>
-          <h3>{= number.n4.description }</h3>
-          <h4>{= number.n4.formula }</h4>
-          <p>{= $.formatNumber(number.n4.value, ",", 0) }</p>
-        </div>
-      </li>
+
     </ul>
     <h2>Sum of numbers</h2>
     <ul id='sum'class='list'>
-      <li>
-        <div>
-          <h3>{= sum.n1.description }</h3>
-          <h4>{= sum.n1.formula }</h4>
-          <p>{= $.sum(sum.n1.value) }</p>
-        </div>
-      </li>
-      <li>
-        <div>
-          <h3>{= sum.n2.description }</h3>
-          <h4>{= sum.n2.formula }</h4>
-          <p>{= $.sum(1,2,3,4,5,6,7,8,9,10,11,12.4) }</p>
-        </div>
-      </li>
+
     </ul>
     <h2>Currency</h2>
     <ul id='currency'class='list'>
-      <li>
-        <div>
-          <p>Dollars (default):</p>
-          <h3>{= currency.n1.description }</h3>
-          <h4>{= $.currency(currency.n1.value, 0) }</h4>
-        </div>
-      </li>
-      <li>
-        <div>
-          <p>Euros:</p>
-          <h3>{= currency.n2.description }</h3>
-          <h4>{= $.currency(currency.n2.value, "€") }</h4>
-        </div>
-      </li>
-      <li>
-        <div>
-          <p>Yuan (RMB):</p>
-          <h3>{= currency.n3.description }</h3>
-          <h4>{= $.currency(currency.n3.value, "¥", ",", 2) }</h4>
-        </div>
-      </li>
+
     </ul>
     <h2>Date</h2>
     <ul id='date'class='list'>
-      <li>
-        <div>
-          <h3>{= date.description }</h3>
-          <h4>{= date.date }</h4>
-        </div>
-      </li>
+
     </ul>
     <h2>Time</h2>
     <ul id='time'class='list'>
-      <li>
-        <div>
-          <h3>{= time.description }</h3>
-          <h4>{= time.date }</h4>
-        </div>
-      </li>
+
     </ul>
   </section>
-</screen>
-  
+</ui-screen>
+
 </body>
 </html>

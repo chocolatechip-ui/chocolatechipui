@@ -1,8 +1,8 @@
 {
   "name": "chocolatechipui",
-  "title": "ChocolateChipJS",
-  "description": "JavaScript library for mobile Web apps",
-  "version": "4.9.9",
+  "title": "ChocolateChipUI",
+  "description": "JavaScript framework for mobile Web apps and hybrid apps.",
+  "version": "5.0.0",
   "homepage": "http://chocolatechip-ui.github.io",
   "author": "Robert Biggs and contributors",
   "repository": {
@@ -10,71 +10,28 @@
     "url": "git+https://github.com/chocolatechip-ui/chocolatechipui.git"
   },
   "license": "MIT",
-  "types": "./typings/modules/chocolatechipui/index.d.ts",
-  "scripts": {
-    "dom-stack-test": "phantomjs ./node_modules/mocha-phantomjs-core/mocha-phantomjs-core.js './tests-browser/01-dom-stack.html'",
-    "query-test": "phantomjs ./node_modules/mocha-phantomjs-core/mocha-phantomjs-core.js './tests-browser/02-dom-query.html'",
-    "extend-test": "phantomjs ./node_modules/mocha-phantomjs-core/mocha-phantomjs-core.js './tests-browser/03-extend.html'",
-    "utilities-test": "phantomjs ./node_modules/mocha-phantomjs-core/mocha-phantomjs-core.js './tests-browser/04-utilities.html'",
-    "strings-test": "phantomjs ./node_modules/mocha-phantomjs-core/mocha-phantomjs-core.js './tests-browser/05-strings.html'",
-    "types-test": "phantomjs ./node_modules/mocha-phantomjs-core/mocha-phantomjs-core.js './tests-browser/06-types.html'",
-    "array-extras-test": "phantomjs ./node_modules/mocha-phantomjs-core/mocha-phantomjs-core.js './tests-browser/07-array-extras.html'",
-    "browsers-test": "phantomjs ./node_modules/mocha-phantomjs-core/mocha-phantomjs-core.js './tests-browser/08-browsers.html'",
-    "serialize-test": "phantomjs ./node_modules/mocha-phantomjs-core/mocha-phantomjs-core.js './tests-browser/09-serialize.html'",
-    "collection-utilities-test": "phantomjs ./node_modules/mocha-phantomjs-core/mocha-phantomjs-core.js './tests-browser/10-collection-utilities.html'",
-    "data-test": "phantomjs ./node_modules/mocha-phantomjs-core/mocha-phantomjs-core.js './tests-browser/11-data.html'",
-    "events-test": "phantomjs ./node_modules/mocha-phantomjs-core/mocha-phantomjs-core.js './tests-browser/12-events.html'",
-    "event-aliases-test": "phantomjs ./node_modules/mocha-phantomjs-core/mocha-phantomjs-core.js './tests-browser/13-event-aliases.html'",
-    "gestures-test": "phantomjs ./node_modules/mocha-phantomjs-core/mocha-phantomjs-core.js './tests-browser/14-gestures.html'",
-    "dom-test": "phantomjs ./node_modules/mocha-phantomjs-core/mocha-phantomjs-core.js './tests-browser/15-dom.html'",
-    "validators-test": "phantomjs ./node_modules/mocha-phantomjs-core/mocha-phantomjs-core.js './tests-browser/16-validators.html'",
-    "form-test": "phantomjs ./node_modules/mocha-phantomjs-core/mocha-phantomjs-core.js './tests-browser/17-form.html'",
-    "formatters-test": "phantomjs ./node_modules/mocha-phantomjs-core/mocha-phantomjs-core.js './tests-browser/18-formatters.html'",
-    "test": "npm run dom-stack-test && npm run query-test && npm run extend-test && npm run utilities-test && npm run strings-test && npm run types-test && npm run array-extras-test && npm run browsers-test && npm run serialize-test && npm run collection-utilities-test && npm run data-test && npm run events-test && npm run event-aliases-test && npm run gestures-test && npm run dom-test && npm run validators-test && npm run form-test && npm run formatters-test"
-  },
-  "jspm": {
-    "devDependencies": {
-      "babel": "npm:babel-core@^5.8.24",
-      "babel-runtime": "npm:babel-runtime@^5.8.24",
-      "core-js": "npm:core-js@^1.1.4"
-    }
-  },
   "devDependencies": {
-    "babel": "^6.5.2",
-    "babel-preset-es2015": "^6.14.0",
-    "bluebird": "~3.4.7",
-    "chai": "*",
-    "copy": "^0.3.0",
-    "copy_file": "^0.1.0",
-    "cp-file": "^4.1.1",
-    "cpr": "^2.0.0",
-    "gulp": "^3.8.10",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-es2015-rollup": "^3.0.0",
+    "chocolatechipui": ">= 5.0.0 < 6",
+    "concat": "^3.0.0",
+    "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
-    "gulp-concat": "^2.6.0",
-    "gulp-cssnano": "^2.1.1",
-    "gulp-jsbeautifier": "^2.0.4",
-    "gulp-jshint": "~2.0.4",
-    "gulp-jspm": "^0.5.7",
+    "gulp-concat": "^2.6.1",
+    "gulp-cssnano": "^2.1.2",
+    "gulp-jsbeautifier": "^2.1.0",
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.5.4",
-    "gulp-sourcemaps": "^2.4.0",
-    "gulp-uglify": "~2.0.0",
+    "gulp-sourcemaps": "^2.6.0",
+    "gulp-uglify": "^2.1.2",
     "gulp-wrapper": "^1.0.0",
-    "jshint": "^2.9.4",
+    "min.css": "^1.3.1",
     "mkdirp": "^0.5.1",
-    "mocha": "*",
-    "mocha-phantomjs-core": "^2.1.1",
-    "ncp": "^2.0.0",
-    "phantomjs": "^2.1.7",
-    "replace-in-file": "^2.1.0",
-    "writefile": "^0.2.8",
-    "yargs": "^6.6.0"
+    "rollup": "^0.41.6",
+    "rollup-plugin-babel": "^2.7.1",
+    "uglifyjs": "^2.4.10"
   },
-  "projectPath": "",
-  "bugs": {
-    "url": "https://github.com/chocolatechip-ui/chocolatechipui/issues"
-  },
-  "directories": {
-    "example": "examples"
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   }
 }

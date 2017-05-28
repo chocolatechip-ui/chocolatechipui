@@ -7,49 +7,44 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="msapplication-tap-highlight" content="no">
   <title>ChocolateChip-UI Sheet</title>
-  <link rel="stylesheet" href="../dist/css/chui-ios.min.css">
-  <script src="../dist/chui.min.js"></script>
-  <script type="application/json" src="../dist/chui.min.js.map"></script>
+  <link rel="stylesheet" href="./dist/css/chui-ios.css">
+  <script src="./dist/chui.min.js"></script>
+  <script src="./dist/widgets.min.js"></script>
   <script>
     $(function() {
       /**
        * Create sheet and populate it:
        */
-      $.Sheet({
+      var sheet = new UISheet({
         id: 'mySheet',
         handle: true,
         slideFrom: 'bottom'
-      });
-
-      var sheetContent = "<ul class='list'>\n\
-        <li><button class='action centered'>Save</button></li>\n\
-        <li><button class='action centered'>Delete</button></li>\n\
-        <li><button class='action centered'>Cancel</button></li>\n\
-        </ul>\n\
-        <h2 style=\"text-align: center; margin: 20px;\">The End</h2>";
-
-      $('#mySheet').find('section').append(sheetContent);
-      
-      /**
-       * Hide sheet when tapping buttons:
-       */
-      $('#mySheet').on('tap', 'button', function() {
-        $.HideSheet('#mySheet');
-      });
-      
-      /**
-       * Initialize button to show sheet:
-       */
+      })
+      sheet.populate(`
+        <ul class='list'>
+          <li>
+            <button class="action centered">Save</button>
+          </li>
+          <li>
+            <button class="action centered">Delete</button>
+          </li>
+          <li>
+            <button class="action centered">Cancel</button>
+          </li>
+        </ul>`)
       $('#showSheet').on('tap', function() {
-        $.ShowSheet('#mySheet');
-      });
-    });
+        sheet.show()
+      })
+      $('#mySheet').on('tap', 'button', function() {
+        sheet.hide()
+      })
+    })
   </script>
 </head>
 <body>
-  <screen class='current' id='main'>
+  <ui-screen class='current' id='main'>
     <nav>
-      <h1>Sheet Control</h1>
+      <h1>Sheet Control - Slide From Bottom</h1>
       <button id='showSheet'>Show</button>
     </nav>
     <section>
@@ -112,6 +107,6 @@
         </li>
       </ul>        
     </section>
-  </screen>
+  </ui-screen>
 </body>
 </html>

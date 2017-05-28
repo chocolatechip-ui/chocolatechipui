@@ -1,0 +1,193 @@
+
+/*=================*/
+/* reorderable Lists */
+/*=================*/
+.list.deletable.reorderable > li {
+  padding: 8px 20px 8px 30px;
+}
+.list.reorderable > li {
+  padding: 8px 20px 8px 10px;
+}
+.list li > .deletion-indicator {
+  display: inline-block;
+  overflow: hidden;
+  width: 20px;
+  height: 20px;
+  -webkit-transition: all 0.25s ease-out;
+  transition: all 0.25s ease-out;
+  margin-left: -55px;
+  margin-right: 10px;
+  cursor: pointer;
+  position: relative;
+  z-index: 100;
+  border: solid 1px #007aff;
+}
+.list li > .deletion-indicator #ios-circle,
+.list li > .deletion-indicator #ios-bar {
+  display: none;
+}
+.list li > .deletion-indicator #checkmark {
+  stroke: #007aff;
+  display: none;
+}
+.list li:focus {
+  outline: none !important;
+}
+.reordering-list-item {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  outline: none !important;
+  -webkit-focus-ring: transparent !important;
+}
+#move-indicator {
+  stroke: #007aff;
+}
+.list li > button.delete {
+  float: right;
+  background-color: transparent;
+  color: #ffffff;
+  text-align: center;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 60px;
+  position: absolute;
+  right: -100px;
+  top: 0;
+  bottom: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  display: flex;
+  display: -webkit-flex;
+  display: -webkit-box;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-transition: all 0.25s ease-out;
+  transition: all 0.25s ease-out;
+  cursor: pointer;
+  padding: 0;
+  background-color: rgba(102, 102, 102, 0.2);
+  box-shadow: inset 2px 2px 2px rgba(51, 51, 51, 0.2);
+  border-radius: 0;
+  border-bottom: 1px solid rgba(51, 51, 51, 0.2);
+  border-right: 1px solid rgba(51, 51, 51, 0.2);
+}
+.list li > button.delete > svg {
+  display: block;
+  position: absolute;
+  top: 8px;
+  left: 12px;
+  height: 60%;
+  width: 60%;
+}
+.list li > button.delete > label {
+  display: none
+}
+.list.reorderable > li,
+.list.deletable > li {
+  -webkit-transition: all 0.25s ease-out;
+  transition: all 0.25s ease-out;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+.list.reorderable > li.selected,
+.list.deletable > li.selected {
+  background-color: #ffffff;
+}
+.list.reorderable > li.selected h3,
+.list.deletable > li.selected h3,
+.list.reorderable > li.selected h4,
+.list.deletable > li.selected h4,
+.list.reorderable > li.selected p,
+.list.deletable > li.selected p {
+  position: relative;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -webkit-transition: all 0.25s ease-out;
+  transition: all 0.25s ease-out;
+}
+.list.reorderable > li.selected > button.delete,
+.list.deletable > li.selected > button.delete {
+  -webkit-transform: translate3d(85px, 0, 0);
+  transform: translate3d(85px, 0, 0);
+  right: 85px;
+}
+.list.reorderable > li.selected > .deletion-indicator,
+.list.deletable > li.selected > .deletion-indicator {
+  box-shadow: 0 0 2px 1px #007aff;
+}
+.list.reorderable > li.selected > .deletion-indicator #checkmark,
+.list.deletable > li.selected > .deletion-indicator #checkmark {
+  display: block;
+}
+.list.reorderable > li.selected > .deletion-indicator > svg,
+.list.deletable > li.selected > .deletion-indicator > svg {
+  position: relative;
+  top: -1px;
+}
+.list > li > svg.handle,
+.list.reorderable > li > svg.handle {
+  margin-right: -40px !important;
+}
+.list.reorderable.showIndicators > li > svg.handle {
+  margin-right: 0px !important;
+  -webkit-transition: all 0.5s ease-out;
+  transition: all 0.25s ease-out;
+}
+.list.reorderable.showIndicators > li.selected > svg.handle {
+  margin-right: 65px !important;
+}
+.list.reorderable > li.reordering-list-item:hover {
+  cursor: move;
+}
+.list.showIndicators .deletion-indicator {
+  margin-left: -20px;
+}
+.list.showIndicators > li > h3 {
+  width: 55%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.list > li[data-goto] > .deletion-indicator {
+  position: absolute;
+  left: -40px;
+  margin-left: 0px;
+}
+.list > li[data-goto] > .deletion-indicator + div + aside {
+  margin: -20px;
+  position: relative;
+  right: 15px;
+}
+html[dir=rtl] .list.reorderable > li {
+  padding: 8px 30px 8px 20px;
+}
+html[dir=rtl] .list li > .deletion-indicator {
+  margin-right: -50px;
+  margin-left: 10px;
+}
+html[dir=rtl] .list li > button.delete {
+  float: left;
+  right: auto;
+  left: -100px;
+}
+html[dir=rtl] .list.reorderable > li.selected > button.delete,
+html[dir=rtl] .list.deletable > li.selected > button.delete {
+  -webkit-transform: translate3d(-100px, 0, 0);
+  transform: translate3d(-100px, 0, 0);
+  right: auto;
+  left: 100px;
+}
+html[dir=rtl] .list.showIndicators .deletion-indicator {
+  margin-left: 10px;
+  margin-right: -20px;
+}
+
+html[dir=rtl] .list.reorderable.showIndicators > li.selected > svg.handle {
+  margin-left: 55px !important;
+  margin-right: 0 !important;
+}

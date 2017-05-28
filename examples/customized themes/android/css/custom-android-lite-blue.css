@@ -1,5 +1,5 @@
 /* Color navbar and toolbar */
-nav, #globalNav, screen > footer, screen > toolbar {
+nav, #globalNav, ui-screen > footer, ui-screen > toolbar {
   background-color: #78c5e4 !important;
 }
 /* Color title and buttons in nav and toolbars */
@@ -13,31 +13,32 @@ disclosure {
 }
 /* Color segmented control marker */
 span.androidSelectionBorder,
-tabbar > span.androidSelectionBorder {
+ui-tabbar > span.androidSelectionBorder {
   border-bottom: solid 3px #78c5e4 !important;
 }
 /* Callout text */
 .attentionGrabber {
-  /*color: #78c5e4;*/
+  color: #78c5e4;
 }
 /* Editable Lists */
 #move-indicator,
 .list li > .deletion-indicator #checkmark,
 .multi-select-list > li #multi-select-icon,
 .select-list > li.selected #outer-circle {
-  /*stroke: #78c5e4 !important;*/
+  stroke: #78c5e4 !important;
 }
 .list li > .deletion-indicator {
-  /*border: solid 1px #78c5e4;*/
+  border: solid 1px #78c5e4;
 }
 .list.editable > li.selected > .deletion-indicator,
 .list.deletable > li.selected > .deletion-indicator {
   box-shadow: 0 0 2px 1px #78c5e4;
 }
-.multi-select-list > li > span.multi-selection-indicator {
+
+.multi-select-list > li > aside > span.multi-selection-indicator {
   border: solid 1px #78c5e4;
 }
-.multi-select-list > li.selected > span.multi-selection-indicator {
+.multi-select-list > li.selected > aside > span.multi-selection-indicator {
   box-shadow: 0 0 2px 1px #78c5e4;
 }
 #pagination-icons path#page-previous,
@@ -93,22 +94,22 @@ button.slide-out-button::before,
 button.slide-out-button::after {
   background-color: #333;
 }
-switch {
+ui-switch {
   background-image: -webkit-linear-gradient(left, #78c5e4, #78c5e4), -webkit-linear-gradient(left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
   background-image: linear-gradient(to left, #78c5e4, #78c5e4), linear-gradient(to left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
 }
-switch.checked > em {
+ui-switch.checked > em {
   background-color: #78c5e4;
 }
-switch.traditional.checked > em {
+ui-switch.traditional.checked > em {
   background-color: #78c5e4;
   border: solid 1px #78c5e4;
 }
-.isDesktop tabbar>button:hover, 
-tabbar>button.selected {
+.isDesktop ui-tabbar>button:hover {
   background-color: #78c5e4 !important;
+  color: #fff !important;
 }
-tabbar ~ screen > nav {
+ui-tabbar ~ ui-screen > nav {
   background-color: #78c5e4 !important;
   border-bottom: 1px solid #78c5e4 !important;
 }

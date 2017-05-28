@@ -6,11 +6,12 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="msapplication-tap-highlight" content="no">
-  <title>ChocolateChip-UI Navigation</title>
-  <link rel="stylesheet" href="../../../../dist/css/chui-ios.min.css">
+  <title>ChocolateChip-UI Navigation - Routes</title>
+  <link rel="stylesheet" href="../../../dist/css/chui-ios.css">
   <link rel="stylesheet" href="../css/custom-ios-lite-blue.css">
-  <script src="../../../../dist/chui.min.js"></script>
-  <script type="application/json" src="../../../../dist/chui.min.js.map"></script>
+  <script src="../../../dist/chui.min.js"></script>
+  <script src="../../../dist/widgets.min.js"></script>
+  <script src="../../../data/data.js"></script>
   <style>
     .list > li  img {
       height: 80px;
@@ -22,223 +23,131 @@
       max-width: 80px;
       justify-content: flex-end;
     }
+    #returning {
+      color: #007aff;
+    }
     .no-flex {
       max-width: 200px !important;
       margin-right: 10px;
     }
+    [dir=rtl] .list > li  img {
+      margin-right: 0;
+      margin-left: 10px;
+    }
+    [dir=rtl] .no-flex {
+      margin-right: 0;
+      margin-left: 10px;
+    }
   </style>
 </head>
 <body>
-  <screen id='main' class='current'>
-    <nav id='nav1'>
-      <h1>Templates</h1>
+  <nav id='global-nav'></nav>
+  <ui-screen id='main' class='current'>
+    <nav>
+      <h1>Navigation List</h1>
     </nav>
     <section>
-      <h2>Single Object</h2>
-      
-      <h2>Arrays</h2>
+      <h2>Famous People</h2>
+      <ul class="list cloak" id="arrayTemplate1"></ul>
+    </section>
+  </ui-screen>
 
-      <ul class="list cloak" id="list">
-        <li data-goto='{= person.firstName }'>
-          <div class='no-flex'>
-            <img data-src='{= person.image }' alt="">
-          </div>
-          <h3>
-            {= $.view.index }: {= person.firstName } {= person.lastName }
-          </h3>
-          <aside>
-            <disclosure></disclosure>
-          </aside>
-        </li>
-      </ul>
-    </section>
-  </screen>
-  
-  <screen id="Stephen" class="next">
+  <ui-screen id="detail" class="next">
     <nav>
-      <button class='back' id='back'>Back</button>
-      <h1>Next Page</h1>
+      <button class="back">Back</button>
+      <h1>Your Choice</h1>
     </nav>
     <section>
-      <h2 id='chosenPerson'>Subtitle Number Two</h2>
+      <h2 id='chosenPerson'></h2>
       <h2 class='normal-case'>Here's your information:</h2>
-      <ul class="list" id='chosenPersonList'>
-        <li>
-          <h3>First Name: Stephen</h3>
-        </li>
-        <li>
-          <h3>Last Name: Hawking</h3>
-        </li>
-        <li>
-          <div class='no-flex'>
-            <h3>Picture:</h3>
-          </div>
-          <img src='../../../images/Hawking.jpg' alt="Stephen Hawking">
-        </li>
-      </ul>
+      <ul class="list" id='chosenPersonList'></ul>
     </section>
-    <toolbar>
-      <button>Button</button>
-    </toolbar>
-  </screen>
-  
-  <screen id="Albert" class="next">
-    <nav>
-      <button class='back' id='back'>Back</button>
-      <h1>Next Page</h1>
-    </nav>
-    <section>
-      <h2 id='chosenPerson'>Subtitle Number Two</h2>
-      <h2 class='normal-case'>Here's your information:</h2>
-      <ul class="list" id='chosenPersonList'>
-        <li>
-          <h3>First Name: Albert</h3>
-        </li>
-        <li>
-          <h3>Last Name: Einstein</h3>
-        </li>
-        <li>
-          <div class='no-flex'>
-            <h3>Picture:</h3>
-          </div>
-          <img src='../../../images/Einstein.jpg' alt="Albert Einstein">
-        </li>
-      </ul>
-    </section>
-    <toolbar>
-      <button>Button</button>
-    </toolbar>
-  </screen>
-  
-  <screen id="Leonardo" class="next">
-    <nav>
-      <button class='back' id='back'>Back</button>
-      <h1>Next Page</h1>
-    </nav>
-    <section>
-      <h2 id='chosenPerson'>Subtitle Number Two</h2>
-      <h2 class='normal-case'>Here's your information:</h2>
-      <ul class="list" id='chosenPersonList'>
-        <li>
-          <h3>First Name: Leonardo</h3>
-        </li>
-        <li>
-          <h3>Last Name: Da Vinci</h3>
-        </li>
-        <li>
-          <div class='no-flex'>
-            <h3>Picture:</h3>
-          </div>
-          <img src='../../../images/DaVinci.jpg' alt="Leonardo Da Vinci">
-        </li>
-      </ul>
-    </section>
-    <toolbar>
-      <button>Button</button>
-    </toolbar>
-  </screen>
-  
-  <screen id="Galileo" class="next">
-    <nav>
-      <button class='back' id='back'>Back</button>
-      <h1>Next Page</h1>
-    </nav>
-    <section>
-      <h2 id='chosenPerson'>Subtitle Number Two</h2>
-      <h2 class='normal-case'>Here's your information:</h2>
-      <ul class="list" id='chosenPersonList'>
-        <li>
-          <h3>First Name: Galileo</h3>
-        </li>
-        <li>
-          <h3>Last Name: Galilei</h3>
-        </li>
-        <li>
-          <div class='no-flex'>
-            <h3>Picture:</h3>
-          </div>
-          <img src='../../../images/Galileo.jpg' alt="Galileo Galilei">
-        </li>
-      </ul>
-    </section>
-    <toolbar>
-      <button>Button</button>
-    </toolbar>
-  </screen>
-  
-  <screen id="Nicholas" class="next">
-    <nav>
-      <button class='back' id='back'>Back</button>
-      <h1>Next Page</h1>
-    </nav>
-    <section>
-      <h2 id='chosenPerson'>Subtitle Number Two</h2>
-      <h2 class='normal-case'>Here's your information:</h2>
-      <ul class="list" id='chosenPersonList'>
-        <li>
-          <h3>First Name: Nicholas</h3>
-        </li>
-        <li>
-          <h3>Last Name: Copernicus</h3>
-        </li>
-        <li>
-          <div class='no-flex'>
-            <h3>Picture:</h3>
-          </div>
-          <img src='../../../images/Copernicus.jpg' alt="Nicholas Copernicus">
-        </li>
-      </ul>
-    </section>
-    <toolbar>
-      <button>Button</button>
-    </toolbar>
-  </screen>
+    <footer>
+      <button>Button 2</button>
+    </footer>
+  </ui-screen>
 
-  <script>
-    $(function() {
-      $.globalNav = true;
-      
-      /**
-       * Array data:
-       */
-      var lums = [
-        {guid: 'N356f953-2c3c-4a72-b4e7-5955662ec80f', firstName: "Stephen", lastName: "Hawking", image: '../../../images/Hawking.jpg', age: 20},
-        {guid: 'Ca0fe1ed-afd8-4c98-8110-e863820ab35f', firstName: "Albert", lastName: "Einstein", image: '../../../images/Einstein.jpg', age: 31},
-        {guid: 'a51a1852-bcd1-44e3-9114-3c0c742b66f9', firstName: "Leonardo", lastName: "Da Vinci", image: '../../../images/DaVinci.jpg', age: 100},
-        {guid: 'k4657925-fdc3-45b0-8c12-6a31c4b83152', firstName: "Galileo", lastName: "Galilei", image: '../../../images/Galileo.jpg', age: 40},
-        {guid: 'F3b2bd1f-346b-4970-a272-11124927a6e6', firstName: "Nicholas", lastName: "Copernicus", image: '../../../images/Copernicus.jpg', age: 32}  
-      ];
+<script>
 
-      /**
-       * Init views:
-       */
-      var VIPView = $.View({
-          name: 'VIPView1',
-          element: '#list', 
-          startIndexFrom: 1,
-          variable: 'person',
-          events: [{
-            event: 'tap',
-            element: 'li',
-            callback: function() {
-              console.log($(this).text());
-            }
-          }]
-        });
+/* Array data: */
+var lums = [
+    {guid: 'N356f953', firstName: "Stephen", lastName: "Hawking", image: '../../../images/Hawking.jpg', age: 20},
+    {guid: 'Ca0fe1ed', firstName: "Albert", lastName: "Einstein", image: '../../../images/Einstein.jpg', age: 31},
+    {guid: 'a51a1852', firstName: "Leonardo", lastName: "Da Vinci", image: '../../../images/DaVinci.jpg', age: 100},
+    {guid: 'k4657925', firstName: "Galileo", lastName: "Galilei", image: '../../../images/Galileo.jpg', age: 40},
+    {guid: 'F3b2bd1f', firstName: "Nicholas", lastName: "Copernicus", image: '../../../images/Copernicus.jpg', age: 32}
+  ];
 
-      /**
-       * Render views:
-       */
-      VIPView.render(lums);
-      window.AppRoutes = $.Router();
-      window.AppRoutes.addRoute([
+
+  $(function() {
+
+  const VIPComponent = new Component({
+    element: '#arrayTemplate1',
+    render: (data) => html`
+      <li data-goto='detail:${ data.guid }'>
+        <div class='no-flex'>
+          <img src='${ data.image }' alt=''>
+        </div>
+        <h3>
+          ${ data.firstName } ${ data.lastName }
+        </h3>
+        <aside>
+          <disclosure></disclosure>
+        </aside>
+      </li>`,
+    actions: [{
+      element: 'li',
+      event: 'tap',
+      callback: function() {
+        console.log($(this).text());
+      }
+    }]
+  })
+
+  const chosenPersonComponent = new Component({
+    element: '#chosenPersonList',
+    render: (data) => html`
+      <li>
+        <h3>First Name: ${ data.firstName }</h3>
+      </li>
+      <li>
+        <h3>Last Name: ${ data.lastName }</h3>
+      </li>
+      <li>
+        <div class='no-flex'>
+          <h3>Your picture:</h3>
+        </div>
+        <img src='${ data.image }' alt="${ data.firstName} + ' ' + ${ data.lastName}">
+      </li>`
+  })
+
+  const chosenPersonNameComponent = new Component({
+    element: '#chosenPerson',
+    render: function(personsName) {
+      return html`<span>Welcome, ${ personsName }.</span>`
+    }
+  })
+
+  let chosenData = 'lums'
+
+  VIPComponent.render(lums);
+    /**
+     * Setup Router:
+     */
+    var appRoutes = new Router();
+    appRoutes.addRoute([
       {
-        route: 'main', 
-        callback: function(id) {
-          console.log('Just returned to main page.')
+        route: 'detail',
+        callback: function(param) {
+          var whichPerson = lums.filter(function(person) {
+            return person.guid === param;
+          })[0];
+          chosenPersonComponent.render(whichPerson);
+          chosenPersonNameComponent.render(whichPerson.firstName);
         }
-      }]);
+      }
+    ]);
 
-    });
-  </script>  
+  });
+</script>
 </body>

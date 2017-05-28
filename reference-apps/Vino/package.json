@@ -1,0 +1,22 @@
+{
+  "name": "vino-chui",
+  "version": "1.0.0",
+  "description": "''",
+  "main": "app.js",
+  "scripts": {
+    "build": "rollup -c"
+  },
+  "repository": {
+    "type": "git",
+    "url": "foo.com"
+  },
+  "author": "Robert Biggs",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-preset-es2015": "^6.24.1",
+    "rollup": "^0.41.6",
+    "rollup-plugin-babel": "^2.7.1",
+    "rollup-plugin-uglify": "^1.0.2"
+  }
+}

@@ -7,77 +7,56 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="msapplication-tap-highlight" content="no">
   <title>ChocolateChip-UI Select List - Arabic</title>
-  <link rel="stylesheet" href="../dist/css/chui-ios.min.css">
-  <script src="../dist/chui.min.js"></script>
-  <script type="application/json" src="../dist/chui.min.js.map"></script>
+  <link rel="stylesheet" href="./dist/css/chui-ios.css">
+  <script src="./dist/chui.min.js"></script>
+  <script src="./dist/widgets.min.js"></script>
   <script>
     $(function() {
       /**
        * TODO data:
        */
-      var TODO = [
+      const todosStore = new State([
         {value: "أكل", label: "يذهب يأكل شيئا."},
         {value: "قيلولة", label: "أخذ غفوة."},
         {value: "عمل", label: "الحصول على بعض العمل المنجز."},
         {value: "لعب", label: "تلعب لعبة."}
-      ];
+      ])
 
-      /**
-       * Define and render view:
-       */
-      var TODOView = $.View({
-        element: '#selectList'
-      });
-      TODOView.render(TODO);
-
-      /**
-       * Set up Select List:
-       */
-      var MySelectList = $.SelectList({
-        element: '#selectList',
-        selected: 2,
+      const selectList = new UISelectList({
+        element: '#my-list',
+        selected: 0,
+        name: 'my-list',
+        state: todosStore,
+        value: 'name',
+        render: (todo) => html`
+          <li data-select="${ todo.value}">
+            <h3>${ todo.label }</h3>
+          </li>`,
         callback: function() {
-          renderSelection();
+          renderSelection()
         }
-      });
-
-      /**
-       * View for chosen segment value:
-       */
-      var SelectListView = $.View({
-        element: '.attentionGrabber',
-        variable: 'value'
       })
-
-      /**
-       * Define callback for select list:
-       */ 
+      selectList.render()
+      /* Define callback for select list. */
       var renderSelection = function() {
-        var value = MySelectList.val().value;
-        SelectListView.render(value);
+        var value = selectList.value
+        $('.attentionGrabber').text(value)
       }
-
-      /**
-       * Render default selection:
-       */
-      renderSelection();
-    });
+      /* Render default value. */
+      renderSelection()
+    })
   </script>
 </head>
 <body>
-  <screen id='select-example'>
+  <ui-screen id='select-example'>
     <nav>
       <h1>قائمة الاختيار</h1>
     </nav>
     <section>
       <h2>المهام للقيام</h2>
-      <ul class="list" id="selectList">
-        <li data-select="{= data.value}">
-          <h3>{= data.label }</h3>
-        </li>
-      </ul>
-      <p>أنت ذاهب ل: <strong><span id="response" class='attentionGrabber'>{= value }</span></strong></p>
+      <ul id="my-list" class='list select-list'></ul>
+      <p>أنت ذاهب ل: <strong><span id="response" class='attentionGrabber'></span></strong></p>
     </section>
-  </screen>
+  </ui-screen>
 </body>
 </html>

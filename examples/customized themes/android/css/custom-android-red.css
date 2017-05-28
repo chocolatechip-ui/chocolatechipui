@@ -1,5 +1,5 @@
 /* Color navbar and toolbar */
-nav, #globalNav, screen > footer, screen > toolbar {
+nav, #globalNav, ui-screen > footer, ui-screen > toolbar {
   background-color: red;
   border-color: red;
 }
@@ -14,7 +14,7 @@ disclosure {
 }
 /* Color segmented control marker */
 span.androidSelectionBorder,
-tabbar > span.androidSelectionBorder {
+ui-tabbar > span.androidSelectionBorder {
   border-bottom: solid 3px red !important;
 }
 /* Callout text */
@@ -94,23 +94,22 @@ button.slide-out-button::before,
 button.slide-out-button::after {
   background-color: #fafafa;
 }
-switch {
+ui-switch {
   background-image: -webkit-linear-gradient(left, red, red), -webkit-linear-gradient(left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
   background-image: linear-gradient(to left, red, red), linear-gradient(to left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
 }
-switch.checked > em {
+ui-switch.checked > em {
   background-color: red;
 }
-switch.traditional.checked > em {
+ui-switch.traditional.checked > em {
   background-color: red;
   border: solid 1px red;
 }
-.isDesktop tabbar>button:hover, 
-tabbar>button.selected {
+.isDesktop ui-tabbar>button:hover {
   color: #fff !important;
   background-color: red !important;
 }
-tabbar ~ screen > nav {
+ui-tabbar ~ ui-screen > nav {
   background-color: red !important;
   border-bottom: 1px solid red !important;
 }

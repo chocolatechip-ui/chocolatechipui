@@ -7,14 +7,14 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="msapplication-tap-highlight" content="no">
   <title>ChocolateChip-UI Out Menu</title>
-  <link rel="stylesheet" href="../dist/css/chui-ios.min.css">
-  <script src="../dist/chui.min.js"></script>
-  <script type="application/json" src="../dist/chui.min.js.map"></script>
+  <link rel="stylesheet" href="./dist/css/chui-ios.css">
+  <script src="./dist/chui.min.js"></script>
+  <script src="./dist/widgets.min.js"></script>
   <script src="data/data.js"></script>
   <script src="data/fruits.js"></script>
   <style>
     /**
-     * Styles for Image Grid 
+     * Styles for Image Grid
      */
     .grid {
       -webkit-flex-wrap: wrap;
@@ -30,7 +30,7 @@
       max-width: 300px;
       margin-top: 5px;
     }
-    @media only screen and (max-width: 481px) {
+    @media only ui-screen and (max-width: 481px) {
       .grid > .col {
         height: 120px;
         width: 120px;
@@ -50,223 +50,205 @@
 
   <script>
   $(function() {
- 
+
     /**
-     * Music View:
+     * Music Component:
      */
-    var musicView = $.View({
+    var musicComponent = new Component({
       element: '#musicList',
-      variable: 'music'
-    });
-    musicView.render(music);
+      render: (music) => html`
+        <li>
+          <img  src="${ music.image }" height="80px">
+          <div>
+            <h3>${ music.title }</h3>
+            <h4>${ music.album }</h4>
+            <p>${ music.description }</p>
+          </div>
+        </li>`
+    })
+    musicComponent.render(music)
 
 
     /**
-     * Image Grid View:
+     * Image Grid Component:
      */
-    var imageGridView = $.View({
+    var imageGridComponent = new Component({
       element: '#gridOfImages',
-      variable: 'image'
-    });
-    imageGridView.render(imageCollection);
+      render: (image) => html`
+        <img class="col" src="${ image }">`
+    })
+    imageGridComponent.render(imageCollection)
 
     /**
-     * Docs View:
+     * Docs Component:
      */
-    var docsView = $.View({
+    var docsComponent = new Component({
       element: '#docsList',
-      variable: 'doc'
-    });
-    docsView.render(docs);
+      render: (doc) => html`
+        <li class='center-vertical'>
+          <h3>${ doc.title }</h3>
+          <h4>${ doc.subtitle }</h4>
+          <aside>
+            <span class='counter'>${ doc.amount }</span>
+          </aside>
+        </li>`
+    })
+    docsComponent.render(docs)
 
     /**
-     * Recipes View:
+     * Recipes Component:
      */
-    var recipesView = $.View({
+
+    function renderSubList(data) {
+      return data.map(item => `<li>${ item }</li>`)
+    }
+    var recipesComponent = new Component({
       element: '#recipesList',
-      variable: 'recipe'
-    });
-    recipesView.render(recipes);
+      render: (recipe) => html`
+        <li>
+          <div>
+            <h3>${ recipe.name }</h3>
+            <h4>Ingredients</h4>
+            <ul>${ renderSubList(recipe.ingredients) }</ul>
+            <h4>Directions</h4>
+            <ol>${ renderSubList(recipe.directions) }</ol>
+          </div>
+        </li>`
+    })
+    recipesComponent.render(recipes)
 
     /**
-     * Favorites View:
+     * Favorites Component:
      */
-    var fruitsView = $.View({
+    var fruitsComponent = new Component({
       element: '#fruitsList',
-      variable: 'fruit'
-    });
-    fruitsView.render(fruits);
+      render: (fruit) => html`
+        <li data-goto='chosenFruit:${ fruit.type }'>
+          <div>
+            <h3>${ fruit.name }</h3>
+          </div>
+          <aside>
+            <disclosure></disclosure>
+          </aside>
+        </li>`
+    })
+    fruitsComponent.render(fruits)
 
     /**
-     * Chosen Fruit View:
+     * Chosen Fruit Component:
      */
-    var chosenFruitView = $.View({
+    var chosenFruitComponent = new Component({
       element: '#chosenFruitList',
-      variable: 'fruit'
-    });
+      render: (fruit) => html`
+        <li>
+          <h3>${ fruit }</h3>
+        </li>`
+    })
 
 
-    var appSlideOut = $.SlideOut();
+    var appSlideOut = new UISlideOut()
     appSlideOut.populate([
       { music: 'Music' },
       { pictures: 'Pictures' },
       { documents: 'Documents'},
       { recipes: 'Recipes' },
       { fruits: 'Fruits' }
-    ]);
+    ])
 
     /**
      * Routes for fruits:
      */
-    var AppRoutes = $.Router();
-    AppRoutes.addRoute([
-      {
-        route: 'chosenFruit',
-        callback: function(id) {
-          var renderChosenFruit = function(whichOne) {
-            chosenFruitView.setElement('#chosenFruitList');
-            chosenFruitView.render(fruits[whichOne].uses);
-            $('#chosenFruitTitle').text(fruits[whichOne].name);
-          };
+    var AppRoutes = new Router()
+    AppRoutes.addRoute({
+      route: 'chosenFruit',
+      callback: function(id) {
+        console.log(id)
+        var renderChosenFruit = function(whichOne) {
+          chosenFruitComponent.render(fruits[whichOne].uses)
+          $('#chosenFruitTitle').text(fruits[whichOne].name)
+        }
 
-          switch (id) {
-            case 'apples':
-              renderChosenFruit(0);
-              break;
-            case 'oranges':
-              renderChosenFruit(1);
-              break;
-            case 'bananas':
-              renderChosenFruit(2);
-              break;
-            case 'peaches':
-              renderChosenFruit(3);
-              break;
-            case 'strawberries':
-              renderChosenFruit(4);
-              break;
-            case 'cherries':
-              renderChosenFruit(5);
-              break;
-          }
+        switch (id) {
+          case 'apples':
+            renderChosenFruit(0)
+            break
+          case 'oranges':
+            renderChosenFruit(1)
+            break
+          case 'bananas':
+            renderChosenFruit(2)
+            break
+          case 'peaches':
+            renderChosenFruit(3)
+            break
+          case 'strawberries':
+            renderChosenFruit(4)
+            break
+          case 'cherries':
+            renderChosenFruit(5)
+            break
         }
       }
-    ]);
-  });
+    })
+  })
   </script>
 </head>
 <body>
-  <screen role='article'  id="music" class='show'>
+  <ui-screen role='article'  id="music" class='show'>
     <nav>
       <h1>My Stuff</h1>
     </nav>
     <section>
       <h2>Current Choice</h2>
-      <ul class='list' id='musicList'>
-        <li>
-          <img  data-src="{= music.image }" height="80px">
-          <div>
-            <h3>{= music.title }</h3>
-            <h4>{= music.album }</h4>
-            <p>{= music.description }</p>
-          </div>
-        </li>
-      </ul>
+      <ul class='list' id='musicList'></ul>
     </section>
-  </screen><screen role='article' id='pictures'>
+  </ui-screen><ui-screen role='article' id='pictures'>
     <nav>
       <h1>Pictures</h1>
     </nav>
     <section id='imageGrid'>
-      <div class="grid" id='gridOfImages'>
-        <img class="col" data-src="{= image }">
-      </div>
+      <div class="grid" id='gridOfImages'></div>
     </section>
-  </screen>
+  </ui-screen>
 
-  <screen role='article' id='documents'>
+  <ui-screen role='article' id='documents'>
     <nav>
       <h1>Documents</h1>
     </nav>
     <section>
-      <ul class='list' id='docsList'>
-        <script type='text/x-template'>
-          <li class='center-vertical'>
-            <h3>{= doc.title }</h3>
-            <h4>{= doc.subtitle }</h4>
-            <aside>
-              <span class='counter'>{= doc.amount }</span>
-            </aside>
-          </li>
-        </script>
-      </ul>          
+      <ul class='list' id='docsList'></ul>
     </section>
-  </screen>
+  </ui-screen>
 
-  <screen role='article' id='recipes'>
+  <ui-screen role='article' id='recipes'>
     <nav>
       <h1>Recipes</h1>
     </nav>
     <section>
       <h2>Special Dishes</h2>
-      <ul class='list' id='recipesList'>
-        <script type='text/x-template'>
-          <li>
-            <div>
-              <h3>{= recipe.name }</h3>
-              <h4>Ingredients</h4>
-              <ul>
-                {{ recipe.ingredients.forEach(function(ingredient) { }}
-                  <li>{= ingredient }</li>
-                {{ }); }}
-              </ul>
-              <h4>Directions</h4>
-              <ol>
-                {{ recipe.directions.forEach(function(direction) { }}
-                  <li>{= direction }</li>
-                {{ }); }}
-              </ol>
-            </div>
-          </li>
-        </script>
-      </ul>
+      <ul class='list' id='recipesList'></ul>
     </section>
-  </screen>
+  </ui-screen>
 
-  <screen role='article' id='fruits'>
+  <ui-screen role='article' id='fruits'>
     <nav>
       <h1>Fruits</h1>
     </nav>
     <section>
       <h2>Fruits</h2>
-      <ul class='list' id='fruitsList'>
-        <script type='text/x-template'>
-          <li class='center-vertical' data-goto='chosenFruit:{= fruit.type }'>
-            <div>
-              <h3>{= fruit.name }</h3>
-            </div>
-            <aside>
-              <disclosure></disclosure>
-            </aside>
-          </li>
-        </script>
-       </ul>
+      <ul class='list' id='fruitsList'></ul>
     </section>
-  </screen>
+  </ui-screen>
 
-  <screen role='article' id='chosenFruit' class='next'>
+  <ui-screen role='article' id='chosenFruit' class='next'>
     <nav>
       <button class='back' id='back'><span>Back</span></button>
       <h1>Fruit Uses</h1>
     </nav>
     <section>
       <h2 id='chosenFruitTitle'>fruit</h2>
-      <ul class="list" id='chosenFruitList'>
-        <li>
-          <h3>{= fruit }</h3>
-        </li>
-      </ul>
+      <ul class="list" id='chosenFruitList'></ul>
     </section>
-  </screen>
+  </ui-screen>
 </body>
 </html>

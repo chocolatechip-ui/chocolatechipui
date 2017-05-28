@@ -7,88 +7,107 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="msapplication-tap-highlight" content="no">
   <title>ChocolateChip-UI Popovers</title>
-  <link rel="stylesheet" href="../dist/css/chui-ios.min.css">
-  <script src="../dist/chui.min.js"></script>
-  <script type="application/json" src="../dist/chui.min.js.map"></script>
+  <link rel="stylesheet" href="./dist/css/chui-ios.css">
+  <script src="./dist/chui.min.js"></script>
+  <script src="./dist/widgets.min.js"></script>
   <script type="text/javascript">
     $(function(){
-      
-      var popover1Content = "<ul class='list'><li><h3>Apples</h3></li><li><h3>Oranges</h3></li><li><h3>Bananas</h3></li><li><h3>Pears</h3></li><li><h3>Plums</h3></li><li><h3>Cherries</h3></li><li><h3>Apricots</h3></li><li><h3>Lemons</h3></li><li><h3>Peaches</h3></li><li><h3>Pineapples</h3></li><li><h3>Strawberries</h3></li><li><h3>Guavas</h3></li><li><h3>Grapefruit</h3></li></ul>";
-          
-      var popover2Content = "<ul class='list'><li><h3>Cake</h3></li><li><h3>Ice cream</h3></li><li><h3>Pies</h3></li><li><h3>Tiramisu</h3></li><li><h3>Cupcakes</h3></li><li><h3>Donuts</h3></li><li><h3>Cookies</h3></li><li><h3>Cobbler</h3></li><li><h3>Crepes</h3></li><li><h3>Tarts</h3></li><li><h3>Custard</h3></li><li><h3>Pudding</h3></li><li><h3>Fudge</h3></li><li><h3>Turnovers</h3></li><li><h3>Eclairs</h3></li></ul>";
-          
+
+      var popover1Content = `
+        <ul class='list'>
+          <li><h3>Apples</h3></li>
+          <li><h3>Oranges</h3></li>
+          <li><h3>Bananas</h3></li>
+          <li><h3>Pears</h3></li>
+          <li><h3>Plums</h3></li>
+          <li><h3>Cherries</h3></li>
+          <li><h3>Apricots</h3></li>
+          <li><h3>Lemons</h3></li>
+          <li><h3>Peaches</h3></li>
+          <li><h3>Pineapples</h3></li>
+          <li><h3>Strawberries</h3></li>
+          <li><h3>Guavas</h3></li>
+          <li><h3>Grapefruit</h3></li>
+        </ul>`
+
+      var popover2Content = `<ul class='list'>
+          <li><h3>Cake</h3></li>
+          <li><h3>Ice cream</h3></li>
+          <li><h3>Pies</h3></li>
+          <li><h3>Tiramisu</h3></li>
+          <li><h3>Cupcakes</h3></li>
+          <li><h3>Donuts</h3></li>
+          <li><h3>Cookies</h3></li>
+          <li><h3>Cobbler</h3></li>
+          <li><h3>Crepes</h3></li>
+          <li><h3>Tarts</h3></li>
+          <li><h3>Custard</h3></li>
+          <li><h3>Pudding</h3></li>
+          <li><h3>Fudge</h3></li>
+          <li><h3>Turnovers</h3></li>
+          <li><h3>Eclairs</h3></li>
+        </ul>`
+
       /**
        * Callback for Popovers:
        */
-      var fillPopover1 = function(popover) {
-        /**
-         * Populate Popover with content:
-         */
-        $('.popover').find('section').append(popover1Content);
-        popoverEventHandler();
-      };
-        
-      var fillPopover2 = function(popover) {
-        /**
-         * Populate Popover with content:
-         */
-        $('.popover').find('section').append(popover2Content);
-        popoverEventHandler();
-      };
-        
+
       var popoverEventHandler = function(whichPopover) {
         /**
          * Attach event to catch user interaction.
          * Use singletap to allow user to scroll content.
          */
-        $('.popover').on('tap', function(e) {
-          var results;
-          if (whichPopover === 'fruitsPopover') {
-            results = '#fruitsChoice';
-          } else if(whichPopover === 'dessertsPopover') {
-            results = '#dessertsChoice';
+        $('#'+ whichPopover).on('tap', function(e) {
+          let results
+          if (whichPopover === 'popoverFruits') {
+            results = '#fruitsChoice'
+          } else if(whichPopover === 'popoverDessert') {
+            results = '#dessertsChoice'
           }
-          var listItem;
+          let listItem
           if (e.target.nodeName === 'LI') {
-            listItem = e.target;
-            $(results).text(e.target.textContent.trim());
+            listItem = e.target
+            $(results).text(e.target.textContent.trim())
           } else {
-            listItem = $(e.target).closest('li')[0];
-            $(results).text(listItem.textContent.trim());
+            listItem = $(e.target).closest('li').array[0]
+            $(results).text(listItem.textContent.trim())
           }
-          $(listItem).addClass('selected');
+          listItem.classList.add('selected')
           if ($.isAndroid || $.isChrome) {
             setTimeout(function() {
-              $.ClosePopover();
-            }, 300);
+              $.closePopover()
+            }, 300)
           } else {
-            $.ClosePopover();
+            $.closePopover()
           }
-        });
-      };
+        })
+      }
       $('#showPopover1').on('tap', function() {
-        var trigger = this;
-        $.Popover({
+        fruitPopover.open()
+      })
+      $('#showPopover2').on('tap', function() {
+        dessertPopover.open()
+      })
+      var fruitPopover = new UIPopover({
           title: 'Fruits',
-          trigger: trigger,
+          id: 'popoverFruits',
+          trigger: '#showPopover1',
           content: popover1Content,
           callback: function() {
-            popoverEventHandler('fruitsPopover');
+            popoverEventHandler('popoverFruits')
           }
-        });
-      });
-      $('#showPopover2').on('tap', function() {
-        var trigger = this;
-        $.Popover({
+      })
+      var dessertPopover = new UIPopover({
           title: 'Desserts',
-          trigger: trigger,
+          id: 'popoverDessert',
+          trigger: '#showPopover2',
           content: popover2Content,
           callback: function() {
-            popoverEventHandler('dessertsPopover');
+            popoverEventHandler('popoverDessert')
           }
-        });
-      });
-    });
+      })
+      window.fruitPopover = fruitPopover
+    })
   </script>
   <style>
     #choices h4 {
@@ -112,7 +131,7 @@
   </style>
 </head>
 <body>
-  <screen id="main" class="current">
+  <ui-screen id="main" class="current">
     <nav>
       <h1>Popover</h1>
       <div class='horizontal centered align-flush'>
@@ -145,6 +164,6 @@
         </li>
       </ul>
     </section>
-  </screen>
+  </ui-screen>
 </body>
 </html>

@@ -1,13 +1,13 @@
 /* Color navbar and toolbar */
-nav, #globalNav, screen > footer, 
-screen > toolbar,
+nav, #globalNav, ui-screen > footer, 
+ui-screen > toolbar,
 input[type="range"] -webkit-track,
 .isDesktop .segmented > button:hover,
 .segmented > button.selected,
-.isDesktop .stepper > button:hover,
-.isDesktop .stepper > button.selected,
-.isDesktop .stepper > button:hover > span,
-.isDesktop .stepper > button.selected > span  {
+.isDesktop ui-stepper > button:hover,
+.isDesktop ui-stepper > button.selected,
+.isDesktop ui-stepper > button:hover > span,
+.isDesktop ui-stepper > button.selected > span  {
   background-color: #78c5e4;
 }
 /* Color disclosure indicators */
@@ -27,13 +27,13 @@ nav .back,
 }
 /* Callout text */
 .attentionGrabber {
-  /*color: #78c5e4;*/
+  color: #78c5e4;
 }
 /* Editable List, Select List &  Multi-select List */
 #move-indicator,
 .selection-indicator #checkmark,
 .multi-select-list > li #multi-select-icon  {
-  /*stroke: #78c5e4 ;*/
+  stroke: #78c5e4 ;
 }
 /* Paging Control */
 #pagination-icons path#page-previous,
@@ -63,16 +63,16 @@ button.slide-out-button::after {
   background-color: #333;
 }
 /* Stepper Control */
-.stepper > label,
-.stepper > button {
+ui-stepper > label,
+ui-stepper > button {
   border: solid 1px #78c5e4;
 }
 /* Switches */
-switch.checked {
+ui-switch.checked {
   border-color: #78c5e4;
   box-shadow: inset 0 0 0 15px #78c5e4;
 }
 /* Tabbar */
-tabbar > button.more > .icon::before {
+ui-tabbar > button.more > .icon::before {
   color: #78c5e4 !important;
 }

@@ -7,21 +7,25 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="msapplication-tap-highlight" content="no">
   <title>ChocolateChip-UI Activity Indicator - Modal</title>
-  <link rel="stylesheet" href="../dist/css/chui-ios.min.css">
-  <script src="../dist/chui.min.js"></script>
-  <script type="application/json" src="../dist/chui.min.js.map"></script>
+  <link rel="stylesheet" href="./dist/css/chui-ios.css">
+  <script src="./dist/chui.min.js"></script>
+  <script src="./dist/widgets.min.js"></script>
   <script>
     $(function() {
-      $.Popup({id: 'busyModal', empty: true, width: 100});
+      var popup = new UIPopup({id: 'busyModal', empty: true, width: 100})
       $('#showModalBusyIndicator').on('tap', function(e) {
-        $('.dialog').Busy({'color':'orange', 'size': 90});
-        $('#busyModal').ShowPopup();
+        const busy = new UIBusy({
+          element: '.dialog',
+          color: 'orange',
+          size: 90
+        })
+        popup.open()
         setTimeout(function() {
-          $('#busyModal').ClosePopup();
-          $('#busyModal').find('.dialog').empty();
-        },5000);
-      });
-    });
+          popup.close()
+          $('#busyModal').find('.dialog').empty()
+        },5000)
+      })
+    })
   </script>
   <style>
     .popup > .panel {
@@ -30,7 +34,7 @@
   </style>
 </head>
 <body>
-  <screen id='main' class="current">
+  <ui-screen id='main' class="current">
     <nav>
       <h1>Activity Indicator</h1>
     </nav>
@@ -41,6 +45,6 @@
         </li>
       </ul>
     </section>
-  </screen>
+  </ui-screen>
 </body>
 </html>

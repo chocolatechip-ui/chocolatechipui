@@ -7,56 +7,55 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="msapplication-tap-highlight" content="no">
   <title>ChocolateChip-UI Switches - Arabic</title>
-  <link rel="stylesheet" href="../dist/css/chui-ios.min.css">
-  <script src="../dist/chui.min.js"></script>
-  <script type="application/json" src="../dist/chui.min.js.map"></script>
+  <link rel="stylesheet" href="./dist/css/chui-ios.css">
+  <script src="./dist/chui.min.js"></script>
+  <script src="./dist/widgets.min.js"></script>
   <script>
 
     $(function() {
-      var sleepSwitch = $.Switch({
+      var sleepSwitch = new UISwitch({
         element: '#sleep-switch',
         name: 'sleep',
         value: 'خذ قسطا من النوم',
         checked: false,
         on: function() {
-          $('#switchCallbacks').text('على التبديل: التبديل ١');
-          $('#response').text(sleepSwitch.val().value);
+          $('#switchCallbacks').text('على التبديل: التبديل ١')
+          $('#response').text(sleepSwitch.val().value)
         },
         off: function() {
-          $('#switchCallbacks').text('قبالة التحول: التبديل ١');
-          $('#response').empty();
+          $('#switchCallbacks').text('قبالة التحول: التبديل ١')
+          $('#response').empty()
         }
-      });
-      var vacationSwitch = $.Switch({
+      })
+      var vacationSwitch = new UISwitch({
         element: '#vacation-switch',
         name: 'vacation',
         value: 'خد اجازة',
         checked: false,
         on: function() {
-          $('#switchCallbacks').text('على التبديل: التبديل ٢');
-          $('#response').text(vacationSwitch.val().value);
+          $('#switchCallbacks').text('على التبديل: التبديل ٢')
+          $('#response').text(vacationSwitch.val().value)
         },
         off: function() {
-          $('#switchCallbacks').text('قبالة التحول: التبديل ٢');
-          $('#response').empty();
+          $('#switchCallbacks').text('قبالة التحول: التبديل ٢')
+          $('#response').empty()
         }
-      });
-      var breakfastSwitch = $.Switch({
+      })
+      var breakfastSwitch = new UISwitch({
         element: '#breakfast-switch',
         name: 'breakfast',
         value: 'تناول وجبة الفطور',
         checked: false,
         on: function() {
-          $('#switchCallbacks').text('على التبديل: التبديل ٣');
-          $('#response').text(breakfastSwitch.val().value);
+          $('#switchCallbacks').text('على التبديل: التبديل ٣')
+          $('#response').text(breakfastSwitch.val().value)
         },
         off: function() {
-          $('#switchCallbacks').text('قبالة التحول: التبديل ٣');
-          $('#response').empty();
+          $('#switchCallbacks').text('قبالة التحول: التبديل ٣')
+          $('#response').empty()
         }
-      });
-
-    });
+      })
+    })
   </script>
   <style>
     #response {
@@ -65,8 +64,8 @@
     }
   </style>
 </head>
-<body>  
-  <screen class='current' id='select-example'>
+<body>
+  <ui-screen class='current' id='select-example'>
     <nav>
       <h1>مفتاح</h1>
     </nav>
@@ -77,7 +76,7 @@
           <div>
             <h3>نوم</h3>
           </div>
-          <switch id='sleep-switch'></switch>
+          <ui-switch id='sleep-switch'></ui-switch>
         </li>
       </ul>
       <ul class='list'>
@@ -85,7 +84,7 @@
           <div>
             <h3>عطلة</h3>
           </div>
-          <switch id='vacation-switch'></switch>
+          <ui-switch id='vacation-switch'></ui-switch>
         </li>
       </ul>
       <ul class='list'>
@@ -93,12 +92,12 @@
           <div>
             <h3>إفطار</h3>
           </div>
-          <switch id='breakfast-switch'></switch>
+          <ui-switch id='breakfast-switch'></ui-switch>
         </li>
       </ul>
       <p>إجابة: <strong><span id="response" class='attentionGrabber'></span></strong></p>
       <p id='switchCallbacks'></p>
     </section>
-  </screen>
+  </ui-screen>
 </body>
 </html>

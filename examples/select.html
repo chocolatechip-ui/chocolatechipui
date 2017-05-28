@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" dir='ltr'>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="msapplication-tap-highlight" content="no">
+  <title>Select List</title>
+  <link rel="stylesheet" href="./dist/css/chui-ios.css">
+  <script src="./dist/chui.min.js"></script>
+  <script src="./dist/widgets.min.js"></script>
+  <script>
+    $(() => {
+      const todosStore = new State([
+        {value: "eat", label: "Go Eat Something"},
+        {value: "nap", label: "Take a nap"},
+        {value: "work", label: "Get some work done"},
+        {value: "play", label: "Play a game"}
+      ])
+
+      const selectList = new UISelectList({
+        element: '#my-list',
+        selected: 0,
+        name: 'my-list',
+        state: todosStore,
+        render: (todo) => html`
+          <li data-select="${ todo.value}">
+            <h3>${ todo.label }</h3>
+          </li>`,
+        callback: function() {
+          renderSelection()
+        }
+      })
+      selectList.render()
+      /* Define callback for select list. */
+      var renderSelection = function() {
+        var value = selectList.value
+        $('.attentionGrabber').text(value)
+      }
+      /* Render default value. */
+      renderSelection()
+    })
+  </script>
+</head>
+<body>
+  <ui-screen class="current" id='main'>
+    <nav>
+      <h1>Select List</h1>
+    </nav>
+    <section>
+      <h2>Choose one:</h2>
+      <ul id="my-list" class='list select-list'></ul>
+      <p>You are going to: <strong><span id="response" class='attentionGrabber'></span></strong></p>
+    </section>
+  </ui-screen>
+</body>
+</html>

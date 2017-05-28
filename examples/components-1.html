@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="msapplication-tap-highlight" content="no">
+  <title>ChocolateChip-UI Component</title>
+  <link rel="stylesheet" href="./dist/css/chui-ios.css">
+  <script src="./dist/chui.min.js"></script>
+  <script src="./dist/widgets.min.js"></script>
+  <style>
+    li {
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <ui-screen id='main' class='current'>
+    <nav>
+      <h1>Components</h1>
+    </nav>
+    <section>
+      <h2>Single Object</h2>
+      <ul class="list" id='objTemplate'></ul>
+
+      <h2>Array of Objects</h2>
+      <ul class="list" id="arrayTemplate"></ul>
+
+    </section>
+  </ui-screen>
+
+<script>
+  $(function() {
+
+      /**
+       * IMPORTANT! Define any component helpers first, before using them:
+       */
+
+      /**
+       * Simple object:
+       */
+      var person = {
+       "firstName":"John",
+       "lastName": "Doe",
+       "age": 32
+      }
+
+      /**
+       * Create state object:
+       */
+      var personState = new State(person)
+      window.personState = personState
+
+      /**
+       * Init component.
+       */
+      var personComponent = new Component({
+        element: '#objTemplate',
+        state: personState,
+        render: (data) => html`
+          <li>
+            <h3>${ data.firstName } ${ data.lastName }, age: ${ data.age }</h3>
+          </li>`
+      })
+      personComponent.render()
+
+      /**
+       * Array data:
+       */
+      var luminaries = [
+          {firstName: "Stephen", lastName: "Hawking", image: 'images/Hawking.jpg', age: 20},
+          {firstName: "Albert", lastName: "Einstein", image: 'images/Einstein.jpg', age: 31},
+          {firstName: "Leonardo", lastName: "Da Vinci", image: 'images/DaVinci.jpg', age: 100},
+          {firstName: "Galileo", lastName: "Galilei", image: 'images/Galileo.jpg', age: 40},
+          {firstName: "Nicholas", lastName: "Copernicus", image: 'images/Copernicus.jpg', age: 32}
+        ]
+      var luminariesStore = new State(luminaries)
+
+      /**
+       * Init component:
+       */
+      var luminariesComponent = new Component({
+        element: '#arrayTemplate',
+        state: luminariesStore,
+        actions: {
+          element: 'h3',
+          event: 'tap',
+          callback: function() {
+            console.log($(this).text())
+          }
+        },
+        render: (data) => html`
+          <li>
+            <aside>
+              <img width='80' src='${ data.image }' alt="">
+            </aside>
+            <div>
+              <h3>
+                ${ data.firstName } ${ data.lastName }
+              </h3>
+            </div>
+          </li>`
+      })
+      luminariesComponent.render()
+
+    })
+</script>
+</body>

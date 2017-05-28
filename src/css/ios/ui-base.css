@@ -1,0 +1,627 @@
+/**
+ * iOS Theme
+ */
+
+/*======*/
+/* Body */
+/*======*/
+html, body {
+  padding: 0;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  font-size: 1em;
+  line-height: 1.5;
+  font-family: -apple-system, HelveticaNeue, Helvetica, sans-serif;
+  overflow: hidden;
+}
+body {
+  -webkit-display: flex;
+  -webkit-flex-direction: column;
+  -webkit-align-items: stretch;
+  -webkit-justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+}
+template {
+  display: none;
+}
+
+/*============*/
+/* Typography */
+/*============*/
+h1, h2, h3, h4, h5 {
+  margin: 0;
+  -webkit-transition: all .25s ease-out;
+  transition: all .25s ease-out;
+  color: #333;
+}
+h1 {
+  font: -apple-system-headline;
+  font-weight: 300;
+  font-size: 1.25em;
+}
+h2 {
+  font: -apple-system-headline;
+  font-size: 1em;
+  font-weight: normal;
+  text-transform: uppercase;
+  margin-left: 10px;
+}
+h2.normal-case {
+  text-transform: none;
+}
+h2.no-wrap {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+h2 + ul {
+  margin-top: 5px;
+}
+ul + h2 {
+  margin-top: 30px;
+}
+h3 {
+  font: -apple-system-subheadline;
+  font-size: 1em;
+  font-weight: 400;
+  margin: 0;
+}
+h4 {
+  font: -apple-system-subheadline;
+  font-size: 1em;
+  font-weight: 400;
+  color: #7f7f7f;
+}
+
+.attentionGrabber {
+  color: #007AFF;
+}
+html[dir=rtl] h2 {
+  margin-left: 0;
+  margin-right: 10px;
+}
+
+/*=========*/
+/* Screens */
+/*=========*/
+body, ui-screen {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  background-color: #fafafa;
+}
+ui-screen {
+  display: -webkit-flex;
+  -webkit-flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  -webkit-transition: all .25s ease-out;
+  transition: all .25s ease-out;
+  box-shadow: -10px 0 10px 1px rgba(0, 0, 0, .1);
+}
+ui-screen.current {
+  opacity: 1;
+  visibility: visible;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+ui-screen.next {
+  -webkit-transform: translate3d(105%, 0, 0);
+  transform: translate3d(105%, 0, 0);
+  opacity: 1;
+  visibility: visible;
+}
+ui-screen.previous {
+  -webkit-transform: translate3d(-100%, 0, 0);
+  transform: translate3d(-100%, 0, 0);
+  opacity: 1;
+  visibility: visible;
+}
+html[dir=rtl] ui-screen.current {
+  box-shadow: 10px 0 10px 1px rgba(0, 0, 0, .1);
+}
+html[dir=rtl] ui-screen.next {
+  -webkit-transform: translate3d(-105%, 0, 0);
+  transform: translate3d(-105%, 0, 0);
+}
+html[dir=rtl] ui-screen.previous {
+  -webkit-transform: translate3d(100%, 0, 0);
+  transform: translate3d(100%, 0, 0);
+}
+
+/*==============*/
+/* Scroll Panel */
+/*==============*/
+section {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  padding: 10px 0;
+  padding-bottom: 45px;
+  flex: 1;
+  -webkit-flex: 1;
+  height: 100%;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  overflow-style: autohiding-scrollbar;
+  -ms-scroll-chaining: none;
+  scroll-chaining: none;
+}
+
+/*========*/
+/* Navbar */
+/*========*/
+nav {
+  height: 45px;
+  border-bottom: solid 2px #ccc;
+  background-color: #eee;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  display: -webkit-flex;
+  -webkit-flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-justify-content: space-between;
+  padding: 0 10px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+nav > h1 {
+  margin: 0;
+  flex: 1;
+  -webkit-flex: 1;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+nav > h1.do-not-adjust {
+  text-align: left;
+}
+#global-nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 45px;
+  z-index: 0;
+}
+html[dir=rtl] nav > h1.do-not-adjust {
+  text-align: right;
+}
+
+/*=======*/
+/* Lists */
+/*=======*/
+ul.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: solid 1px #ccc;
+  border-width: 1px 0 1px 0;
+  margin-bottom: 10px;
+}
+ul.list > li {
+  list-style: none;
+  margin: 0;
+  padding: 8px 10px;
+  background-color: #fff;
+  position: relative;
+  display: -webkit-flex;
+  -webkit-flex-direction: row;
+  -webkit-align-items: stretch;
+  -webkit-justify-content: start;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: flex-start;
+  overflow: hidden;
+}
+.isDesktop li[data-goto]:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+ul.list > li::before {
+  display: block;
+  content: '';
+  position: absolute;
+  bottom: 0px;
+  left: 10px;
+  right: 0px;
+  border-bottom: solid 1px #c8c8c8;
+}
+.list > li:last-of-type::before {
+  border-bottom: none;
+}
+ul.list > li > h3 {
+  margin: 0;
+}
+ul.list > li p {
+  margin: 0;
+}
+html[dir=rtl] ul.list > li::before {
+  right: 10px;
+  left: 0px;
+}
+
+/*=======*/
+/* Lists */
+/*=======*/
+ul.list > li > div + div {
+  margin-left: 10px;
+}
+ul.list > li > div {
+  flex: 1;
+  -webkit-flex: 1;
+}
+ul.list > li > div.no-flex {
+  flex: none !important;
+  -webkit-flex: none !important;
+}
+ul.list > li > div.auto-width {
+  flex: none;
+  -webkit-flex: none;
+  width: auto;
+}
+li > div:not(:first-child) {
+  margin-left: 10px;
+}
+ul.list > li > h3 {
+  flex: 2;
+  -webkit-flex: 2;
+}
+ul.list > li > h4 {
+  flex: 1;
+  -webkit-flex: 1;
+  text-align: right;
+}
+ul.list > li.center-vertical {
+  -webkit-align-items: center;
+  align-items: center;
+}
+ul.list > li > img:first-of-type {
+  margin-right: 10px;
+}
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  align-self: center;
+}
+html[dir=rtl] ul.list > li > div + div {
+  margin-right: 10px;
+}
+html[dir=rtl] ul.list > li > h4 {
+  text-align: left;
+}
+html[dir=rtl] ul.list > li > img:first-of-type {
+  margin-right: 0;
+  margin-left: 10px;
+}
+
+/*==============*/
+/* List Footers */
+/*==============*/
+summary,
+section > p {
+  margin: 10px 0 0 10px;
+}
+html[dir=rtl] summary,
+html[dir=rtl] section > p {
+  margin: 10px 10px 0 0;
+}
+
+/*======================*/
+/* List Item Indicators */
+/*======================*/
+aside {
+  padding: 5px;
+  margin: 0 0 0 15px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  display: -webkit-flex;
+  -webkit-justify-content: center;
+  -webkit-align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+}
+aside:first-child {
+  margin: 0;
+  padding: 0;
+}
+disclosure {
+  display: block;
+  width: 12px;
+  height: 12px;
+  width: 6px;
+  height: 6px;
+  border-right: solid 2px #c7c7cc;
+  border-top: solid 2px #c7c7cc;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+aside > span + disclosure {
+  margin-left: 10px;
+}
+aside > span {
+  display: block;
+}
+aside.price, aside.number, aside.date, aside.time {
+  width: auto !important;
+}
+aside + h3,
+aside + h4,
+aside + p {
+  margin-left: 10px !important;
+}
+ul.list > li > div:only-child {
+  display: -webkit-flex;
+  -webkit-flex-direction: column;
+  -webkit-align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+li > aside:last-child > info {
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+  border: solid 1px #007aff;
+  color: #007aff;
+  font-weight: bold;
+  line-height: 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 10px;
+  float: right;
+  margin: 0 0 0 10px;
+  position: relative;
+}
+info::after {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  margin-left: -2px;
+  content: 'i';
+}
+.separator {
+  border-left: solid 1px #ccc;
+  padding-left: 10px;
+}
+div:first-of-type.separator {
+  border: none;
+  padding-left: 0;
+}
+html[dir=rtl] aside {
+  margin: 0 10px 0 0;
+}
+html[dir=rtl] aside:first-child {
+  margin: 0 0 0 10px;
+}
+html[dir=rtl] aside > disclosure {
+  -webkit-transform: rotate(-130deg);
+  transform: rotate(-130deg);
+}
+html[dir=rtl] aside > span + disclosure {
+  margin-left: 0;
+  margin-right: 10px;
+}
+html[dir=rtl] aside > span {
+  direction: ltr;
+}
+html[dir=rtl] .separator {
+  border-left: none;
+  border-right: solid 1px #ccc;
+  padding-left: 0;
+  padding-right: 10px;
+}
+html[dir=rtl] info::after {
+  left: 0;
+  right: 50%;
+  margin-right: -2px;
+}
+html[dir=rtl] li > aside:last-child > info {
+  float: none;
+  margin: 0 10px 0 0 !important;
+}
+/*===========================*/
+/* Footer and Bottom Toolbar */
+/*===========================*/
+ui-screen > footer, ui-screen > toolbar {
+  height: 45px;
+  border-top: solid 1px #ccc;
+  margin: 0;
+  padding: 0 10px;
+  background-color: #fafafa;
+  display: -webkit-flex;
+  -webkit-flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-justify-content: start;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+}
+
+/*=========*/
+/* Buttons */
+/*=========*/
+button {
+  -webkit-appearance: none;
+  border: none;
+  background-color: transparent;
+  box-shadow: none;
+  color: #007aff;
+  font-size: 11pt;
+  cursor: pointer;
+}
+button[disabled] {
+  opacity: .5;
+}
+button[disabled]:hover {
+  cursor: default;
+}
+button:focus {
+  outline: 0;
+}
+
+/*==============*/
+/* Back Buttons */
+/*==============*/
+button.back,
+button.backTo {
+  margin: 0;
+  text-align: left;
+  padding: 0;
+  line-height: 28px;
+  color: #007aff;
+  border: none;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  display: -webkit-flex;
+  -webkit-flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-justify-content: space-between;
+  height: 30px;
+  width: auto;
+}
+button.back svg,
+button.backTo svg {
+  height: 25px;
+  width: 25px;
+  margin-top: 2px;
+  margin-right: -5px;
+  display: inline-block;
+}
+/* Firefox hack */
+@-moz-document url-prefix() {
+  button.back {
+    display: block;
+  }
+  button.back svg,
+  button.back svg + *,
+  button.backTo svg,
+  button.backTo svg + * {
+    float:left;
+  }
+}
+#chui-back-arrow {
+  stroke: #007aff;
+  stroke-width: 10px;
+}
+path#back-arrow-shaft {
+  display: none;
+}
+html[dir=rtl] button.back svg,
+html[dir=rtl] button.backTo svg {
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+
+/*================*/
+/* Action Buttons */
+/*================*/
+button.action {
+  color: #585d63;
+  border: solid 1px #585d63;
+  border-radius: 20px;
+  display: block;
+  margin: 0 10px 0 0;
+  padding: 10px 20px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  width: auto;
+  height: auto;
+  min-width: 200px;
+  max-width: 300px;
+}
+button.action.centered {
+  margin: 0 auto !important;
+}
+html[dir=rtl] button.action {
+  margin: 0 0 0 10px;
+}
+
+/*============*/
+/* FAB Button */
+/*============*/
+button.fab {
+  border: solid 1px #007aff ;
+  padding: 0;
+  border-radius: 100%;
+  height: 45px;
+  width: 45px;
+}
+button.fab > span {
+  display: block;
+  text-align: center;
+  flex: 1;
+  -webkit-flex: 1;
+}
+button.red,
+button.raised.red {
+  border-color: #FC4482 !important;
+}
+button.red *,
+button.raised.red * {
+  color: #FC4482 !important;
+}
+button.blue,
+button.raised.blue {
+  border-color: #2B98F0 !important;
+}
+button.blue *,
+button.raised.blue * {
+  color: #2B98F0 !important;
+}
+button.green,
+button.raised.green {
+  border-color: #1D9C5A !important;
+}
+button.green *,
+button.raised.green * {
+  color: #1D9C5A !important;
+}
+
+/*==============*/
+/* Mask Control */
+/*==============*/
+ui-mask {
+  /*display: none;*/
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0,0,0,0.25);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 99999;
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.25s ease-out;
+}
+ui-mask.opened {
+  opacity: .5;
+}

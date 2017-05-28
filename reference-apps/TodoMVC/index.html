@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TodoMVC</title>
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="msapplication-tap-highlight" content="no">
+
+    <!-- iPhone 6 Plus icon -->
+    <link href="./Launchui-screens/Icon-60@2x.png"
+          sizes="120x120"
+          rel="apple-touch-icon-precomposed">
+
+    <!-- iPhone retina icon (iOS < 7) -->
+    <link href="./Launchui-screens/icon-114.png"
+          sizes="114x114"
+          rel="apple-touch-icon-precomposed">
+
+    <!-- iPhone non-retina icon (iOS < 7) -->
+    <link href="./Launchui-screens/icon-57.png"
+          sizes="57x57"
+          rel="apple-touch-icon-precomposed">
+
+    <!-- iPhone 6 Plus portrait startup image -->
+    <link href="./Launchui-screens/iphone_portrait_6p_@3x.png"
+        media="(device-width: 414px) and (device-height: 736px)
+               and (-webkit-device-pixel-ratio: 3)
+               and (orientation: portrait)"
+        rel="apple-touch-startup-image">
+    <!-- iPhone 5 - 5S -->
+    <link rel="apple-touch-startup-image" href="./Launchui-screens/iphone_portrait_5_@2x.png" media="(device-width: 320px) and (device-height: 568px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)">
+
+    <!-- iPhone 6 -->
+    <link rel="apple-touch-startup-image" href="./Launchui-screens/iphone_portrait_6_@2x.png" media="(device-width: 375px) and (device-height: 667px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)">
+
+    <!-- iPhone 6 Plus -->
+    <link rel="apple-touch-startup-image" href="./Launchui-screens/iphone_portrait_6p_@3x.png" media="(device-width: 414px) and (device-height: 736px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 3)">
+
+    <!-- iPhone 6 Plus (down sampled) -->
+    <link rel="apple-touch-startup-image" href="icons/Default-736h@2x~iphone.png" media="(device-width: 414px) and (device-height: 736px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)">
+        
+  <link rel="stylesheet" href='./css/chui-ios.css'>
+  <link rel="stylesheet" href='./css/app.css'>
+  <script src='./js/chui.min.js'></script>
+  <script src='./js/app.js'></script>
+</head>
+<body nocenterheader>
+  <ui-screen id="main">
+    <nav class="current">
+      <h1 class='do-not-adjust'>Todos</h1>
+      <div>
+        <button class="add">Add</button>
+        <input id='add-todo' type="text">
+      </div>
+    </nav>
+    <section>
+      <ul class='list' id='todo-items'></ul>
+    </section>
+    <footer>
+      <div id='totals-view'></div>
+      <div id='show-todo-state'>
+        <button id='show-all' class='selected'>All</button>
+        <button id='show-active'>Active</button>
+        <button id='show-completed'>Completed</button>
+      </div>
+    </footer>
+  </ui-screen>
+</body>
+</html>

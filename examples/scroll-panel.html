@@ -7,9 +7,9 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="msapplication-tap-highlight" content="no">
   <title>ChocolateChip-UI Panel</title>
-  <link rel="stylesheet" href="../dist/css/chui-ios.min.css">
-  <script src="../dist/chui.min.js"></script>
-  <script type="application/json" src="../dist/chui.min.js.map"></script>
+  <link rel="stylesheet" href="./dist/css/chui-ios.css">
+  <script src="./dist/chui.min.js"></script>
+  <script src="./dist/widgets.min.js"></script>
   <style>
     .scroll-panel li > img {
       height: 200px !important;
@@ -27,24 +27,20 @@
   </style>
 </head>
 <body>
-  <screen id="main" class="current">
+  <ui-screen id="main" class="current">
     <nav class="current">
       <h1>Horizontal Scroll Panel</h1>
     </nav>
     <section>
-      <div class='scroll-panel'>
-        <ul id='firstPanel'>
-          <li><img data-src='{= image }'></li>
-        </ul>
-      </div> 
+      <ui-scroll-panel>
+        <ul id='firstPanel'></ul>
+      </ui-scroll-panel>
       <br>
-      <div class='scroll-panel'>
-        <ul id='secondPanel'>
-          <li><img data-src='{= image }'></li>
-        </ul>
-      </div> 
+      <ui-scroll-panel>
+        <ul id='secondPanel'></ul>
+      </ui-scroll-panel>
     </section>
-  </screen>
+  </ui-screen>
   <script>
     var firstPanelImages = [
       'images/pics/pic-01.jpg',
@@ -93,17 +89,19 @@
     /**
      * Define views for panels:
      */
-    var FirstPanelView = $.View({
+    var FirstPanel = new Component({
       element: '#firstPanel',
-      variable: 'image'
-    });
-    FirstPanelView.render(firstPanelImages);
+      render: (image) => html`
+        <li><img src='${ image }'></li>`
+    })
+    FirstPanel.render(firstPanelImages)
 
-    var SecondPanelView = $.View({
+    var SecondPanel = new Component({
       element: '#secondPanel',
-      variable: 'image'
-    });
-    SecondPanelView.render(secondPanelImages);
+      render: (image) => html`
+        <li><img src='${ image }'></li>`
+    })
+    SecondPanel.render(secondPanelImages)
 
   </script>
 </body>

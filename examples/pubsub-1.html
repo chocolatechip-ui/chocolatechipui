@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="msapplication-tap-highlight" content="no">
+  <title>ChocolateChip-UI Pubsub</title>
+  <link rel="stylesheet" href="./dist/css/chui-ios.css">
+  <script src="./dist/chui.min.js"></script>
+  <script src="./dist/widgets.min.js"></script>
+</head>
+<body>
+  <ui-screen class='current' id='main'>
+    <nav>
+      <h1>Pubsub</h1>
+    </nav>
+    <section>
+      <ul class='list'></ul>
+    </section>
+  </ui-screen>
+
+  <script>
+    $(function() {
+
+      var pubsubResults = new Component({
+        element: '.list',
+        render: (data) => html`
+          <li>
+            <h3>${ data }</h3>
+          </li>`
+      })
+
+      /**
+       * Two methods to listen to:
+       */
+      var arrayHandler = function(data) {
+        if (data instanceof Array) {
+          if (data[0] instanceof Object) {
+            data.forEach(function(ctx) {
+              if (ctx['news-flash']) {
+                pubsubResults.render(ctx['news-flash'], true)
+              } else {
+                pubsubResults.render(ctx['update'], true)
+              }
+            })
+          } else {
+            pubsubResults.render(data.join(' '), true)
+          }
+        }
+      }
+
+      var stringHandler = function(string) {
+        if (typeof string === 'string') {
+          pubsubResults.render(string, true)
+        }
+      }
+
+      var objArrayHandler = function(obj) {
+        if (obj instanceof Array) {
+          obj.forEach(function(ctx) {
+            if (ctx.name && ctx.job) {
+              pubsubResults.render('My name is ' + ctx.name + ', and I am a ' + ctx.job + '.', true)
+            } else {
+              return
+            }
+          })
+        }
+      }
+      var stringDispatcher = $.subscribe('news/update', stringHandler)
+      $.subscribe('news/update', arrayHandler)
+      $.subscribe('users/new', objArrayHandler)
+
+      $.publish('news/update', 'This is the latest news!')
+      $.publish('news/update', ['Somebody','did','something','funny'])
+      $.publish('news/update', [{'news-flash':'Not much has happened yet.'},{'update':'More of the same.'}])
+
+      stringDispatcher.off()
+      /**
+       * This doesn't get published to stringDispatcher:
+       */
+      $.publish('news/update', 'We need piles of money now!')
+      /**
+       * This does get published:
+       */
+      $.publish('users/new', [{'name':'Wobba', 'job':'developer'}, {'name':'Bozo the Clown', 'job':'clown'}, {'name':'Joe','job':'just a regular guy'}])
+    })
+  </script>
+</body>
+</html>

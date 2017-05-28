@@ -1,0 +1,43 @@
+
+/*===================*/
+/* Multi-Select List */
+/*===================*/
+ul.multi-select-list > li {
+  cursor: pointer;
+  -webkit-align-items: center !important;
+  align-items: center !important;
+}
+.multi-select-list > li > aside > span.multi-selection-indicator {
+  max-height: 20px;
+  width: 20px;
+  margin-right: 10px;
+  border: solid 1px #007aff;
+  transition: all .5s ease-out;
+}
+.multi-select-list > li > aside span.multi-selection-indicator > svg {
+  margin: -6px 0 0 -5px;
+}
+.multi-select-list > li > aside #multi-select-icon,
+.multi-select-list > li > aside  circle#multi-select-circle {
+  display: none;
+  stroke: #007aff;
+}
+.multi-select-list > li > input{
+  display: none;
+}
+.multi-select-list > li.selected > aside #multi-select-icon,
+.multi-select-list > li.selected > aside > span.multi-selection-indicator {
+  display: inline-block;
+  box-shadow: 0 0 2px 1px #007aff;
+}
+.multi-select-list > li.selected > aside path#multi-select-checkmark {
+  display: block;
+  stroke-width: 2px;
+}
+html[dir=rtl] .multi-select-list > li > span.multi-selection-indicator {
+  margin-right: 0;
+  margin-left: 10px;
+}
+html[dir=rtl] .multi-select-list > li > span.multi-selection-indicator > svg {
+  margin: -6px -5px 0 0;
+}

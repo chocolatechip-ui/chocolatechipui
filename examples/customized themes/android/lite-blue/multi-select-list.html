@@ -6,20 +6,20 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="msapplication-tap-highlight" content="no">
-  <title>ChocolateChip-UI Multi-Select</title>
-  <link rel="stylesheet" href="../../../../dist/css/chui-android.min.css">
+  <title>Multi-Select List</title>
+  <link rel="stylesheet" href="../../../dist/css/chui-android.css">
   <link rel="stylesheet" href="../css/custom-android-lite-blue.css">
-  <script src="../../../../dist/chui.min.js"></script>
-  <script type="application/json" src="../../../../dist/chui.min.js.map"></script>
+  <script src="../../../dist/chui.min.js"></script>
+  <script src="../../../dist/widgets.min.js"></script>
   <style>
-`    body.themeIsAndroid button.action {
+    body.themeIsAndroid button.action {
       color: #333;
       border-radius: 0;
     }
   </style>
 </head>
 <body>
-  <screen class='current' id='multi-select-example'>
+  <ui-screen class='current' id='multi-select-example'>
     <nav>
       <h1>To Do</h1>
     </nav>
@@ -32,51 +32,50 @@
       </ul>
       <p>You are going to: <strong><span id="response" class='attentionGrabber'></span></strong></p>
       <p>
-        <button id='done' class="action centered raised">Validate</button>
-        <p>Validation Results: <span id="valiationResults"></span></p>
+        <button id='done' class="action centered">Get Selections</button>
+        <p>User Choices: <span id="valiationResults"></span></p>
       </p>
     </section>
-  </screen>
+  </ui-screen>
   <script>
 
     $(function() {
       /**
        * ToDo data:
        */
-      var ToDo = [
+      const ToDo = [
         {value: "eat", label: "Go Eat Something"},
         {value: "nap", label: "Take a nap"},
         {value: "work", label: "Get some work done"},
         {value: "play", label: "Play a game"}
       ];
 
-      /**
-       * Define and render view:
-       */
-      var ToDoView = $.View({
-        element: '#multiSelectList'
-      });
-      ToDoView.render(ToDo);
+      const toDoState = new State(ToDo)
 
       /**
        * Set up Select List:
        */
-      var myMulitSelectList = $.MultiSelectList({
+      const myMulitSelectList = new UIMultiSelectList({
         element: '#multiSelectList',
         selected: [1,2],
         name: 'personal_choice[]',
+        state: toDoState,
+        render: (data) => `
+          <li>
+            <h3>${data.label}</h3>
+          </li>`,
         callback: function() {
           renderSelection();
         }
       });
-
+      myMulitSelectList.render()
 
       /**
        * Define callback for multi-select list:
        */
-      var renderSelection = function() {
-        var temp = [];
-        myMulitSelectList.getSelection().forEach(function(item) {
+      const renderSelection = function() {
+        let temp = [];
+        myMulitSelectList.value().forEach(function(item) {
           temp.push(item.value);
         });
         temp.sort()
@@ -91,25 +90,16 @@
       /**
        * Render any default selections:
        */
-      renderSelection();
+      setTimeout(function() {
+        renderSelection();
+      })
 
       /**
-       * Validate and return JSON object from list, view results in browser console:
+       * Get value of user selections:
        */
       $('#done').on('tap', function() {
-        var choice = $.Form([
-          {
-            element: '#multiSelectList',
-            type: 'multiselectlist'
-          }
-        ]);
-        /**
-         * If validation passed, output results:
-         */
-        if(!choice.errors()) {
-          var formData = choice.get();
-          $('#valiationResults').text(JSON.stringify(formData));
-        }
+        const choices = myMulitSelectList.value()
+        document.getElementById('valiationResults').textContent = JSON.stringify(choices);
       });
 
     });

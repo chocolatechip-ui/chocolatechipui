@@ -7,31 +7,29 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="msapplication-tap-highlight" content="no">
   <title>ChocolateChip-UI Navigation BackTo</title>
-  <link rel="stylesheet" href="../dist/css/chui-ios.min.css">
-  <script src="../dist/chui.min.js"></script>
-  <script type="application/json" src="../dist/chui.min.js.map"></script>
+  <link rel="stylesheet" href="./dist/css/chui-ios.css">
+  <script src="./dist/chui.min.js"></script>
+  <script src="./dist/widgets.min.js"></script>
   <script>
     $(function() {
-      // Create global nav:
-      $.globalNav = true;
-      
       $("#goToLast").on("tap", function() {
-         $.GoToScreen("screen3");
-       });
-       $('#backToMain').on('tap', function() {
-         $.GoBackToScreen('main');
-       });
-    });
+        $.GoTo("ui-screen3")
+      })
+      $('#backToMain').on('tap', function() {
+        $.GoBackTo('main')
+      })
+    })
   </script>
 </head>
 <body>
-  <screen id='main' class='current'>
+  <nav id='global-nav'></nav>
+  <ui-screen id='main' class='current'>
     <nav>
       <h1>Non-Linear Navigation</h1>
     </nav>
     <section>
       <ul class='list' role='list'>
-        <li data-goto="screen2">
+        <li data-goto="ui-screen2">
           <h3>Item</h3>
           <aside>
             <disclosure></disclosure>
@@ -39,17 +37,17 @@
         </li>
       </ul>
       <br><br>
-      <button id='goToLast' class="action centered raised">Straight to Detail screen</button>
+      <button id='goToLast' class="action centered raised">Straight to Detail Screen</button>
     </section>
-  </screen>
-  <screen id="screen2" class='next'>
+  </ui-screen>
+  <ui-screen id="ui-screen2" class='next'>
     <nav>
       <button class="back">Back</button>
-      <h1>Second screen</h1>
+      <h1>Second ui-screen</h1>
     </nav>
     <section>
       <ul class='list' role='list'>
-        <li data-goto="screen3">
+        <li data-goto="ui-screen3">
           <h3>Item</h3>
           <h4>Item Subtitle</h4>
           <aside>
@@ -58,8 +56,8 @@
         </li>
       </ul>
     </section>
-  </screen>
-  <screen id="screen3" class='next'>
+  </ui-screen>
+  <ui-screen id="ui-screen3" class='next'>
     <nav>
       <button id='backToMain' class='backTo'>Back</button>
       <h1>BackTo Button</h1>
@@ -76,6 +74,6 @@
         </li>
       </ul>
     </section>
-  </screen>
+  </ui-screen>
 </body>
 </html>

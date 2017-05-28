@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="msapplication-tap-highlight" content="no">
+  <title>ChocolateChip-UI Component</title>
+  <link rel="stylesheet" href="./dist/css/chui-ios.css">
+  <script src="./dist/chui.min.js"></script>
+  <script src="./dist/widgets.min.js"></script>
+  <style>
+    ol, li {
+      padding-left: 0;
+      margin-left: 0;
+    }
+    ol {
+      margin-left: 20px;
+    }
+  </style>
+
+</head>
+<body>
+  <ui-screen id='main' class='current'>
+    <nav>
+      <h1>Components</h1>
+    </nav>
+    <section>
+
+      <h2 id='titleTemplate'></h2>
+      <br>
+
+      <h2>Single Object Template</h2>
+      <ul class="list" id='renderObjectInTemplate'></ul>
+
+      <h2>Rendering HTML In Data</h2>
+      <ul class="list" id="renderArrayOfObjects"></ul>
+
+      <h2>Images in Templates</h2>
+      <ul class="list" id="listOfObjects"></ul>
+
+      <h2>Nested Template Example</h2>
+      <ul class="list" id="nestedTemplate"></ul>
+
+
+    </section>
+</ui-screen>
+
+<script>
+  $(function() {
+
+    /**
+     * Data for templates.
+     */
+    var titleTemplate = ['This', ' ', 'is', ' ', 'a',' ', 'title', ' ', 'template!']
+
+    var person = {
+      "firstName":"<b>John</b>",
+      "lastName": "Doe",
+      "age": 32
+    }
+
+    var luminaries = [
+      {firstName: "<strong> Stephen</strong>", lastName: "Hawking", image: 'images/Hawking.jpg', age: 20},
+      {firstName: "Albert", lastName: "<strong> Einstein</strong>", image: 'images/Einstein.jpg', age: 31},
+      {firstName: "Leonardo", lastName: "Da Vinci", image: 'images/DaVinci.jpg', age: 100},
+      {firstName: "Galileo", lastName: "Galilei", image: 'images/Galileo.jpg', age: 40},
+      {firstName: "Nicholas", lastName: "Copernicus", image: 'images/Copernicus.jpg', age: 32}
+    ]
+
+    var peeps = [
+      {
+        "name": "Wobba",
+        "image": "images/Wobba.jpg",
+        "friends": [
+          {
+            "name": "Brennan",
+            "job": "Installer"
+          },
+          {
+            "name": "Josh",
+            "job": "Developer"
+          },
+          {
+            "name": "Pete",
+            "job": "Grand Poobah"
+          }
+        ]
+      },
+      {
+        "name": "Bozo",
+        "image": "images/Bozo.jpg",
+        "friends": [
+          {
+            "name": "Boo",
+            "job": "Mad Scientist"
+          },
+          {
+            "name": "Bingo",
+            "job": "Gambler"
+          },
+          {
+            "name": "Bango",
+            "job": "Whatever"
+          }
+        ]
+      },
+      {
+        "name": "Boo",
+        "image": "images/Boo.jpg",
+        "friends": []
+      },
+      {
+        "name": "Apple",
+        "image": "images/apple.png",
+        "friends": [
+          {
+            "name": "orange",
+            "job": "juice"
+          },
+          {
+            "name": "banana",
+            "job": "eating"
+          }
+        ]
+      }
+    ]
+
+    /**
+     * Component 1.
+     * Define template for an array of strings:
+     */
+    var titleView = new Component({
+      element: '#titleTemplate',
+      render: (data) => html`${ data }`
+    })
+    /* Render the component. */
+    titleView.render(titleTemplate)
+
+    /**
+     * Component 2.
+     * Define a template for a single object:
+     */
+
+    var personScriptView = new Component({
+      element: '#renderObjectInTemplate',
+      render: (person) => html`
+        <li>
+          <h3>${ person.firstName } ${ person.lastName }, age: ${ person.age }</h3>
+        </li>`
+    })
+    /* Render the component. */
+    personScriptView.render(person)
+
+    /**
+     * Component 3.
+     * Define template for an array of objects:
+     */
+
+    var personDeclarativeView = new Component({
+      element: '#renderArrayOfObjects',
+      render: (person) => html`
+        <li>
+          <h3>!${ person.firstName } !${ person.lastName }</h3>
+        </li>`
+    })
+    /* Render the component. */
+    personDeclarativeView.render(luminaries)
+
+    /**
+     * Component 4.
+     * Define template with images:
+     */
+    var luminariesState = new State(luminaries)
+    var luminariesComponent = new Component({
+      element: '#listOfObjects',
+      state: luminariesState,
+      render: (person) => html`
+        <li>
+          <aside>
+            <img width='80' src='${person.image }' alt=''>
+          </aside>
+          <div>
+            <h3>!${ person.firstName } !${ person.lastName }</h3>
+          </div>
+        </li>`,
+      actions: [
+        {
+          event: 'tap',
+          element: 'h3',
+          callback: function() {
+            console.log(this.textContent.trim())
+          }
+        }
+      ]
+    })
+    luminariesComponent.render()
+    window.luminariesComponent = luminariesComponent
+
+    /**
+     * Component 5.
+     * Nested template example:
+     */
+    /* Define template partial to use in component. */
+    var templatePartial = (somebody) => {
+      if (somebody.friends && somebody.friends.length) {
+        return html`
+          <li>
+            <div class='no-flex' style='max-width: 100px;'>
+              <h3>Friends:</h3>
+            </div>
+            <div>
+              <ol>
+                ${
+                  somebody.friends.map(function(friend) {
+                    return `<li>${friend.name}: ${friend.job}</li>`
+                  })
+                }
+              </ol>
+            </div>
+          </li>
+        `
+      } else {
+        return ''
+      }
+    }
+    var nestedTemplateComponent = new Component({
+      element: '#nestedTemplate',
+      render: (somebody) => html`
+        <li>
+          <aside>
+            <img width='80' src='${ somebody.image }'>
+          </aside>
+          <div>
+            <h3>${ somebody.name }</h3>
+          </div>
+        </li>
+        !${templatePartial(somebody)}`
+    })
+    nestedTemplateComponent.render(peeps)
+  })
+</script>
+</body>

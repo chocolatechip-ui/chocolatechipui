@@ -7,9 +7,10 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="msapplication-tap-highlight" content="no">
   <title>Sort Arrays</title>
-  <link rel="stylesheet" href="../dist/css/chui-ios.min.css">
-  <script src="../dist/chui.min.js"></script>
-  <script type="application/json" src="../dist/chui.min.js.map"></script>
+  <link rel="stylesheet" href="./dist/css/chui-ios.css">
+  <script src="./dist/chui.min.js"></script>
+  <script src="./dist/widgets.min.js"></script>
+  <script src="./dist/utils/formatters.js"></script>
   <style>
     #prices span {
       display: inline-block;
@@ -19,29 +20,19 @@
   </style>
 </head>
 <body>
-<screen id="main" class="current">
+<ui-screen id="main" class="current">
   <nav>
     <h1>Sorting</h1>
   </nav>
   <section>
     <h2>Sort Array of Names</h2>
-    <ul id='names' class="list cloak">
-      <li>{= name.toUpperCase() }</li>
-    </ul>
+    <ul id='names' class="list"></ul>
     <h2>Sort Array of Dates</h2>
-    <ul id="dates" class="list">
-      <li>
-        <h3>{= new Date(date).getFullYear() }, {= $.getMonth(new Date(date).getMonth()) }</h3>
-      </li>
-    </ul>
+    <ul id="dates" class="list"></ul>
     <h2>Sort Array of Prices</h2>
-    <ul id='prices'class='list'>
-      <li>
-        <h3><span>{= $.currency(price) }</span></h3>
-      </li>
-    </ul>
+    <ul id='prices'class='list'></ul>
   </section>
-</screen>
+</ui-screen>
   
   <script>
   $(function(){
@@ -62,16 +53,20 @@
         'Ed',
         'Jane',
         'Carl'
-      ];
+      ]
 
-      var namesModel = $.Model(names);
+      var namesModel = new State(names)
       /**
        * Use localCompare to deal with accent marks on lettters:
        */
       namesModel.sort(function(a, b) {
-        return a.localeCompare(b);
+        return a.localeCompare(b)
       })
-      var namesView = $.View({element: '#names', model: namesModel, variable: 'name'});
+      var namesView = new Component({
+        element: '#names', 
+        state: namesModel, 
+        render: (name) => html`<li>${ name.toUpperCase() }</li>`
+      })
       namesView.render()
 
       /**
@@ -91,27 +86,34 @@
           'October',
           'November',
           'December'
-        ];
-        return months[date];
+        ]
+        return months[date]
       }
 
       /**
        * Create dates and sort:
        */
-      var today = new Date();
-      var date_1999 = new Date('October 30, 1999');
-      var date_1949 = new Date('August 20, 1949');
-      var date_1980 = new Date('January 1, 1980');
-      var date_2001 = new Date('July 4, 2001');
+      var today = new Date()
+      var date_1999 = new Date('October 30, 1999')
+      var date_1949 = new Date('August 20, 1949')
+      var date_1980 = new Date('January 1, 1980')
+      var date_2001 = new Date('July 4, 2001')
       var date_1968 = new Date('December, 25, 1968')
 
-      var dates = [date_1949, date_1999, today, date_1980, date_2001, date_1968];
+      var dates = [date_1949, date_1999, today, date_1980, date_2001, date_1968]
 
-      var dateModel = $.Model(dates);
-      dateModel.sort($.sortDate);
+      var dateModel = new State(dates)
+      dateModel.sort($.sortDate)
 
-      var dateView = $.View({element: '#dates', model: dateModel, variable: 'date'});
-      dateView.render();
+      var dateView = new Component({
+        element: '#dates', 
+        state: dateModel, 
+        render: (date) => html`
+          <li>
+            <h3>${ new Date(date).getFullYear() }, ${ $.getMonth(new Date(date).getMonth()) }</h3>
+          </li>`
+      })
+      dateView.render()
 
       /**
        * Create and sort prices:
@@ -128,12 +130,19 @@
         22.22,
         .02,
         7.5
-      ];
-      var priceModel = $.Model(prices);
-      priceModel.sort($.sortNumbersDescending);
-      var priceView = $.View({element: '#prices', model: priceModel, variable: 'price'});
-      priceView.render();
-    });
+      ]
+      var priceModel = new State(prices)
+      priceModel.sort($.sortNumbersDescending)
+      var priceView = new Component({
+        element: '#prices', 
+        state: priceModel, 
+        render: (price) => html `
+          <li>
+            <h3><span>${ $.currency(price) }</span></h3>
+          </li>`
+      })
+      priceView.render()
+    })
   </script>
 </body>
 </html>

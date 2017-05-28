@@ -1,0 +1,97 @@
+
+/*===============*/
+/* Sheet Control */
+/*===============*/
+ui-sheet {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: hsla(218, 4%, 63%, .5);
+  -webkit-transition: all 0.25s ease-in;
+  transition: all 0.25s ease-in;
+  -webkit-transform: translate3d(0, 100%, 0);
+  transform: translate3d(0, 100%, 0);
+}
+ui-sheet.slideDown {
+  -webkit-transform: translate3d(0, -120%, 0) !important;
+  transform: translate3d(0, -120%, 0) !important;
+}
+ui-sheet ui-sheet-handle {
+  display: -webkit-flex;
+  -webkit-flex-direction: column;
+  -webkit-align-items: center;
+  -webkit-align-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  text-align: center;
+  margin: 0 auto;
+  color: #ffffff;
+  cursor: pointer;
+  height: 40pt;
+  margin: 0 auto;
+  cursor: pointer;
+}
+ui-sheet ui-sheet-handle #sheet-handle {
+  stroke: #fff;
+  stroke-linecap: butt;
+  stroke-linejoin: butt;
+  stroke-width: 6px
+}
+ui-sheet.opened,
+ui-sheet.slideDown.opened {
+  visibility: visible;
+  -webkit-transform: translate3d(0, 0, 0) !important;
+  transform: translate3d(0, 0, 0) !important;
+}
+ui-sheet > ui-sheet-handle  svg {
+  -webkit-transform: scale(.5) !important;
+  transform: scale(.5) !important;
+}
+ui-sheet.slideDown > ui-sheet-handle  svg {
+  -webkit-transform: rotate(180deg) scale(.5) !important;
+  transform: rotate(180deg) scale(.5) !important;
+}
+ui-sheet button {
+  color: #585d63;
+  border: solid 1px #585d63;
+  /*border-radius: 20px;*/
+  width: auto;
+  height: auto;
+  margin: 0 auto;
+  padding: 10px 20px;
+  border-radius: 0 !important;
+}
+ui-sheet > section {
+  position: absolute;
+  top: 53px;
+  left: 0;
+  bottom: 0;
+  height: auto;
+  right: 0;
+  background: none;
+}
+ui-sheet > section > h2 {
+  text-align: center;
+}
+ui-sheet > section > .list {
+  border: none;
+  background-color: transparent !important;
+}
+ui-sheet > section > .list > li {
+  border-bottom: solid 1px #585d63;
+  background-color: transparent !important;
+}
+ui-sheet > section > .list > li::before {
+  content: none;
+}
+ui-screen.current.blurred {
+  -webkit-filter: blur(10px);
+  -webkit-transition-duration: .15s;
+  filter: blur(10px);
+  transition-duration: .15s;
+}

@@ -7,10 +7,10 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="msapplication-tap-highlight" content="no">
   <title>ChocolateChip-UI Range Input</title>
-  <link rel="stylesheet" href="../../../../dist/css/chui-ios.min.css">
+  <link rel="stylesheet" href="../../../dist/css/chui-ios.css">
   <link rel="stylesheet" href="../css/custom-ios-red.css">
-  <script src="../../../../dist/chui.min.js"></script>
-  <script type="application/json" src="../../../../dist/chui.min.js.map"></script>
+  <script src="../../../dist/chui.min.js"></script>
+  <script src="../../../dist/widgets.min.js"></script>
   <style>
     div {
       width: 300px;
@@ -27,20 +27,20 @@
   </style>
   <script>
     $(function() {
-      $('#rangeValue1').text($('#rangeControl1').val());
+      $('#rangeValue1').text($('#rangeControl1').array[0].value);
       $('#rangeControl1').on('input', function() {
-        $('#rangeValue1').text($(this).val());
+        $('#rangeValue1').text(this.value);
       });
       
-      $('#rangeValue2').text($('#rangeControl2').val());
+      $('#rangeValue2').text($('#rangeControl2').array[0].value);
       $('#rangeControl2').on('input', function() {
-        $('#rangeValue2').text($(this).val());
+        $('#rangeValue2').text(this.value);
       });
     });
   </script>
 </head>
 <body>
-  <screen id="main" class="current">
+  <ui-screen id="main" class="current">
     <nav>
       <h1>Range Input</h1>
     </nav>
@@ -65,6 +65,6 @@
         </li>
       </ul>
     </section>
-  </screen>
+  </ui-screen>
 </body>
 </html>

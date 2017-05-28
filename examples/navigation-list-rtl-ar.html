@@ -7,24 +7,18 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="msapplication-tap-highlight" content="no">
   <title>ChocolateChip-UI Navigation - Arabic</title>
-  <link rel="stylesheet" href="../dist/css/chui-ios.min.css">
-  <script src="../dist/chui.min.js"></script>
-  <script type="application/json" src="../dist/chui.min.js.map"></script>
-  <script>
-    $(function() {
-      // Create global nav:
-      $.globalNav = true;
-    })
-  </script>
+  <link rel="stylesheet" href="./dist/css/chui-ios.css">
+  <script src="./dist/chui.min.js"></script>
+  <script src="./dist/widgets.min.js"></script>
 </head>
 <body>
-  <screen id="main" class="current">
+  <ui-screen id="main" class="current">
     <nav class="current">
       <h1>التنقل</h1>
     </nav>
     <section>
       <ul class='list' role='list'>
-        <li class='comp' data-goto="people">
+        <li data-goto="people">
           <div>
             <h3>الأشخاص</h3>
           </div>
@@ -32,7 +26,7 @@
             <disclosure></disclosure>
           </aside>
         </li>
-        <li class='comp' data-goto="places">
+        <li data-goto="places">
           <div>
             <h3>مدينة</h3>
           </div>
@@ -40,7 +34,7 @@
             <disclosure></disclosure>
           </aside>
         </li>
-        <li class='comp' data-goto="things">
+        <li data-goto="things">
           <div>
             <h3>الأشياء</h3>
           </div>
@@ -48,7 +42,7 @@
             <disclosure></disclosure>
           </aside>
         </li>
-        <li class='comp' data-goto="animals">
+        <li data-goto="animals">
           <div>
             <h3>حيوانات</h3>
           </div>
@@ -56,7 +50,7 @@
             <disclosure></disclosure>
           </aside>
         </li>
-        <li class='comp' data-goto="food">
+        <li data-goto="food">
           <div>
             <h3>طعام</h3>
           </div>
@@ -66,9 +60,9 @@
         </li>
       </ul>
     </section>
-  </screen>
+  </ui-screen>
 
-  <screen id="people" class='next'>
+  <ui-screen id="people" class='next'>
     <nav class='next'>
       <button class='back'>التنقل</button>
       <h1>الأشخاص</h1>
@@ -83,9 +77,9 @@
       </ul>
       <p>هذا هو ملخص عن بعض الناس.</p>
     </section>
-  </screen>
+  </ui-screen>
 
-  <screen id="places" class='next'>
+  <ui-screen id="places" class='next'>
     <nav class='next'>
       <button class='back'>التنقل</button>
       <h1>مدينة</h1>
@@ -100,9 +94,9 @@
       </ul>
       <p>هذا هو ملخص من حيث لهذه الزيارة.</p>
     </section>
-  </screen>
+  </ui-screen>
 
-  <screen id="things" class='next'>
+  <ui-screen id="things" class='next'>
     <nav class='next'>
       <button class='back'>التنقل</button>
       <h1>الأشياء</h1>
@@ -117,9 +111,9 @@
       </ul>
       <p>هذا هو ملخص ما هي الأشياء.</p>
     </section>
-  </screen>
+  </ui-screen>
 
-  <screen id="animals" class='next'>
+  <ui-screen id="animals" class='next'>
     <nav class='next'>
       <button class='back'>التنقل</button>
       <h1>حيوانات</h1>
@@ -134,9 +128,9 @@
       </ul>
       <p>هذا هو ملخص لماذا الحيوانات هي حيوانات.</p>
     </section>
-  </screen>
+  </ui-screen>
 
-  <screen id="food" class='next'>
+  <ui-screen id="food" class='next'>
     <nav class='next'>
       <button class='back'>التنقل</button>
       <h1>طعام</h1>
@@ -151,6 +145,6 @@
       </ul>
       <p>هذا هو ملخص لماذا الطعام جيد.</p>
     </section>
-  </screen>
+  </ui-screen>
 </body>
 </html>

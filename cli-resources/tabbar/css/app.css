@@ -1,0 +1,26 @@
+ui-tabbar > button {
+  background-color: #fafafa;
+}
+ui-tabbar > button:hover,
+ui-tabbar > button.selected {
+  color: #007aff !important;
+  background-color: #f0f0f0;
+  opacity: 1 !important;
+}
+ui-tabbar > button > .icon {
+  background-position: center center;
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+ui-tabbar > button.music > .icon  {
+  background-image: url("../images/icons/Head_phones.svg");
+}
+ui-tabbar > button.docs > .icon {
+  background-image: url("../images/icons/Documents.svg");
+}
+ui-tabbar > button.recipes > .icon  {
+  background-image: url("../images/icons/Download.svg");
+}
+ui-tabbar > button.top_rated > .icon {
+  background-image: url("../images/icons/Favorite.svg");
+}

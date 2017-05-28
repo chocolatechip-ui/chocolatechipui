@@ -1,13 +1,13 @@
 /* Color navbar and toolbar */
-nav, #globalNav, screen > footer, 
-screen > toolbar,
+nav, #globalNav, ui-screen > footer, 
+ui-screen > toolbar,
 input[type="range"] -webkit-track,
 .isDesktop .segmented > button:hover,
 .segmented > button.selected,
-.isDesktop .stepper > button:hover,
-.isDesktop .stepper > button.selected,
-.isDesktop .stepper > button:hover > span,
-.isDesktop .stepper > button.selected > span  {
+.isDesktop ui-stepper > button:hover,
+.isDesktop ui-stepper > button.selected,
+.isDesktop ui-stepper > button:hover > span,
+.isDesktop ui-stepper > button.selected > span  {
   background-color: red;
 }
 /* Color disclosure indicators */
@@ -63,16 +63,16 @@ button.slide-out-button::after {
   background-color: #fafafa;
 }
 /* Stepper Control */
-.stepper > label,
-.stepper > button {
+ui-stepper > label,
+ui-stepper > button {
   border: solid 1px red;
 }
 /* Switches */
-switch.checked {
+ui-switch.checked {
   border-color: red;
   box-shadow: inset 0 0 0 15px red;
 }
 /* Tabbar */
-tabbar > button.more > .icon::before {
+ui-tabbar > button.more > .icon::before {
   color: red !important;
 }

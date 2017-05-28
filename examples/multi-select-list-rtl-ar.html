@@ -6,10 +6,10 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="msapplication-tap-highlight" content="no">
-  <title>ChocolateChip-UI Multi-Select</title>
-  <link rel="stylesheet" href="../dist/css/chui-ios.min.css">
-  <script src="../dist/chui.min.js"></script>
-  <script type="application/json" src="../dist/chui.min.js.map"></script>
+  <title>Multi-Select List</title>
+  <link rel="stylesheet" href="./dist/css/chui-ios.css">
+  <script src="./dist/chui.min.js"></script>
+  <script src="./dist/widgets.min.js"></script>
   <style>
     body.themeIsAndroid button.action {
       color: #333;
@@ -18,100 +18,89 @@
   </style>
 </head>
 <body>
-  <screen class='current' id='multi-select-example'>
+  <ui-screen class='current' id='multi-select-example'>
     <nav>
       <h1>تودوس</h1>
     </nav>
     <section>
       <h2>قائمة الاختيار</h2>
       <ul class="list" id="multiSelectList">
-        <li data-select="{= data.value}">
-          <h3>{= data.label }</h3>
-        </li>
+
       </ul>
       <p>أنت ذاهب ل: <strong><span id="response" class='attentionGrabber'></span></strong></p>
       <p>
         <button id='done' class="action centered">التحقق من صحة</button>
-        <p>نتائج التحقق من صحة: <span id="valiationResults"></span></p>
+        <p>نتائج التحقق من صحة: <span id="valiationResults" dir='ltr'></span></p>
       </p>
     </section>
-  </screen>
+  </ui-screen>
   <script>
 
     $(function() {
       /**
        * ToDo data:
        */
-      var ToDo = [
+      const toDos = [
         {value: "أكل", label: "يذهب يأكل شيئا."},
         {value: "قيلولة", label: "أخذ غفوة."},
         {value: "عمل", label: "الحصول على بعض العمل المنجز."},
         {value: "لعب", label: "تلعب لعبة."}
-      ];
+      ]
 
-      /**
-       * Define and render view:
-       */
-      var ToDoView = $.View({
-        element: '#multiSelectList'
-      });
-      ToDoView.render(ToDo);
+      const toDoState = new State(toDos)
 
       /**
        * Set up Select List:
        */
-      var myMulitSelectList = $.MultiSelectList({
+      const myMulitSelectList = new UIMultiSelectList({
         element: '#multiSelectList',
         selected: [1,2],
         name: 'الشخصية_الاختيار[]',
+        render: (data) => html`
+          <li data-select="${ data.value}">
+            <h3>${ data.label }</h3>
+          </li>`,
+        state: toDoState,
         callback: function() {
           renderSelection();
         }
-      });
+      })
+      myMulitSelectList.render()
 
 
       /**
        * Define callback for multi-select list:
        */
-      var renderSelection = function() {
-        var temp = [];
-        myMulitSelectList.val().forEach(function(item) {
-          temp.push(item.value);
-        });
+      const renderSelection = function() {
+        let temp = []
+        myMulitSelectList.selection.forEach(function(item) {
+          temp.push(item.value)
+        })
         temp.sort()
-        temp = temp.join(', ');
+        temp = temp.join(', ')
         if (temp.length) {
-          $('#response').text(temp);
+          $('#response').text(temp)
         } else {
           $('#response').empty()
         }
       };
-      
+
       /**
        * Render any default selections:
        */
-      renderSelection();
+      setTimeout(function() {
+        renderSelection()
+      })
 
       /**
        * Validate and return JSON object from list, view results in browser console:
        */
       $('#done').on('tap', function() {
-        var choice = $.Form([
-          {
-            element: '#multiSelectList',
-            type: 'multiselectlist'
-          }
-        ]);
-        /**
-         * If validation passed, output results:
-         */
-        if(!choice.errors()) {
-          var formData = choice.get();
-          $('#valiationResults').text(JSON.stringify(formData));
-        }
-      });
+        var choices = myMulitSelectList.selection
+        document.getElementById('valiationResults').textContent = JSON.stringify(choices)
+      })
 
-    });
+    })
   </script>
 </body>
 </html>

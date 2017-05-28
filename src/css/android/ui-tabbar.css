@@ -1,0 +1,124 @@
+
+/*=========*/
+/* Tab Bar */
+/*=========*/
+ui-tabbar {
+  display: -webkit-flex;
+  -webkit-flex-direction: row;
+  -webkit-justify-content: start;
+  -webkit-align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  position: absolute;
+  z-index: 11111111;
+  top: 50px;
+  left: 0;
+  right: 0;
+  height: 30px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  border-bottom: solid 1px #ccc;
+  background-color: #f7f7f7; 
+}
+ui-tabbar > span.androidSelectionBorder {
+  display: block;
+  position: absolute;
+  z-index: 91111111;
+  bottom: 0;
+  left: 0;
+  border-bottom: solid 3px #007aff;
+  transition: left .25s ease-out;
+}
+ui-tabbar.showIcons {
+  height: 50px;
+}
+ui-tabbar.showIcons ~ ui-screen {
+  top: 50px !important;
+}
+ui-tabbar > button {
+  height: 100%;
+  position: relative;
+  margin: 0;
+  padding: 1px;
+  padding-top: 8px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  display: -webkit-flex;
+  -webkit-flex-direction: column;
+  -webkit-justify-content: center;
+  -webkit-align-items: center;
+  -webkit-flex: 1 !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1 !important;
+  font-size: 9pt;
+  border-radius: 0;
+}
+ui-tabbar.showIcons > button {
+  padding-top: 1px !important;
+}
+.isDesktop ui-tabbar > button:hover,
+ui-tabbar > button.selected {
+  border-color: rgba(0,0,0,0.25) !important;
+}
+ui-tabbar > button > label {
+  display: block;
+}
+ui-tabbar > button > .icon {
+  margin: 0 auto;
+  content: '';
+  display: none;
+  height: 30px;
+  width: 30px;      
+}
+ui-tabbar.showIcons > button > .icon {
+  display: block !important;
+}
+ui-tabbar ~ ui-screen.previous,
+ui-tabbar ~ ui-screen.next {
+  display: none;
+  -webkit-transform: none !important;
+  transform: none !important;
+}
+ui-tabbar ~ ui-screen.current {
+  display: block;
+  -webkit-transform: none !important;
+  transform: none !important;
+  z-index: 111111;
+}
+ui-tabbar > button.more > label {
+  display: none !important;
+}
+ui-tabbar > button.more > .icon::before {
+  content: '…';
+  display: block;
+  width: 100%;
+  height: 100%;
+  color: #333;
+  font-size: 2rem;
+  line-height: 1rem;
+  vertical-align: middle;
+}
+.isDesktop ui-tabbar > button:hover > .icon::before,
+ui-tabbar > button.selected > .icon::before {
+  color: #007aff;
+}
+ui-tabbar > button.more > .icon {
+  display: -webkit-flex;
+  -webkit-align-items: center;
+  -webkit-justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+ui-tabbar ~ ui-screen > nav {
+  border-bottom: solid 1px #929292 !important;
+  margin-bottom: 29px;
+}
+html[dir=rtl] ui-tabbar > button.more > label {
+  display: none;
+}

@@ -14,50 +14,94 @@ $(function() {
   /** 
    * Init Tab Bar:
    */
-  $.WobbaTabbar = $.TabBar(opts);
+  var myTabbar = new UITabbar(opts);
+  window.myTabbar = myTabbar
 
   /**
-   * Music View:
+   * Music Component:
    */
-  var musicView = $.View({
+  var musicComponent = new Component({
     element: '#musicList',
-    variable: 'music'
+    render: function(music) {
+      return html`
+        <li>
+          <img  data-src="${ music.image }" height="80px">
+          <div>
+            <h3>${ music.title }</h3>
+            <h4>${ music.album }</h4>
+            <p>${ music.description }</p>
+          </div>
+        </li>`
+    }
   });
-  musicView.render(music);
+  musicComponent.render(music);
 
   /**
-   * Image Grid View:
+   * Image Grid Component:
    */
-  var imageGridView = $.View({
+  var imageGridComponent = new Component({
     element: '#gridOfImages',
-    variable: 'image'
+    render: function(image) {
+      return html`
+        <img class="col" src="${ image }">
+      `
+    }
   });
-  imageGridView.render(imageCollection);
+  imageGridComponent.render(imageCollection);
 
   /**
-   * Docs View:
+   * Docs Component:
    */
-  var docsView = $.View({
+  var docsComponent = new Component({
     element: '#docsList',
-    variable: 'doc'
+    render: function(doc) {
+      return html`
+        <li class='center-vertical'>
+          <h3>${ doc.title }</h3>
+          <h4>${ doc.subtitle }</h4>
+          <aside>
+            <span class='counter'>${ doc.amount }</span>
+          </aside>
+        </li>`
+    }
   });
-  docsView.render(docs);
+  docsComponent.render(docs);
 
   /**
-   * Recipes View:
+   * Recipes Component:
    */
-  var recipesView = $.View({
+  var recipesComponent = new Component({
     element: '#recipesList',
-    variable: 'recipe'
+    render: function(recipe) {
+      return html`
+        <li>
+          <div>
+            <h3>${ recipe.name }</h3>
+            <h4>Ingredients</h4>
+            <ul>${ recipe.ingredients.map(ingredient => html`<li>!${ ingredient }</li>`)}
+            </ul>
+            <h4>Directions</h4>
+            <ol>
+              ${ recipe.directions.map(direction => html`<li>!${ direction }</li>`)}
+            </ol>
+          </div>
+        </li>`
+    }
   });
-  recipesView.render(recipes);
+  recipesComponent.render(recipes);
 
   /**
-   * Favorites View:
+   * Favorites Component:
    */
-  favoritesView = $.View({
-    element: '#favoritesList'
+  favoritesComponent= new Component({
+    element: '#favoritesList',
+    render: function(data) {
+      return html`
+        <li>
+          <h3>${ data }</h3>
+        </li> `
+    }
   });
-  favoritesView.render(favorites);
+  favoritesComponent.render(favorites);
   
 });

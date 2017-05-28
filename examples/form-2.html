@@ -7,12 +7,15 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="msapplication-tap-highlight" content="no">
   <title>ChocolateChip-UI Form</title>
-  <link rel="stylesheet" href="../dist/css/chui-ios.min.css">
-  <script src="../dist/chui.min.js"></script>
-  <script type="application/json" src="../dist/chui.min.js.map"></script>
+  <link rel="stylesheet" href="./dist/css/chui-ios.css">
+  <script src="./dist/chui.min.js"></script>
+  <script src="./dist/widgets.min.js"></script>
+  <script src="./dist/utils/validators.js"></script>
+  <script src="./dist/utils/form.js"></script>
+  <script src="./dist/utils/formatters.js"></script>
 </head>
 <body>
-  <screen id='main' class="current">
+  <ui-screen id='main' class="current">
     <nav>
       <h1>Form</h1>
     </nav>
@@ -41,16 +44,16 @@
         <li id="results"></li>
       </ul>
     </section>
-  </screen>
+  </ui-screen>
   <script>
     $(function() {
 
-      $.registerCustomValidator('custom-nameWithSpaces', /^[A-Za-z\W]+$/);
+      $.registerCustomValidator('custom-nameWithSpaces', /^[A-Za-z\W]+$/)
 
-      var ResultsView = $.View({
+      var ResultsView = new Component({
         element: '#results',
-        template: '{= data }'
-      });
+        render: (data) => `${ data }`
+      })
 
       $('#validateForm').on('click', function() {
         var myForm = $.Form([
@@ -76,17 +79,17 @@
               alert("Please provide a proper age.")
             }
           }
-        ]);
+        ])
         if(!myForm.errors()) {
-          formData = myForm.get();
-          ResultsView.render(JSON.stringify(formData));
+          formData = myForm.get()
+          ResultsView.render(JSON.stringify(formData))
         } else {
           myForm.getErrors().forEach(function(err) {
-            ResultsView.render('Error: ' + err.type);
+            ResultsView.render('Error: ' + err.type)
           })
         }
-      });
-    });
+      })
+    })
   </script>
 </body>
 </html>

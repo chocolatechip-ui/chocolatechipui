@@ -7,9 +7,9 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="msapplication-tap-highlight" content="no">
   <title>ChocolateChip-UI Range Input - Arabic</title>
-  <link rel="stylesheet" href="../dist/css/chui-ios.min.css">
-  <script src="../dist/chui.min.js"></script>
-  <script type="application/json" src="../dist/chui.min.js.map"></script>
+  <link rel="stylesheet" href="./dist/css/chui-ios.css">
+  <script src="./dist/chui.min.js"></script>
+  <script src="./dist/widgets.min.js"></script>
   <style>
     div {
       width: 300px;
@@ -25,24 +25,27 @@
     }
     html[dir=rtl] body.isNativeAndroidBrowser input[type="range"] {
       width: 200px;
-    } 
+    }
   </style>
   <script>
     $(function() {
-      $('#rangeValue1').text($('#rangeControl1').val());
+
+      const setupRanges = new UIRange()
+
+      $('#rangeValue1').text($('#rangeControl1').array[0].value)
       $('#rangeControl1').on('input', function() {
-        $('#rangeValue1').text($(this).val());
-      });
-      
-      $('#rangeValue2').text($('#rangeControl2').val());
+        $('#rangeValue1').text(this.value)
+      })
+
+      $('#rangeValue2').text($('#rangeControl2').array[0].value)
       $('#rangeControl2').on('input', function() {
-        $('#rangeValue2').text($(this).val());
-      });
-    });
+        $('#rangeValue2').text(this.value)
+      })
+    })
   </script>
 </head>
 <body>
-  <screen id="main" class="current">
+  <ui-screen id="main" class="current">
     <nav>
       <h1>نطاق</h1>
     </nav>
@@ -61,11 +64,11 @@
           <div>
             <h3>زيادة كل 5 نقطة<span></span></h3>
             <label>القيمة الحالية: <span id='rangeValue2' class='attentionGrabber'></span></label>
-            <input type="range" id="rangeControl2" step='5' value="20" min="0" max="40">    
+            <input type="range" id="rangeControl2" step='5' value="20" min="0" max="40">
           </div>
         </li>
       </ul>
     </section>
-  </screen>
+  </ui-screen>
 </body>
 </html>

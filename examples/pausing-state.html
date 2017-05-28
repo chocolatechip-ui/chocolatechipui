@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="msapplication-tap-highlight" content="no">
+  <title>ChocolateChip-UI Pausing State</title>
+  <link rel="stylesheet" href="./dist/css/chui-ios.css">
+  <script src="./dist/chui.min.js"></script>
+  <script src="./dist/widgets.min.js"></script>
+  <style>
+    li {
+      cursor: pointer;
+    }
+    #addComponent label {
+      display: inline-block;
+      margin-right: 10px;
+    }
+    #addComponent label > input[type=checkbox] {
+      position: relative;
+      top: 3px;
+    }
+  </style>
+</head>
+<body>
+  <ui-screen id='main' class='current'>
+    <nav>
+      <h1>Pausing State</h1>
+    </nav>
+    <section>
+      <p>This is an example of pausing state to prevent a bound componet from rendering. Enter a first and last name and tap Add Person. You'll see the component update because its bound to the state. Now check the Pause State checkbox, then add a new first and last name. When you tap Add Person, nothing happens. Add another first and last name and tap Add Person. Nothing happens. Now uncheck the checkbox and tap the Render Component button. You'll see the component update with the new names. The checkbox toggles the paused state of the State object. If it is not paused, the Render Component button executes the State object's "renderComponents" method.</p>
+      <br>
+      <ul class="list" id='addComponent'>
+        <li>
+          <label for="toggleState">Pause State: <input type="checkbox" name='toggleState' id='toggleState'></label>
+          <button id='reload'>Render Component</button>
+        </li>
+        <li>
+            <label>First Name: <input type="text" id='firstName'></label>
+            <label>Last Name: <input type="text" id='lastName'></label>
+            <button id='addPerson'>Add Person</button>
+        </li>
+      </ul>
+
+      <h2>Array of Objects</h2>
+      <ul class="list" id="peopleList"></ul>
+      <p id="dingo"></p>
+
+    </section>
+  </ui-screen>
+
+<script>
+  $(function() {
+
+
+      /**
+       * Array data:
+       */
+      const people = [
+          {firstName: "Joe", lastName: "Bodoni"},
+          {firstName: "Ellen", lastName: "Berg"},
+          {firstName: "Sam", lastName: "Daniels"},
+          {firstName: "Jane", lastName: "Morgan"}
+        ]
+      const peopleStore = new State(people)
+      window.peopleStore = peopleStore
+
+      /**
+       * Init component:
+       */
+      const peopleComponent = new Component({
+        element: '#peopleList',
+        state: peopleStore,
+        actions: {
+          element: 'h3',
+          event: 'tap',
+          callback: function() {
+            console.log($(this).text())
+          }
+        },
+        render: (data) => html`
+          <li>
+            <h3>
+              ${ data.firstName } ${ data.lastName }
+            </h3>
+          </li>`
+      })
+      peopleComponent.render()
+
+      const addComponent = new Component({
+        element: '#addComponent',
+        actions: [
+          {
+            element: '#toggleState',
+            event: 'change',
+            callback: () => peopleStore.paused = !peopleStore.paused
+          },
+          {
+            element: '#reload',
+            event: 'tap',
+            callback: () => peopleStore.renderComponents()
+          },
+          {
+            element: '#addPerson',
+            event: 'tap',
+            callback: function() {
+              const firstName = $('#firstName').val()
+              const lastName = $('#lastName').val()
+              if (!firstName || !lastName) return
+              peopleStore.push({ firstName, lastName })
+              $('#firstName').val('')
+              $('#lastName').val('')
+            }
+          }
+        ]
+      })
+    })
+</script>
+</body>

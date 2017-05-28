@@ -7,9 +7,9 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="msapplication-tap-highlight" content="no">
   <title>ChocolateChip-UI Segmented Buttons</title>
-  <link rel="stylesheet" href="../dist/css/chui-ios.min.css">
-  <script src="../dist/chui.js"></script>
-  <script type="application/json" src="../dist/chui.min.js.map"></script>
+  <link rel="stylesheet" href="./dist/css/chui-ios.css">
+  <script src="./dist/chui.min.js"></script>
+  <script src="./dist/widgets.min.js"></script>
   <style>
     .chosen-image {
       height: 100px;
@@ -17,71 +17,73 @@
     }
   </style>
   <script>
-    $(function() {
+$(function() {
+  /**
+   * Define callback for Segmented Control:
+   */
+  var segmentedResponse = function() {
+    var index = segCtrl.index
+    var choice
+    var img
+    switch(index) {
+      case 0:
+        choice = 'one'
+        img = 'images/music/Imagine Dragons.jpg'
+        break
+      case 1:
+        choice = 'two'
+        img = 'images/music/Hurry and Harm.jpg'
+        break
+      case 2:
+        choice = 'three'
+        img = 'images/music/Willy Moon.jpg'
+        break
+    }
+    segmentValueComponent.render({
+      value: choice,
+      text: segCtrl.button.textContent.trim(),
+      imagePath: img
+    })
+  }
 
-      /**
-       * Define callback for Segmented Control:
-       */
-      var segmentedResponse = function() {
-        var selection = segCtrl.val().index;
-        var choice;
-        var img;
-        switch(selection) {
-          case 0:
-            choice = 'one';
-            img = 'images/music/Imagine Dragons.jpg';
-            break;
-          case 1:
-            choice = 'two';
-            img = 'images/music/Hurry and Harm.jpg';
-            break;
-          case 2:
-            choice = 'three';
-            img = 'images/music/Willy Moon.jpg';
-            break;
-        }
-        segmentValueView.render({value: choice, text: segCtrl.val().element.text(), imagePath: img});
-      };
+  /**
+   * Component for chosen segment value:
+   */
+  var segmentValueComponent = new Component({
+    element: '#choice',
+    render: (data) => html`
+      <li>
+        <div id='choice'>
+          <h3>You selected segment: <span>${ data.value }</span>.</h3>
+          <h4>Content: <span id="content">${ data.text }</span></h4>
+          <img class='chosen-image' id='image' src="${ data.imagePath }" alt="${ data.text }">
+        </div>
+      </li>`
+  });
 
-      /**
-       * View for chosen segment value:
-       */
-      var segmentValueView = $.View({
-        element: '#choice'
-      });
-
-      /**
-       * Setup segmented control:
-       */
-      var segCtrl = $.Segmented({
-        element: '#segmentedPanel',
-        labels : ['Radioactive','Hurt','Yeah, Yeah'],
-        selected: 2,
-        callback: segmentedResponse
-      });
-      segmentValueView.render({value: 'three', text: 'Yeah, Yeah', imagePath: 'images/music/Willy Moon.jpg'});
-      window.segCtrl = segCtrl;
-    });
+  /**
+   * Setup segmented control:
+   */
+  var segCtrl = new UISegmented({
+    element: '#segmentedPanel',
+    labels : ['Radioactive','Hurt','Yeah, Yeah'],
+    selected: 2,
+    callback: segmentedResponse
+  })
+  segmentValueComponent.render({value: 'three', text: 'Yeah, Yeah', imagePath: 'images/music/Willy Moon.jpg'})
+})
   </script>
 </head>
 <body>
-  <screen id="main" class="current">
+  <ui-screen id="main" class="current">
     <nav>
       <h1>Segmented</h1>
     </nav>
     <section>
       <div id='segmentedPanel' class='horizontal centered'>
       </div>
-      <ul class='list' id='output'>
-        <li>
-          <div id='choice'>
-            <h3>You selected segment: <span>{= data.value }</span>.</h3>
-            <h4>Content: <span id="content">{= data.text }</span></h4>
-            <img class='chosen-image' id='image' data-src="{= data.imagePath }" alt="{= data.text }">
-          </div>
-        </li>
-      </ul>
+      <ul class='list' id='choice'></ul>
     </section>
-  </screen>
+  </ui-screen>
 </body>
 </html>

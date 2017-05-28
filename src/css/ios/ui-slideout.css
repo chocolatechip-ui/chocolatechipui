@@ -1,0 +1,120 @@
+
+/*================*/
+/* Slide Out Menu */
+/*================*/
+ui-slideout  {
+  position: absolute;
+  top: 45px;
+  right: 0;
+  bottom: 0;
+  background-color: #ffffff;
+  z-index: 111111111;
+  width: 90%;
+  visibility: hidden;
+  -webkit-transform: translate3d(100%, 0, 0);
+  transform: translate3d(100%, 0, 0);
+  -webkit-transition: all 0.25s ease-out;
+  transition: all 0.25s ease-out;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+
+  display: -webkit-flex;
+  -webkit-flex-direction: column;
+  -webkit-justify-content: center;
+  -webkit-align-items: start;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+ui-slideout > section {
+  overflow-y: scroll;
+  padding: 10px 0;
+  padding-bottom: 45px;
+  flex: 1;
+  -webkit-flex: 1;
+  height: 100%;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.isDesktop ui-slideout li[data-show]:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+ui-slideout ~ ui-screen:not(.show):not([DATA-GOTO]):not(.current):not(.next) {
+  display: none;
+}
+ui-slideout ~ ui-screen.show {
+  display: -webkit-flex;
+  display: flex;
+}
+ui-slideout ~ ui-screen.next,
+ui-slideout ~ ui-screen.current {
+  display: -webkit-flex;
+  display: flex;
+}
+ui-slideout.open {
+  visibility: visible;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  border-left: solid 1px #c8c8c8;
+  box-shadow: -3px 0 6px rgba(0, 0, 0, 0.25);
+}
+button.slide-out-button {
+  background-color: transparent;
+  position: absolute;
+  z-index: 1111111;
+  top: 4px;
+  right: 10px;
+  width: 35px;
+  height: 35px;
+  background-image: -webkit-linear-gradient(left, #007aff, #007aff);
+  background-image: linear-gradient(to right, #007aff, #007aff);
+  background-size: 26px 3px;
+  background-repeat: no-repeat;
+  background-position: 4px center;
+  box-sizing: border-box;
+  padding: 0;
+  margin-left: 0;
+  border-radius: 50%;
+  transition: all 0.25s ease-out;
+  box-shadow: none;
+}
+button.slide-out-button::before {
+  content: '';
+  display: block;
+  height: 3px;
+  width: 26px;
+  background-color: #007aff;
+  position: absolute;
+  top: 8px;
+  left: 4px;
+  transition: all 0.25s ease-out;
+}
+button.slide-out-button::after {
+  display: block;
+  content: '';
+  width: 26px;
+  height: 3px;
+  background-color: #007aff;
+  position: absolute;
+  top: 24px;
+  left: 4px;
+  transition: all 0.25s ease-out;
+}
+button.slide-out-button.focused {
+  background-image: none !important;
+}
+button.slide-out-button.focused::before {
+  transform: rotate(39deg) translate3d(4px,7px,0);
+}
+button.slide-out-button.focused::after {
+  transform: rotate(-39deg) translate3d(4px,-7px,0);
+}
+html[dir=rtl] button.slide-out-button {
+  right: auto;
+  left: 10px;
+}

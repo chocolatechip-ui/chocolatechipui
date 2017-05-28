@@ -7,12 +7,12 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="msapplication-tap-highlight" content="no">
   <title>ChocolateChip-UI Switches</title>
-  <link rel="stylesheet" href="../dist/css/chui-ios.min.css">
-  <script src="../dist/chui.min.js"></script>
-  <script type="application/json" src="../dist/chui.min.js.map"></script>
+  <link rel="stylesheet" href="./dist/css/chui-ios.css">
+  <script src="./dist/chui.min.js"></script>
+  <script src="./dist/widgets.min.js"></script>
 </head>
 <body>
-  <screen class='current' id='select-example'>
+  <ui-screen class='current' id='select-example'>
     <nav>
       <h1>To Do</h1>
     </nav>
@@ -23,7 +23,7 @@
           <div>
             <h3>Sleep</h3>
           </div>
-          <switch id='sleep-switch'></switch>
+          <ui-switch id='sleep-switch'></ui-switch>
         </li>
       </ul>
       <ul class='list'>
@@ -31,7 +31,7 @@
           <div>
             <h3>Vacation</h3>
           </div>
-          <switch id='vacation-switch'></switch>
+          <ui-switch id='vacation-switch'></ui-switch>
         </li>
       </ul>
       <ul class='list'>
@@ -39,60 +39,59 @@
           <div>
             <h3>Breakfast</h3>
           </div>
-          <switch id='breakfast-switch'></switch>
+          <ui-switch id='breakfast-switch'></ui-switch>
         </li>
       </ul>
       <p>You're Choice : <strong><span id="response" class='attentionGrabber'></span></strong></p>
       <p id='switchCallbacks'></p>
     </section>
-  </screen>
+  </ui-screen>
   <script>
-
     $(function() {
-      var sleepSwitch = $.Switch({
+      var sleepSwitch = new UISwitch({
         element: '#sleep-switch',
         name: 'sleep',
         value: 'get some sleep',
         checked: false,
         on: function() {
-          $('#switchCallbacks').text('On callback: Just turned switch one on!');
-          $('#response').text(sleepSwitch.val().value);
+          $('#switchCallbacks').text('On callback: Just turned switch one on!')
+          $('#response').text(sleepSwitch.value)
         },
         off: function() {
-          $('#switchCallbacks').text('Off callback: Turned switch one off!');
-          $('#response').empty();
+          $('#switchCallbacks').text('Off callback: Turned switch one off!')
+          $('#response').empty()
         }
-      });
-      var vacationSwitch = $.Switch({
+      })
+      var vacationSwitch = new UISwitch({
         element: '#vacation-switch',
         name: 'vacation',
         value: 'take a vacation',
         checked: false,
         on: function() {
-          $('#switchCallbacks').text('On callback: Just turned switch two on!');
-          $('#response').text(vacationSwitch.val().value);
+          $('#switchCallbacks').text('On callback: Just turned switch two on!')
+          $('#response').text(vacationSwitch.value)
         },
         off: function() {
-          $('#switchCallbacks').text('Off callback: Turned switch two off!');
-          $('#response').empty();
+          $('#switchCallbacks').text('Off callback: Turned switch two off!')
+          $('#response').empty()
         }
-      });
-      var breakfastSwitch = $.Switch({
+      })
+      var breakfastSwitch = new UISwitch({
         element: '#breakfast-switch',
         name: 'breakfast',
         value: 'have some breakfast',
         checked: false,
         on: function() {
-          $('#switchCallbacks').text('On callback: Just turned switch three on!');
-          $('#response').text(breakfastSwitch.val().value);
+          $('#switchCallbacks').text('On callback: Just turned switch three on!')
+          $('#response').text(breakfastSwitch.value)
         },
         off: function() {
-          $('#switchCallbacks').text('Off callback: Turned switch three off!');
-          $('#response').empty();
+          $('#switchCallbacks').text('Off callback: Turned switch three off!')
+          $('#response').empty()
         }
-      });
+      })
 
-    });
+    })
   </script>
 </body>
 </html>

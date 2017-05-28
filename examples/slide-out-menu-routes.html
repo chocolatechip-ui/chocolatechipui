@@ -7,13 +7,13 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="msapplication-tap-highlight" content="no">
   <title>ChocolateChip-UI Out Menu</title>
-  <link rel="stylesheet" href="../dist/css/chui-ios.min.css">
-  <script src="../dist/chui.min.js"></script>
-  <script type="application/json" src="../dist/chui.min.js.map"></script>
+  <link rel="stylesheet" href="./dist/css/chui-ios.css">
+  <script src="./dist/chui.min.js"></script>
+  <script src="./dist/widgets.min.js"></script>
   <script src="data/data.js"></script>
   <style>
     /**
-     * Styles for Image Grid 
+     * Styles for Image Grid
      */
     .grid {
       -webkit-flex-wrap: wrap;
@@ -29,7 +29,7 @@
       max-width: 300px;
       margin-top: 5px;
     }
-    @media only screen and (max-width: 481px) {
+    @media only ui-screen and (max-width: 481px) {
       .grid > .col {
         height: 120px;
         width: 120px;
@@ -49,7 +49,7 @@
 
 </head>
 <body>
-  <screen id="choice" class='show'>
+  <ui-screen id="choice" class='show'>
     <nav>
       <h1>My Stuff</h1>
     </nav>
@@ -57,91 +57,91 @@
       <ul id='myList' class="list"></ul>
       <div id='gridOfImages' class="grid"></div>
     </section>
-  </screen>
-
-  <script id='music-template' type='text/x-template'>
-    <li>
-      <img  data-src="{= data.image }" height="80px">
-      <div>
-        <h3>{= data.title }</h3>
-        <h4>{= data.album }</h4>
-        <p>{= data.description }</p>
-      </div>
-    </li>
-  </script>
-
-  <script id='pictures-template' type='text/x-template'>
-    <img class="col" data-src="{= data }">
-  </script>
-
-  <script id='documents-template' type='text/x-template'>
-    <li class='center-vertical'>
-      <h3>{= data.title }</h3>
-      <h4>{= data.subtitle }</h4>
-      <aside>
-        <span class='counter'>{= data.amount }</span>
-      </aside>
-    </li>
-  </script>
-
-  <script id='recipes-template' type='text/x-template'>
-    <li>
-      <div>
-        <h3>{= data.name }</h3>
-        <h4>Ingredients</h4>
-        <ul>
-          {{ data.ingredients.forEach(function(ingredient) { }}
-            <li>{= ingredient }</li>
-          {{ }); }}
-        </ul>
-        <h4>Directions</h4>
-        <ol>
-          {{ data.directions.forEach(function(direction) { }}
-            <li>{= direction }</li>
-          {{ }); }}
-        </ol>
-      </div>
-    </li>
-  </script>
-=
-  <script id='favorites-template' type='text/x-template'>
-    <li>
-       <h3>{= data }</h3>
-    </li> 
-  </script>
+  </ui-screen>
 
 
   <script>
     $(function() {
-      // Create global nav:
-      $.globalNav = true;
-      
-      var templates = [];
-
-      templates[0] = $('#music-template').html();
-      templates[1] = $('#pictures-template').html();
-      templates[2] = $('#documents-template').html();
-      templates[3] = $('#recipes-template').html();
-      templates[4] = $('#favorites-template').html();
-   
       /**
-       * Define initial state of View:
+       * Define Templates for routes.
        */
-      var listView = $.View({
+      var templates = []
+      window.templates = templates
+
+      // Music template:
+      templates[0] = (data) => html`
+        <li>
+          <img  src="${ data.image }" height="80px">
+          <div>
+            <h3>${ data.title }</h3>
+            <h4>${ data.album }</h4>
+            <p>${ data.description }</p>
+          </div>
+        </li>`
+
+      // Image template:
+      templates[1] = (data) => html`
+        <img class="col" src="${ data }">`
+
+      // Docs template:
+      templates[2] = (data) => html`
+        <li class='center-vertical'>
+          <h3>${ data.title }</h3>
+          <h4>${ data.subtitle }</h4>
+          <aside>
+            <span class='counter'>${ data.amount }</span>
+          </aside>
+        </li>`
+
+      /**
+       * Helper function for nested lists.
+       */
+      function renderSubList(data) {
+        return data.map(item => html`<li>${ item }</li>`)
+      }
+
+      // Recipies template:
+      templates[3] = (recipe) => html`
+        <li>
+          <div>
+            <h3>${ recipe.name }</h3>
+            <h4>Ingredients</h4>
+            <ul>${ renderSubList(recipe.ingredients) }</ul>
+            <h4>Directions</h4>
+            <ol>${ renderSubList(recipe.directions) }</ol>
+          </div>
+        </li>`
+
+
+      // Favorites template:
+      templates[4] = (data) => html`
+        <li>
+          <h3>${ data }</h3>
+        </li>`
+
+      /**
+       * Define initial state of component.
+       */
+      var listComponent = new Component({
         element: '#myList',
-        template: templates[0]
-      });
-      window.listView = listView;
-      listView.render(music)
+        render: templates[0]
+      })
+      listComponent.render(music)
+      window.listComponent = listComponent
+
+      var gridComponent = new Component({
+        element: '#gridOfImages',
+        render: templates[1]
+      })
 
       /**
        * Setup Slide Out:
        */
-      var appSlideOut = $.SlideOut();
-      
+      var appSlideOut = new UISlideOut()
+
       /**
        * Notice names have `:` to indicate id for routing.
-       * Id will be used to render view.
+       * Id will be used to render component.
        */
       appSlideOut.populate([
         { "choice:music": 'Music' },
@@ -149,73 +149,50 @@
         { "choice:documents": 'Documents'},
         { "choice:recipes": 'Recipes' },
         { "choice:favorites": 'Favorites' }
-      ]);
+      ])
 
       /**
-       * Define Routes:
+       * Define Routes.
        */
-      var AppRoutes;
-      AppRoutes = $.Router();
-
-      /**
-       * Define routes to handle ids from slide out menu items:
-       */
-      AppRoutes.addRoute([
-        {
+      var routes = new Router()
+      routes.addRoute({
+        route: 'choice',
+        callback: function(param) {
           /**
-           * The route:
+           * Method to render templates in switch statement:
            */
-          route: 'choice', 
+          var renderChosenTemplate = function(template, item) {
+            listComponent.setTemplate(template)
+            listComponent.render(item)
+            $('#gridOfImages').empty()
+          }
 
           /**
-           * Callback to handle passed param:
+           * Handle passed param.
+           * Based on id, render the component with a different template and data.
            */
-          callback: function(param) {
-
-            /**
-             * Method to render templates in switch statement:
-             */
-            var renderChosenTemplate = function(element, template, item) {
-              listView.setElement(element);
-              listView.setTemplate(template);
-              listView.render(item);
-            };
-
-            /**
-             * Handle passed param.
-             * Based on id, render the view with a different template and data.
-             */
-            switch (param) {
-              case 'music':
-                $('#gridOfImages').empty();
-                $('#myList').show();
-                renderChosenTemplate('#myList', templates[0], music);
-                break;
-              case 'pictures':
-                $('#myList').empty();
-                $('#myList').hide();
-                renderChosenTemplate('#gridOfImages', templates[1], imageCollection);
-                break;
-              case 'documents':
-                $('#gridOfImages').empty();
-                $('#myList').show();
-                renderChosenTemplate('#myList', templates[2], docs);
-                break;
-              case 'recipes':
-                $('#gridOfImages').empty();
-                $('#myList').show();
-                renderChosenTemplate('#myList', templates[3], recipes);
-                break;
-              case 'favorites':
-                $('#gridOfImages').empty();
-                $('#myList').show();
-                renderChosenTemplate('#myList', templates[4], favorites);
-                break;
-            }
+          switch (param) {
+            case 'music':
+              renderChosenTemplate(templates[0], music)
+              break
+            case 'pictures':
+              $('#myList').empty()
+              gridComponent.render(imageCollection)
+              break
+            case 'documents':
+              $('#myList').empty()
+              renderChosenTemplate(templates[2], docs)
+              break
+            case 'recipes':
+              renderChosenTemplate(templates[3], recipes)
+              break
+            case 'favorites':
+              renderChosenTemplate(templates[4], favorites)
+              break
           }
         }
-      ]);
-    });
-  </script>  
+      })
+    })
+  </script>
 </body>
 </html>

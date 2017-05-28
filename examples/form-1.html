@@ -7,9 +7,12 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="msapplication-tap-highlight" content="no">
   <title>ChocolateChip-UI Form</title>
-  <link rel="stylesheet" href="../dist/css/chui-ios.min.css">
-  <script src="../dist/chui.min.js"></script>
-  <script type="application/json" src="../dist/chui.min.js.map"></script>
+  <link rel="stylesheet" href="./dist/css/chui-ios.css">
+  <script src="./dist/chui.min.js"></script>
+  <script src="./dist/widgets.min.js"></script>
+  <script src="./dist/utils/validators.js"></script>
+  <script src="./dist/utils/form.js"></script>
+  <script src="./dist/utils/formatters.js"></script>
   <style>
     .personal label {
       width: 90px;
@@ -35,7 +38,7 @@
   </style>
 </head>
 <body>
-  <screen id='main' class="current">
+  <ui-screen id='main' class="current">
     <nav>
       <h1>Form</h1>
     </nav>
@@ -77,28 +80,11 @@
         </li>
       </ul>
       <h2>Choose One</h2>
-      <ul id="selectList" class='list'>
-        <li data-select='nap'>
-          <h3>Take a nap</h3>
-        </li>
-        <li data-select='game'>
-          <h3>Play a game</h3>
-        </li>
-        <li data-select='snack'>
-          <h3>Eat a snack</h3>
-        </li>
-      </ul>
+      <ul id="selectList" class='list select-list'></ul>
+
       <h2>Choose a Fruit</h2>
       <ul id="multiSelectList" class='list'>
-        <li data-select='apples'>
-          <h3>Apples</h3>
-        </li>
-        <li data-select='oranges'>
-          <h3>Oranges</h3>
-        </li>
-        <li data-select='bananas'>
-          <h3>Bananas</h3>
-        </li>
+        
       </ul>
         <br>
         <p>
@@ -111,26 +97,69 @@
         <li id="results"></li>
       </ul>
     </section>
-  </screen>
+  </ui-screen>
   <script>
     $(function() {
 
-      var mySelectList = $.SelectList({
+      var selectListData = [
+        {label: 'Take a nap', value: 'nap'}, 
+        {label: 'Play a game', value: 'game'}, 
+        {label: 'Eat a snack', value: 'snack'}
+      ]
+      var selectListState = new State(selectListData)
+      var mySelectList = new UISelectList({
         element: '#selectList',
         selected: 0,
-        name: 'user_choice_todo'
-      });
+        name: 'user_choice_todo',
+        state: selectListState,
+        render: (task) => `
+          <li data-select='${task.value}'>
+            <h3>${task.label}</h3>
+          </li>`
+      })
+      mySelectList.render()
 
-      var multiSelectList = $.MultiSelectList({
+      var fruitState = new State([
+        {
+          label: 'Apple',
+          value: 'apple'
+        },
+        {
+          label: 'Orange',
+          value: 'orange'
+        },
+        {
+          label: 'Banana',
+          value: 'banana'
+        },
+        {
+          label: 'Pineapple',
+          value: 'pineapple'
+        },
+        {
+          label: 'Grape',
+          value: 'grape'
+        }
+      ])
+
+
+      var multiSelectList = new UIMultiSelectList({
         element: '#multiSelectList',
         selected: [0,2],
-        name: 'user_choice_fruits[]'
+        name: 'user_choice_fruits[]',
+        state: fruitState,
+        render: (fruit) => `
+          <li data-select='${fruit.value}'>
+            <h3>${fruit.label}</h3>
+          </li>`
       })
+      multiSelectList.render()
+      
 
-      var ResultsView = $.View({
+      var ResultsView = new Component({
         element: '#results',
-        template: '{= data }'
-      });
+        render: (data) => `${ data }`
+      })
 
       $('#validateForm').on('click', function() {
         $.myForm = $.Form([
@@ -185,14 +214,14 @@
             element: '#multiSelectList',
             type: 'multiselectlist'
           }
-        ]);
+        ])
         if(!$.myForm.errors()) {
-          $.formData = $.myForm.get();
-          ResultsView.render(JSON.stringify($.formData));
-          $('section')[0].scrollTop = 95;
+          $.formData = $.myForm.get()
+          ResultsView.render(JSON.stringify($.formData))
+          $('section')[0].scrollTop = 95
         }
-      });
-    });
+      })
+    })
   </script>
 </body>
 </html>

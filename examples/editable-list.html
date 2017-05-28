@@ -7,12 +7,12 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="msapplication-tap-highlight" content="no">
   <title>ChocolateChip-UI Editable List</title>
-  <link rel="stylesheet" href="../dist/css/chui-ios.min.css">
-  <script src="../dist/chui.js"></script>
-  <script type="application/json" src="../dist/chui.min.js.map"></script>
+  <link rel="stylesheet" href="./dist/css/chui-ios.css">
+  <script src="./dist/chui.min.js"></script>
+  <script src="./dist/widgets.min.js"></script>
 </head>
 <body>
-  <screen id='main' class='current'>
+  <ui-screen id='main' class='current'>
     <nav>
       <h1>Editable List</h1>
     </nav>
@@ -20,14 +20,14 @@
       <h2>People</h2>
       <ul class='list' id="editList"></ul>
     </section>
-</screen>
+  </ui-screen>
 
 <script>
 
   $(function() {
     var people = [
       {
-        "uuid": "02cd3a66-2a4f-48b9-ac6b-e32c1868a8e8",
+        "uuid": "02cd3a66",
         "name": {
           "first": "Jeanie",
           "last": "Nolan"
@@ -38,7 +38,7 @@
         "address": "185 Decatur Street, Greenbackville, Wisconsin, 2311"
       },
       {
-        "uuid": "4cf0c7b3-2df1-42c8-99af-377955cd1690",
+        "uuid": "4cf0c7b3",
         "name": {
           "first": "Sean",
           "last": "Daugherty"
@@ -49,7 +49,7 @@
         "address": "109 Varick Street, Faywood, North Dakota, 5887"
       },
       {
-        "uuid": "0f17f9e0-fb41-4b8f-b3f7-9b0426c50066",
+        "uuid": "0f17f9e0",
         "name": {
           "first": "Diane",
           "last": "Foley"
@@ -60,7 +60,7 @@
         "address": "523 Bryant Street, Fresno, Alaska, 7005"
       },
       {
-        "uuid": "e90dd256-4ee9-4681-a5fa-dd428d455c16",
+        "uuid": "e90dd256",
         "name": {
           "first": "Paul",
           "last": "Kirkland"
@@ -71,7 +71,7 @@
         "address": "237 Blake Court, Gibbsville, Iowa, 233"
       },
       {
-        "uuid": "ed17ad1c-1dfd-4d70-bbd2-56a96cc7fe02",
+        "uuid": "ed17ad1c",
         "name": {
           "first": "Dan",
           "last": "Finley"
@@ -82,18 +82,7 @@
         "address": "488 Williams Court, Sunnyside, Arkansas, 6302"
       },
       {
-        "uuid": "d2867a0e-1ea1-408e-9450-0876804675db",
-        "name": {
-          "first": "Reynold",
-          "last": "Montoya"
-        },
-        "company": "KONNECT",
-        "email": "reynolds.montoya@konnect.tv",
-        "phone": "+1 (977) 572-3542",
-        "address": "239 Holly Street, Ivanhoe, South Carolina, 1146"
-      },
-      {
-        "uuid": "cea10dc6-b63c-46b0-8e51-3081638275c2",
+        "uuid": "cea10dc6",
         "name": {
           "first": "Hallie",
           "last": "Yang"
@@ -104,18 +93,7 @@
         "address": "798 Withers Street, Kula, Nebraska, 5470"
       },
       {
-        "uuid": "4bac88a3-3afe-4df1-b0ce-8b6bde3dba6b",
-        "name": {
-          "first": "Carole",
-          "last": "Anthony"
-        },
-        "company": "NETBOOK",
-        "email": "carole.anthony@netbook.net",
-        "phone": "+1 (893) 486-2961",
-        "address": "175 Metropolitan Avenue, Disautel, Minnesota, 8916"
-      },
-      {
-        "uuid": "6d6f5e3a-988c-48a6-ad62-d6741346102f",
+        "uuid": "6d6f5e3a",
         "name": {
           "first": "Paul",
           "last": "Mckenzie"
@@ -126,7 +104,7 @@
         "address": "677 Denton Place, Sanborn, Indiana, 2527"
       },
       {
-        "uuid": "4fcc9d85-5e9f-4f9c-8f45-5997e159707e",
+        "uuid": "4fcc9d85",
         "name": {
           "first": "Kathrine",
           "last": "Waller"
@@ -137,18 +115,7 @@
         "address": "848 Hanover Place, Lafferty, Federated States Of Micronesia, 640"
       },
       {
-        "uuid": "905ce47a-cf92-42d7-94b8-95a497903154",
-        "name": {
-          "first": "Michelle",
-          "last": "Ochoa"
-        },
-        "company": "SLAMBDA",
-        "email": "michelle.ochoa@slambda.co.uk",
-        "phone": "+1 (935) 556-2679",
-        "address": "940 Wilson Street, Walker, Massachusetts, 2754"
-      },
-      {
-        "uuid": "56615e29-7289-4a70-81a3-1075c2acb191",
+        "uuid": "56615e29",
         "name": {
           "first": "Marcy",
           "last": "Jackson"
@@ -159,7 +126,7 @@
         "address": "763 Congress Street, Moscow, Ohio, 6242"
       },
       {
-        "uuid": "e0497613-15e0-446f-a596-b390935fe905",
+        "uuid": "e0497613",
         "name": {
           "first": "Shelia",
           "last": "Stanley"
@@ -170,7 +137,7 @@
         "address": "181 Commercial Street, Tioga, Maryland, 9447"
       },
       {
-        "uuid": "dff782d7-4ae5-437b-98c6-6b8d7516800b",
+        "uuid": "dff782d7",
         "name": {
           "first": "Camacho",
           "last": "Contreras"
@@ -181,7 +148,7 @@
         "address": "604 Joval Court, Glenville, West Virginia, 2605"
       },
       {
-        "uuid": "f3440ed5-e999-457d-bbeb-dfdbe44c8326",
+        "uuid": "f3440ed5",
         "name": {
           "first": "Holder",
           "last": "Mosley"
@@ -191,37 +158,27 @@
         "phone": "+1 (855) 578-2009",
         "address": "802 Kiely Place, Hilltop, Maine, 2224"
       }
-    ];
+    ]
 
     /**
-     * Define  model:
+     * Define  state object:
      */
-    var PeopleModel = $.Model(people);
+    var peopleState = new State(people)
+    window.peopleState = peopleState
 
-    var editListView = $.View({
+    var editList = new UIEditList({
       element: '#editList',
-      model: PeopleModel,
-      variable: 'person',
-      template:
-      "<li data-id='{= person.uuid }''>\
-        <h3>{= person.name.first } {= person.name.last }</h3>\
-      </li>"
-    });
-    editListView.render();
-
-    var myEditList = $.EditList({
+      state: peopleState,
+      render: (person) => html`
+        <li data-id='${ person.uuid }''>
+          <h3>${ person.name.first } ${ person.name.last }</h3>
+        </li>`,
       deletable: true,
-      movable: true,
-      model: PeopleModel,
-      modelProp: 'uuid',
-      element: '#editList',
-      view: editListView
-    });
-
-
-    window.editListView = editListView;
-    window.PeopleModel = PeopleModel;
-    window.myEditList = myEditList;
-  });
-</script>  
+      reorderable: true,
+      callback: () => console.dir(peopleState.get())
+    })
+    editList.render()
+    window.editList = editList
+  })
+</script>
 </body>

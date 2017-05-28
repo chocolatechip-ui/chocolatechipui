@@ -8,9 +8,9 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="msapplication-tap-highlight" content="no">
   <title>ChocolateChip-UI Filter</title>
-  <link rel="stylesheet" href="../dist/css/chui-ios.min.css">
-  <script src="../dist/chui.min.js"></script>
-  <script type="application/json" src="../dist/chui.min.js.map"></script>
+  <link rel="stylesheet" href="./dist/css/chui-ios.css">
+  <script src="./dist/chui.min.js"></script>
+  <script src="./dist/widgets.min.js"></script>
   <style>
     .sortButtons button {
       margin-bottom: 10px;
@@ -39,13 +39,15 @@
   </style>
 </head>
 <body>
-  <screen id='main' class="current">
+  <ui-screen id='main' class="current">
     <nav>
       <h1>Filter and Sort</h1>
     </nav>
     <section>
-      <h2>Sortable List:</h2>
+      <h2>Filter by First or Last Name:</h2>
       <p><input id='filterByName' type="text" placeholder='first or last name'></p>
+      <br>
+      <h2>Sort by Last Name or Age:</h2>
       <p class='sortButtons'>
         <button id='sortByName'>Last Name
           <svg width="10px" height="6px" viewBox="0 0 10 6" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -58,13 +60,11 @@
           </svg>
         </button>
       </p>
-      <ul id="listView" class='list cloak'>
-        <li>
-          <h3>{= data.firstName } {= data.lastName }, Age: {= data.age }</h3>
-        </li>
+      <ul id="listView" class='list'>
+
       </ul>
     </section>
-  </screen>
+  </ui-screen>
 
   <script>
 
@@ -86,36 +86,41 @@
       {firstName: "Paul", lastName: "Quintin", age: 34},
       {firstName: "Debbie", lastName: "Abernathy", age: 29},
       {firstName: "William", lastName: "Gonzalez", age: 41}
-    ];
-    var PeopleModel = $.Model(people);
+    ]
+    var peopleState = new State(people)
 
-    var PeopleView = $.View({
-      element: '#listView', 
-      model: PeopleModel
-    });
-    PeopleView.render();
+    var peopleComponent = new Component({
+      element: '#listView',
+      render: (data) => html`
+        <li>
+          <h3>${ data.firstName } ${ data.lastName }, Age: ${ data.age }</h3>
+        </li>`,
+      state: peopleState
+    })
+    peopleComponent.render()
 
-    var filterInput = $('#filterByName');
+    var filterInput = document.getElementById('filterByName')
 
     /**
      * Filter the model.
      * Make case insensitive:
      */
     function filterNames() {
-      var val = filterInput.val();
-      if (val) val = val.toLowerCase();
+      var val = filterInput.value
+      if (val) val = val.toLowerCase()
       /**
        * Check that word characters were entered:
        */
-      if (!/\w/.test(val)) return;
+      if (val === '') peopleComponent.render(persons)
+      if (!/\w/.test(val)) return
       /**
        * Find a match:
        */
-      var persons = PeopleModel.filter(function(person) {
+      var persons = peopleState.filter(function(person) {
         var name = person.firstName.toLowerCase() + ' ' + person.lastName.toLowerCase()
-        return name.match(val);
-      });
-      PeopleView.render(persons);
+        return name.match(val)
+      })
+      peopleComponent.render(persons)
     }
 
     /**
@@ -125,52 +130,53 @@
     /**
      * Initial state for sort:
      */
-    var sortOrder = true;
+    var sortOrder = true
 
     /**
      * Sort by Last Name:
      */
     $('#sortByName').on('tap', function() {
-      var hyphen = '-';
-      sortOrder = $(this).hasClass('descending');hyphen = sortOrder ? '' : '-';
-      
-      PeopleModel.orderBy(hyphen + 'lastName', hyphen + 'firstName');
-      if (filterInput.val() !== '') {
-        filterNames();
+      var hyphen = '-'
+      sortOrder = this.classList.contains('descending')
+      hyphen = sortOrder ? '' : '-'
+
+      peopleState.orderBy(hyphen + 'lastName', hyphen + 'firstName')
+      if (filterInput.value !== '') {
+        filterNames()
       } else {
-        PeopleView.render();
+        peopleComponent.render()
       }
-      $(this).toggleClass('descending');
-    });
+      this.classList.toggle('descending')
+    })
 
     /**
      * Sort by Age:
      */
     $('#sortByAge').on('tap', function() {
-      var hyphen = '-';
-      sortOrder = $(this).hasClass('descending');
-      hyphen = sortOrder ? '' : '-';
-      PeopleModel.orderBy(hyphen + 'age');
-      if (filterInput.val() !== '') {
-        filterNames();
+      var hyphen = '-'
+      sortOrder = this.classList.contains('descending')
+      hyphen = sortOrder ? '' : '-'
+      peopleState.orderBy(hyphen + 'age')
+      if (filterInput.value !== '') {
+        filterNames()
       } else {
-        PeopleView.render();
+        peopleComponent.render()
       }
-      $(this).toggleClass('descending');
-    });
+      this.classList.toggle('descending')
+    })
 
     /**
-     * Sort Model and render view:
+     * Sort Model and render component:
      */
-    PeopleModel.orderBy('lastName', 'firstName');
-    PeopleView.render();
+    peopleState.orderBy('lastName', 'firstName')
+    peopleComponent.render()
 
     /**
      * Filter data as user types:
      */
-    filterInput.on('input', function() {
-      filterNames();
-    });
+    $(filterInput).on('input', function() {
+      filterNames()
+    })
 
   })
   </script>

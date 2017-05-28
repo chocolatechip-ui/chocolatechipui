@@ -6,11 +6,21 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="msapplication-tap-highlight" content="no">
-  <title>ChocolateChip-UI Slide Out Menu</title>
-  <link rel="stylesheet" href="../../../../dist/css/chui-android.min.css">
+  <title>ChocolateChip-UI Out Menu</title>
+  <link rel="stylesheet" href="../../../../dist/css/chui-android.css">
   <link rel="stylesheet" href="../css/custom-android-red.css">
-  <script src="../../../../dist/chui.min.js"></script>
-  <script type="application/json" src="../../../../dist/chui.min.js.map"></script>
+  <script src="../../../../dist/chui.js"></script>
+  <link rel="stylesheet" href="../../../dist/css/chui-android.css">
+  <link rel="stylesheet" href="../css/custom-android-red.css">
+  <script src="../../../dist/chui.min.js"></script>
+  <script src="../../../dist/widgets.min.js"></script>
+  
+  <script type="application/json" src="../../../../dist/chui.js.map"></script>
+  <script src="../../../../src/components/ui-router.js"></script>
+  <script src="../../../../src/components/ui-block.js"></script>
+  <script src="../../../../src/components/ui-slideout.js"></script>
+  <script src="../../../../src/components/color-contrast.js"></script>
+  <script src="../../../../src/components/android-ripple.js"></script>
   <script src="../../data/data.js"></script>
   <style>
     /**
@@ -24,17 +34,18 @@
       background-color: #222;
     }
     .grid > .col {
-      height: 150px;
-      width: 150px;
-      max-height: 150px;
-      max-width: 150px;
+      height: 300px;
+      width: 300px;
+      max-height: 300px;
+      max-width: 300px;
+      margin-top: 5px;
     }
-    @media only screen and (min-width: 481px) {
+    @media only screen and (max-width: 481px) {
       .grid > .col {
-        height: 300px;
-        width: 300px;
-        max-height: 300px;
-        max-width: 300px;
+        height: 120px;
+        width: 120px;
+        max-height: 120px;
+        max-width: 120px;
         background-repeat: no-repeat;
         background-position: center center;
         background-size: auto 300px;
@@ -48,150 +59,138 @@
   </style>
 </head>
 <body>
-<body>
-  <screen id="music" class='show'>
+  <ui-screen id="music" >
     <nav>
       <h1>Music</h1>
     </nav>
     <section>
       <h2>Available Songs</h2>
-      <ul class='list' id='musicList'>
-        <li>
-          <img  data-src="{= music.image }" height="80px">
-          <div>
-            <h3>{= music.title }</h3>
-            <h4>{= music.album }</h4>
-            <p>{= music.description }</p>
-          </div>
-        </li>
-      </ul>
+      <ul class='list' id='musicList'></ul>
     </section>
-  </screen><screen role='article' id='pictures'>
+  </ui-screen>
+  <ui-screen role='article' id='pictures' >
     <nav>
       <h1>Pictures</h1>
     </nav>
     <section id='imageGrid'>
-      <div class="grid" id='gridOfImages'>
-        <img class="col" data-src="{= image }">
-      </div>
+      <div class="grid" id='gridOfImages'></div>
     </section>
-  </screen>
+  </ui-screen>
 
-  <screen role='article' id='documents'>
+  <ui-screen role='article' id='documents' >
     <nav>
       <h1>Documents</h1>
     </nav>
     <section>
-      <ul class='list' id='docsList'>
-        <script type='text/x-template'>
-          <li class='center-vertical'>
-            <h3>{= doc.title }</h3>
-            <h4>{= doc.subtitle }</h4>
-            <aside>
-              <span class='counter'>{= doc.amount }</span>
-            </aside>
-          </li>
-        </script>
-      </ul>          
+      <ul class='list' id='docsList'></ul>          
     </section>
-  </screen>
+  </ui-screen>
 
-  <screen role='article' id='recipes'>
+  <ui-screen role='article' id='recipes' >
     <nav>
       <h1>Recipes</h1>
     </nav>
     <section>
       <h2>Special Dishes</h2>
-      <ul class='list' id='recipesList'>
-        <script type='text/x-template'>
-          <li>
-            <div>
-              <h3>{= recipe.name }</h3>
-              <h4>Ingredients</h4>
-              <ul>
-                {{ recipe.ingredients.forEach(function(ingredient) { }}
-                  <li>{= ingredient }</li>
-                {{ }); }}
-              </ul>
-              <h4>Directions</h4>
-              <ol>
-                {{ recipe.directions.forEach(function(direction) { }}
-                  <li>{= direction }</li>
-                {{ }); }}
-              </ol>
-            </div>
-          </li>
-        </script>
-      </ul>
+      <ul class='list' id='recipesList'></ul>
     </section>
-  </screen>
+  </ui-screen>
 
-  <screen role='article' id='favorites'>
+  <ui-screen role='article' id='favorites' >
     <nav>
       <h1>Favorites</h1>
     </nav>
     <section>
-      <ul class='list' id='favoritesList'>
-        <li>
-           <h3>{= data }</h3>
-        </li>  
-       </ul>
+      <ul class='list' id='favoritesList'></ul>
     </section>
-  </screen>
+  </ui-screen>
 
   
   <script>
   $(function() {
  
     /**
-     * Music View:
+     * Music Component:
      */
-    var musicView = $.View({
+    var musicView = new Component({
       element: '#musicList',
-      variable: 'music'
+      render: (music) => html`
+        <li>
+          <img  src="${ music.image }" height="80px">
+          <div>
+            <h3>${ music.title }</h3>
+            <h4>${ music.album }</h4>
+            <p>${ music.description }</p>
+          </div>
+        </li>`
     });
     musicView.render(music);
 
 
     /**
-     * Image Grid View:
+     * Image Grid Component:
      */
-    var imageGridView = $.View({
+    var imageGridView = new Component({
       element: '#gridOfImages',
-      variable: 'image'
+      render: (image) => html`
+        <img class="col" src="${ image }">`
     });
     imageGridView.render(imageCollection);
 
     /**
-     * Docs View:
+     * Docs Component:
      */
-    var docsView = $.View({
+    var docsView = new Component({
       element: '#docsList',
-      variable: 'doc'
+      render: (doc) => html`
+        <li class='center-vertical'>
+          <h3>${ doc.title }</h3>
+          <h4>${ doc.subtitle }</h4>
+          <aside>
+            <span class='counter'>${ doc.amount }</span>
+          </aside>
+        </li>`
     });
     docsView.render(docs);
 
     /**
-     * Recipes View:
+     * Recipes Component:
      */
-    var recipesView = $.View({
+    var recipesView = new Component({
       element: '#recipesList',
-      variable: 'recipe'
+      render: (recipe) => html`
+        <li>
+          <div>
+            <h3>${ recipe.name }</h3>
+            <h4>Ingredients</h4>
+            <ul>
+              ${ recipe.ingredients.map(ingredient => `<li>${ ingredient }</li>`)}
+            </ul>
+            <h4>Directions</h4>
+            <ol>
+              ${ recipe.directions.map(direction => `<li>${ direction }</li>`)}
+            </ol>
+          </div>
+        </li>`
     });
     recipesView.render(recipes);
 
     /**
-     * Favorites View:
+     * Favorites Component:
      */
-    favoritesView = $.View({
-      element: '#favoritesList'
+    favoritesView = new Component({
+      element: '#favoritesList',
+      render: (data) => html`
+        <li>
+           <h3>${ data }</h3>
+        </li>`
     });
     favoritesView.render(favorites);
 
     /**
      * Set up Slide Out Menu:
      */
-    var appSlideOut = $.SlideOut();
+    var appSlideOut = new UISlideOut();
     appSlideOut.populate([
       { music: 'Music' },
       { pictures: 'Pictures' },

@@ -1,0 +1,124 @@
+
+/*=================*/
+/* Popover Control */ 
+/*=================*/
+ui-popover {
+  width: 300px;
+  background-color: #f5f5f5;
+  box-shadow: 0 0 5px #000000;
+  border-radius: 0;
+  height: 250px;
+  max-height: 300px;
+  position: absolute;
+  z-index: 11111111111;
+  margin-top: -20px;
+  right: 0;
+  transform: scaleY(0);
+  transform-origin: top center;
+  opacity: 0;
+  transition: all 0.25s ease;
+  overflow: hidden;
+  display: none;
+}
+ui-popover.opened {
+  transform: scaleY(1);
+  opacity: 1;
+}
+ui-popover header {
+  display: none;
+}
+ui-popover > section {
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 0;
+  position: absolute;
+  top: 9;
+  bottom: 0;
+  width: 100%;
+  padding-bottom: 20px;
+}
+ui-popover .list > li {
+  background-image: -webkit-radial-gradient(circle, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0.065) 20%);
+  background-size: 1000% 1000%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  -webkit-animation-timing-function: ease-out;
+  animation-timing-function: ease-out;
+  -webkit-animation-duration: .2s;
+  animation-duration: .2s;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}
+button.show-popover {
+  position: relative;
+  background-color: transparent !important;
+  border: none !important;
+  padding: 6px 20px 2px 20px !important;
+  margin: 0 10px 0 0 !important;
+  box-shadow: none !important;
+  font-size: 13px !important;
+  opacity: 1;
+  box-sizing: unset !important;
+  width: auto;
+  display: inline-flex;
+  flex-direction: row;
+}
+nav button.show-popover {
+  box-sizing: unset !important;
+}
+button.show-popover.align-flush {
+  position: absolute;
+}
+button.show-popover.selected {
+  background-color: #007aff;
+}
+.segmented > button.show-popover:first-of-type {
+  border-left: none !important;
+}
+button.show-popover::after {
+  content: '';
+  display: block;
+  float: right;
+  margin-left: 5px;
+  width: 0px;
+  height: 0px;
+  border-right: solid 4px #000000;
+  border-bottom: solid 4px #000000;
+  border-top: solid 4px transparent;
+  border-left: solid 4px transparent;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+nav > button.show-popover::after {
+  border-right: solid 4px #000000;
+  border-bottom: solid 4px #000000;
+}
+nav > h1 + button.show-popover.align-flush {
+  margin: 8px 0 0 0 !important;
+}
+html[dir=rtl] ui-popover {
+  right: auto !important;
+}
+html[dir=rtl] button.show-popover {
+  padding: 6px 10px 2px 20px !important;
+}
+html[dir=rtl] button.show-popover::after {
+  left: 2px;
+  right: auto;
+  border: none;
+  border-left: solid 4px transparent;
+  border-bottom: solid 4px #000000;
+  border-top: solid 4px transparent;
+  border-right: solid 4px #000000;
+}
+html[dir=rtl] button.show-popover + button {
+  -webkit-box-ordinal-group: 1;
+  -webkit-order: 1;
+}
+html[dir=rtl] .isDesktop .button.show-popover:hover::after {
+  border-left: solid 6px #000000 !important;
+  border-bottom: solid 6px #000000;
+  border-top: solid 6px transparent;
+  border-right: solid 6px transparent;
+}

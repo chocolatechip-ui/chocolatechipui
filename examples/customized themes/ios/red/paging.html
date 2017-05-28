@@ -7,17 +7,14 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="msapplication-tap-highlight" content="no">
   <title>ChocolateChip-UI Paging</title>
-  <link rel="stylesheet" href="../../../../dist/css/chui-ios.min.css">
+  <link rel="stylesheet" href="../../../dist/css/chui-ios.css">
   <link rel="stylesheet" href="../css/custom-ios-red.css">
-  <script src="../../../../dist/chui.min.js"></script>
-  <script type="application/json" src="../../../../dist/chui.min.js.map"></script>
+  <script src="../../../dist/chui.min.js"></script>
+  <script src="../../../dist/widgets.min.js"></script>
+  <script src="../../../dist/utils/array_chunk.js"></script>
   <script type="text/javascript">
     $(function() {
-      $.globalNav = true;
-
       var pagingData = [
-        {title: 'First',
-         items: [
           'Thing One',
           'Thing Two',
           'Thing Three',
@@ -25,19 +22,13 @@
           'Thing Five',
           'Thing Six',
           'Thing Seven',
-          'Thing Eight'
-        ]},
-        {title: 'Second',
-         items: [
+          'Thing Eight',
           'Item One',
           'Item Two',
           'Item Three',
           'Item Four',
           'Item Five',
-          'Item Six'
-        ]},
-        {title: 'Third',
-         items: [
+          'Item Six',
           'Thing 1',
           'Thing 2',
           'Thing 3',
@@ -45,19 +36,13 @@
           'Thing 5',
           'Thing 6',
           'Thing 7',
-          'Thing 8'
-        ]},
-        {title: 'Fourth',
-         items: [
+          'Thing 8',
           'Item 1',
           'Item 2',
           'Item 3',
           'Item 4',
           'Item 5',
-          'Item 6'
-        ]},
-        {title: 'Fifth',
-         items: [
+          'Item 6',
           'Another Thing One',
           'Another Thing Two',
           'Another Thing Three',
@@ -66,48 +51,36 @@
           'Another Thing Six',
           'Another Thing Seven',
           'Another Thing Eight'
-        ]}
+
       ]
-      var PagingView = $.View({
-        element: '.paging'
-      });
-      PagingView.render(pagingData);
-      $('.paging').find('article').eq(0).removeClass('next').addClass('current');
-      $.Paging({element: '#paging'});
+
+      var paging = new UIPaging({
+        screen: '#paging',
+        data: pagingData,
+        size: 6,
+        render: (chunks) => html`
+          ${chunks.map((chunk, idx) => html`
+            <article  class="${idx === 0 ? 'current' : 'next'}">
+              <br>
+              <h2>Section ${idx + 1}</h2>
+              <ul class='list'>
+                ${chunk.map(item => `<li>${item}</li>`)}
+              </ul>
+            </article>`)
+          }`
+      })
+
+      paging.render()
+
     });
   </script>
 </head>
 <body>
-  <screen id="main" class="current">
+  <ui-screen id="paging" class='current'>
     <nav>
       <h1>Paging</h1>
     </nav>
-    <section>
-      <ul class="list">
-        <li data-goto='paging'>
-          <h3>See paging example</h3>
-          <aside>
-            <disclosure></disclosure>
-          </aside>
-        </li>
-      </ul>
-    </section>
-  </screen>
-  <screen id="paging" class='next'>
-    <nav>
-      <button class="back">Home</button>
-      <h1>Paging</h1>
-    </nav>
-    <section class='paging'>
-      <article class='next'>
-        <h2>{= data.title } Article</h2>
-          <ul class="list">
-            {{  data.items.forEach(function(item) {  }}
-            <li> {= item }</li>
-            {{  });  }}
-          </ul>
-      </article>
-    </section>
-  </screen>
+    <section class='paging'></section>
+  </ui-screen>
 </body>
 </html>

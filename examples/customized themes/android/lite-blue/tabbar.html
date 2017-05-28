@@ -7,10 +7,10 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="msapplication-tap-highlight" content="no">
   <title>Truck Tab Bar</title>
-  <link rel="stylesheet" href="../../../../dist/css/chui-android.min.css">
+  <link rel="stylesheet" href="../../../dist/css/chui-android.css">
   <link rel="stylesheet" href="../css/custom-android-lite-blue.css">
-  <script src="../../../../dist/chui.min.js"></script>
-  <script type="application/json" src="../../../../dist/chui.min.js.map"></script>
+  <script src="../../../dist/chui.min.js"></script>
+  <script src="../../../dist/widgets.min.js"></script>
   <script src="../../data/data.js"></script>
   <script src='../../data/setup-1.js'></script>
   <style>
@@ -20,34 +20,36 @@
       we can style the tab bar icons just for Safari
       without affecting the look of Android and Windows Phone 8.
     */
-    tabbar > button {
+    ui-tabbar > button {
       background-color: #fafafa;
-      color: #555;
     }
-    tabbar > button:hover,
-    tabbar > button.selected {
-      color: #555 !important;
+    ui-tabbar > button {
+      color: #78c5e4 !important;
+    }
+    ui-tabbar > button:hover,
+    ui-tabbar > button.selected {
+      color: #78c5e4 !important;
       background-color: #f0f0f0;
       opacity: 1 !important;
     }
-    tabbar > button > .icon {
+    ui-tabbar > button > .icon {
       background-position: center center;
       background-size: 100%;
       background-repeat: no-repeat;
     }
-    tabbar > button.music > .icon  {
+    ui-tabbar > button.music > .icon  {
       background-image: url('../lite-blue-icons/Head_phones.svg');
     }
-    tabbar > button.pictures > .icon  {
+    ui-tabbar > button.pictures > .icon  {
       background-image: url('../lite-blue-icons/Camera.svg');
     }
-    tabbar > button.docs > .icon {
+    ui-tabbar > button.docs > .icon {
       background-image: url('../lite-blue-icons/Documents.svg');
     }
-    tabbar > button.recipes > .icon  {
+    ui-tabbar > button.recipes > .icon  {
       background-image: url('../lite-blue-icons/Download.svg');
     }
-    tabbar > button.top_rated > .icon {
+    ui-tabbar > button.top_rated > .icon {
       background-image: url('../lite-blue-icons/Favorite.svg');
     }
     /* Styles for Image Grid */
@@ -59,17 +61,18 @@
       background-color: #222;
     }
     .grid > .col {
-      height: 150px;
-      width: 150px;
-      max-height: 150px;
-      max-width: 150px;
+      height: 300px;
+      width: 300px;
+      max-height: 300px;
+      max-width: 300px;
+      margin-top: 5px;
     }
-    @media only screen and (min-width: 481px) {
+    @media only ui-screen and (max-width: 481px) {
       .grid > .col {
-        height: 300px;
-        width: 300px;
-        max-height: 300px;
-        max-width: 300px;
+        height: 120px;
+        width: 120px;
+        max-height: 120px;
+        max-width: 120px;
         background-repeat: no-repeat;
         background-position: center center;
         background-size: auto 300px;
@@ -82,97 +85,52 @@
     }
   </style>
 </head>
-<body id='TabbarExample'>
+<body>
 
-  <screen role='article' id="music" class="next">
+  <ui-screen role='article' id="music" class="next">
     <nav>
       <h1>Music</h1>
     </nav>
     <section>
-      <ul class='list' id='musicList'>
-        <li>
-          <img  data-src="{= music.image }" height="80px">
-          <div>
-            <h3>{= music.title }</h3>
-            <h4>{= music.album }</h4>
-            <p>{= music.description }</p>
-          </div>
-        </li>
-      </ul>  
+      <ul class='list' id='musicList'></ul>  
     </section>
-  </screen>
+  </ui-screen>
 
-  <screen role='article' id='pictures' class='current'>
+  <ui-screen role='article' id='pictures' class='current'>
     <nav>
       <h1>Pictures</h1>
     </nav>
     <section id='imageGrid'>
-      <div class="grid" id='gridOfImages'>
-        <img class="col" data-src="{= image }">
-      </div>
+      <div class="grid" id='gridOfImages'></div>
     </section>
-  </screen>
+  </ui-screen>
 
-  <screen role='article' id='documents' class='next'>
+  <ui-screen role='article' id='documents' class='next'>
     <nav>
       <h1>Documents</h1>
     </nav>
     <section>
-      <ul class='list' id='docsList'>
-        <script type='text/x-template'>
-          <li class='center-vertical'>
-            <h3>{= doc.title }</h3>
-            <h4>{= doc.subtitle }</h4>
-            <aside>
-              <span class='counter'>{= doc.amount }</span>
-            </aside>
-          </li>
-        </script>
-      </ul>          
+      <ul class='list' id='docsList'></ul>          
     </section>
-  </screen>
+  </ui-screen>
 
-  <screen role='article' id='recipes' class='next'>
+  <ui-screen role='article' id='recipes' class='next'>
     <nav>
       <h1>Recipes</h1>
     </nav>
     <section>
       <h2>Special Dishes</h2>
-      <ul class='list' id='recipesList'>
-        <script type='text/x-template'>
-          <li>
-            <div>
-              <h3>{= recipe.name }</h3>
-              <h4>Ingredients</h4>
-              <ul>
-                {{ recipe.ingredients.forEach(function(ingredient) { }}
-                  <li>{= ingredient }</li>
-                {{ }); }}
-              </ul>
-              <h4>Directions</h4>
-              <ol>
-                {{ recipe.directions.forEach(function(direction) { }}
-                  <li>{= direction }</li>
-                {{ }); }}
-              </ol>
-            </div>
-          </li>
-        </script>
-      </ul>
+      <ul class='list' id='recipesList'></ul>
     </section>
-  </screen>
+  </ui-screen>
 
-  <screen role='article' id='favorites' class='next'>
+  <ui-screen role='article' id='favorites' class='next'>
     <nav>
       <h1>Favorites</h1>
     </nav>
     <section>
-      <ul class='list' id='favoritesList'>
-        <li>
-           <h3>{= data }</h3>
-        </li>  
-       </ul>
+      <ul class='list' id='favoritesList'></ul>
     </section>
-  </screen>
+  </ui-screen>
 </body>
 </html>
