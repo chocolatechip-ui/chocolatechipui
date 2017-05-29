@@ -202,7 +202,7 @@ class Component {
     const self = this
     if (!self.renderFnc) return
     let temp = ''
-    if (!this.elm) return
+    if (!this.elm || !this.elm.array[0]) return
 
     if (!data && this.state) {
       data = this.state.get()
@@ -240,6 +240,6 @@ class Component {
     this.elm = $(this.origElement)
     this.handleEvents()
     const styles = this.chuiStyle()
-    styles.css(this.elm, this.styles)
+    styles.css(this.origElement, this.styles)
   }
 }
