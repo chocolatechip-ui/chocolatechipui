@@ -200,10 +200,13 @@ class Component {
 
   render(data, append) {
     const self = this
-    if (!self.renderFnc) return
+    if (!self.renderFnc) {
+      return
+    }
     let temp = ''
-    if (!this.elm || !this.elm.array[0]) return
-
+    if (!this.elm.array[0]) {
+      return
+    }
     if (!data && this.state) {
       data = this.state.get()
     }
@@ -216,17 +219,16 @@ class Component {
       temp = self.renderFnc(data)
     }
 
-    if (this.styles && this.elm) {
+    if (this.styles && (this.elm && this.elm.array[0])) {
       const styles = this.chuiStyle()
       if (typeof this.styles !== 'object') return
       styles.css(this.origElement, this.styles)
-      this.handleEvents()
     }
 
     if (append) {
       self.elm.append(temp)
     } else {
-      this.elm.textContent = ''
+      this.elm.array[0].textContent = ''
       self.elm.empty()
       self.elm.append(temp)
     }
