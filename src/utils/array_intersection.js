@@ -1,4 +1,6 @@
 
+import './array_difference'
+
 if (!Array.prototype.intersection) {
   $.extend(Array.prototype, {
     intersection(array) {

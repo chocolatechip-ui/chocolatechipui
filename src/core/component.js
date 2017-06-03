@@ -235,7 +235,9 @@ class Component {
   }
 
   empty() {
-    $(this.element).empty()
+    if (this.elm.array[0]) {
+      this.elm.empty()
+    }
   }
 
   mount() {
