@@ -1,6 +1,5 @@
 export const VIPComponent = new Component({
   element: "#navigationList",
-  startIndexFrom: 1,
   actions: [{
     event: "tap",
     element: "li",

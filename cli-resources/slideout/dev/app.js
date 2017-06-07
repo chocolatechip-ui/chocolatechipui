@@ -56,7 +56,6 @@ $(() => {
          * Method to render templates in switch statement:
          */
         const renderChosenTemplate = (template, data) => {
-          console.dir(template)
           listComponent.setTemplate(template)
           listComponent.render(data)
         }
