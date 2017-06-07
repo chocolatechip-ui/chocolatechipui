@@ -22,6 +22,7 @@
       <h1>Components</h1>
     </nav>
     <section>
+      <p><button class='action' id='addBtn'>Add Stuff</button></p>
       <h2>Single Object</h2>
       <ul class="list" id='objTemplate'></ul>
 
@@ -33,6 +34,13 @@
 
 <script>
   $(function() {
+
+      $('#addBtn').on('tap', function() {
+        // console.log('This works')
+        // console.dir($('#objTemplate'))
+        const bozo = 'Bozo'
+        $('#objTemplate').after(`<h1>New Stuff here! ${bozo}</h1>`)
+      })
 
       /**
        * IMPORTANT! Define any component helpers first, before using them:

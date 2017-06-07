@@ -368,12 +368,13 @@ class Stack {
   }
 
   before(content) {
-    if (!this.array.length) {
+    if (!this.array || !this.array.length) {
       return new Stack()
     }
+    const self = this
     const __before = function(node, content) {
       if (typeof content === 'string' || typeof content === 'number') {
-        content = html(content)
+        content = $.h(content)
       }
       if (content && content.type && content.type === 'Stack') {
         const len = content.size()
@@ -385,26 +386,27 @@ class Stack {
       } else if (content && content.nodeType === 1) {
         node.parentNode.insertBefore(content, node)
       } else if (content && content.nodeType == 11) {
-      this.forEach(function() {
-        node.parentNode.appendChild(content)
+      self.forEach(function() {
+        node.parentNode.insertBefore(content, node)
       })
     }
-      this[0] = this.array[0]
-      return this
+      self[0] = self.array[0]
+      return self
     };
-    this.forEach(function(node) {
+    self.forEach(function(node) {
       return __before(node, content)
     });
-    this[0] = this.array[0]
+    self[0] = self.array[0]
     return this
   }
 
   after(content) {
-    if (!this.array.length) return new Stack();
+    if (!this.array || !this.array.length) return new Stack();
+    const self = this
     const __after = function(node, content) {
       const parent = node.parentNode
       if (typeof content === 'string' || typeof content === 'number') {
-        content = html(content)
+        content = $.h(content)
       }
       if (content && content.type && content.type === 'Stack') {
         let i = 0,
@@ -420,18 +422,18 @@ class Stack {
       } else if (content && content.nodeType === 1) {
         parent.appendChild(content)
       } else if (content && content.nodeType == 11) {
-      this.forEach(function() {
-        parent.appendChild(content)
-      })
-    }
-      this[0] = this.array[0]
-      return this
+        self.forEach(function(p) {
+          p.appendChild(content)
+        })
+      }
+      self[0] = self.array[0]
+      return self
     };
-    this.forEach(function(node) {
+    self.forEach(function(node) {
       return __after(node, content)
     });
-    this[0] = this.array[0]
-    return this
+    self[0] = this.array[0]
+    return self
   }
 
   prepend(content) {
