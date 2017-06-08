@@ -376,8 +376,8 @@ class Stack {
       if (typeof content === 'string' || typeof content === 'number') {
         content = $.h(content)
       }
-      if (content && content.type && content.type === 'Stack') {
-        const len = content.size()
+      if (content && content.type && content.type === 'stack') {
+        const len = content.array.length
         let i = 0
         while (i < len) {
           node.parentNode.insertBefore(content.array[i], node)
@@ -403,35 +403,31 @@ class Stack {
   after(content) {
     if (!this.array || !this.array.length) return new Stack();
     const self = this
-    const __after = function(node, content) {
-      const parent = node.parentNode
-      if (typeof content === 'string' || typeof content === 'number') {
-        content = $.h(content)
-      }
-      if (content && content.type && content.type === 'Stack') {
-        let i = 0,
-          len = content.size()
-        while (i < len) {
-          if (node === parent.lastChild) {
-            parent.appendChild(content.array[i])
+    const __after = (children) => {
+      children.forEach(function(node) {
+        self.array.forEach(function(el) {
+          if (el.nextElementSibling) {
+            el.parentNode.insertBefore(node, el.nextElementSibling)
           } else {
-            parent.insertBefore(content.array[i], node.nextSibling)
+            el.parent.appendChild(node)
           }
-          i++
-        }
-      } else if (content && content.nodeType === 1) {
-        parent.appendChild(content)
-      } else if (content && content.nodeType == 11) {
-        self.forEach(function(p) {
-          p.appendChild(content)
         })
-      }
-      self[0] = self.array[0]
-      return self
-    };
-    self.forEach(function(node) {
-      return __after(node, content)
-    });
+      })
+    }
+    if (typeof content === 'string') {
+      content = $.h(content)
+    }
+    if (content && content.type === 'stack') {
+      if (content && content.array && !content.array.length) return
+      __after(content.array)
+    } else if (content && (content.nodeType === 1 || content.nodeType === 3)) {
+      self.forEach(function(el) {
+        __after([content])
+      })
+    } else if (content && content.nodeType === 11) {
+      const children = Array.prototype.slice.apply(content.childNodes)
+      __after(children)
+    }
     self[0] = this.array[0]
     return self
   }
