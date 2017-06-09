@@ -8,10 +8,7 @@ export class Router {
   addRoute(...options) {
     options.forEach(item => $.subscribe(item.route, item.callback));
   }
-}
-
-$.extend(Router, {
-  dispatch: route => {
+  static dispatch(route) {
     if (!route) return
     let temp
     let id
@@ -22,7 +19,7 @@ $.extend(Router, {
     }
     $.publish(route, id)
   }
-})
+}
 
 $.extend($.ChuiRoutes, {
   getFullRoute: function getFullRoute() {
