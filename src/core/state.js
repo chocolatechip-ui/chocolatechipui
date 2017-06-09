@@ -79,8 +79,11 @@ class State {
   mixin(data) {
     if (!data) {
       return
-    }
-    if ($.type(this[dataStore]) === 'object') {
+    } 
+    if ($.type(this[dataStore]) === 'array') {
+      this[dataStore] = this[dataStore].concat(data).unique()
+      this.renderComponents()
+    } else if ($.type(this[dataStore]) === 'object') {
       for (let key in data) {
 
         if (!(key in this[dataStore])) {
@@ -88,9 +91,6 @@ class State {
           this.renderComponents()
         }
       }
-    } else if ($.type(this[dataStore]) === 'array') {
-      this[dataStore] = this[dataStore].concat(data).unique()
-      this.renderComponents()
     }
   }
 
