@@ -44,6 +44,7 @@ class State {
       this.renderComponents()
     } else {
       this[dataStore] = property
+      this.renderComponents()
     }
   }
 
