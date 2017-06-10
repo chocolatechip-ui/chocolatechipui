@@ -39,19 +39,11 @@ class State {
   }
 
   set(property, data) {
-    if (property === '' || property === false) {
-      this[dataStore][property] = property
-      console.log('Setting property to:')
-      console.log(property)
-      this.renderComponents()
-    } else if (!property) {
-      return
-    } else if (data && $.type(this[dataStore]) === 'object') {
+    if (data === false || data === 0 || data === '' || data) {
       this[dataStore][property] = data
       this.renderComponents()
-    } else if (!data && ($.type(this[dataStore]) !== 'object' || $.type(this[dataStore]) !== 'array')) {
+    } else {
       this[dataStore] = property
-      this.renderComponents()
     }
   }
 
@@ -60,8 +52,12 @@ class State {
       this[dataStore] = {}
     } else if ($.type(this[dataStore]) === 'array') {
       this[dataStore] = []
-    } else {
-      this[dataStore]
+    } else if ($.type(this[dataStore]) === 'string') {
+      this[dataStore] = ''
+    } else if (typeof this[dataStore] === 'number') {
+      this[dataStore] = NaN
+    } else if ($.type(this[dataStore] === 'boolean')) {
+      this[dataStore] = undefined
     }
   }
 
