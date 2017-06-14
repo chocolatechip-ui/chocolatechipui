@@ -16,7 +16,6 @@ class Component {
     }
     this.actions = options.actions
     this.styles = options.styles
-    this.id = options.id || Math.random().toString(16).substr(2, 10)
 
     this.chuiStyle = function() {
       let sharedSheet = null

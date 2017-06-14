@@ -4,9 +4,9 @@ export function aboutSheet() {
    * Setup up About info sheet:
    */
   var aboutContent = `<h2>California Wines</h2>
-    <p>This is an app about wines of Northern California. We built it with TruckJS using views, routing, layouts and widgets. It's using the iOS theme and should render reasonably on most browsers.</p>
+    <p>This is an app about wines of Northern California. We built it with ChocolateChip-UI using components, routing, layouts and widgets. It's using the iOS theme and should render reasonably on most browsers.</p>
     <ul>
-    <li><a target="_blank" href="http://truckjs.io">TruckJS</a></li>
+    <li><a target="_blank" href="https://chocolatechip-ui.github.io">ChocolateChip-UI</a></li>
     </ul>
     <h3>Team</h3>
     <ul>

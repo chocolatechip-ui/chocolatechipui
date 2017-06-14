@@ -6,7 +6,7 @@
   let swipeTimeout
   let tapTimeout
   const longTapDelay = 750
-  let singleTapDelay = 150
+  let singleTapDelay = 50
   const gestureLength = 50
   if ($.isAndroid) singleTapDelay = 200
   let longTapTimeout

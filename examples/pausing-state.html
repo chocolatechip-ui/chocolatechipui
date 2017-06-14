@@ -22,6 +22,9 @@
       position: relative;
       top: 3px;
     }
+    input[type=text] {
+      width: 100px
+    }
   </style>
 </head>
 <body>
@@ -38,9 +41,17 @@
           <button id='reload'>Render Component</button>
         </li>
         <li>
-            <label>First Name: <input type="text" id='firstName'></label>
-            <label>Last Name: <input type="text" id='lastName'></label>
+          <div style='flex:none;'>
+            <p>
+              <label>First Name: <input type="text" id='firstName'></label>
+            </p>
+            <p>
+              <label>Last Name: <input type="text" id='lastName'></label>
+            </p>
+          </div>
+          <aside>
             <button id='addPerson'>Add Person</button>
+          </aside>
         </li>
       </ul>
 
@@ -76,10 +87,14 @@
         actions: {
           element: 'h3',
           event: 'tap',
-          callback: function() {
-            console.log($(this).text())
-          }
+          callback: (e) => peopleComponent.bozo('This is your choice: ' + $(e.target).text())
         },
+        methods: {
+          bozo(msg) {
+            // console.log(peopleComponent)
+            alert(msg)
+          }
+        }, 
         render: (data) => html`
           <li>
             <h3>
@@ -116,6 +131,7 @@
           }
         ]
       })
+      window.peopleComponent = peopleComponent
     })
 </script>
 </body>
