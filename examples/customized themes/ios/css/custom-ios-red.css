@@ -2,8 +2,8 @@
 nav, #globalNav, ui-screen > footer, 
 ui-screen > toolbar,
 input[type="range"] -webkit-track,
-.isDesktop .segmented > button:hover,
-.segmented > button.selected,
+.isDesktop ui-segmented > button:hover,
+ui-segmented > button.selected,
 .isDesktop ui-stepper > button:hover,
 .isDesktop ui-stepper > button.selected,
 .isDesktop ui-stepper > button:hover > span,
@@ -47,9 +47,10 @@ nav .back,
 /* Range Control */
 input[type="range"] {
   background-image: -webkit-linear-gradient(top, red, red);
+  background-image: linear-gradient(top, red, red);
 }
 /* Segmented Buttons */
-.segmented > button {
+ui-segmented > button {
   border-color: red;
   color: red;
 }

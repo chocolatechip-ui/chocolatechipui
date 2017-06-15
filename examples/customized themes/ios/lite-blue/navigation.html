@@ -69,84 +69,84 @@
 
 <script>
 
-/* Array data: */
-var lums = [
-    {guid: 'N356f953', firstName: "Stephen", lastName: "Hawking", image: '../../../images/Hawking.jpg', age: 20},
-    {guid: 'Ca0fe1ed', firstName: "Albert", lastName: "Einstein", image: '../../../images/Einstein.jpg', age: 31},
-    {guid: 'a51a1852', firstName: "Leonardo", lastName: "Da Vinci", image: '../../../images/DaVinci.jpg', age: 100},
-    {guid: 'k4657925', firstName: "Galileo", lastName: "Galilei", image: '../../../images/Galileo.jpg', age: 40},
-    {guid: 'F3b2bd1f', firstName: "Nicholas", lastName: "Copernicus", image: '../../../images/Copernicus.jpg', age: 32}
+  /* Array data: */
+  var lums = [
+    {id: 'N356f953', firstName: "Stephen", lastName: "Hawking", image: '../../../images/Hawking.jpg', age: 20},
+    {id: 'Ca0fe1ed', firstName: "Albert", lastName: "Einstein", image: '../../../images/Einstein.jpg', age: 31},
+    {id: 'a51a1852', firstName: "Leonardo", lastName: "Da Vinci", image: '../../../images/DaVinci.jpg', age: 100},
+    {id: 'k4657925', firstName: "Galileo", lastName: "Galilei", image: '../../../images/Galileo.jpg', age: 40},
+    {id: 'F3b2bd1f', firstName: "Nicholas", lastName: "Copernicus", image: '../../../images/Copernicus.jpg', age: 32}
   ];
 
 
   $(function() {
 
-  const VIPComponent = new Component({
-    element: '#arrayTemplate1',
-    render: (data) => html`
-      <li data-goto='detail:${ data.guid }'>
-        <div class='no-flex'>
-          <img src='${ data.image }' alt=''>
-        </div>
-        <h3>
-          ${ data.firstName } ${ data.lastName }
-        </h3>
-        <aside>
-          <disclosure></disclosure>
-        </aside>
-      </li>`,
-    actions: [{
-      element: 'li',
-      event: 'tap',
-      callback: function() {
-        console.log($(this).text());
+    const VIPComponent = new Component({
+      element: '#arrayTemplate1',
+      render: (data) => html`
+        <li data-goto='detail:${ data.id }'>
+          <div class='no-flex'>
+            <img src='${ data.image }' alt=''>
+          </div>
+          <h3>
+            ${ data.firstName } ${ data.lastName }
+          </h3>
+          <aside>
+            <disclosure></disclosure>
+          </aside>
+        </li>`,
+      actions: [{
+        element: 'li',
+        event: 'tap',
+        callback: function() {
+          // console.log($(this).text());
+        }
+      }]
+    })
+
+    const chosenPersonComponent = new Component({
+      element: '#chosenPersonList',
+      render: (data) => html`
+        <li>
+          <h3>First Name: ${ data.firstName }</h3>
+        </li>
+        <li>
+          <h3>Last Name: ${ data.lastName }</h3>
+        </li>
+        <li>
+          <div class='no-flex'>
+            <h3>Your picture:</h3>
+          </div>
+          <img src='${ data.image }' alt="${ data.firstName} + ' ' + ${ data.lastName}">
+        </li>`
+    })
+
+    const chosenPersonNameComponent = new Component({
+      element: '#chosenPerson',
+      render: function(personsName) {
+        return html`<span>Welcome, ${ personsName }.</span>`
       }
-    }]
-  })
+    })
 
-  const chosenPersonComponent = new Component({
-    element: '#chosenPersonList',
-    render: (data) => html`
-      <li>
-        <h3>First Name: ${ data.firstName }</h3>
-      </li>
-      <li>
-        <h3>Last Name: ${ data.lastName }</h3>
-      </li>
-      <li>
-        <div class='no-flex'>
-          <h3>Your picture:</h3>
-        </div>
-        <img src='${ data.image }' alt="${ data.firstName} + ' ' + ${ data.lastName}">
-      </li>`
-  })
+    let chosenData = 'lums'
 
-  const chosenPersonNameComponent = new Component({
-    element: '#chosenPerson',
-    render: function(personsName) {
-      return html`<span>Welcome, ${ personsName }.</span>`
-    }
-  })
-
-  let chosenData = 'lums'
-
-  VIPComponent.render(lums);
+    VIPComponent.render(lums);
     /**
      * Setup Router:
      */
     var appRoutes = new Router();
-    appRoutes.addRoute([
+    appRoutes.addRoute(
       {
         route: 'detail',
         callback: function(param) {
-          var whichPerson = lums.filter(function(person) {
-            return person.guid === param;
-          })[0];
+          console.log(param)
+          var whichPerson = lums.filter((person) => person.id === param)[0];
+          console.dir(whichPerson)
           chosenPersonComponent.render(whichPerson);
           chosenPersonNameComponent.render(whichPerson.firstName);
         }
       }
-    ]);
+    );
 
   });
 </script>

@@ -35,6 +35,7 @@
   </style>
   <script>
     $(function() {
+      const setupRanges = new UIRange()
       $('#rangeValue1').text($('#rangeControl1').array[0].value);
       $('#rangeControl1').on('input', function() {
         $('#rangeValue1').text(this.value);

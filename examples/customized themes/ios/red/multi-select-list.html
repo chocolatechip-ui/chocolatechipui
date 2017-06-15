@@ -75,7 +75,7 @@
        */
       const renderSelection = function() {
         let temp = [];
-        myMulitSelectList.value().forEach(function(item) {
+        myMulitSelectList.selection.forEach(function(item) {
           temp.push(item.value);
         });
         temp.sort()
@@ -98,7 +98,7 @@
        * Get value of user selections:
        */
       $('#done').on('tap', function() {
-        const choices = myMulitSelectList.value()
+        const choices = myMulitSelectList.selection
         document.getElementById('valiationResults').textContent = JSON.stringify(choices);
       });
 
