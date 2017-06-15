@@ -131,12 +131,6 @@ gulp.task('example-widgets', function() {
     .pipe(gulp.dest('./examples/dist/utils'));
 })
 
-// const widgets = [
-//   'ui-block'
-// ].map(function (file) {
-//   return './src/widgets/' + file + '.js'
-// })
-
 gulp.task('widgets', function() {
   return gulp.src('./src/widgets/ui-block.js')
     .pipe(wrap({

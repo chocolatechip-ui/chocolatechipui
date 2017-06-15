@@ -40,7 +40,7 @@ ui-sheet ui-sheet-handle #sheet-handle {
   stroke: #fff;
   stroke-linecap: round;
   stroke-linejoin: round;
-  stroke-width: 12px
+  stroke-width: 10px;
 }
 ui-sheet > ui-sheet-handle  svg {
   -webkit-transform: scale(.5) !important;
