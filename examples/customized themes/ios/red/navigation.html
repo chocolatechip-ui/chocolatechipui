@@ -134,16 +134,14 @@
     /**
      * Setup Router:
      */
-    var appRoutes = new Router();
+    var appRoutes = new Router()
     appRoutes.addRoute(
       {
         route: 'detail',
         callback: function(param) {
-          console.log(param)
-          var whichPerson = lums.filter((person) => person.id === param)[0];
-          console.dir(whichPerson)
-          chosenPersonComponent.render(whichPerson);
-          chosenPersonNameComponent.render(whichPerson.firstName);
+          var whichPerson = lums.filter((person) => person.id === param)[0]
+          chosenPersonComponent.render(whichPerson)
+          chosenPersonNameComponent.render(whichPerson.firstName)
         }
       }
     );

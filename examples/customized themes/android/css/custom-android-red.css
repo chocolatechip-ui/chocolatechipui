@@ -80,7 +80,7 @@ input[type=text] {
      linear-gradient(to right, red, red),
      linear-gradient(to right, #ccc, #ccc);
 }
-.segmented > span.androidSelectionBorder {
+ui-segmented > span.androidSelectionBorder {
   border-bottom: solid 3px red;
 }
 .select-list > li.selected #inner-circle {

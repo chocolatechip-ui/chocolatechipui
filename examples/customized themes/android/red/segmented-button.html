@@ -7,18 +7,10 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="msapplication-tap-highlight" content="no">
   <title>ChocolateChip-UI Segmented Buttons</title>
-  <link rel="stylesheet" href="../../../../dist/css/chui-android.css">
-  <link rel="stylesheet" href="../css/custom-android-red.css">
-  <script src="../../../../dist/chui.js"></script>
   <link rel="stylesheet" href="../../../dist/css/chui-android.css">
   <link rel="stylesheet" href="../css/custom-android-red.css">
   <script src="../../../dist/chui.min.js"></script>
   <script src="../../../dist/widgets.min.js"></script>
-  
-  <script type="application/json" src="../../../../dist/chui.js.map"></script>
-  <script src="../../../../src/components/ui-segmented.js"></script>
-  <script src="../../../../src/components/color-contrast.js"></script>
-  <script src="../../../../src/components/android-ripple.js"></script>
   <style>
     .chosen-image {
       height: 100px;
@@ -33,34 +25,34 @@
        * Define callback for Segmented Control:
        */
       var segmentedResponse = function() {
-        var selection = segCtrl.value().index;
-        var choice;
-        var img;
-        switch(selection) {
-          case 0:
-            choice = 'one';
-            img = '../../../images/music/Imagine Dragons.jpg';
-            break;
-          case 1:
-            choice = 'two';
-            img = '../../../images/music/Hurry and Harm.jpg';
-            break;
-          case 2:
-            choice = 'three';
-            img = '../../../images/music/Willy Moon.jpg';
-            break;
-        }
-        segmentValueView.render({
-          value: choice, 
-          text: segCtrl.value().element.text(), 
+          var index = segCtrl.index
+          var choice
+          var img
+          switch(index) {
+            case 0:
+              choice = 'one';
+              img = '../../../images/music/Imagine Dragons.jpg';
+              break;
+            case 1:
+              choice = 'two';
+              img = '../../../images/music/Hurry and Harm.jpg';
+              break;
+            case 2:
+              choice = 'three';
+              img = '../../../images/music/Willy Moon.jpg';
+              break;
+          }
+          segmentValueComponent.render({
+          value: choice,
+          text: segCtrl.button.textContent.trim(),
           imagePath: img
-        });
-      };
+        })
+      }
 
       /**
        * Component for chosen segment value:
        */
-      var segmentValueView = new Component({
+      var segmentValueComponent = new Component({
         element: '#choice',
         render: (data) => html`
           <li>
@@ -71,7 +63,6 @@
             </div>
           </li>`
       });
-  
 
       /**
        * Setup segmented control:
@@ -81,10 +72,9 @@
         labels : ['Radioactive','Hurt','Yeah, Yeah'],
         selected: 2,
         callback: segmentedResponse
-      });
-      segmentValueView.render({value: 'three', text: 'Yeah, Yeah', imagePath: '../../../images/music/Willy Moon.jpg'});
-      window.segCtrl = segCtrl;
-    });
+      })
+      segmentValueComponent.render({value: 'three', text: 'Yeah, Yeah', imagePath: '../../../images/music/Willy Moon.jpg'})
+    })
   </script>
 </head>
 <body>

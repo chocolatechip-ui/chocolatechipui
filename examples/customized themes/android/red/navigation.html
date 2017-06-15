@@ -11,16 +11,6 @@
   <link rel="stylesheet" href="../css/custom-android-red.css">
   <script src="../../../dist/chui.min.js"></script>
   <script src="../../../dist/widgets.min.js"></script>
-
-  <link rel="stylesheet" href="../../../../dist/css/chui-android.css">
-  <link rel="stylesheet" href="../css/custom-android-red.css">
-  <script src="../../../../dist/chui.js"></script>
-  <script type="application/json" src="../../../../dist/chui.js.map"></script>
-  <script src="../../../../src/components/ui-router.js"></script>
-  <script src="../../../../src/components/ui-navigation.js"></script>
-  <script src="../../../../src/components/color-contrast.js"></script>
-  <script src="../../../../src/components/android-ripple.js"></script>
-  <script src="../../../data/data.js"></script>
   <style>
     .list > li  img {
       height: 80px;
@@ -143,16 +133,14 @@
     /**
      * Setup Router:
      */
-    var appRoutes = new Router();
+    var appRoutes = new Router()
     appRoutes.addRoute(
       {
         route: 'detail',
         callback: function(param) {
-          console.log(param)
-          var whichPerson = lums.filter((person) => person.id === param)[0];
-          console.dir(whichPerson)
-          chosenPersonComponent.render(whichPerson);
-          chosenPersonNameComponent.render(whichPerson.firstName);
+          var whichPerson = lums.filter((person) => person.id === param)[0]
+          chosenPersonComponent.render(whichPerson)
+          chosenPersonNameComponent.render(whichPerson.firstName)
         }
       }
     );

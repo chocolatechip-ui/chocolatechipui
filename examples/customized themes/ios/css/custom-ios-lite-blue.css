@@ -2,8 +2,8 @@
 nav, #globalNav, ui-screen > footer, 
 ui-screen > toolbar,
 input[type="range"] -webkit-track,
-.isDesktop .segmented > button:hover,
-.segmented > button.selected,
+.isDesktop ui-segmented > button:hover,
+ui-segmented > button.selected,
 .isDesktop ui-stepper > button:hover,
 .isDesktop ui-stepper > button.selected,
 .isDesktop ui-stepper > button:hover > span,
@@ -45,12 +45,12 @@ input[type="range"] {
   background-image: -webkit-linear-gradient(top, #78c5e4, #78c5e4);
 }
 /* Segmented Buttons */
-.segmented > button {
+ui-segmented > button {
   border-color: #78c5e4;
   color: #78c5e4;
 }
-.isDesktop .segmented > button:hover,
-.segmented > button.selected {
+.isDesktop ui-segmented > button:hover,
+ui-segmented > button.selected {
   color: #333;
 }
 /* Slideout Button */
