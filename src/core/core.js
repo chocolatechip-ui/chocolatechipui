@@ -1,79 +1,73 @@
-
 function $(selector) {
-  const readyRE = /complete|loaded|interactive/;
-  let temp;
+  const readyRE = /complete|loaded|interactive/
+  let temp
 
   const slice = function(elements) {
-    temp = new Stack([].slice.apply(elements));
-    temp[0] = temp.array[0];
-    return temp;
-  };
+    temp = new Stack([].slice.apply(elements))
+    temp[0] = temp.array[0]
+    return temp
+  }
 
   const getNode = function(selector) {
     if (typeof selector === 'string') {
-      selector = selector.trim();
-      temp = slice(document.querySelectorAll(selector));
-      return temp;
+      selector = selector.trim()
+      temp = slice(document.querySelectorAll(selector))
+      return temp
     }
-  };
+  }
 
   if (selector && selector.type && selector.type === 'Stack') {
-    return selector;
+    return selector
   }
 
   if (selector === document) {
-    return new Stack(document);
+    return new Stack(document)
   }
 
   if (selector === null) {
-    return new Stack();
+    return new Stack()
   }
 
   if (typeof selector === 'function') {
     if (readyRE.test(document.readyState) && document.body) {
-      selector.call(selector);
+      selector.call(selector)
     } else {
-      document.addEventListener("DOMContentLoaded", function() {
-        return selector.call(selector);
-      });
+      document.addEventListener('DOMContentLoaded', function() {
+        return selector.call(selector)
+      })
     }
-
   } else if (selector && selector.nodeType === 1) {
-    temp = new Stack();
-    temp[0] = selector;
-    temp.length = temp.array.length;
-    temp.push(selector);
-    return temp;
-
+    temp = new Stack()
+    temp[0] = selector
+    temp.length = temp.array.length
+    temp.push(selector)
+    return temp
   } else if (typeof selector === 'string') {
-    if (selector === '') return new Stack();
+    if (selector === '') return new Stack()
     try {
-      return getNode(selector) ? getNode(selector) : new Stack();
+      return getNode(selector) ? getNode(selector) : new Stack()
     } catch (err) {
-      return new Stack();
+      return new Stack()
     }
-
   } else if (Array.isArray(selector)) {
-    return new Stack(selector);
-
+    return new Stack(selector)
   } else if (selector === window) {
-    temp = new Stack();
-    temp[0] = window;
-    temp.length = temp.array.length;
-    return temp;
-
+    temp = new Stack()
+    temp[0] = window
+    temp.length = temp.array.length
+    return temp
   } else {
-    return new Stack();
+    return new Stack()
   }
 
-  return new Stack();
+  return new Stack()
 }
 window.$ = $
 
 $.extend = function(obj, prop) {
   if (!prop) {
-    prop = obj;
-    obj = $;
+    prop = obj
+    obj = $
   }
   Object.keys(prop).forEach(function(p) {
     if (prop.hasOwnProperty(p)) {
@@ -81,20 +75,19 @@ $.extend = function(obj, prop) {
         value: prop[p],
         writable: true,
         enumerable: false,
-        configurable: true
-      });
+        configurable: true,
+      })
     }
-  });
+  })
 }
 
 $.fn = {
   extend: function(object) {
-   $.extend(Stack.prototype, object)
-  }
-};
+    $.extend(Stack.prototype, object)
+  },
+}
 
 $.extend({
-
   version: 'VERSION_NUMBER',
 
   noop: function() {
@@ -102,54 +95,63 @@ $.extend({
   },
 
   uuid: function() {
-    let d = Date.now();
-    d += performance.now();
-    const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
-    const randomLetter = charset[Math.floor(Math.random() * charset.length)];
-    return randomLetter + 'xxxxxxxxxxxxxxx'.replace(/[x]/g, function(c) {
-      const r = (d + Math.random() * 16) % 16 | 0;
-      d = Math.floor(d / 16);
-      return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
-    });
+    let d = Date.now()
+    d += performance.now()
+    const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(
+      ''
+    )
+    const randomLetter = charset[Math.floor(Math.random() * charset.length)]
+    return (
+      randomLetter +
+      'xxxxxxxxxxxxxxx'.replace(/[x]/g, function(c) {
+        const r = ((d + Math.random() * 16) % 16) | 0
+        d = Math.floor(d / 16)
+        return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16)
+      })
+    )
   },
 
   type: function(type) {
     switch (typeof type) {
       case 'boolean':
-        return 'boolean';
+        return 'boolean'
       case 'number':
-        return 'number';
+        return 'number'
       case 'string':
-        return 'string';
+        return 'string'
       case 'function':
-        return 'function';
+        return 'function'
       case 'object':
         if (Array.isArray(type)) {
-          return 'array';
+          return 'array'
         } else if (Object.prototype.toString.call(type) === '[object Date]') {
-          return 'date';
+          return 'date'
         } else if (Object.prototype.toString.call(type) === '[object Error]') {
-          return 'error';
+          return 'error'
         } else if (Object.prototype.toString.call(type) === '[object RegExp]') {
-          return 'regexp';
+          return 'regexp'
         } else if (Object.prototype.toString.call(type) === '[object Object]') {
-            if (type.objectType && type.objectType === 'domstack') {
-              return 'domstack';
-              /* If Promise polyfill, then should support `then`. */
-            } else if (type.then) {
-              return 'promise';
-              /* Otherwise we got a normal object here. */
-            } else {
-              return 'object';
-            }
+          if (type.objectType && type.objectType === 'domstack') {
+            return 'domstack'
+            /* If Promise polyfill, then should support `then`. */
+          } else if (type.then) {
+            return 'promise'
+            /* Otherwise we got a normal object here. */
+          } else {
+            return 'object'
+          }
         } else if (Object.prototype.toString.call(type) === '[object Number]') {
-          return 'number';
+          return 'number'
         } else if (Object.prototype.toString.call(type) === '[object String]') {
-          return 'string';
-        } else if (Object.prototype.toString.call(type) === '[object Promise]') {
-          return 'promise';
-        } else if (Object.prototype.toString.call(type) === '[object Boolean]') {
-          return 'boolean';
+          return 'string'
+        } else if (
+          Object.prototype.toString.call(type) === '[object Promise]'
+        ) {
+          return 'promise'
+        } else if (
+          Object.prototype.toString.call(type) === '[object Boolean]'
+        ) {
+          return 'boolean'
         }
     }
   },
@@ -160,7 +162,7 @@ $.extend({
       '<': '&lt;',
       '>': '&gt;',
       '(': '%28',
-      ')': '%29'
+      ')': '%29',
     }
 
     let str = JSON.stringify(data)
@@ -178,17 +180,15 @@ $.extend({
   },
 
   camelize: function(string) {
-    if (typeof string !== 'string')
-      return;
+    if (typeof string !== 'string') return
     return string.replace(/\-(.)/g, function(match, letter) {
-      return letter.toUpperCase();
-    });
+      return letter.toUpperCase()
+    })
   },
 
   hyphenate: function(string) {
-    if (typeof string !== 'string')
-      return;
-    return string.replace(/([A-Z])/g, '-$1').toLowerCase();
+    if (typeof string !== 'string') return
+    return string.replace(/([A-Z])/g, '-$1').toLowerCase()
   },
 
   subscriptions: {},
@@ -203,8 +203,9 @@ $.extend({
   },
 
   subscribe: function(subscription, handler) {
-    if (!$.subscriptions.hasOwnProperty.call($.subscriptions, subscription)) $.subscriptions[subscription] = []
-    const index = $.subscriptions[subscription].push(handler) -1
+    if (!$.subscriptions.hasOwnProperty.call($.subscriptions, subscription))
+      $.subscriptions[subscription] = []
+    const index = $.subscriptions[subscription].push(handler) - 1
     return {
       off: function() {
         delete $.subscriptions[subscription][index]
@@ -214,9 +215,9 @@ $.extend({
         if ($.subscriptions[subscription]) {
           try {
             $.subscriptions[subscription][index](data)
-          } catch(err) {}
+          } catch (err) {}
         }
-      }
+      },
     }
   },
 
@@ -237,10 +238,10 @@ $.extend({
     // Use childNodes to allow creating element nodes or text nodes:
     const children = Array.prototype.slice.apply(temp.childNodes)
     children.map(function(el) {
-     frag.appendChild(el)
+      frag.appendChild(el)
     })
     return frag
-  }
+  },
 })
 
 function html(literals) {
@@ -257,14 +258,14 @@ function html(literals) {
    * It flattens arrays while ignoring falsey values.
    * All other values are converted to strings.
    */
-  function normalize (value, safe) {
-    return (
-      value == null ? ''
-      : value === false ? ''
-      : Array.isArray(value) ? value.map(normalize).join('')
-      : safe === false ? $.escapeHTML(value)
-      : String(value)
-    )
+  function normalize(value, safe) {
+    return value == null
+      ? ''
+      : value === false
+        ? ''
+        : Array.isArray(value)
+          ? value.map(normalize).join('')
+          : safe === false ? $.escapeHTML(value) : String(value)
   }
 
   for (i = 1, len = arguments.length; i < len; i++) {
@@ -294,45 +295,43 @@ function app(callback) {
 window.app = app
 
 $(function() {
-    if (!/(mobile)|(ios)|(android)/img.test(navigator.userAgent)) {
-        document.body.classList.add('isDesktop');
-    }
-    if ($('link[href*=ios]')[0]) {
-        document.body.classList.add('themeIsiOS');
-        $.theme = 'ios';
-    } else if ($('link[href*=android]')[0]) {
-        document.body.classList.add('themeIsAndroid');
-        $.theme = 'android';
-    }
-    $.dir = 'ltr';
-    if (document.dir === 'rtl') {
-        $.dir = 'rtl';
-    }
-
+  if (!/(mobile)|(ios)|(android)/gim.test(navigator.userAgent)) {
+    document.body.classList.add('isDesktop')
+  }
+  if ($('link[href*=ios]')[0]) {
+    document.body.classList.add('themeIsiOS')
+    $.theme = 'ios'
+  } else if ($('link[href*=android]')[0]) {
+    document.body.classList.add('themeIsAndroid')
+    $.theme = 'android'
+  }
+  $.dir = 'ltr'
+  if (document.dir === 'rtl') {
+    $.dir = 'rtl'
+  }
 
   if (!Array.prototype.unique) {
     $.extend(Array.prototype, {
       unique: function() {
-        const len = this.length;
-        const obj = {};
-        const ret = [];
+        const len = this.length
+        const obj = {}
+        const ret = []
         for (let i = 0; i < len; i++) {
-          const arrayItem = JSON.stringify(this[i]);
-          const arrayItemValue = this[i];
+          const arrayItem = JSON.stringify(this[i])
+          const arrayItemValue = this[i]
           if (obj[arrayItem] === undefined) {
-            ret.push(arrayItemValue);
-            obj[arrayItem] = 1;
+            ret.push(arrayItemValue)
+            obj[arrayItem] = 1
           } else {
-            obj[arrayItem]++;
+            obj[arrayItem]++
           }
         }
-        this.length = 0;
-        const self = this;
+        this.length = 0
+        const self = this
         ret.forEach(function(item) {
-          self.push(item);
+          self.push(item)
         })
-      }
+      },
     })
   }
-});
-
+})

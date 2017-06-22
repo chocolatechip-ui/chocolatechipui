@@ -1,7 +1,7 @@
 
 export class UISelectList {
   constructor(options) {
-    if (!options || !options.element) return;
+    if (!options || !options.element) return
     var self = this
     let settings = {
       element: undefined,
@@ -11,7 +11,7 @@ export class UISelectList {
       state: undefined,
       render: undefined,
       value: undefined,
-    };
+    }
     $.extend(settings, options)
     this.value = settings.value
     this.index = settings.selected
@@ -75,7 +75,7 @@ export class UISelectList {
     }
 
     $(settings.element).on('tap', 'li', function() {
-      const item = $(this);
+      const item = $(this)
       self.value = this.querySelector('input').value
       self.index = item.index()
 
@@ -89,6 +89,6 @@ export class UISelectList {
       this.setAttribute('aria-checked', true)
       this.querySelector('input').checked = true
       settings.callback.apply(this, arguments)
-    });
+    })
   }
 }

@@ -1,11 +1,11 @@
 class Stack {
   constructor(args) {
-    this.array = [];
+    this.array = []
     this.length = 0
     this.type = 'stack'
     if (args && args === document) {
       this.array[0] = document
-      this[0] = document;
+      this[0] = document
     } else if (Array.isArray(args)) {
       let i = -1
       const len = args.length
@@ -13,7 +13,7 @@ class Stack {
         this.array[i] = args[i]
       }
     } else {
-      const array = Array.prototype.slice.apply(arguments);
+      const array = Array.prototype.slice.apply(arguments)
       array.forEach(function(ctx, idx) {
         this.array[idx] = ctx
       })
@@ -23,7 +23,7 @@ class Stack {
   eq(index) {
     const ret = new Stack()
     if (!this.array.length) return ret
-    let temp;
+    let temp
     if (index < 0) {
       temp = this.array[this.array.length + index]
       ret.push(temp)
@@ -154,15 +154,15 @@ class Stack {
       if (ret.indexOf(ctx) === -1) {
         ret.push(ctx)
       }
-    });
+    })
     ret.sort(function(a, b) {
       return a - b
-    });
+    })
     this.array.splice(0)
     const self = this.array
     ret.forEach(function(node) {
       self.push(node)
-    });
+    })
   }
 
   purge() {
@@ -173,14 +173,14 @@ class Stack {
     let ret = new Stack()
     let matches
     if (!this.array.length)
-      return ret;
+      return ret
     if (context) {
       $(context).forEach(function() {
         matches = Array.prototype.slice.apply(context.querySelectorAll(selector))
         matches.forEach(function(node) {
           ret.array.push(node)
-        });
-      });
+        })
+      })
     } else {
       this.forEach(function(ctx) {
         if (ctx && ctx.children && ctx.children.length) {
@@ -189,88 +189,88 @@ class Stack {
             ret.array.push(node)
           })
         }
-      });
+      })
     }
     ret[0] = ret.array[0]
-    return ret;
+    return ret
   }
 
   is(arg) {
-    let ret = false;
-    if (!this.array.length || !arg) return;
+    let ret = false
+    if (!this.array.length || !arg) return
     if (!this.array.length) return
-    const self = this;
+    const self = this
     const __is = function(node, arg) {
       if (typeof arg === 'string') {
-        let nodes;
-        if (node.parentNode) nodes = node.parentNode.querySelectorAll(arg);
-        let elements;
+        let nodes
+        if (node.parentNode) nodes = node.parentNode.querySelectorAll(arg)
+        let elements
         if (nodes && nodes.length) {
-          elements = Array.prototype.slice.apply(node.parentNode.querySelectorAll(arg));
+          elements = Array.prototype.slice.apply(node.parentNode.querySelectorAll(arg))
         }
         if (elements && elements.length) {
           if (elements.indexOf(node) >= 0) {
-            ret = true;
+            ret = true
           }
         }
       } else if (typeof arg === 'function') {
         if (arg.call(self)) {
-          ret = true;
+          ret = true
         }
       } else if (arg && arg.type && arg.type === 'Stack') {
         if (node === arg[0]) {
-          ret = true;
+          ret = true
         }
       } else if (arg && arg.length) {
         if (this.slice.apply(arg).indexOf(node) !== -1) {
-          ret = true;
+          ret = true
         }
       } else if (arg.nodeType === 1) {
         if (node === arg) {
-          ret = true;
+          ret = true
         }
       } else {
-        return;
+        return
       }
-      return ret;
-    };
+      return ret
+    }
     this.forEach(function(item) {
       if (__is(item, arg)) {
-        ret = true;
+        ret = true
       }
-    });
-    return ret;
+    })
+    return ret
   }
 
   index(selector) {
-    const self = this.array;
+    const self = this.array
     if (!this.array.length) {
-      return;
+      return
     }
 
     function getIndex() {
       const result = self.findIndex(function(el) {
-        return $(el).is(selector);
+        return $(el).is(selector)
       })
       return result
     }
 
     if (selector && typeof selector === 'string') {
-      return getIndex(selector);
+      return getIndex(selector)
 
     } else if (selector && selector.type && selector.type === 'Stack') {
-      return getIndex(selector[0]);
+      return getIndex(selector[0])
 
     } else if (selector && selector.nodeType && selector.nodeType === 1) {
-      return getIndex(selector);
+      return getIndex(selector)
 
     } else {
       if (self.length > 1) {
-        return 0;
+        return 0
       }
-      const siblings = Array.prototype.slice.apply(self[0].parentNode.children);
+      const siblings = Array.prototype.slice.apply(self[0].parentNode.children)
       return siblings.findIndex(function(el) {
-        return el === self[0];
+        return el === self[0]
       })
     }
   }
@@ -283,7 +283,7 @@ class Stack {
     const self = this
     const pos =  this.index()
     let parent
-    const children = Array.prototype.slice.apply(self.array[0].parentNode.children);
+    const children = Array.prototype.slice.apply(self.array[0].parentNode.children)
     if (selector && typeof selector === 'string') {
       parent = this.array[0].parentNode
       __siblings = Array.prototype.slice.apply(parent.querySelectorAll(selector))
@@ -311,7 +311,7 @@ class Stack {
     }
     let p
     if (this.array[0]) {
-      p = this.array[0].parentNode;
+      p = this.array[0].parentNode
     }
     if (!p) {
       return new Stack()
@@ -332,7 +332,7 @@ class Stack {
   }
 
   css(property, value) {
-    if (!this.array.length) return new Stack();
+    if (!this.array.length) return new Stack()
     const pixelRE = /top|bottom|left|right|margin|padding/img
     let postFix = ''
     const ret = new Stack()
@@ -340,7 +340,7 @@ class Stack {
       if (value === 'number' && property.match(pixelRE)) {
         postFix = 'px'
       }
-    };
+    }
     if (!property) return new Stack()
     if (!value && typeof property === 'object' && !Array.isArray(property)) {
       this.forEach(function(node) {
@@ -351,20 +351,20 @@ class Stack {
           }
         }
         ret.push(node)
-      });
+      })
     } else if (!value && typeof property === 'string') {
       if (!this.array.length)
-        return;
+        return
       return document.defaultView.getComputedStyle(this.eq(0).array[0], null).getPropertyValue(property.toLowerCase())
     } else if (!!value) {
       this.forEach(function(node) {
         testForPixelSupport(value, property)
         node.style[$.camelize(property)] = value + postFix
         ret.push(node)
-      });
+      })
     }
     ret[0] = ret.array[0]
-    return ret;
+    return ret
   }
 
   before(content) {
@@ -392,16 +392,16 @@ class Stack {
     }
       self[0] = self.array[0]
       return self
-    };
+    }
     self.forEach(function(node) {
       return __before(node, content)
-    });
+    })
     self[0] = self.array[0]
     return this
   }
 
   after(content) {
-    if (!this.array || !this.array.length) return new Stack();
+    if (!this.array || !this.array.length) return new Stack()
     const self = this
     const __after = (children) => {
       children.forEach(function(node) {
@@ -433,48 +433,48 @@ class Stack {
   }
 
   prepend(content) {
-    if (!this.array.length) return new Stack();
+    if (!this.array.length) return new Stack()
 
     if (typeof content === 'string' || typeof content === 'number') {
       this.forEach(function(element) {
-        element.insertAdjacentHTML('afterbegin', content);
-      });
+        element.insertAdjacentHTML('afterbegin', content)
+      })
     } else if (content && content.type && content.type === 'Stack') {
       this.forEach(function(element) {
         content.forEach(function(node) {
-          element.insertBefore(node, element.firstChild);
-        });
-      });
+          element.insertBefore(node, element.firstChild)
+        })
+      })
     } else if (content && content.nodeType === 1) {
       this.forEach(function(element) {
-        element.insertBefore(content, element.firstChild);
-      });
+        element.insertBefore(content, element.firstChild)
+      })
     } else if (content && content.nodeType == 11) {
       this.forEach(function(element) {
         element.appendChild(content)
       })
     }
     this[0] = this.array[0]
-    return this;
+    return this
   }
 
   append(content) {
-    if (!this.array.length) return new Stack();
+    if (!this.array.length) return new Stack()
 
     if (typeof content === 'string' || typeof content === 'number') {
       this.forEach(function(element) {
-        element.insertAdjacentHTML('beforeend', content);
-      });
+        element.insertAdjacentHTML('beforeend', content)
+      })
     } else if (content && content.type && content.type === 'Stack') {
       this.forEach(function(element) {
         content.forEach(function(node) {
-          element.insertBefore(node, null);
+          element.insertBefore(node, null)
         })
       })
 
     } else if (content && content.nodeType === 1) {
       this.forEach(function(element) {
-        element.insertBefore(content, null);
+        element.insertBefore(content, null)
       })
     } else if (content && content.nodeType == 11) {
       this.forEach(function(element) {
@@ -482,7 +482,7 @@ class Stack {
       })
     }
     this[0] = this.array[0]
-    return this;
+    return this
   }
 
   empty() {
@@ -491,35 +491,35 @@ class Stack {
     this.array.forEach(function(ctx) {
       ctx.textContent = ''
       ret.push(ctx)
-    });
+    })
     ret[0] = ret.array[0]
     return ret
   }
 
   replaceWith(content) {
     function replace(newElement, targetElement) {
-      if (!newElement || !targetElement) return;
-      let newEl;
-      let targEl;
+      if (!newElement || !targetElement) return
+      let newEl
+      let targEl
       if (typeof newElement === 'string') {
-        newEl = $.h(newElement);
+        newEl = $.h(newElement)
       } else if (newElement.type && newElement.type === 'stack') {
-        newEl = newElement.array[0];
+        newEl = newElement.array[0]
       } else if (newElement.nodeType === 1 || newElement.nodeType === 11) {
-        newEl = newElement;
+        newEl = newElement
       }
       if (typeof targetElement === 'string') {
-        targEl = $(targetElement).array[0];
+        targEl = $(targetElement).array[0]
       } else if (targetElement.type && targetElement.type === 'stack') {
-        targEl = targetElement.array[0];
+        targEl = targetElement.array[0]
       } else if (targetElement.nodeType === 1) {
-        targEl = targetElement;
+        targEl = targetElement
       }
       /**
        * Remove target's bound events:
        */
-      $(targEl).off();
-      targEl.parentNode.replaceChild(newEl, targEl);
+      $(targEl).off()
+      targEl.parentNode.replaceChild(newEl, targEl)
     }
     if (content && content.nodeType && content.nodeType === 1) {
       $(content).off()
@@ -529,15 +529,15 @@ class Stack {
     this.forEach(function(node) {
       $(node).off()
         replace(content, node)
-    });
+    })
   }
 
   remove() {
-    if (!this.array.length) return new Stack();
+    if (!this.array.length) return new Stack()
     this.forEach(function(node) {
       $(node).off()
       if (node.parentNode) node.parentNode.removeChild(node)
-    });
+    })
   }
 
   text(string) {
@@ -546,31 +546,31 @@ class Stack {
     if (!!string || string === 0) {
       this.forEach(function(element) {
         element.innerText = string
-      });
+      })
       return this
     } else {
       this.forEach(function(element) {
         ret += element.innerText
         ret.trim()
-      });
+      })
       return ret
     }
   }
 
   html(markup) {
-    if (!this.array.length) return new Stack();
+    if (!this.array.length) return new Stack()
     if (markup === '') {
       this.array.forEach(node => {
-        node.innerHTML = '';
-      });
-      return this;
+        node.innerHTML = ''
+      })
+      return this
     } else if (markup) {
       this.array.forEach(node => {
-        node.innerHTML = markup;
-      });
-      return this;
+        node.innerHTML = markup
+      })
+      return this
     } else if (!markup) {
-      return this.array[0].innerHTML.trim();
+      return this.array[0].innerHTML.trim()
     }
   }
 
