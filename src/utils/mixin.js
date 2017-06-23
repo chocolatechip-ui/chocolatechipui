@@ -2,7 +2,6 @@
 /**
  * Mixin one object into another:
  */
-
 $.extend({
   mixin: (sourceObj, targetObj) => {
     for (let key in sourceObj) {
