@@ -40,7 +40,7 @@
                 stroke="white"
               />
             </svg>
-            <p>The time: <span>${ new Date(time).getHours() > 0 ? new Date(time).getHours() -12 : new Date(time).getHours() }:${ new Date(time).getMinutes() }:${ new Date(time).getSeconds() < 10 ?  '0' + new Date(time).getSeconds() : new Date(time).getSeconds()} ${ new Date(time).getHours() > 12 ? 'PM' : 'AM' }</span></p>
+            <p>The time: <span>${ new Date(time).getHours() > 12 ? new Date(time).getHours() -12 : new Date(time).getHours() }:${ new Date(time).getMinutes() }:${ new Date(time).getSeconds() < 10 ?  '0' + new Date(time).getSeconds() : new Date(time).getSeconds()} ${ new Date(time).getHours() > 12 ? 'PM' : 'AM' }</span></p>
             </div>
           </li>`
         },
