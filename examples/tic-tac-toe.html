@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="msapplication-tap-highlight" content="no">
+  <title>Tic-Tac-Toe</title>
+  <link rel="stylesheet" href="./dist/css/chui-ios.css">
+  <script src="./dist/chui.min.js"></script>
+</head>
+<body>
+  <ui-screen class='current' id='select-example'>
+    <nav>
+      <h1>Tic-Tac-Toe</h1>
+    </nav>
+    <section>
+      <h2>Take Turns Playing</h2>
+      <ul class="list" id="game"></ul>
+      <ul class="list" id="game2"></ul>
+    </section>
+  </ui-screen>
+
+  <script>
+    app(() => {
+      // Define tic-tac-toe board:
+      const board = new Component({
+        element: '#game',
+        state: new State({
+          squares: [0,1,2,3,4,5,6,7,8],
+          xIsNext: 'X',
+          status: 'Next Player: X',
+          winner: null,
+          won: false
+        }),
+        render: (data) => {
+          const status = `${data.status}`
+          return html`
+          <li>
+            <div id='frame'>
+              <h3 class="status no-wrap ${data.won ? 'won' : ''}">${status}</h3>
+                !${
+                  board.state.get().squares.map((num, idx) => {
+                    if (num == 'X' || num == 'O') {
+                      return html`<button class="square" data-value='${idx}'>${num}</button>`
+                    } else {
+                      return html`<button class="square" data-value='${idx}'></button>`
+                    }
+                  })
+                }
+            </div>
+            <aside>
+              <button id='reset'>Reset Board</button>
+            </aside>
+          </li>`
+        },
+        actions: [
+          // Define result of tapping a square:
+          {
+            event: $.eventStart,
+            element: '.square',
+            callback: (e) => {       
+              function calculateWinner(squares) {
+                const lines = [
+                  [0, 1, 2],
+                  [3, 4, 5],
+                  [6, 7, 8],
+                  [0, 3, 6],
+                  [1, 4, 7],
+                  [2, 5, 8],
+                  [0, 4, 8],
+                  [2, 4, 6],
+                ];
+                for (let i = 0; i < lines.length; i++) {
+                  const [a, b, c] = lines[i];
+                  if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+                    board.state.set('winner', lines[i])
+                    return squares[a];
+                  }
+                }
+                return null;
+              }
+              // Already completed, so exit:
+              if (board.state.get().winner) return
+
+              // Find what square was tapped:
+              const value = e.target.dataset.value
+              let update = board.state.get()
+              update.squares[value] = board.state.get().xIsNext
+              board.state.set('squares', update.squares)
+
+              // Show winner:
+              let status;
+              winner = calculateWinner(board.state.get().squares)
+              if (winner) {
+                const lines = board.state.get().winner
+                status = 'Winner: ' + winner;
+                board.state.set('status', status)
+                board.state.set('won', true)
+                lines.map(cell => {
+                  $('.square').eq(cell).css('background-color', 'lime')
+                })
+              // Otherwise show move:
+              } else {
+                status = 'Next player: ' + (board.state.get().xIsNext ? 'X' : 'O');
+                board.state.set('xIsNext', board.state.get().xIsNext === 'X' ? 'O' : 'X')
+                board.state.set('status', `Next Player: ${board.state.get().xIsNext}`)
+              }
+            }
+          },
+          // Allow resetting the board:
+          {
+            event: 'tap',
+            element: '#reset',
+            callback: () => {
+              board.state.set({
+                squares: [0,1,2,3,4,5,6,7,8],
+                xIsNext: 'X',
+                status: 'Next Player: X',
+                winner: null,
+                won: false
+              })
+            }
+          }
+        ],
+        // Style the board:
+        styles: {
+          font: '14px "Century Gothic", Futura, sans-serif',
+          '.board-row:after': {
+              clear: 'both',
+              content: "",
+              display: 'table'
+          },
+          '#frame': {
+            display: 'block',
+            maxWidth: '120px !important'
+          },
+          '.status': {
+            marginBottom: '20px',
+            fontSize: '11pt',
+            fontWeight: 'bold',
+          },
+          'button.square': {
+            color: '#333',
+            background: '#fff',
+            border: '1px solid #999 !important',
+            float: 'left',
+            fontSize: '24px',
+            fontWeight: 'bold',
+            lineHeight: "34px",
+            height: '34px',
+            marginRight: '-1px',
+            marginTop: '-1px',
+            padding: 0,
+            textAlign: 'center',
+            width: 34
+          },
+          '.status.won': {
+            color: 'green'
+          }
+        }
+      })
+      board.render()
+    })
+  </script>
+</body>

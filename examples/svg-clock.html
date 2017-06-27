@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="msapplication-tap-highlight" content="no">
+  <title>SVG Clock</title>
+  <link rel="stylesheet" href="./dist/css/chui-ios.css">
+  <script src="./dist/chui.min.js"></script>
+</head>
+<body>
+  <ui-screen class="current" id="main">
+    <nav>
+      <h1>SVG Clock</h1>
+    </nav>
+    <section>
+      <h2>Counting Seconds</h2>
+      <ul id="clock" class="list"></ul>
+    </section>
+  </ui-screen>
+  <script>
+    app(() => {
+      const clock = new Component({
+        element: '#clock',
+        state: new State(Date.now()),
+        render: (time) => {
+          const angle = (time) => 2 * Math.PI * time / 60000
+          return html`
+          <li>
+            <div>
+            <svg viewBox="0 0 100 100" width="150px">
+              <circle cx="50" cy="50" r="45" fill="blue" />
+              <line
+                x1="50"
+                y1="50"
+                x2="${ 50 + 40 * Math.cos(angle(time)) }"
+                y2="${ 50 + 40 * Math.sin(angle(time)) }"
+                stroke="white"
+              />
+            </svg>
+            <p>The time: <span>${ new Date(time).getHours() > 0 ? new Date(time).getHours() -12 : new Date(time).getHours() }:${ new Date(time).getMinutes() }:${ new Date(time).getSeconds() < 10 ?  '0' + new Date(time).getSeconds() : new Date(time).getSeconds()} ${ new Date(time).getHours() > 12 ? 'PM' : 'AM' }</span></p>
+            </div>
+          </li>`
+        },
+        styles: {
+          'p > span': {
+            fontFamily: 'Courier, Monospace'
+          }
+        }
+      })
+      clock.render()
+      setInterval(() => clock.state.set(Date.now()), 1000)
+    }) 
+  </script>
+</body>

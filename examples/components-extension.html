@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="msapplication-tap-highlight" content="no">
+  <title>ChocolateChip-UI Component Extension</title>
+  <link rel="stylesheet" href="./dist/css/chui-ios.css">
+  <script src="./dist/chui.min.js"></script>
+  <script src="./dist/widgets.min.js"></script>
+  <style>
+    ol, li {
+      padding-left: 0;
+      margin-left: 0;
+    }
+    ol {
+      margin-left: 20px;
+    }
+  </style>
+
+</head>
+<body>
+  <ui-screen id='main' class='current'>
+    <nav>
+      <h1>Extending Component</h1>
+    </nav>
+    <section>
+
+      <h2>Update Component State</h2>
+      <ul class="list" id="addData"></ul>
+
+      <h2>Fruit List</h2>
+      <ul class="list" id="fruitList"></ul>
+
+      <h2>People List</h2>
+      <ul class="list" id="peopleList"></ul>
+
+      <h2>Number List</h2>
+      <ul class="list" id="numberList"></ul>
+
+
+    </section>
+</ui-screen>
+
+<script>
+  $(function() {
+
+    const dataList = new Component({
+      element: '#addData',
+      render: () => html`
+        <li>
+          <p>
+            <label for="fruitInput">Fruit: </label>
+            <input type="text" id='fruitInput'>
+            <button id='addFruit'>Add</button>
+          </p>
+        </li>
+        <li>
+          <p>
+            <label for="peopleInput">Person Name: </label>
+            <input type="text" id='peopleInput'>
+            <button id='addPerson'>Add</button>
+          </p>
+        </li>
+        <li>
+          <p>
+            <label for="numberInput">Number: </label>
+            <input type="text" id='numberInput'>
+            <button id='addNumber'>Add</button>
+          </p>
+        </li>`,
+      actions: [
+        {
+          event: 'tap',
+          element: '#addFruit',
+          callback: (e) => {
+            const value = $('#fruitInput').val()
+            if (value) fruitState.push(value)
+            $('#fruitInput').val('')
+          }
+        },
+        {
+          event: 'tap',
+          element: '#addPerson',
+          callback: (e) => {
+            const value = $('#peopleInput').val()
+            if (value) peopleState.push(value)
+            $('#peopleInput').val('')
+          }
+        },
+        {
+          event: 'tap',
+          element: '#addNumber',
+          callback: (e) => {
+            const value = $('#numberInput').val()
+            if (value) numberState.push(value)
+            $('#numberInput').val('')
+          }
+        }
+      ],
+      styles: {
+        label: {
+          display: 'inline-block',
+          width: 120,
+          textAlign: 'right'
+        }
+      }
+    })
+    dataList.render()
+
+    /**
+     * Data for components.
+     */
+    const fruits = ['Apples', 'Oranges', 'Bananas']
+    const people = ['Joe Bodoni', 'Ellen Morris', 'Sam Anderson']
+    const numbers = [1,2,3,4,5]
+    /**
+     * Create State objects for components:
+     */
+    const fruitState = new State(fruits)
+    const peopleState = new State(people)
+    const numberState = new State(numbers)
+
+    /**
+     * Extend Component as new class List.
+     * All instances of List will
+     * share the same template.
+     * Notice that we use "this.renderFnc" to define template.
+     */
+    class List extends Component {
+      constructor(options) {
+        super(options)
+        // The following render will override whatever gets passed to super:
+        this.renderFnc = (data) => html`
+          <li>
+            <h3>${data}</h3>
+          </li>`
+        // Define styles for List class:
+        this.styles = {
+          margin: 20,
+          border: 'solid 1px #ccc',
+          li: {
+            cursor: 'pointer'
+          }
+        }
+      }
+    }
+
+    /**
+     * Create extended component instances:
+     */
+    const fruitList = new List({
+      element: '#fruitList',
+      state: fruitState,
+      // The following code will be ignored due to "renderFnc" defined in List class.
+      render: (data, idx) => html`
+        <li>${idx + 1}: ${data}</li>`,
+      // Define actions for this instance:
+      actions: [
+        {
+          event: 'tap',
+          element: 'h3',
+          callback: (e) => alert(e.target.textContent)
+        }
+      ]
+    })
+    fruitList.render()
+    window.fruitList = fruitList
+
+    const peopleList = new List({
+      element: '#peopleList',
+      state: peopleState
+    })
+    peopleList.render()
+
+    const numberList = new List({
+      element: '#numberList',
+      state: numberState
+    })
+    numberList.render()
+  })
+</script>
+</body>
