@@ -48,10 +48,8 @@
                     }
                   })
                 }
+              <button class='action' id='reset'>Reset Board</button>
             </div>
-            <aside>
-              <button id='reset'>Reset Board</button>
-            </aside>
           </li>`
         },
         actions: [
@@ -133,7 +131,8 @@
           },
           '#frame': {
             display: 'block',
-            maxWidth: '120px !important'
+            maxWidth: '120px !important',
+            marginLeft: 20
           },
           '.status': {
             marginBottom: '20px',
@@ -157,6 +156,14 @@
           },
           '.status.won': {
             color: 'green'
+          },
+          'button#reset': {
+            position: 'relative',
+            top: 20,
+            marginBottom: 30,
+            marginLeft: '-10px',
+            padding: '5px 5px !important',
+            minWidth: '120px !important'
           }
         }
       })
