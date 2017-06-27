@@ -18,7 +18,6 @@
     <section>
       <h2>Take Turns Playing</h2>
       <ul class="list" id="game"></ul>
-      <ul class="list" id="game2"></ul>
     </section>
   </ui-screen>
 
@@ -92,7 +91,7 @@
 
               // Show winner:
               let status;
-              winner = calculateWinner(board.state.get().squares)
+              const winner = calculateWinner(board.state.get().squares)
               if (winner) {
                 const lines = board.state.get().winner
                 status = 'Winner: ' + winner;
