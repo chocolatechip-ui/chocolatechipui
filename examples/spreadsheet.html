@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="msapplication-tap-highlight" content="no">
+  <title>Spreadsheet</title>
+  <link rel="stylesheet" href="./dist/css/chui-ios.css">
+  <script src="./dist/chui.min.js"></script>
+  <script src="./dist/utils/formatters.js"></script>
+  <script>
+    app(() => {
+
+      const table =  {
+        rows: [
+          {
+            product: 'Apple',
+            price: 1.50,
+            quantity: 5
+          },
+          {
+            product: 'Orange',
+            price: 1.00,
+            quantity: 7
+          },
+          {
+            product: 'Banana',
+            price: .90,
+            quantity: 3
+          }, {
+            product: 'Peach',
+            price: 1.10,
+            quantity: 0
+          }
+        ]
+      }
+      window.table = table
+      const sheetState = new State(table)
+      const spreadsheet = new Component({
+        element: '#spreadsheet-list',
+        render: (table) => {
+          function sumUp(rows) {
+            let total = 0
+            rows.forEach((row) => {
+              total += row.price * row.quantity
+            })
+            spreadsheet.value = total
+            return total
+          }
+          return html`
+        <li>
+          <table id='spreadsheet'>
+          <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+          </tr>
+          !${table.rows.map((row, idx) => html`
+            <tr>
+              <td>${row.product}</td>
+              <td><input class='price' data-index='${idx}' type='number' min='0' value='${row.price}'></td>
+              <td><input class='quantity' data-index='${idx}' type='number' min='0' value='${row.quantity}'></td>
+              <td><span class='total'>${$.currency(row.price * row.quantity, '$', ',', 2)}</span></td>
+              <td><button data-index='${idx}' class='delete'>X</button></td>
+            </tr>
+          `)}
+          <tfoot>
+            <tr>
+              <td colspan='3' style='text-align="right"'>Sum:</td>
+              <td><span class='total'>${$.currency(sumUp(table.rows), '$', ',', 2)}</span></td>
+              <td></td>
+            </tr>
+          </tfoot>
+          </table>
+        </li>
+          <li>
+          <div id='newRowForm'>
+            <p>
+              <label for="">Product: </label><input id='product' type="text" tabindex='1'>
+            </p>
+            <p>
+              <label for="">Price: </label><input id='price' type="text" tabindex='2'>
+            </p>
+            <p>
+              <label for="">Quantity: </label><input id='quantity' type="text" tabindex='3'>
+            </p>
+          </div>
+          <aside>
+            <button id='addRow'>Add Row</button>
+            <input type='text' tabindex='5' id='hidden-input'>
+          </aside>
+        </li>`
+        },
+        actions: [
+          {
+            event: 'input',
+            element: '#spreadsheet input',
+            callback: function() {
+              var index = this.dataset.index
+              if (this.className === 'price') {
+                table.rows[index].price = this.value
+              } else if (this.className === 'quantity') {
+                table.rows[index].quantity = this.value
+              }
+            }
+          },
+          {
+            event: 'blur',
+            element: '#spreadsheet input',
+            callback: function() {
+              spreadsheet.render(table)
+            },
+            bubble: true
+          },
+          {
+            event: 'blur',
+            element: '#quantity',
+            callback: function() {
+              $('#addRow').focus()
+              // $('#addRow').trigger('tap')
+            }
+          },
+          {
+            event: 'tap',
+            element: '.delete',
+            callback: function() {
+              const index = this.dataset.index
+              table.rows.splice(index, 1)
+              spreadsheet.render(table)
+            }
+          },
+          {
+            event: 'tap',
+            element: '#addRow',
+            callback: function() {
+              const productInput = document.querySelector('#product')
+              const priceInput = document.querySelector('#price')
+              const quantityInput = document.querySelector('#quantity')
+              const product = productInput.value
+              const price = priceInput.value || 0
+              const quantity = quantityInput.value || 0
+              productInput.value = ''
+              priceInput.value = ''
+              quantityInput.value = ''
+              if (product) {
+                table.rows.push({
+                  product: product,
+                  price: price,
+                  quantity: quantity
+                })
+                spreadsheet.render(table)
+              } else {
+                alert('Please provide a product name before trying to add a row.')
+              }
+
+            }
+          }
+        ],
+        styles: {
+          table: {
+            borderCollapse: 'collapse',
+            td: {
+              border: '1px solid #999',
+              padding: 0,
+              textAlign: 'right',
+              input: {
+                border: 'none !important',
+                width: 90,
+                fontSize: '16px !important',
+                padding: 2,
+                marginRight: 5
+              },
+              'span.total': {
+                display: 'block',
+                paddingRight: 10
+              }
+            },
+            th: {
+              width: 100,
+              textAlign: 'center'
+            }
+          },
+          'td:first-child, tfoot td': {
+            backgroundColor: 'lightblue',
+            color: '#666',
+            padding: '1px 3px',
+            fontWeight: 'bold',
+            textAlign: 'right'
+          },
+          'input:hover': { 
+            backgroundColor: '#eee'
+          },
+          'input:focus': { 
+            backgroundColor: '#ccf' 
+          },
+          'input:not(:focus)': {
+              textAlign: 'right'
+          },
+          button: {
+            color: '#000',
+            fontWeight: 'bold',
+            ':hover': {
+              color: {
+                backgroundColor: 'blue',
+                color: '#fff'
+              }
+            }
+          },
+          '#newRowForm': {
+            flex: 'none',
+            width: 220,
+            label: {
+              display: 'inline-block',
+              width: 80,
+              textAlign: 'right'
+            },
+            input: {
+              width: 100
+            }
+          },
+          'button.delete': {
+            backgroundColor: 'red',
+            color: '#fff !important'
+          },
+          '#hidden-input': {
+            height: '0px !important',
+            width: '0px !important',
+            padding: '0px !important',
+            border: 'solid 1px transparent !important'
+          }
+        }
+      })
+      spreadsheet.render(table)
+      window.spreadsheet = spreadsheet
+      
+    })
+  </script>
+</head>
+<body>
+  <ui-screen class="current" id="main">
+    <nav>
+      <h1>Spreadsheet</h1>
+    </nav>
+    <section>
+      <h2 class='normal-case'>You Can Add a New Product, or Edit a Price or Quanity"</h2>
+      <ul class="list" id='spreadsheet-list'></ul>
+    </section>
+  </ui-screen>
+</body>
