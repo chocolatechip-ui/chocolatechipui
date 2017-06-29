@@ -57,6 +57,7 @@
             <th>Price</th>
             <th>Quantity</th>
             <th>Total</th>
+            <th></th>
           </tr>
           !${table.rows.map((row, idx) => html`
             <tr>
@@ -180,7 +181,13 @@
             },
             th: {
               width: 100,
-              textAlign: 'center'
+              textAlign: 'center',
+              backgroundColor: '#333',
+              border: 'solid 1px #333',
+              color: '#fff',
+              ':last-of-type': {
+                width: 20
+              }
             }
           },
           'td:first-child, tfoot td': {
