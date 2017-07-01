@@ -191,7 +191,12 @@ class Component {
   }
 
   setState(state) {
+    let self = this
     if (state) {
+      if (this.state) {
+        const position = state.boundComponents.findIndex((component) => self == component)
+        this.state.boundComponents.splice(position, 1)
+      }
       state.boundComponents.push(this)
       this.state = state
     }

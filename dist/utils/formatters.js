@@ -3,7 +3,6 @@ export default (function() {
 /**
  * ChocolateChip-UI  - Data Formatters.
  */
-
 $.extend({
   /**
    * Format Numbers for Thousands:

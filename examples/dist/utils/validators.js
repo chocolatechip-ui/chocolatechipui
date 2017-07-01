@@ -1,9 +1,5 @@
 
 /**
- * ChocolateChip-UI - Validators.
- */
-
-/**
  * Set validity state of form elements: 
  */
 const setValidityStatus = (element, valid) => {

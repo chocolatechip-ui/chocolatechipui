@@ -3,7 +3,6 @@ export default (function() {
 /**
  * Execute a function only once.
  */
-
 $.extend({
   once: func => {
     let times = 2
