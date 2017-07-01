@@ -27,7 +27,7 @@
       const board = new Component({
         element: '#game',
         state: new State({
-          squares: [0,1,2,3,4,5,6,7,8],
+          squares: [1,2,3,4,5,6,7,8,9], 
           xIsNext: 'X',
           status: 'Next Player: X',
           winner: null,
@@ -52,12 +52,15 @@
             </div>
           </li>`
         },
+
         actions: [
           // Define result of tapping a square:
           {
             event: $.eventStart,
             element: '.square',
-            callback: (e) => {       
+            callback: (e) => {
+              let status;
+              // Three utitility functions (calculateWinner, showWinner & showMove):
               function calculateWinner(squares) {
                 const lines = [
                   [0, 1, 2],
@@ -78,19 +81,8 @@
                 }
                 return null;
               }
-              // Already completed, so exit:
-              if (board.state.get().winner) return
-
-              // Find what square was tapped:
-              const value = e.target.dataset.value
-              let update = board.state.get()
-              update.squares[value] = board.state.get().xIsNext
-              board.state.set('squares', update.squares)
-
-              // Show winner:
-              let status;
-              const winner = calculateWinner(board.state.get().squares)
-              if (winner) {
+              // If winner:
+              const showWinner = () => {
                 const lines = board.state.get().winner
                 status = 'Winner: ' + winner;
                 board.state.set('status', status)
@@ -98,11 +90,31 @@
                 lines.map(cell => {
                   $('.square').eq(cell).css('background-color', 'lime')
                 })
-              // Otherwise show move:
-              } else {
+              }
+              // Otherwise show next move:
+              const showMove = () => {
                 status = 'Next player: ' + (board.state.get().xIsNext ? 'X' : 'O');
                 board.state.set('xIsNext', board.state.get().xIsNext === 'X' ? 'O' : 'X')
                 board.state.set('status', `Next Player: ${board.state.get().xIsNext}`)
+              }
+
+              // Check user action.
+              // If already completed, exit:
+              if (board.state.get().winner) return
+
+              // Otherwise, find what square was tapped:
+              const value = e.target.dataset.value
+              let update = board.state.get()
+              update.squares[value] = board.state.get().xIsNext
+              board.state.set('squares', update.squares)
+
+              // Show winner:
+              const winner = calculateWinner(board.state.get().squares)
+              if (winner) {
+                showWinner()
+              // Otherwise show move:
+              } else {
+                showMove()
               }
             }
           },
