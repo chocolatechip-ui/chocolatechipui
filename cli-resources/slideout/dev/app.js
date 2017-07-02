@@ -42,41 +42,39 @@ $(() => {
    * Define routes to handle ids from slide out menu items:
    */
   window.appRoutes = appRoutes
-  appRoutes.addRoute([
-    {
+  appRoutes.addRoute({
+    /**
+     * The route:
+     */
+    route: "choice",
+    /**
+     * Callback to handle passed id:
+     */
+    callback: id => {
       /**
-       * The route:
+       * Method to render templates in switch statement:
        */
-      route: "choice",
+      const renderChosenTemplate = (template, data) => {
+        listComponent.setTemplate(template)
+        listComponent.render(data)
+      }
       /**
-       * Callback to handle passed id:
+       * Handle passed id:
        */
-      callback: id => {
-        /**
-         * Method to render templates in switch statement:
-         */
-        const renderChosenTemplate = (template, data) => {
-          listComponent.setTemplate(template)
-          listComponent.render(data)
-        }
-        /**
-         * Handle passed id:
-         */
-        switch (id) {
-          case "music":
-            renderChosenTemplate(templates.music, music)
-            break
-          case "documents":
-            renderChosenTemplate(templates.docs, docs)
-            break
-          case "recipes":
-            renderChosenTemplate(templates.recipes, recipes)
-            break
-          case "favorites":
-            renderChosenTemplate(templates.favorites, favorites)
-            break
-        }
+      switch (id) {
+        case "music":
+          renderChosenTemplate(templates.music, music)
+          break
+        case "documents":
+          renderChosenTemplate(templates.docs, docs)
+          break
+        case "recipes":
+          renderChosenTemplate(templates.recipes, recipes)
+          break
+        case "favorites":
+          renderChosenTemplate(templates.favorites, favorites)
+          break
       }
     }
-  ])
+  })
 })
