@@ -10,6 +10,8 @@
   <link rel="stylesheet" href="./dist/css/chui-ios.css">
   <script src="./dist/chui.min.js"></script>
   <script src="./dist/widgets.min.js"></script>
+  <script src="./dist/utils/validators.js"></script>
+  <script src="./dist/utils/form.js"></script>
   <script>
     $(() => {
       const todosStore = new State([
@@ -22,7 +24,7 @@
       const selectList = new UISelectList({
         element: '#my-list',
         selected: 0,
-        name: 'my-list',
+        name: 'myList',
         state: todosStore,
         render: (todo) => html`
           <li data-select="${ todo.value}">

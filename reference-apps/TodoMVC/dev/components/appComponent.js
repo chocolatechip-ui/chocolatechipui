@@ -29,7 +29,6 @@ export const appComponent = new Component({
       event: 'tap',
       element: '.add',
       callback: () => {
-        console.log('adding todo')
         const todo = $('#add-todo').val()
         $('#add-todo')[0].value = ''
         if (todo) {

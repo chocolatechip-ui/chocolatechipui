@@ -44,7 +44,7 @@ export class UIMultiSelectList {
       }
 
       if (!data && settings.state) {
-        data = settings.state.get()
+        data = settings.state.dataStore
       }
 
       if (Array.isArray(data)) {
@@ -60,7 +60,7 @@ export class UIMultiSelectList {
       elm.empty()
       elm.append(temp)
       setTimeout(function() {
-        var data = settings.state.get()
+        var data = settings.state.dataStore
         var listItems = Array.prototype.slice.apply(elm[0].querySelectorAll('li'))
         listItems.map((item, idx) => {
           item.dataset.select = data[idx].value
@@ -72,10 +72,13 @@ export class UIMultiSelectList {
                 index: idx,
                 value: data[idx].value
               })
+              $(item).append(`<input type="checkbox" checked name="${ name }" value="${ data[idx].value }">`)
+            } else {
+              $(item).append(`<input type="checkbox" name="${ name }" value="${ data[idx].value }">`)
             }
-          }
+          } 
           $(item).prepend(selectionIndicator(data[idx][settings.value]))
-          $(item).append(`<input type="checkbox" name="${ name }" value="${ data[idx].value }">`)
+          
         })
       })
     }

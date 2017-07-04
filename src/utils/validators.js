@@ -287,7 +287,13 @@ $.fn.extend({
 
   validateSelectList: function() {
     const radio = this.find('input[type=radio]')
-    if (radio.is('[checked]')) {
+    let checked = false
+    radio.forEach(function(item) {
+      if (item.checked) {
+        checked = true
+      }
+    })
+    if (checked) {
       return true
     } else {
       return false
@@ -297,7 +303,7 @@ $.fn.extend({
     const checkboxes = this.find('input[type=checkbox]')
     let checked = false
     checkboxes.forEach(function(item) {
-      if (item.hasAttribute('checked')) {
+      if (item.checked) {
         checked = true
       }
     })

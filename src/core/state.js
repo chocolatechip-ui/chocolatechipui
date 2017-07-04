@@ -1,7 +1,4 @@
 
-const dataStore = {
-  id: new Date()
-}
 class State {
   constructor(data) {
     let d
@@ -13,9 +10,7 @@ class State {
       d = data
     }
 
-    this[dataStore] = d
-    this.id = (((1+Math.random())*0x10000)|0).toString(16).substring(1) + (((1+Math.random())*0x10000)|0).toString(16).substring(1)
-    this[dataStore] = d
+    this.dataStore = d
     this.events = {}
     this.paused = false
     this.boundComponents = []
@@ -31,43 +26,43 @@ class State {
   }
 
   get(property) {
-    if (property && $.type(this[dataStore]) === 'object') {
-      return this[dataStore][property]
+    if (property && $.type(this.dataStore) === 'object') {
+      return this.dataStore[property]
     } else {
-      return this[dataStore]
+      return this.dataStore
     }
   }
 
   set(property, data) {
     if (data === false || data === 0 || data === '' || data) {
-      this[dataStore][property] = data
+      this.dataStore[property] = data
       this.renderComponents()
     } else {
-      this[dataStore] = property
+      this.dataStore = property
       this.renderComponents()
     }
   }
 
   purge() {
-    if ($.type(this[dataStore]) === 'object') {
-      this[dataStore] = {}
-    } else if ($.type(this[dataStore]) === 'array') {
-      this[dataStore] = []
-    } else if ($.type(this[dataStore]) === 'string') {
-      this[dataStore] = ''
-    } else if (typeof this[dataStore] === 'number') {
-      this[dataStore] = NaN
-    } else if ($.type(this[dataStore] === 'boolean')) {
-      this[dataStore] = undefined
+    if ($.type(this.dataStore) === 'object') {
+      this.dataStore = {}
+    } else if ($.type(this.dataStore) === 'array') {
+      this.dataStore = []
+    } else if ($.type(this.dataStore) === 'string') {
+      this.dataStore = ''
+    } else if (typeof this.dataStore === 'number') {
+      this.dataStore = NaN
+    } else if ($.type(this.dataStore === 'boolean')) {
+      this.dataStore = undefined
     }
   }
 
   merge(obj) {
     if (!obj || typeof obj !== 'object') {
       return
-    } else if (typeof this[dataStore] === 'object') {
+    } else if (typeof this.dataStore === 'object') {
       for (let key in obj) {
-        this[dataStore][key] = obj[key]
+        this.dataStore[key] = obj[key]
       }
       this.renderComponents()
     }
@@ -77,14 +72,14 @@ class State {
     if (!data) {
       return
     } 
-    if ($.type(this[dataStore]) === 'array') {
-      this[dataStore] = this[dataStore].concat(data).unique()
+    if ($.type(this.dataStore) === 'array') {
+      this.dataStore = this.dataStore.concat(data).unique()
       this.renderComponents()
-    } else if ($.type(this[dataStore]) === 'object') {
+    } else if ($.type(this.dataStore) === 'object') {
       for (let key in data) {
 
-        if (!(key in this[dataStore])) {
-          this[dataStore][key] = data[key]
+        if (!(key in this.dataStore)) {
+          this.dataStore[key] = data[key]
           this.renderComponents()
         }
       }
@@ -101,7 +96,7 @@ class State {
     } else {
       d = data
     }
-      this[dataStore] = d
+      this.dataStore = d
       this.renderComponents(this)
     }
   }
@@ -110,8 +105,8 @@ class State {
     if (!prop) {
       return
     }
-    if ($.type(this[dataStore]) !== 'object') return
-    delete this[dataStore][prop]
+    if ($.type(this.dataStore) !== 'object') return
+    delete this.dataStore[prop]
     this.renderComponents()
   }
 
@@ -119,14 +114,14 @@ class State {
     if (!property || position === undefined) {
       return
     }
-    if ($.type(this[dataStore]) === 'array') {
+    if ($.type(this.dataStore) === 'array') {
       if (position < 0) {
-        const pos = this[dataStore].length + position
-        return this[dataStore][pos][property]
-      } else if (position > this[dataStore].length) {
+        const pos = this.dataStore.length + position
+        return this.dataStore[pos][property]
+      } else if (position > this.dataStore.length) {
         return
       } else {
-        return this[dataStore][position][property]
+        return this.dataStore[position][property]
       }
     }
   }
@@ -135,13 +130,13 @@ class State {
     if (!property || value === undefined || position=== undefined) {
       return
     }
-    if ($.type(this[dataStore]) === 'array') {
+    if ($.type(this.dataStore) === 'array') {
       if (position < 0) {
-        const pos = this[dataStore].length + position
-        this[dataStore][pos][property] = value
+        const pos = this.dataStore.length + position
+        this.dataStore[pos][property] = value
         this.renderComponents()
       } else {
-        this[dataStore][position][property] = value
+        this.dataStore[position][property] = value
         this.renderComponents()
       }
     }
@@ -151,15 +146,15 @@ class State {
     if (!data) {
       return
     }
-    if ($.type(this[dataStore]) === 'array') {
-      this[dataStore].push(data)
+    if ($.type(this.dataStore) === 'array') {
+      this.dataStore.push(data)
       this.renderComponents()
     }
   }
 
   pop() {
-    if ($.type(this[dataStore]) === 'array') {
-      this[dataStore].pop()
+    if ($.type(this.dataStore) === 'array') {
+      this.dataStore.pop()
       this.renderComponents()
     }
   }
@@ -167,15 +162,15 @@ class State {
   unshift(data) {
     if (!data) {
       return
-    } else if ($.type(this[dataStore]) === 'array') {
-      this[dataStore].unshift(data)
+    } else if ($.type(this.dataStore) === 'array') {
+      this.dataStore.unshift(data)
       this.renderComponents()
     }
   }
 
   shift() {
-    if ($.type(this[dataStore]) === 'array') {
-      this[dataStore].shift()
+    if ($.type(this.dataStore) === 'array') {
+      this.dataStore.shift()
       this.renderComponents()
     }
   }
@@ -185,8 +180,8 @@ class State {
     if (end === undefined || start === undefined) {
       return
     }
-    if ($.type(this[dataStore]) === 'array') {
-      return this[dataStore].slice(start, end)
+    if ($.type(this.dataStore) === 'array') {
+      return this.dataStore.slice(start, end)
     }
   }
 
@@ -194,12 +189,12 @@ class State {
     if (end === undefined || start === undefined) {
       return
     }
-    if ($.type(this[dataStore]) === 'array' && data) {
-      this[dataStore].splice(start, end, data)
+    if ($.type(this.dataStore) === 'array' && data) {
+      this.dataStore.splice(start, end, data)
       this.renderComponents()
-    } else if ($.type(this[dataStore]) === 'array') {
+    } else if ($.type(this.dataStore) === 'array') {
       if(start == null || !end) return
-      this[dataStore].splice(start, end)
+      this.dataStore.splice(start, end)
       this.renderComponents()
     }
   }
@@ -208,9 +203,9 @@ class State {
     if (data === undefined || position === undefined || typeof position !== 'number') {
       return
     }
-    if (typeof this[dataStore] === 'array') {
+    if (typeof this.dataStore === 'array') {
       if ($.type(position) !== 'number') return
-      this[dataStore].splice(position, 0, data)
+      this.dataStore.splice(position, 0, data)
       this.renderComponents()
     }
   }
@@ -220,10 +215,10 @@ class State {
       return
     } else {
       const ret = []
-      if (this[dataStore] && this[dataStore].length) {
-        const len = this[dataStore].length
+      if (this.dataStore && this.dataStore.length) {
+        const len = this.dataStore.length
         for (let i = 0; i < len; i++) {
-          ret.push(this[dataStore][i][property])
+          ret.push(this.dataStore[i][property])
         }
         return ret
       }
@@ -233,24 +228,24 @@ class State {
   indexOf(element, startFrom) {
     if (!element) {
       return
-    } else if ($.type(this[dataStore]) === 'array') {
-      return this[dataStore].indexOf(element, startFrom)
+    } else if ($.type(this.dataStore) === 'array') {
+      return this.dataStore.indexOf(element, startFrom)
     }
   }
 
   find(callback) {
     if (!callback) {
       return
-    } else if ($.type(this[dataStore]) === 'array') {
-      return this[dataStore].find(callback)
+    } else if ($.type(this.dataStore) === 'array') {
+      return this.dataStore.find(callback)
     }
   }
 
   findIndex(callback) {
     if (!callback) {
       return
-    } else if ($.type(this[dataStore]) === 'array') {
-      return this[dataStore].findIndex(callback)
+    } else if ($.type(this.dataStore) === 'array') {
+      return this.dataStore.findIndex(callback)
     }
   }
 
@@ -258,12 +253,12 @@ class State {
     if (!callback) {
       return
     }
-    if (this[dataStore] && this[dataStore].length) {
+    if (this.dataStore && this.dataStore.length) {
       let value
       let i = -1
-      const len = this[dataStore].length
+      const len = this.dataStore.length
       while (++i < len) {
-        value = callback.call(this[dataStore][i], this[dataStore][i], i)
+        value = callback.call(this.dataStore[i], this.dataStore[i], i)
         if (value === false) {
           break
         }
@@ -275,8 +270,8 @@ class State {
     for (let _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key]
     }
-    if (this[dataStore] && this[dataStore].length) {
-      return this[dataStore].filter.apply(this[dataStore], args)
+    if (this.dataStore && this.dataStore.length) {
+      return this.dataStore.filter.apply(this.dataStore, args)
     }
   }
 
@@ -284,25 +279,25 @@ class State {
     for (let _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key]
     }
-    if (this[dataStore] && this[dataStore].length) {
-      return this[dataStore].map.apply(this[dataStore], args)
+    if (this.dataStore && this.dataStore.length) {
+      return this.dataStore.map.apply(this.dataStore, args)
     }
   }
 
   reverse() {
-    if (this[dataStore] && this[dataStore].length) {
-      this[dataStore].reverse()
+    if (this.dataStore && this.dataStore.length) {
+      this.dataStore.reverse()
       this.renderComponents()
     }
   }
 
   sort(compareFunction) {
-    if (this[dataStore] && this[dataStore].length) {
+    if (this.dataStore && this.dataStore.length) {
       if (compareFunction) {
-        this[dataStore].sort(compareFunction)
+        this.dataStore.sort(compareFunction)
         this.renderComponents()
       } else {
-        this[dataStore].sort()
+        this.dataStore.sort()
         this.renderComponents()
       }
     }
@@ -338,8 +333,8 @@ class State {
         return result
       }
     }
-    if (this[dataStore] && this[dataStore].length) {
-      this[dataStore].sort(orderBy.apply(null, props))
+    if (this.dataStore && this.dataStore.length) {
+      this.dataStore.sort(orderBy.apply(null, props))
       this.renderComponents()
     }
   }
@@ -348,29 +343,29 @@ class State {
     if (!data) {
       return
     }
-    if ($.type(this[dataStore]) === 'array') {
-      const temp = this[dataStore].concat(data)
-      this[dataStore] = temp
+    if ($.type(this.dataStore) === 'array') {
+      const temp = this.dataStore.concat(data)
+      this.dataStore = temp
       this.renderComponents()
     }
   }
 
   unique() {
-    if ($.type(this[dataStore]) === 'array') {
-      this[dataStore].unique()
+    if ($.type(this.dataStore) === 'array') {
+      this.dataStore.unique()
       this.renderComponents()
     }
   }
 
   eq(position) {
-    if ($.type(this[dataStore]) === 'array') {
-      return this[dataStore][position]
+    if ($.type(this.dataStore) === 'array') {
+      return this.dataStore[position]
     }
   }
 
   size() {
-    if ($.type(this[dataStore]) === 'array') {
-      return this[dataStore].length
+    if ($.type(this.dataStore) === 'array') {
+      return this.dataStore.length
     } else {
       return
     }

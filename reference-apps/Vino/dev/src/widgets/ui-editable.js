@@ -664,7 +664,7 @@ export class UIEditList {
       }
 
       if (!data && settings.state) {
-        data = settings.state.get()
+        data = settings.state.dataStore
       }
 
       if (Array.isArray(data)) {
@@ -690,7 +690,7 @@ export class UIEditList {
       })
     }
 
-    this.val = () => options.state.get()
+    this.val = () => options.state.dataStore
 
     $(() => {
 
@@ -798,7 +798,7 @@ export class UIEditList {
          */
         if (settings.state) {
           // (function () {
-            let __data = settings.state.get()
+            let __data = settings.state.dataStore
             let __newarray = []
             let liData = $(settings.element).find('li')
             let temp = []

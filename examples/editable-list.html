@@ -175,7 +175,7 @@
         </li>`,
       deletable: true,
       reorderable: true,
-      callback: () => console.dir(peopleState.get())
+      callback: () => console.dir(peopleState.dataStore)
     })
     editList.render()
     window.editList = editList

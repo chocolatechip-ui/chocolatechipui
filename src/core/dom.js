@@ -302,7 +302,6 @@ class Stack {
 
   closest(selector) {
     if (!this.array.length) {
-      console.log('nothing to find here')
       return new Stack()
     }
     const ret = new Stack()

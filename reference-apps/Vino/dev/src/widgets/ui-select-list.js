@@ -20,7 +20,7 @@ export class UISelectList {
 
     const selectionIndicator = function(value) {
       return `
-        <input type='checkbox' value='${value}' name='${settings.name}'><aside>
+        <input type='radio' value='${value}' name='${settings.name}'><aside>
         <span class="selection-indicator">
           <svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -38,7 +38,7 @@ export class UISelectList {
       settings.state.boundComponents.push(this)
     }
     let settingsData
-    if (settings.state) settingsData = settings.state.get()
+    if (settings.state) settingsData = settings.state.dataStore
     this.value = settingsData ? settingsData[settings.selected].value : ''
     this.index = settings.selected
 
@@ -49,7 +49,7 @@ export class UISelectList {
       }
 
       if (!data && settings.state) {
-        data = settings.state.get()
+        data = settings.state.dataStore
       }
 
       if (Array.isArray(data)) {
@@ -65,11 +65,14 @@ export class UISelectList {
       elm.empty()
       elm.append(temp)
       setTimeout(function() {
-        var data = settings.state.get()
+        var data = settings.state.dataStore
         var listItems = Array.prototype.slice.apply(elm[0].querySelectorAll('li'))
         listItems.map((item, idx) => {
-          $(item).append(selectionIndicator(data[idx].value))
-          if (idx == settings.selected) item.classList.add('selected')
+          $(item).append(selectionIndicator(data[idx].value, idx))
+          if (idx == settings.selected) {
+            item.classList.add('selected')
+            $(item).find('input')[0].checked = true
+          }
         })
       })
     }

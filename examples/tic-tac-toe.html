@@ -40,7 +40,7 @@
             <div id='frame'>
               <h3 class="status no-wrap ${data.won ? 'won' : ''}">${status}</h3>
                 !${
-                  board.state.get().squares.map((num, idx) => {
+                  board.state.dataStore.squares.map((num, idx) => {
                     if (num == 'X' || num == 'O') {
                       return html`<button class="square" data-value='${idx}'>${num}</button>`
                     } else {
@@ -83,7 +83,7 @@
               }
               // If winner:
               const showWinner = () => {
-                const lines = board.state.get().winner
+                const lines = board.state.dataStore.winner
                 status = 'Winner: ' + winner;
                 board.state.set('status', status)
                 board.state.set('won', true)
@@ -93,23 +93,23 @@
               }
               // Otherwise show next move:
               const showMove = () => {
-                status = 'Next player: ' + (board.state.get().xIsNext ? 'X' : 'O');
-                board.state.set('xIsNext', board.state.get().xIsNext === 'X' ? 'O' : 'X')
-                board.state.set('status', `Next Player: ${board.state.get().xIsNext}`)
+                status = 'Next player: ' + (board.state.dataStore.xIsNext ? 'X' : 'O');
+                board.state.set('xIsNext', board.state.dataStore.xIsNext === 'X' ? 'O' : 'X')
+                board.state.set('status', `Next Player: ${board.state.dataStore.xIsNext}`)
               }
 
               // Check user action.
               // If already completed, exit:
-              if (board.state.get().winner) return
+              if (board.state.dataStore.winner) return
 
               // Otherwise, find what square was tapped:
               const value = e.target.dataset.value
-              let update = board.state.get()
-              update.squares[value] = board.state.get().xIsNext
+              let update = board.state.dataStore
+              update.squares[value] = board.state.dataStore.xIsNext
               board.state.set('squares', update.squares)
 
               // Show winner:
-              const winner = calculateWinner(board.state.get().squares)
+              const winner = calculateWinner(board.state.dataStore.squares)
               if (winner) {
                 showWinner()
               // Otherwise show move:

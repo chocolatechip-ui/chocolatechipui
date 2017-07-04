@@ -162,7 +162,7 @@
       })
 
       $('#validateForm').on('click', function() {
-        $.myForm = $.Form([
+        const myForm = $.Form([
           {
             element: '#firstName',
             type: 'text',
@@ -215,9 +215,9 @@
             type: 'multiselectlist'
           }
         ])
-        if(!$.myForm.errors()) {
-          $.formData = $.myForm.get()
-          ResultsView.render(JSON.stringify($.formData))
+        if(!myForm.errors()) {
+          const formData = myForm.get()
+          ResultsView.render(JSON.stringify(formData))
           $('section')[0].scrollTop = 95
         }
       })
