@@ -17,11 +17,6 @@ class Component {
     }
     this.actions = options.actions
     this.styles = options.styles
-    if (options.methods && options.methods.length) {
-      options.methods.map(function (method) {
-        self[method.name] = method
-      })
-    }
     /* Lifecyle methods */
     if (options.componentWillMount && typeof options.componentWillMount === 'function') {
       this.componentWillMount = options.componentWillMount

@@ -83,6 +83,11 @@
       var luminariesComponent = new Component({
         element: '#arrayTemplate',
         state: luminariesStore,
+        methods: [
+          function dingo() {
+            alert('This is Dingo!')
+          }
+        ],
         actions: {
           element: 'h3',
           event: 'tap',
@@ -103,7 +108,7 @@
           </li>`
       })
       luminariesComponent.render()
-
+      window.luminariesComponent = luminariesComponent
     })
 </script>
 </body>
