@@ -22,9 +22,9 @@ class UIPaging {
       </div>`;
     const settings = {}
     $.extend(settings, options)
-    var screen = $(settings.screen);
+    const screen = $(settings.screen);
     screen.find('nav').append(pagingControls)
-    var chunks = $.chunk(settings.data, settings.size)
+    const chunks = $.chunk(settings.data, settings.size)
 
     /**
      * Setup buttons for paging.
@@ -32,9 +32,9 @@ class UIPaging {
     $(() => {
       $('#paging-next').on($.eventStart, function() {
         if (this.disabled) return
-        var currPage = document.querySelector('article.current')
+        const currPage = document.querySelector('article.current')
         if (!currPage) return
-        var nextPage = currPage.nextElementSibling
+        const nextPage = currPage.nextElementSibling
         if (nextPage && nextPage.className === 'next') {
           currPage.classList.add('previous')
           currPage.classList.remove('current')
@@ -48,9 +48,9 @@ class UIPaging {
       })
       $('#paging-previous').on($.eventStart, function() {
         if (this.disabled) return
-        var currPage = document.querySelector('article.current')
+        const currPage = document.querySelector('article.current')
         if (!currPage) return
-        var nextPage = currPage.previousElementSibling
+        const nextPage = currPage.previousElementSibling
         if (nextPage && nextPage.className === 'previous') {
           currPage.classList.add('next')
           currPage.classList.remove('current')
@@ -66,7 +66,7 @@ class UIPaging {
     })
 
     this.render = function() {
-      var temp = ''
+      let temp = ''
       if (Array.isArray(chunks)) {
 
         temp = settings.render(chunks)
@@ -74,9 +74,9 @@ class UIPaging {
       } else {
         return
       }
-      var elm = $(settings.screen).find('section')
-      elm.empty()
-      elm.append(temp)
+      const root = $(settings.screen).find('section')
+      root.empty()
+      root.append(temp)
     }
 
   }

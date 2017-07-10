@@ -16,7 +16,7 @@ class UISelectList {
     this.value = settings.value
     this.index = settings.selected
     const name = settings.name
-    this.elm = $(settings.element)
+    this.root = $(settings.element)
 
     const selectionIndicator = function(value) {
       return `
@@ -60,13 +60,13 @@ class UISelectList {
         return
       }
 
-      this.elm.textContent = ''
-      var elm = $(settings.element)
-      elm.empty()
-      elm.append(temp)
+      this.root.textContent = ''
+      var root = $(settings.element)
+      root.empty()
+      root.append(temp)
       setTimeout(function() {
         var data = settings.state.dataStore
-        var listItems = Array.prototype.slice.apply(elm[0].querySelectorAll('li'))
+        var listItems = Array.prototype.slice.apply(root[0].querySelectorAll('li'))
         listItems.map((item, idx) => {
           $(item).append(selectionIndicator(data[idx].value, idx))
           if (idx == settings.selected) {

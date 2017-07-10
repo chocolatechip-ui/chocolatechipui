@@ -319,6 +319,10 @@ export default (function() {
     .pipe(gulp.dest('./dist/utils'));
   }, 10000);
 });
+gulp.task('h', function() {
+  return gulp.src('./src/utils/h.js')
+    .pipe(gulp.dest('./dist/utils'));
+})
 
 gulp.task('reference-apps', function() {
   gulp.src('./dist/chui.min.js')
@@ -375,6 +379,7 @@ gulp.task('dev-build', [
 'ui-slideout',
 'ui-tabbar',
 'utils',
+'h',
 'form']);
 
 gulp.task('default', ['mkdir', 'build', 'process-css', 'dev-build', 'example-widgets','reference-apps'])

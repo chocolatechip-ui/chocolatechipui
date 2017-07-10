@@ -55,13 +55,13 @@ class UIMultiSelectList {
         return
       }
 
-      var elm = $(settings.element)
-      elm.array[0].classList.add('multi-select-list')
-      elm.empty()
-      elm.append(temp)
+      var root = $(settings.element)
+      root.array[0].classList.add('multi-select-list')
+      root.empty()
+      root.append(temp)
       setTimeout(function() {
         var data = settings.state.dataStore
-        var listItems = Array.prototype.slice.apply(elm[0].querySelectorAll('li'))
+        var listItems = Array.prototype.slice.apply(root[0].querySelectorAll('li'))
         listItems.map((item, idx) => {
           item.dataset.select = data[idx].value
           if (settings.selected && settings.selected.length) {

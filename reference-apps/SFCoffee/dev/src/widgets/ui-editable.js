@@ -646,7 +646,7 @@ export class UIEditList {
     let moveDownIndicator
     let element = settings.element
     let deleteLabel
-    this.elm = $(settings.element)
+    this.root = $(settings.element)
 
     if (settings.deletable) {
       document.querySelector(settings.element).classList.add('deletable')
@@ -675,11 +675,11 @@ export class UIEditList {
         return
       }
 
-      this.elm.textContent = ''
-      let elm = $(settings.element)
-      elm.empty()
-      elm.append(temp)
-      elm.find('li').array.map(li => {
+      this.root.textContent = ''
+      let root = $(settings.element)
+      root.empty()
+      root.append(temp)
+      root.find('li').array.map(li => {
         if (settings.deletable) {
           $(li).prepend(deletionIndicator)
           $(li).append(deleteButton)
@@ -698,7 +698,7 @@ export class UIEditList {
        * Handle deletion of list item.
        */
       function deleteListItem(el) {
-        let elm = $(settings.element)
+        let root = $(settings.element)
         let $this = this
         __editMade = true
         let listItem = $($this).closest('li')
@@ -706,7 +706,7 @@ export class UIEditList {
         /**
          * Mark list as edited:
          */
-        elm[0].dataset.listEdit = 'true'
+        root[0].dataset.listEdit = 'true'
         let direction = '-1200%'
         if (document.querySelector('html').getAttribute('dir') === 'rtl') direction = '1000%'
         $($this).siblings().css({

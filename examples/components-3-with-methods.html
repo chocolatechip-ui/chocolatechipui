@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="msapplication-tap-highlight" content="no">
+  <title>ChocolateChip-UI Component</title>
+  <link rel="stylesheet" href="./dist/css/chui-ios.css">
+  <script src="./dist/chui.min.js"></script>
+  <script src="./dist/widgets.min.js"></script>
+  <style>
+    li {
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <ui-screen id='main' class='current'>
+    <nav>
+      <h1>Components with Methods</h1>
+    </nav>
+    <section>
+      <h2>Tap on List Item</h2>
+      <ul class="list" id="list"></ul>
+
+    </section>
+  </ui-screen>
+
+<script>
+  $(function() {
+
+  const fruits = ['Apples', 'Oranges', 'Bananas', 'Cherries', 'Mangos']
+  const fruitState = new State(fruits)
+  
+  const list = new Component({
+    element: '#list',
+    state: fruitState,
+    render: (data) => html`
+      <li>
+        <h3>${ data }</h3>
+      </li>`,
+    actions: [
+      {
+        event: 'tap',
+        element: 'h3',
+        callback: (e) => {
+          // Must use class instance to access method:
+          alert('You chose: ' + list.getTextFromElement(e.target))
+        }
+      }
+    ],
+    methods: [
+      function getTextFromElement(el) {
+        return el.textContent.trim()
+      },
+      function makeUpperCase(el) {
+      // Use "this" to get getTextFromElement method:
+      return this.getTextFromElement(el)
+    }
+  ]
+  })
+  list.render()
+      window.list = list
+
+    })
+</script>
+</body>

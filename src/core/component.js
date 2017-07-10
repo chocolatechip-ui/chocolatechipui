@@ -1,12 +1,13 @@
 class Component {
   constructor(options) {
     if (!options) return
+    const self = this
     if (typeof options.element === 'string') {
-      this.elm = $(options.element)
+      this.root = $(options.element)
     } else if (options.element && options.element.nodeType) {
-      this.elm = $(options.element)
+      this.root = $(options.element)
     } else {
-      this.elm = options.element
+      this.root = options.element
     }
     this.origElement = options.element
     this.renderFnc = options.render
@@ -16,6 +17,35 @@ class Component {
     }
     this.actions = options.actions
     this.styles = options.styles
+    if (options.methods && options.methods.length) {
+      options.methods.map(function (method) {
+        self[method.name] = method
+      })
+    }
+    /* Lifecyle methods */
+    if (options.componentWillMount && typeof options.componentWillMount === 'function') {
+      this.componentWillMount = options.componentWillMount
+    }
+
+    if (options.componentDidMount && typeof options.componentDidMount === 'function') {
+      this.componentDidMount = options.componentDidMount
+    }
+
+    if (options.componentWillUnmount && typeof options.componentWillUnmount === 'function') {
+      this.componentWillUnmount = options.componentWillUnmount
+    }
+
+    if (options.componentDidUnmount && typeof options.componentDidUnmount === 'function') {
+      this.componentDidUnmount = options.componentDidUnmount
+    }
+    
+    if (options.componentWillUpdate && typeof options.componentWillUpdate === 'function') {
+      this.componentWillUpdate = options.componentWillUpdate
+    }
+
+    if (options.componentDidUpdate && typeof options.componentDidUpdate === 'function') {
+      this.componentDidUpdate = options.componentDidUpdate
+    }
 
     this.chuiStyle = function() {
       let sharedSheet = null
@@ -166,17 +196,17 @@ class Component {
         this.actions.forEach(function(item) {
           bubble = item.bubble
           if (item && item.element === 'self' || item && !item.element) {
-            self.elm.on(item.event, item.callback, bubble)
+            self.root.on(item.event, item.callback, bubble)
           } else {
-            self.elm.on(item.event, item.element, item.callback, bubble)
+            self.root.on(item.event, item.element, item.callback, bubble)
           }
         })
       } else if ($.type(this.actions) === 'object') {
         bubble = this.actions.bubble || false
         if (!this.actions.element || this.actions.element === 'self') {
-          self.elm.on(this.actions.event, this.actions.callback, bubble)
+          self.root.on(this.actions.event, this.actions.callback, bubble)
         } else {
-          self.elm.on(this.actions.event, this.actions.element, this.actions.callback, bubble)
+          self.root.on(this.actions.event, this.actions.element, this.actions.callback, bubble)
         }
       }
     }
@@ -208,8 +238,11 @@ class Component {
       return
     }
     let temp = ''
-    if (!this.elm.array[0]) {
+    if (!this.root.array[0]) {
       return
+    }
+    if (this.componentWillUpdate) {
+      this.componentWillUpdate()
     }
     if (!data && this.state) {
       data = this.state.get()
@@ -223,31 +256,51 @@ class Component {
       temp = self.renderFnc(data)
     }
 
-    if (this.styles && (this.elm && this.elm.array[0])) {
+    if (this.styles && (this.root && this.root.array[0])) {
       const styles = this.chuiStyle()
       if (typeof this.styles !== 'object') return
       styles.css(this.origElement, this.styles)
     }
 
     if (append) {
-      self.elm.append(temp)
+      self.root.append(temp)
     } else {
-      this.elm.array[0].textContent = ''
-      self.elm.empty()
-      self.elm.append(temp)
+      this.root.array[0].textContent = ''
+      self.root.empty()
+      self.root.append(temp)
+    }
+    if (this.componentDidUpdate) {
+      this.componentDidUpdate()
     }
   }
 
   empty() {
-    if (this.elm.array[0]) {
-      this.elm.empty()
+    if (this.root.array[0]) {
+      this.root.empty()
     }
   }
 
   mount() {
-    this.elm = $(this.origElement)
+    if (this.componentWillMount) {
+      this.componentWillMount()
+    }
+    this.root = $(this.origElement)
     this.handleEvents()
     const styles = this.chuiStyle()
     styles.css(this.origElement, this.styles)
+    if (this.componentDidMount) {
+      this.componentDidMount()
+    }
+  }
+
+  unmount() {
+    if (this.componentWillUnmount) {
+      this.componentWillUnmount()
+    }
+    this.empty()
+    this.root.off()
+    if (this.componentDidUnmount) {
+      this.componentDidUnmount()
+    }
   }
 }
