@@ -209,6 +209,12 @@ class Component {
     if (this.actions) {
       this.handleEvents(this.actions)
     }
+
+    if (this.styles && (this.root && this.root.array[0])) {
+      const styles = this.chuiStyle()
+      if (typeof this.styles !== 'object') return
+      styles.css(this.origElement, this.styles)
+    }
   }
 
   setTemplate(template) {
@@ -249,12 +255,6 @@ class Component {
       }).join('')
     } else {
       temp = self.renderFnc(data)
-    }
-
-    if (this.styles && (this.root && this.root.array[0])) {
-      const styles = this.chuiStyle()
-      if (typeof this.styles !== 'object') return
-      styles.css(this.origElement, this.styles)
     }
 
     if (append) {
