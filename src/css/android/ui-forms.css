@@ -25,7 +25,7 @@ input[type=text] {
   background-position: center bottom, center bottom;
   background-size: 0% 2px, 100% 1px;
   background-repeat: no-repeat;
-  transition: all .5s ease;
+  transition: all .35s ease-out;
   padding-bottom: 4px;
   font-size: 12pt;
   border-radius: 0;
