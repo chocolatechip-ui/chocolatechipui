@@ -4,6 +4,8 @@ var reload = browserSync.reload
 var rollup = require('rollup')
 var babel =  require('rollup-plugin-babel')
 var uglify =  require('rollup-plugin-uglify')
+var resolve = require('rollup-plugin-node-resolve')
+var commonjs = require('rollup-plugin-commonjs')
 
 // Static Server & watching files:
 gulp.task('serve', ['build'], function () {
@@ -31,6 +33,12 @@ gulp.task('build', function () {
       babel({
         exclude: 'node_modules/**'
       }),
+      resolve({
+        jsnext: true,
+        main: true,
+        browser: true
+      }),
+      commonjs(),
       uglify({
         compress: {
           collapse_vars: true
