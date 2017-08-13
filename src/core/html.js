@@ -1,11 +1,11 @@
 
-function html(literals) {
+function html(literals, ...vars) {
   let raw = literals.raw
   let result = ''
-  let i
-  let len
-  let sub
-  let lit
+  let i = 1
+  let len = arguments.length
+  let variable
+  let str
   let safe
 
   /**
@@ -23,17 +23,18 @@ function html(literals) {
     )
   }
 
-  for (i = 1, len = arguments.length; i < len; i++) {
-    lit = raw[i - 1]
+  while (i < len) {
+    str = raw[i - 1]
     /**
      * Allow safe html by prefixing interpolation with an exclamation mark.
      */
-    safe = lit[lit.length - 1] === '!'
-    sub = normalize(arguments[i], safe)
-    if (safe) lit = lit.slice(0, -1)
-
-    result += lit + sub
+    safe = str[str.length - 1] === '!'
+    variable = normalize(vars[i -1], safe)
+    if (safe) str = str.slice(0, -1)
+    result += str + variable
+    i++
   }
+
 
   // Take care of last literal section.
   result += raw[raw.length - 1]

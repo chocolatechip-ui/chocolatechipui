@@ -241,7 +241,7 @@ $.extend({
       frag.appendChild(el)
     })
     return frag
-  },
+  }
 })
 
 function html(literals) {
