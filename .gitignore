@@ -3,6 +3,7 @@ S_Store
 *.tgz
 .Spotlight-V100
 .Trashes
+.DS_Store
 npm-debug.log
 Thumbs.db
 jspm_packages
